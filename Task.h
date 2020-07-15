@@ -22,10 +22,16 @@ class Task {
   Task(const std::string &name, const std::string &label, Priority priority, const int &dueDate);
 
  public:
-  std::string getName();
-  std::string getLabel();
-  std::string getPriority();
-  int getDate();
+  std::string getName() const;
+  std::string getLabel() const;
+  Priority getPriority() const;
+  int getDate() const;
+
+  std::string convertPriority() const;
+
+  void showTask() const;
+
+//  friend std::ostream& operator<< (std::ostream &out, Task task);
 
  private:
   std::string name;

@@ -11,21 +11,26 @@ Task::Task(const std::string &name, const std::string &label, Priority priority,
   this->label = label;
   this->priority = priority;
   this->dueDate = dueDate;
+  this->status = false;
 }
 
-std::string Task::getName() { return name; }
+std::string Task::getName() const { return name; }
 
-std::string Task::getLabel() { return label; }
+std::string Task::getLabel() const { return label; }
 
-std::string Task::getPriority() {
-  switch(priority) {
+Priority Task::getPriority() const { return priority; }
+
+int Task::getDate() const { return dueDate; }
+
+std::string Task::convertPriority() const {
+  switch (priority) {
     case EMPTY: {
       return "No priority";
       break;
     }
     case LOW: {
-     return "Low";
-     break;
+      return "Low";
+      break;
     }
     case MEDIUM: {
       return "Medium";
@@ -38,5 +43,6 @@ std::string Task::getPriority() {
   }
 }
 
-int Task::getDate() { return dueDate; }
-
+void Task::showTask() const {
+  std::cout << "Task: " << getName() << " (" << getLabel() << "), Priority: " << convertPriority() << ". Deadline: " << getDate() << std::endl;
+}
