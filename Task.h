@@ -6,30 +6,34 @@
 #define TODOLIST__TASK_H_
 
 #include <iostream>
-//#include <ctime>
+#include <vector>
+
+enum Priority {
+  EMPTY,
+  LOW,
+  MEDIUM,
+  HIGH
+};
 
 class Task {
  public:
-  std::string getName() { return name; }
-  std::string getLabel() { return label; }
-  tm getDate() { return dueDate; }
-  int getPriority() { return priority; }
+  Task();
 
+  Task(const std::string &name, const std::string &label, Priority priority, const int &dueDate);
 
-
-/*  Priority getPriority() {
-
-  }*/
+ public:
+  std::string getName();
+  std::string getLabel();
+  std::string getPriority();
+  int getDate();
 
  private:
   std::string name;
   std::string label;
-  tm dueDate;
-  enum Priority {
-    LOW,
-    MEDIUM,
-    HIGH
-  } priority;
+  int dueDate;
+  bool status;
+  std::vector<Task> subtasks;
+  Priority priority = EMPTY;
 };
 
 #endif //TODOLIST__TASK_H_
