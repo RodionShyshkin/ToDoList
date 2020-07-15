@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 enum Priority {
   EMPTY,
@@ -26,20 +27,26 @@ class Task {
   std::string getLabel() const;
   Priority getPriority() const;
   int getDate() const;
+  std::shared_ptr<Task> getRootTask() const;
+  std::string getRootTaskName() const;
+  std::vector<std::shared_ptr<Task>> getSubtasks() const;
 
   std::string convertPriority() const;
 
   void showTask() const;
 
-//  friend std::ostream& operator<< (std::ostream &out, Task task);
+ public:
+  void pushSubtask(const Task &task);
+  void setRoot(std::shared_ptr<Task> root);
 
  private:
   std::string name;
   std::string label;
   int dueDate;
   bool status;
-  std::vector<Task> subtasks;
+  std::vector<std::shared_ptr<Task>> subtasks;
   Priority priority = EMPTY;
+  std::shared_ptr<Task> rootTask;
 };
 
 #endif //TODOLIST__TASK_H_

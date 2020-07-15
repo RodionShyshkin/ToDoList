@@ -6,7 +6,6 @@
 #define TODOLIST__TASKMANAGER_H_
 
 #include "Task.h"
-#include <memory>
 #include <map>
 
 class TaskManager {
@@ -21,8 +20,8 @@ class TaskManager {
   void showTasksForLabel(const std::string &label) const;
 
  public:
-  void addTask(std::shared_ptr<Task> task);
-  void addSubtask();
+  void addTask(const Task &task);
+  void addSubtask(std::shared_ptr<Task> root, Task &subtask);
   void removeTask();
 
   void markTask();

@@ -33,7 +33,28 @@ void TaskManager::showAllTasks() const {
   }
 }*/
 
-void TaskManager::addTask(std::shared_ptr<Task> task) {
+/*void TaskManager::addTask(std::shared_ptr<Task> task) {
   tasks.push_back(task);
   sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task->getPriority(), task));
+}*/
+
+void TaskManager::addTask(const Task &task) {
+  auto task_ptr = std::make_shared<Task>(task);
+  tasks.push_back(task_ptr);
+  sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task.getPriority(), task_ptr));
+}
+
+void TaskManager::addSubtask(std::shared_ptr<Task> root, Task &subtask) {
+//  auto root_ptr = std::make_shared<Task>(root);
+  for(auto task : tasks) {
+    if(task->getName() == root->getName()) {
+      auto subtask_ptr = std::make_shared<Task>(subtask);
+      subtask.setRoot(root);
+      task->pushSubtask(subtask);
+//      subtask_ptr->setRoot(root);
+      addTask(subtask);
+      return;
+
+    }
+  }
 }
