@@ -26,7 +26,7 @@ int Task::getDate() const { return dueDate; }
 std::shared_ptr<Task> Task::getRootTask() const { return rootTask; }
 
 std::string Task::getRootTaskName() const {
-  if(rootTask == NULL) return "No root";
+  if(rootTask == NULL) return "NULL";
   return rootTask->getName();
 }
 

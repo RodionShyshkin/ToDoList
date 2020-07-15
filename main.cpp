@@ -13,15 +13,14 @@ int main() {
   Task first("Eating", "fish", HIGH, 4);
   Task second("Cooking", "meat", MEDIUM, 6);
   Task firstsub("Drinking", "Cola", MEDIUM, 5);
-  Task firstSubSub("Trun", "Huyun", MEDIUM, 5);
+  Task firstSubSub("Trun", "meat", MEDIUM, 5);
+
   dir.addTask(first);
   dir.addTask(second);
+  dir.addSubtask(first, firstsub);
+  dir.addSubtask(firstsub, firstSubSub);
 
-  auto ptr = std::make_shared<Task>(first);
-  dir.addSubtask(ptr, firstsub);
-
-  auto ptr2 = std::make_shared<Task>(firstsub);
-  dir.addSubtask(ptr2, firstSubSub);
+  dir.showTasksForLabel("meat");
 
   dir.showAllTasks();
 

@@ -8,11 +8,7 @@ TaskManager::TaskManager() = default;
 TaskManager::~TaskManager() = default;
 
 void TaskManager::showAllTasks() const {
-  /*for(auto item : tasks) {
-    item->showTask();
-  }
-  if(tasks.empty()) std::cout << "Vector is empty" << std::endl;*/
-  if(sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
+  if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
   else {
     for (auto[key, value] : sortedTasks) {
       value->showTask();
@@ -33,10 +29,19 @@ void TaskManager::showAllTasks() const {
   }
 }*/
 
-/*void TaskManager::addTask(std::shared_ptr<Task> task) {
-  tasks.push_back(task);
-  sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task->getPriority(), task));
-}*/
+void TaskManager::showTasksForLabel(const std::string &label) const {
+  std::vector<std::shared_ptr<Task>> searchResult;
+  for (auto[priority, task] : sortedTasks) {
+    if (task->getLabel() == label) {
+      searchResult.push_back(task);
+    }
+  }
+  if (searchResult.size() == 0) std::cout << "No tasks found." << std::endl;
+  else {
+    std::cout << searchResult.size() << " tasks found." << std::endl;
+    for (auto task : searchResult) task->showTask();
+  }
+}
 
 void TaskManager::addTask(const Task &task) {
   auto task_ptr = std::make_shared<Task>(task);
@@ -44,17 +49,14 @@ void TaskManager::addTask(const Task &task) {
   sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task.getPriority(), task_ptr));
 }
 
-void TaskManager::addSubtask(std::shared_ptr<Task> root, Task &subtask) {
-//  auto root_ptr = std::make_shared<Task>(root);
-  for(auto task : tasks) {
-    if(task->getName() == root->getName()) {
-      auto subtask_ptr = std::make_shared<Task>(subtask);
-      subtask.setRoot(root);
+void TaskManager::addSubtask(Task &root, Task &subtask) {
+  auto root_ptr = std::make_shared<Task>(root);
+  for (auto task : tasks) {
+    if (task->getName() == root_ptr->getName()) {
+      subtask.setRoot(task);
       task->pushSubtask(subtask);
-//      subtask_ptr->setRoot(root);
       addTask(subtask);
       return;
-
     }
   }
 }

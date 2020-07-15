@@ -21,7 +21,7 @@ class TaskManager {
 
  public:
   void addTask(const Task &task);
-  void addSubtask(std::shared_ptr<Task> root, Task &subtask);
+  void addSubtask(Task &root, Task &subtask);
   void removeTask();
 
   void markTask();
