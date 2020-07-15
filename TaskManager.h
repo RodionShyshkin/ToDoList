@@ -24,7 +24,7 @@ class TaskManager {
   void addSubtask(Task &root, Task &subtask);
   void removeTask();
 
-  void markTask();
+  void markTask(const Task& taskToMark);
 
  private:
   std::vector<std::shared_ptr<Task>> tasks;

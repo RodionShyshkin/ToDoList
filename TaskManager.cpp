@@ -45,6 +45,7 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
 
 void TaskManager::addTask(const Task &task) {
   auto task_ptr = std::make_shared<Task>(task);
+  for(auto existTask : tasks) { if(existTask->getId() == task.getId()) return; }
   tasks.push_back(task_ptr);
   sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task.getPriority(), task_ptr));
 }
@@ -56,6 +57,16 @@ void TaskManager::addSubtask(Task &root, Task &subtask) {
       subtask.setRoot(task);
       task->pushSubtask(subtask);
       addTask(subtask);
+      return;
+    }
+  }
+}
+
+void TaskManager::markTask(const Task& taskToMark) {
+  auto task_ptr = std::make_shared<Task>(taskToMark);
+  for(auto task : tasks) {
+    if(task->getName() == task_ptr->getName()) {
+      task->setStatus();
       return;
     }
   }

@@ -20,9 +20,14 @@ class Task {
  public:
   Task();
 
-  Task(const std::string &name, const std::string &label, Priority priority, const int &dueDate);
+  Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const int &dueDate);
+
+  Task(const Task &task);
+
+  ~Task();
 
  public:
+  unsigned int getId() const;
   std::string getName() const;
   std::string getLabel() const;
   Priority getPriority() const;
@@ -30,6 +35,8 @@ class Task {
   std::shared_ptr<Task> getRootTask() const;
   std::string getRootTaskName() const;
   std::vector<std::shared_ptr<Task>> getSubtasks() const;
+
+  void setStatus();
 
   std::string convertPriority() const;
 
@@ -40,6 +47,7 @@ class Task {
   void setRoot(std::shared_ptr<Task> root);
 
  private:
+  unsigned int id;
   std::string name;
   std::string label;
   int dueDate;

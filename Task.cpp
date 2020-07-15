@@ -6,7 +6,8 @@
 
 Task::Task() = default;
 
-Task::Task(const std::string &name, const std::string &label, Priority priority, const int &dueDate) {
+Task::Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const int &dueDate) {
+  this->id = id;
   this->name = name;
   this->label = label;
   this->priority = priority;
@@ -14,6 +15,12 @@ Task::Task(const std::string &name, const std::string &label, Priority priority,
   this->status = false;
   this->rootTask = NULL;
 }
+
+Task::Task(const Task &task) : name(task.name), label(task.label), priority(task.priority), dueDate(task.dueDate), status(task.status), rootTask(task.rootTask), id(task.id) {}
+
+Task::~Task() = default;
+
+unsigned int Task::getId() const { return id; }
 
 std::string Task::getName() const { return name; }
 
@@ -31,6 +38,8 @@ std::string Task::getRootTaskName() const {
 }
 
 std::vector<std::shared_ptr<Task> > Task::getSubtasks() const { return subtasks; }
+
+void Task::setStatus() { status = !status; }
 
 std::string Task::convertPriority() const {
   switch (priority) {
@@ -54,7 +63,7 @@ std::string Task::convertPriority() const {
 }
 
 void Task::showTask() const {
-  std::cout << "Task: " << getName() << " (" << getLabel() << "), Priority: " << convertPriority() << ". Deadline: " << getDate()
+  std::cout << "Task " << getId() << ": " << getName() << " (" << getLabel() << "), Priority: " << convertPriority() << ". Deadline: " << getDate()
       << ". Root is " << getRootTaskName() << ". Subtasks number is " << getSubtasks().size() << std::endl;
 }
 
