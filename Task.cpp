@@ -6,7 +6,7 @@
 
 Task::Task() = default;
 
-Task::Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const int &dueDate) {
+Task::Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const DueTime &dueDate) {
   this->id = id;
   this->name = name;
   this->label = label;
@@ -30,7 +30,7 @@ bool Task::getStatus() const { return status; }
 
 Priority Task::getPriority() const { return priority; }
 
-int Task::getDate() const { return dueDate; }
+DueTime Task::getDate() const { return dueDate; }
 
 std::shared_ptr<Task> Task::getRootTask() const { return rootTask; }
 
@@ -72,8 +72,6 @@ void Task::showTask() const {
 void Task::pushSubtask(const Task &task) {
   auto subtask_ptr = std::make_shared<Task>(task);
   subtasks.push_back(subtask_ptr);
-  std::cout << subtasks.size() << std::endl;
-  std::cout << this->getSubtasks().size() << std::endl;
 }
 
 void Task::setRoot(std::shared_ptr<Task> root) {

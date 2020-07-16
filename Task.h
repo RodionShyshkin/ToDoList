@@ -5,7 +5,7 @@
 #ifndef TODOLIST__TASK_H_
 #define TODOLIST__TASK_H_
 
-#include <iostream>
+#include "DueTime.h"
 #include <vector>
 #include <memory>
 
@@ -20,7 +20,7 @@ class Task {
  public:
   Task();
 
-  Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const int &dueDate);
+  Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const DueTime &dueDate);
 
   Task(const Task &task);
 
@@ -32,7 +32,7 @@ class Task {
   std::string getLabel() const;
   bool getStatus() const;
   Priority getPriority() const;
-  int getDate() const;
+  DueTime getDate() const;
   std::shared_ptr<Task> getRootTask() const;
   std::string getRootTaskName() const;
   std::vector<std::shared_ptr<Task>> getSubtasks() const;
@@ -50,7 +50,7 @@ class Task {
   unsigned int id;
   std::string name;
   std::string label;
-  int dueDate;
+  DueTime dueDate;
   bool status;
   std::vector<std::shared_ptr<Task>> subtasks;
   Priority priority = EMPTY;

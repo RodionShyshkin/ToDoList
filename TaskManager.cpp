@@ -24,7 +24,7 @@ void TaskManager::showAllTasks() const {
 /*void TaskManager::showTasksForToday() const {
   int today = 99;
   if(sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
-  else {
+  lse {
     std::vector<Task> todayTasks;
     for(auto[priority, task] : sortedTasks) {
       if(task->getDate() == today) {
