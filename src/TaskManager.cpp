@@ -5,12 +5,12 @@
 #include <algorithm>
 #include "TaskManager.h"
 
+using Pointer = std::shared_ptr<FullTask>;
+using Vector = std::vector<Pointer>;
+using Multimap = std::multimap<Task::Priority, Pointer>;
+
 TaskManager::TaskManager() = default;
 TaskManager::~TaskManager() = default;
-
-bool operator==(const Task &lhs, const Task &rhs) {
-  return lhs.getId() == rhs.getId();
-}
 
 void TaskManager::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
@@ -35,29 +35,28 @@ void TaskManager::showAllTasks() const {
 }*/
 
 void TaskManager::showTasksForLabel(const std::string &label) const {
-  std::vector<std::shared_ptr<Task>> searchResult;
-  for (auto[priority, task] : sortedTasks) {
-    if (task->getLabel() == label) {
-      searchResult.push_back(task);
+  Vector searchResult;
+  for (auto[priority, sortingTask] : sortedTasks) {
+    if (sortingTask->task->getLabel() == label) {
+      searchResult.push_back(sortingTask);
     }
   }
   if (searchResult.size() == 0) std::cout << "No tasks found." << std::endl;
   else {
     std::cout << searchResult.size() << " tasks found." << std::endl;
-    for (auto task : searchResult) task->showTask();
+    for (auto itemTask : searchResult) itemTask->showTask();
   }
 }
 
-void TaskManager::addTask(const Task &task) {
-  auto task_ptr = std::make_shared<Task>(task);
-  for(auto existTask : tasks) { if(existTask->getId() == task.getId()) return; }
+void TaskManager::addTask(const FullTask &task) {
+  auto task_ptr = std::make_shared<FullTask>(task);
   tasks.push_back(task_ptr);
-  sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task.getPriority(), task_ptr));
+  sortedTasks.insert(std::pair<Task::Priority, std::shared_ptr<FullTask>>(task.task->getPriority(), task_ptr));
 }
 
-void TaskManager::addSubtask(const unsigned int &id, Task &subtask) {
+void TaskManager::addSubtask(const unsigned int &id, FullTask &subtask) {
   for (auto task : tasks) {
-    if (task->getId() == id) {
+    if (task->getID() == id) {
       subtask.setRoot(task);
       task->pushSubtask(subtask);
       addTask(subtask);
@@ -71,9 +70,9 @@ void TaskManager::removeTask(const unsigned int &id) {
 
 void TaskManager::markTask(const unsigned int &id) {
 //  auto task_ptr = std::make_shared<Task>(taskToMark);
-  for(auto task : tasks) {
-    if(task->getId() == id) {
-      task->setStatus();
+  for(auto itemTask : tasks) {
+    if(itemTask->getID() == id) {
+      itemTask->task->setStatus();
       return;
     }
   }
