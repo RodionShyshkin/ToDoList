@@ -11,6 +11,8 @@ DueTime::DueTime(int year, int month, int day, int hours, int minutes, int secon
   this->time = temp;
 }
 
+DueTime::~DueTime() = default;
+
 int DueTime::getYear() const { return time.tm_year; }
 int DueTime::getMonth() const { return time.tm_mon; }
 int DueTime::getDay() const { return time.tm_mday; }

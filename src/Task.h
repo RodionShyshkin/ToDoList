@@ -6,6 +6,7 @@
 #define TODOLIST__TASK_H_
 
 #include "DueTime.h"
+#include "TaskID.h"
 #include <vector>
 #include <memory>
 
@@ -20,7 +21,7 @@ class Task {
  public:
   Task();
 
-  Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const DueTime &dueDate);
+  Task(const std::string &name, const std::string &label, Priority priority, const DueTime &dueDate);
 
   Task(const Task &task);
 

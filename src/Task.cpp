@@ -6,8 +6,8 @@
 
 Task::Task() = default;
 
-Task::Task(const unsigned int &id, const std::string &name, const std::string &label, Priority priority, const DueTime &dueDate) {
-  this->id = id;
+Task::Task(const std::string &name, const std::string &label, Priority priority, const DueTime &dueDate) {
+  this->id = TaskID::generateID();
   this->name = name;
   this->label = label;
   this->priority = priority;
