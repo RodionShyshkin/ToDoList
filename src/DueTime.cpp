@@ -21,8 +21,8 @@ int DueTime::getMinutes() const { return time.tm_min; }
 int DueTime::getSeconds() const { return time.tm_sec; }
 
 std::ostream& operator<< (std::ostream &out, const DueTime &duetime) {
-  out << duetime.getYear() << "-" << duetime.getMonth() << "-" << duetime.getDay() << " " << duetime.getHours() << ":" << duetime.getMinutes() <<
-  ":" << duetime.getSeconds();
+  out << duetime.time.tm_year << "-" << duetime.time.tm_mon << "-" << duetime.time.tm_mday << " " << duetime.time.tm_hour << ":" << duetime.time.tm_min <<
+  ":" << duetime.time.tm_sec;
   return out;
 }
 
