@@ -26,6 +26,8 @@ std::string Task::getName() const { return name; }
 
 std::string Task::getLabel() const { return label; }
 
+bool Task::getStatus() const { return status; }
+
 Priority Task::getPriority() const { return priority; }
 
 int Task::getDate() const { return dueDate; }
@@ -37,7 +39,7 @@ std::string Task::getRootTaskName() const {
   return rootTask->getName();
 }
 
-std::vector<std::shared_ptr<Task> > Task::getSubtasks() const { return subtasks; }
+std::vector<std::shared_ptr<Task>> Task::getSubtasks() const { return subtasks; }
 
 void Task::setStatus() { status = !status; }
 
@@ -64,7 +66,7 @@ std::string Task::convertPriority() const {
 
 void Task::showTask() const {
   std::cout << "Task " << getId() << ": " << getName() << " (" << getLabel() << "), Priority: " << convertPriority() << ". Deadline: " << getDate()
-      << ". Root is " << getRootTaskName() << ". Subtasks number is " << getSubtasks().size() << std::endl;
+      << ". Root is " << getRootTaskName() << ". Subtasks number is " << getSubtasks().size() << ". Status: " << getStatus() << std::endl;
 }
 
 void Task::pushSubtask(const Task &task) {
@@ -77,3 +79,4 @@ void Task::pushSubtask(const Task &task) {
 void Task::setRoot(std::shared_ptr<Task> root) {
   rootTask = root;
 }
+

@@ -30,21 +30,21 @@ class Task {
   unsigned int getId() const;
   std::string getName() const;
   std::string getLabel() const;
+  bool getStatus() const;
   Priority getPriority() const;
   int getDate() const;
   std::shared_ptr<Task> getRootTask() const;
   std::string getRootTaskName() const;
   std::vector<std::shared_ptr<Task>> getSubtasks() const;
 
+ public:
   void setStatus();
-
-  std::string convertPriority() const;
-
-  void showTask() const;
+  void setRoot(std::shared_ptr<Task> root);
 
  public:
+  std::string convertPriority() const;
+  void showTask() const;
   void pushSubtask(const Task &task);
-  void setRoot(std::shared_ptr<Task> root);
 
  private:
   unsigned int id;

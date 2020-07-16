@@ -14,16 +14,21 @@ int main() {
   Task second(2, "Cooking", "meat", MEDIUM, 6);
   Task firstsub(3, "Drinking", "Cola", MEDIUM, 5);
   Task firstSubSub(4, "Trun", "meat", MEDIUM, 5);
-  Task third(2, "Zhopa", "Antilopa", LOW, 7);
+  Task third(5, "Zhopa", "Antilopa", LOW, 7);
 
   dir.addTask(first);
   dir.addTask(second);
-  dir.addSubtask(first, firstsub);
-  dir.addSubtask(firstsub, firstSubSub);
+  dir.addSubtask(1, firstsub);
+  dir.addSubtask(3, firstSubSub);
+
+  dir.addSubtask(4, third);
   dir.addTask(third);
 
   dir.showTasksForLabel("meat");
 
+  std::cout << std::endl << std::endl;
+
+  dir.markTask(4);
   dir.showAllTasks();
 
   return 0;

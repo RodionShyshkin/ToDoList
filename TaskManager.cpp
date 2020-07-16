@@ -2,10 +2,15 @@
 // Created by rodion on 7/15/20.
 //
 
+#include <algorithm>
 #include "TaskManager.h"
 
 TaskManager::TaskManager() = default;
 TaskManager::~TaskManager() = default;
+
+bool operator==(const Task &lhs, const Task &rhs) {
+  return lhs.getId() == rhs.getId();
+}
 
 void TaskManager::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
@@ -50,10 +55,9 @@ void TaskManager::addTask(const Task &task) {
   sortedTasks.insert(std::pair<Priority, std::shared_ptr<Task>>(task.getPriority(), task_ptr));
 }
 
-void TaskManager::addSubtask(Task &root, Task &subtask) {
-  auto root_ptr = std::make_shared<Task>(root);
+void TaskManager::addSubtask(const unsigned int &id, Task &subtask) {
   for (auto task : tasks) {
-    if (task->getName() == root_ptr->getName()) {
+    if (task->getId() == id) {
       subtask.setRoot(task);
       task->pushSubtask(subtask);
       addTask(subtask);
@@ -62,10 +66,13 @@ void TaskManager::addSubtask(Task &root, Task &subtask) {
   }
 }
 
-void TaskManager::markTask(const Task& taskToMark) {
-  auto task_ptr = std::make_shared<Task>(taskToMark);
+void TaskManager::removeTask(const unsigned int &id) {
+}
+
+void TaskManager::markTask(const unsigned int &id) {
+//  auto task_ptr = std::make_shared<Task>(taskToMark);
   for(auto task : tasks) {
-    if(task->getName() == task_ptr->getName()) {
+    if(task->getId() == id) {
       task->setStatus();
       return;
     }

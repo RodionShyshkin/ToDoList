@@ -21,10 +21,12 @@ class TaskManager {
 
  public:
   void addTask(const Task &task);
-  void addSubtask(Task &root, Task &subtask);
-  void removeTask();
+  void addSubtask(const unsigned int &id, Task &subtask);
+  void removeTask(const unsigned int &id);
 
-  void markTask(const Task& taskToMark);
+  void markTask(const unsigned int &id);
+
+  friend bool operator==(const Task &lhs, const Task &rhs);
 
  private:
   std::vector<std::shared_ptr<Task>> tasks;
