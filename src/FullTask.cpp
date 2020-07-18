@@ -38,6 +38,12 @@ Task::Priority FullTask::getPriority() const {
   return task->getPriority();
 }
 
+DueTime FullTask::getTime() const {
+  return task->getDate();
+}
+
+Task FullTask::getTask() const { return *task; }
+
 std::vector<std::shared_ptr<FullTask>> FullTask::getSubtasks() const { return subtasks; }
 
 void FullTask::AddSubtask(const std::shared_ptr<FullTask> &task) {
@@ -49,7 +55,12 @@ void FullTask::setComplete() {
   this->status = true;
 }
 
+void FullTask::postponeTask(const Task &newtask) {
+  this->task = std::make_shared<Task>(newtask);
+}
+
 void FullTask::showTask() {
-  std::cout << "Task " << getID() << ": " << task->getName() << " (" << task->getLabel() << "), Priority: " << showPriority(*task) << ". Deadline: " << task->getDate()
+  std::cout << "Task " << getID() << ": " << task->getName() << " (" << task->getLabel() << "), Priority: "
+            << showPriority(*task) << ". Deadline: " << task->getDate()
             << ". Subtasks number is " << getSubtasks().size() << ". Status: " << getStatus() << std::endl;
 }

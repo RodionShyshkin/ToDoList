@@ -14,7 +14,7 @@ class DueTime {
   ~DueTime();
 
  public:
-//  DateTime getCurrentTime();
+  DateTime getTime() const;
 
   void changeDueTime(const DateTime &newDueTime);
 
@@ -28,5 +28,7 @@ class DueTime {
  private:
   DateTime time_;
 };
+
+DateTime getCurrentTime();
 
 #endif //TODOLIST_SRC_DUETIME_H_

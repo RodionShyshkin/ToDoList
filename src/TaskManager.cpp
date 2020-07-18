@@ -21,15 +21,34 @@ void TaskManager::showAllTasks() const {
   }
 }
 
-/*void TaskManager::showTasksForToday() const {
-  int today = 99;
+void TaskManager::showTasksForToday() const {
   if(sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
-  lse {
-    std::vector<Task> todayTasks;
-    for(auto[priority, task] : sortedTasks) {
-      if(task->getDate() == today) {
-        todayTasks.push_back(task);
+  else {
+    std::vector<FullTask> todayTasks;
+    for(auto [priority, task] : sortedTasks) {
+      auto now = getCurrentTime();
+      auto taskDate = task->getTime().getTime();
+
+      if(now.getYear() == taskDate.getYear() && now.getMonth() == taskDate.getMonth() && now.getDay() == taskDate.getDay()) {
+        todayTasks.push_back(*task);
       }
+    }
+    if(todayTasks.empty()) { std::cout << "There are no tasks for today." << std::endl; }
+    else {
+      for(auto todayTask : todayTasks) { todayTask.showTask(); }
+    }
+  }
+}
+
+/*void TaskManager::showTasksForWeek() const {
+  if(sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
+  else {
+    std::vector<FullTask> weekTasks;
+    for(auto [priority, task] : sortedTasks) {
+      auto now = getCurrentTime();
+      auto taskDate = task->getTime().getTime();
+
+
     }
   }
 }*/
@@ -66,14 +85,24 @@ void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
 }
 
 void TaskManager::removeTask(const unsigned int &id) {
+
 }
 
-void TaskManager::markTask(const unsigned int &id) {
-//  auto task_ptr = std::make_shared<Task>(taskToMark);
-  for(auto itemTask : tasks) {
-    if(itemTask->getID() == id) {
-      itemTask->setComplete();
+void TaskManager::completeTask(const TaskID &id) {
+  for(auto task : tasks) {
+    if(task->getID() == id) {
+      task->setComplete();
       return;
     }
+  }
+}
+
+void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
+  for(auto task : tasks) {
+    if(task->getID() == id) {
+      auto oldtask = task->getTask();
+      auto newtask = Task(oldtask.getName(), oldtask.getLabel(), oldtask.getPriority(), newtime);
+      task->postponeTask(newtask);
+   }
   }
 }

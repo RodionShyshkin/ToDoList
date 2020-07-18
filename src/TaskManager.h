@@ -25,7 +25,9 @@ class TaskManager {
   void addSubtask(const TaskID &id, const Task &subtask);
   void removeTask(const unsigned int &id);
 
-  void markTask(const unsigned int &id);
+ public:
+  void completeTask(const TaskID &id);
+  void postponeTask(const TaskID &id, const DateTime &newtime);
 
  private:
   std::vector<std::shared_ptr<FullTask>> tasks;

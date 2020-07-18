@@ -6,18 +6,12 @@
 #include "DueTime.h"
 
 DueTime::DueTime() = default;
-
 DueTime::DueTime(const DateTime& time) : time_(time) {
   //... timer ...
 }
-
 DueTime::~DueTime() = default;
 
-DateTime getCurrentTime() {
-  time_t t = time(0);
-  std::unique_ptr<struct tm> now(localtime(&t));
-  return DateTime(now->tm_year, now->tm_mon, now->tm_mday, now->tm_hour, now->tm_min);
-}
+DateTime DueTime::getTime() const { return time_; }
 
 void DueTime::changeDueTime(const DateTime &newDueTime) {
   DueTime current = getCurrentTime();
@@ -29,19 +23,13 @@ std::ostream& operator<< (std::ostream &out, const DueTime &duetime) {
   out << duetime.time_;
   return out;
 }
+bool operator== (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ == rhs.time_); }
+bool operator< (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ < rhs.time_; }
+bool operator> (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ > rhs.time_); }
+bool operator<= (const DueTime &lhs, const DueTime &rhs) { return (lhs == rhs && lhs < rhs); }
 
-bool operator== (const DueTime &lhs, const DueTime &rhs) {
-  return (lhs.time_ == rhs.time_);
-}
-
-bool operator< (const DueTime &lhs, const DueTime &rhs) {
-  return lhs.time_ < rhs.time_;
-}
-
-bool operator> (const DueTime &lhs, const DueTime &rhs) {
-  return (lhs.time_ > rhs.time_);
-}
-
-bool operator<= (const DueTime &lhs, const DueTime &rhs) {
-  return (lhs == rhs && lhs < rhs);
+DateTime getCurrentTime() {
+  time_t t = time(0);
+  struct tm * now = localtime(&t);
+  return DateTime(now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min);
 }
