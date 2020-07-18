@@ -22,6 +22,10 @@ int main(int argc, char* argv[]) {
 
   std::cout << "---" << std::endl;
   dir.showTasksForToday();
+  std::cout << "++++++ " << std::endl << std::endl;
+  dir.removeTask(1);
+  dir.showAllTasks();
+
 
   return 0;
 }

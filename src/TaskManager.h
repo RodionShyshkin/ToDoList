@@ -23,7 +23,7 @@ class TaskManager {
  public:
   void addTask(const Task &task);
   void addSubtask(const TaskID &id, const Task &subtask);
-  void removeTask(const unsigned int &id);
+  void removeTask(const TaskID &id);
 
  public:
   void completeTask(const TaskID &id);
@@ -36,4 +36,7 @@ class TaskManager {
   GenerateID newID;
 };
 
+std::vector<std::shared_ptr<FullTask>>::const_iterator findIteratorInVector(std::vector<std::shared_ptr<FullTask>> vec, std::shared_ptr<FullTask> task);
+
+std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>>::const_iterator findIteratorInMultimap(std::shared_ptr<FullTask> task);
 #endif //TODOLIST__TASKMANAGER_H_

@@ -84,8 +84,42 @@ void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
   }
 }
 
-void TaskManager::removeTask(const unsigned int &id) {
+void TaskManager::removeTask(const TaskID &id) {
+  auto taskToRemove = std::make_shared<FullTask>();
+  size_t NumInVector;
+  auto IteratorInMultimap = sortedTasks.begin();
 
+  for(auto counter = 0; counter < tasks.size(); counter++) {
+    if(tasks[counter]->getID() == id) {
+      taskToRemove = tasks[counter];
+      NumInVector = counter;
+      break;
+    }
+  }
+  for(auto it = sortedTasks.begin(); it != sortedTasks.end(); ++it) {
+    if(it->second->getID() == id) {
+      IteratorInMultimap = it;
+      break;
+    }
+  }
+
+  tasks.erase(tasks.begin() + NumInVector);
+  sortedTasks.erase(IteratorInMultimap);
+
+
+/*  if(taskToRemove->getSubtasks().empty()) {
+    tasks.erase(tasks.begin() + NumInVector);
+    sortedTasks.erase(IteratorInMultimap);
+ }
+  else {
+    auto subtasks = taskToRemove->getSubtasks();
+    for(auto subtask : subtasks) {
+      auto subtaskID = subtask->getID();
+      removeTask(subtaskID);
+    }
+    tasks.erase(tasks.begin() + NumInVector);
+    sortedTasks.erase(IteratorInMultimap);
+  }*/
 }
 
 void TaskManager::completeTask(const TaskID &id) {
@@ -106,3 +140,14 @@ void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
    }
   }
 }
+
+std::vector<std::shared_ptr<FullTask>>::const_iterator findIteratorInVector(std::vector<std::shared_ptr<FullTask>> vec, std::shared_ptr<FullTask> task) {
+  for(auto it = vec.begin(); it != vec.end(); ++it) {
+    if(*it == task) return it;
+  }
+}
+
+std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>>::const_iterator findIteratorInMultimap(std::shared_ptr<FullTask> task) {
+
+}
+
