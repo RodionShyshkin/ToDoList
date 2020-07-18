@@ -23,7 +23,6 @@ std::vector<std::shared_ptr<FullTask>> FullTask::getSubtasks() const { return su
 
 
 void FullTask::AddSubtask(const std::shared_ptr<FullTask> &task) {
-//  auto subtask_ptr = std::make_shared<FullTask>(task);
   subtasks.push_back(task);
 }
 

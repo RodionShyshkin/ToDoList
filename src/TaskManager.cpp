@@ -69,6 +69,15 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
 }
 
 
+/*std::shared_ptr<FullTask> TaskManager::getTaskByID(const TaskID &id) {
+  for(auto task : tasks) {
+    if(task->getID() == id) {
+      return task;
+    }
+  }
+}*/
+
+
 void TaskManager::addTask(const Task &task) {
   auto task_ptr = std::make_shared<FullTask>(task, newID.generateID());
   tasks.push_back(task_ptr);

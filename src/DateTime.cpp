@@ -18,10 +18,7 @@ DateTime::DateTime(int year, int month, int day, int hours, int minutes) {
   this->time = {0, minutes, hours, day, month, year};
 }
 
-DateTime::DateTime(tm tmtime) {
-  this->time = tmtime;
-}
-
+DateTime::DateTime(tm tmtime) : DateTime(tmtime.tm_year, tmtime.tm_mon, tmtime.tm_mday, tmtime.tm_hour, tmtime.tm_min) { }
 DateTime::~DateTime() = default;
 
 

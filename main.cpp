@@ -6,14 +6,13 @@
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   RUN_ALL_TESTS();
-
+/*
   TaskManager dir;
 
   dir.addTask((Task("Eating", "fish", Task::Priority::HIGH, DueTime(DateTime(2019, 01, 01, 23, 0)))));
   dir.addTask(Task("Cooking", "meat", Task::Priority::MEDIUM, DueTime(DateTime(2019,01,01,23,10))));
 
   dir.addSubtask(1, Task("Drinking", "Cola", Task::Priority::LOW, DueTime(DateTime(2019, 01, 01, 23, 05))));
-//  dir.addSubtask(1, Task("Whiskey", "cola", Task::Priority::LOW, DueTime(DateTime(2019, 01, 01, 25, 1))));
 
   dir.showAllTasks();
 
@@ -26,6 +25,9 @@ int main(int argc, char* argv[]) {
   dir.removeTask(1);
   dir.showAllTasks();
 
+  DateTime lhs(2020, 07, 14, 10, 59);
 
+  const std::type_info& t1 = typeid(lhs);
+  std::cout << t1.name() << std::endl;*/
   return 0;
 }
