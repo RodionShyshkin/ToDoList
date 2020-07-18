@@ -13,6 +13,7 @@ class GenerateID {
   GenerateID();
   ~GenerateID();
 
+ public:
   TaskID generateID();
 
  public:

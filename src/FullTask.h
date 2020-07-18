@@ -12,7 +12,6 @@
 class FullTask {
  public:
   FullTask();
-//  FullTask(std::shared_ptr<Task> task);
   FullTask(const Task &task, const TaskID &id);
 
  public:

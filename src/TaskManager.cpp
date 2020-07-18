@@ -12,6 +12,7 @@ using Multimap = std::multimap<Task::Priority, Pointer>;
 TaskManager::TaskManager() : newID() {}
 TaskManager::~TaskManager() = default;
 
+
 void TaskManager::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
   else {
@@ -66,6 +67,7 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
     for (auto itemTask : searchResult) itemTask->showTask();
   }
 }
+
 
 void TaskManager::addTask(const Task &task) {
   auto task_ptr = std::make_shared<FullTask>(task, newID.generateID());
@@ -122,6 +124,8 @@ void TaskManager::removeTask(const TaskID &id) {
   }*/
 }
 
+
+
 void TaskManager::completeTask(const TaskID &id) {
   for(auto task : tasks) {
     if(task->getID() == id) {
@@ -139,15 +143,5 @@ void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
       task->postponeTask(newtask);
    }
   }
-}
-
-std::vector<std::shared_ptr<FullTask>>::const_iterator findIteratorInVector(std::vector<std::shared_ptr<FullTask>> vec, std::shared_ptr<FullTask> task) {
-  for(auto it = vec.begin(); it != vec.end(); ++it) {
-    if(*it == task) return it;
-  }
-}
-
-std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>>::const_iterator findIteratorInMultimap(std::shared_ptr<FullTask> task) {
-
 }
 

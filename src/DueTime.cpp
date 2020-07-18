@@ -11,6 +11,7 @@ DueTime::DueTime(const DateTime& time) : time_(time) {
 }
 DueTime::~DueTime() = default;
 
+
 DateTime DueTime::getTime() const { return time_; }
 
 void DueTime::changeDueTime(const DateTime &newDueTime) {
@@ -25,7 +26,6 @@ std::ostream& operator<< (std::ostream &out, const DueTime &duetime) {
 }
 bool operator== (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ == rhs.time_); }
 bool operator< (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ < rhs.time_; }
-bool operator> (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ > rhs.time_); }
 bool operator<= (const DueTime &lhs, const DueTime &rhs) { return (lhs == rhs && lhs < rhs); }
 
 DateTime getCurrentTime() {

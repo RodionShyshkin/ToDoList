@@ -16,13 +16,13 @@ class DueTime {
  public:
   DateTime getTime() const;
 
+ public:
   void changeDueTime(const DateTime &newDueTime);
 
  public:
   friend std::ostream& operator<< (std::ostream &out, const DueTime &duetime);
   friend bool operator== (const DueTime &lhs, const DueTime &rhs);
   friend bool operator< (const DueTime &lhs, const DueTime &rhs);
-  friend bool operator> (const DueTime &lhs, const DueTime &rhs);
   friend bool operator<= (const DueTime &lhs, const DueTime &rhs);
 
  private:

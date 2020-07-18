@@ -36,7 +36,4 @@ class TaskManager {
   GenerateID newID;
 };
 
-std::vector<std::shared_ptr<FullTask>>::const_iterator findIteratorInVector(std::vector<std::shared_ptr<FullTask>> vec, std::shared_ptr<FullTask> task);
-
-std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>>::const_iterator findIteratorInMultimap(std::shared_ptr<FullTask> task);
 #endif //TODOLIST__TASKMANAGER_H_
