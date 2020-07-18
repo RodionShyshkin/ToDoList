@@ -1,33 +1,32 @@
 //
-// Created by rodion on 7/16/20.
+// Created by rodion on 7/17/20.
 //
 
-#ifndef TODOLIST__DUETIME_H_
-#define TODOLIST__DUETIME_H_
+#ifndef TODOLIST_SRC_DUETIME_H_
+#define TODOLIST_SRC_DUETIME_H_
 
-#include <ctime>
-#include <iostream>
+#include "DateTime.h"
 
 class DueTime {
  public:
   DueTime();
-  DueTime(int year, int month, int day, int hours, int minutes, int seconds);
+  DueTime(const DateTime& time);
   ~DueTime();
 
  public:
-  int getYear() const;
-  int getMonth() const;
-  int getDay() const;
-  int getHours() const;
-  int getMinutes() const;
-  int getSeconds() const;
+//  DateTime getCurrentTime();
+
+  void changeDueTime(const DateTime &newDueTime);
 
  public:
   friend std::ostream& operator<< (std::ostream &out, const DueTime &duetime);
-  friend std::istream& operator>> (std::istream &in, DueTime &duetime);
+  friend bool operator== (const DueTime &lhs, const DueTime &rhs);
+  friend bool operator< (const DueTime &lhs, const DueTime &rhs);
+  friend bool operator> (const DueTime &lhs, const DueTime &rhs);
+  friend bool operator<= (const DueTime &lhs, const DueTime &rhs);
 
  private:
-  tm time;
+  DateTime time_;
 };
 
-#endif //TODOLIST__DUETIME_H_
+#endif //TODOLIST_SRC_DUETIME_H_
