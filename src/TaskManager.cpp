@@ -9,7 +9,7 @@ using Pointer = std::shared_ptr<FullTask>;
 using Vector = std::vector<Pointer>;
 using Multimap = std::multimap<Task::Priority, Pointer>;
 
-TaskManager::TaskManager() = default;
+TaskManager::TaskManager() : newID() {}
 TaskManager::~TaskManager() = default;
 
 void TaskManager::showAllTasks() const {
@@ -37,7 +37,7 @@ void TaskManager::showAllTasks() const {
 void TaskManager::showTasksForLabel(const std::string &label) const {
   Vector searchResult;
   for (auto[priority, sortingTask] : sortedTasks) {
-    if (sortingTask->task->getLabel() == label) {
+    if (sortingTask->getLabel() == label) {
       searchResult.push_back(sortingTask);
     }
   }
@@ -48,17 +48,17 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
   }
 }
 
-void TaskManager::addTask(const FullTask &task) {
-  auto task_ptr = std::make_shared<FullTask>(task);
+void TaskManager::addTask(const Task &task) {
+  auto task_ptr = std::make_shared<FullTask>(task, newID.generateID());
   tasks.push_back(task_ptr);
-  sortedTasks.insert(std::pair<Task::Priority, std::shared_ptr<FullTask>>(task.task->getPriority(), task_ptr));
+  sortedTasks.insert(std::pair<Task::Priority, std::shared_ptr<FullTask>>(task.getPriority(), task_ptr));
 }
 
-void TaskManager::addSubtask(const unsigned int &id, FullTask &subtask) {
+void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
   for (auto task : tasks) {
     if (task->getID() == id) {
-      subtask.setRoot(task);
-      task->pushSubtask(subtask);
+      auto subptr = std::make_shared<FullTask>(subtask, id);
+      task->AddSubtask(subptr);
       addTask(subtask);
       return;
     }
@@ -72,7 +72,7 @@ void TaskManager::markTask(const unsigned int &id) {
 //  auto task_ptr = std::make_shared<Task>(taskToMark);
   for(auto itemTask : tasks) {
     if(itemTask->getID() == id) {
-      itemTask->task->setStatus();
+      itemTask->setComplete();
       return;
     }
   }

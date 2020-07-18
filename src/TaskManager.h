@@ -6,6 +6,7 @@
 #define TODOLIST__TASKMANAGER_H_
 
 #include "FullTask.h"
+#include "GenerateID.h"
 #include <map>
 
 class TaskManager {
@@ -20,8 +21,8 @@ class TaskManager {
   void showTasksForLabel(const std::string &label) const;
 
  public:
-  void addTask(const FullTask &task);
-  void addSubtask(const unsigned int &id, FullTask &subtask);
+  void addTask(const Task &task);
+  void addSubtask(const TaskID &id, const Task &subtask);
   void removeTask(const unsigned int &id);
 
   void markTask(const unsigned int &id);
@@ -29,6 +30,8 @@ class TaskManager {
  private:
   std::vector<std::shared_ptr<FullTask>> tasks;
   std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>> sortedTasks;
+
+  GenerateID newID;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

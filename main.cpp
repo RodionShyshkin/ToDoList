@@ -9,9 +9,13 @@ int main(int argc, char* argv[]) {
   RUN_ALL_TESTS();
 
   TaskManager dir;
-  dir.addTask(FullTask(std::make_shared<Task>(Task("Eating", "fish", Task::Priority::HIGH, DueTime(2019, 01, 01, 23, 0, 0)))));
-  dir.addTask(FullTask(std::make_shared<Task>(Task("Cooking", "meat", Task::Priority::MEDIUM, DueTime(2019, 01, 01, 23, 10, 0)))));
 
+  dir.addTask((Task("Eating", "fish", Task::Priority::HIGH, DueTime(DateTime(2019, 01, 01, 23, 0)))));
+  dir.addTask(Task("Cooking", "meat", Task::Priority::MEDIUM, DueTime(DateTime(2019,01,01,23,10))));
+
+  dir.addSubtask(1, Task("Drinking", "Cola", Task::Priority::LOW, DueTime(DateTime(2019, 01, 01, 23, 05))));
+
+  dir.showAllTasks();
 
   return 0;
 }

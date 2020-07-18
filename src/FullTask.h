@@ -6,33 +6,34 @@
 #define TODOLIST_SRC_FULLTASK_H_
 
 #include "Task.h"
-#include "taskID.h"
+#include "GenerateID.h"
+#include "TaskID.h"
 
 class FullTask {
  public:
   FullTask();
-  FullTask(std::shared_ptr<Task> task);
+//  FullTask(std::shared_ptr<Task> task);
+  FullTask(const Task &task, const TaskID &id);
 
  public:
-  std::shared_ptr<FullTask> getRootTask() const;
-  std::string getRootTaskName() const;
+  TaskID getID() const;
+  bool getStatus() const;
+  std::string getLabel() const;
+  Task::Priority getPriority() const;
   std::vector<std::shared_ptr<FullTask>> getSubtasks() const;
 
  public:
-  void pushSubtask(const FullTask &task);
-  void setRoot(std::shared_ptr<FullTask> root);
-
-  void setID();
-  unsigned int getID();
+  void AddSubtask(const std::shared_ptr<FullTask> &task);
+  void setComplete();
 
  public:
   void showTask();
 
-  std::shared_ptr<Task> task;
  private:
-  unsigned int id;
+  TaskID id;
+  bool status;
+  std::shared_ptr<Task> task;
   std::vector<std::shared_ptr<FullTask>> subtasks;
-  std::shared_ptr<FullTask> rootTask;
 };
 
 #endif //TODOLIST_SRC_FULLTASK_H_

@@ -1,33 +1,47 @@
 //
-// Created by rodion on 7/16/20.
+// Created by rodion on 7/17/20.
 //
 
+#include <memory>
 #include "DueTime.h"
 
 DueTime::DueTime() = default;
 
-DueTime::DueTime(int year, int month, int day, int hours, int minutes, int seconds) {
-  tm temp = {seconds, minutes, hours, day, month, year};
-  this->time = temp;
+DueTime::DueTime(const DateTime& time) : time_(time) {
+  //... timer ...
 }
 
 DueTime::~DueTime() = default;
 
-int DueTime::getYear() const { return time.tm_year; }
-int DueTime::getMonth() const { return time.tm_mon; }
-int DueTime::getDay() const { return time.tm_mday; }
-int DueTime::getHours() const { return time.tm_hour; }
-int DueTime::getMinutes() const { return time.tm_min; }
-int DueTime::getSeconds() const { return time.tm_sec; }
+DateTime getCurrentTime() {
+  time_t t = time(0);
+  std::unique_ptr<struct tm> now(localtime(&t));
+  return DateTime(now->tm_year, now->tm_mon, now->tm_mday, now->tm_hour, now->tm_min);
+}
+
+void DueTime::changeDueTime(const DateTime &newDueTime) {
+  DueTime current = getCurrentTime();
+  if(newDueTime <= current) throw std::invalid_argument("You can plan to do task in the past or just now.");
+  this->time_ = newDueTime;
+}
 
 std::ostream& operator<< (std::ostream &out, const DueTime &duetime) {
-  out << duetime.time.tm_year << "-" << duetime.time.tm_mon << "-" << duetime.time.tm_mday << " " << duetime.time.tm_hour << ":" << duetime.time.tm_min <<
-  ":" << duetime.time.tm_sec;
+  out << duetime.time_;
   return out;
 }
 
-std::istream& operator>> (std::istream &in, DueTime &duetime) {
-  in >> duetime.time.tm_year >> duetime.time.tm_mon >> duetime.time.tm_mday >> duetime.time.tm_hour >> duetime.time.tm_min >> duetime.time.tm_sec;
-  return in;
+bool operator== (const DueTime &lhs, const DueTime &rhs) {
+  return (lhs.time_ == rhs.time_);
 }
 
+bool operator< (const DueTime &lhs, const DueTime &rhs) {
+  return lhs.time_ < rhs.time_;
+}
+
+bool operator> (const DueTime &lhs, const DueTime &rhs) {
+  return (lhs.time_ > rhs.time_);
+}
+
+bool operator<= (const DueTime &lhs, const DueTime &rhs) {
+  return (lhs == rhs && lhs < rhs);
+}
