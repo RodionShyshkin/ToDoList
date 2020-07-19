@@ -6,6 +6,22 @@
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   RUN_ALL_TESTS();
+
+  TaskManager dir;
+
+  dir.addTask(Task("Eating", "dinner", Task::Priority::HIGH, DueTime(DateTime(2020, 07, 19, 16, 0))));
+  dir.addTask(Task("Write code", "C++", Task::Priority::MEDIUM, DueTime(DateTime(2020, 07, 21, 23, 0))));
+  dir.addSubtask(1, Task("Drink", "dinner", Task::Priority::LOW, DueTime(DateTime(2020, 07, 19, 16, 05))));
+
+//  dir.removeTask(2);
+
+  dir.showTasksForToday();
+
+//  dir.showAllTasks();
+//  dir.showTasksForLabel("dinner");
+
+
+
 /*
   TaskManager dir;
 
