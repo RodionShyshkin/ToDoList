@@ -21,7 +21,7 @@ class GenerateID {
   friend bool operator==(const GenerateID& lhs, const GenerateID& rhs);
 
  private:
-  unsigned int ids;
+  TaskID ids;
 };
 
 #endif //TODOLIST_SRC_GENERATEID_H_

@@ -6,11 +6,11 @@
 
 Task::Task() = default;
 
-Task::Task(const std::string &name, const std::string &label, Priority priority, const DueTime &duetime) {
+Task::Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duetime) {
   this->name = name;
   this->label = label;
   this->priority = priority;
-  this->duetime = duetime;
+  this->duetime = DueTime(duetime);
 }
 
 Task::Task(const Task &task) : name(task.name), label(task.label), priority(task.priority), duetime(task.duetime) {}

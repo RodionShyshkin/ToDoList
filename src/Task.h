@@ -20,7 +20,7 @@ class Task {
 
  public:
   Task();
-  Task(const std::string &name, const std::string &label, Priority priority, const DueTime &duetime);
+  Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duetime);
   ~Task();
 
  public:

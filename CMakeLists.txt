@@ -11,6 +11,6 @@ add_subdirectory(lib/googletest-master)
 include_directories(lib/googletest-master/googletest/include)
 
 add_executable(Tests tests/DateTimeTest.cpp tests/DueTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskManagerTest.cpp tests/TestTask.cpp
-        src/DateTime.cpp src/DueTime.cpp src/GenerateID.cpp src/TaskID.cpp src/TaskManager.cpp src/FullTask.cpp src/Task.cpp)
+        src/DateTime.cpp src/DueTime.cpp src/GenerateID.cpp src/TaskID.cpp src/TaskManager.cpp src/FullTask.cpp src/Task.cpp src/TaskOutput.cpp src/TaskOutput.h src/FullTaskDTO.cpp src/FullTaskDTO.h src/UUID.cpp src/UUID.h)
 target_link_libraries(Tests gtest gtest_main)
 

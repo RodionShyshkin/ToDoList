@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include "TaskManager.h"
+#include "TaskOutput.h"
 
 using Pointer = std::shared_ptr<FullTask>;
 using Vector = std::vector<Pointer>;
@@ -17,7 +18,8 @@ void TaskManager::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
   else {
     for (auto[key, value] : sortedTasks) {
-      value->showTask();
+      //value->showTask();
+      TaskOutput::printTask(value);
     }
   }
 }
@@ -69,9 +71,9 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
 }
 
 
-/*std::shared_ptr<FullTask> TaskManager::getTaskByID(const TaskID &id) {
+/*std::shared_ptr<FullTask> TaskManager::getTaskByID(const TaskID &user_id) {
   for(auto task : tasks) {
-    if(task->getID() == id) {
+    if(task->getUserID() == user_id) {
       return task;
     }
   }
@@ -86,7 +88,7 @@ void TaskManager::addTask(const Task &task) {
 
 void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
   for (auto task : tasks) {
-    if (task->getID() == id) {
+    if (task->getUserID() == id) {
       auto subptr = std::make_shared<FullTask>(subtask, id);
       task->AddSubtask(subptr);
       addTask(subtask);
@@ -101,14 +103,14 @@ void TaskManager::removeTask(const TaskID &id) {
   auto IteratorInMultimap = sortedTasks.begin();
 
   for(auto counter = 0; counter < tasks.size(); counter++) {
-    if(tasks[counter]->getID() == id) {
+    if(tasks[counter]->getUserID() == id) {
       taskToRemove = tasks[counter];
       NumInVector = counter;
       break;
     }
   }
   for(auto it = sortedTasks.begin(); it != sortedTasks.end(); ++it) {
-    if(it->second->getID() == id) {
+    if(it->second->getUserID() == id) {
       IteratorInMultimap = it;
       break;
     }
@@ -125,7 +127,7 @@ void TaskManager::removeTask(const TaskID &id) {
   else {
     auto subtasks = taskToRemove->getSubtasks();
     for(auto subtask : subtasks) {
-      auto subtaskID = subtask->getID();
+      auto subtaskID = subtask->getUserID();
       removeTask(subtaskID);
     }
     tasks.erase(tasks.begin() + NumInVector);
@@ -137,7 +139,7 @@ void TaskManager::removeTask(const TaskID &id) {
 
 void TaskManager::completeTask(const TaskID &id) {
   for(auto task : tasks) {
-    if(task->getID() == id) {
+    if(task->getUserID() == id) {
       task->setComplete();
       return;
     }
@@ -146,7 +148,7 @@ void TaskManager::completeTask(const TaskID &id) {
 
 void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
   for(auto task : tasks) {
-    if(task->getID() == id) {
+    if(task->getUserID() == id) {
       auto oldtask = task->getTask();
       auto newtask = Task(oldtask.getName(), oldtask.getLabel(), oldtask.getPriority(), newtime);
       task->postponeTask(newtask);

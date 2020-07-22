@@ -7,17 +7,19 @@
 FullTask::FullTask() = default;
 
 FullTask::FullTask(const Task &task, const TaskID &id) {
-  this->id = id;
+  this->user_id = id;
   this->task = std::make_shared<Task>(task);
   this->status = false;
+  this->id = UUID();
 }
 
-
-TaskID FullTask::getID() const { return id; }
-bool FullTask::getStatus() const { return status; }
+UUID FullTask::getUUID() const { return this->id; }
+TaskID FullTask::getUserID() const { return user_id; }
+std::string FullTask::getName() const { return task->getName(); }
 std::string FullTask::getLabel() const { return task->getLabel(); }
 Task::Priority FullTask::getPriority() const { return task->getPriority(); }
 DueTime FullTask::getTime() const { return task->getDate(); }
+bool FullTask::getStatus() const { return status; }
 Task FullTask::getTask() const { return *task; }
 std::vector<std::shared_ptr<FullTask>> FullTask::getSubtasks() const { return subtasks; }
 
@@ -35,7 +37,8 @@ void FullTask::postponeTask(const Task &newtask) {
 }
 
 void FullTask::showTask() {
-  std::cout << "Task " << getID() << ": " << task->getName() << " (" << task->getLabel() << "), Priority: "
+  std::cout << "Task " << getUserID() << ": " << task->getName() << " (" << task->getLabel() << "), Priority: "
             << task->getPriority() << ". Deadline: " << task->getDate()
             << ". Subtasks number is " << getSubtasks().size() << ". Status: " << getStatus() << std::endl;
 }
+

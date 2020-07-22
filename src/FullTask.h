@@ -8,6 +8,7 @@
 #include "Task.h"
 #include "GenerateID.h"
 #include "TaskID.h"
+#include "UUID.h"
 
 class FullTask {
  public:
@@ -15,11 +16,13 @@ class FullTask {
   FullTask(const Task &task, const TaskID &id);
 
  public:
-  TaskID getID() const;
-  bool getStatus() const;
+  UUID getUUID() const;
+  TaskID getUserID() const;
+  std::string getName() const;
   std::string getLabel() const;
   Task::Priority getPriority() const;
   DueTime getTime() const;
+  bool getStatus() const;
   Task getTask() const;
   std::vector<std::shared_ptr<FullTask>> getSubtasks() const;
 
@@ -32,7 +35,8 @@ class FullTask {
   void showTask();
 
  private:
-  TaskID id;
+  TaskID user_id;
+  UUID id;
   bool status;
   std::shared_ptr<Task> task;
   std::vector<std::shared_ptr<FullTask>> subtasks;
