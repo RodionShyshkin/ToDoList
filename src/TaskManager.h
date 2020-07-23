@@ -7,6 +7,7 @@
 
 #include "FullTask.h"
 #include "GenerateID.h"
+#include "FullTaskDTO.h"
 #include <map>
 
 class TaskManager {
@@ -29,9 +30,12 @@ class TaskManager {
   void completeTask(const TaskID &id);
   void postponeTask(const TaskID &id, const DateTime &newtime);
 
+ public:
+  friend class TaskManagerHidden;
+
  private:
-  std::vector<std::shared_ptr<FullTask>> tasks;
-  std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>> sortedTasks;
+  std::vector<FullTaskDTO> tasks;
+  std::multimap<Task::Priority, FullTaskDTO, std::greater<Task::Priority>> sortedTasks;
   GenerateID newID;
 };
 

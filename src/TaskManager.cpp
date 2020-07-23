@@ -7,7 +7,7 @@
 #include "TaskOutput.h"
 
 using Pointer = std::shared_ptr<FullTask>;
-using Vector = std::vector<Pointer>;
+using Vector = std::vector<FullTaskDTO>;
 using Multimap = std::multimap<Task::Priority, Pointer>;
 
 TaskManager::TaskManager() : newID() {}
@@ -18,7 +18,6 @@ void TaskManager::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
   else {
     for (auto[key, value] : sortedTasks) {
-      //value->showTask();
       TaskOutput::printTask(value);
     }
   }
@@ -27,18 +26,18 @@ void TaskManager::showAllTasks() const {
 void TaskManager::showTasksForToday() const {
   if(sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
   else {
-    std::vector<FullTask> todayTasks;
+    std::vector<FullTaskDTO> todayTasks;
     for(auto [priority, task] : sortedTasks) {
       auto now = getCurrentTime();
-      auto taskDate = task->getTime().getTime();
+      auto taskDate = task.getDueTime().getTime();
 
       if(now.getYear() == taskDate.getYear() && now.getMonth() == taskDate.getMonth() && now.getDay() == taskDate.getDay()) {
-        todayTasks.push_back(*task);
+        todayTasks.push_back(task);
       }
     }
     if(todayTasks.empty()) { std::cout << "There are no tasks for today." << std::endl; }
     else {
-      for(auto todayTask : todayTasks) { todayTask.showTask(); }
+      for(auto todayTask : todayTasks) { TaskOutput::printTask(todayTask); }
     }
   }
 }
@@ -59,26 +58,16 @@ void TaskManager::showTasksForToday() const {
 void TaskManager::showTasksForLabel(const std::string &label) const {
   Vector searchResult;
   for (auto[priority, sortingTask] : sortedTasks) {
-    if (sortingTask->getLabel() == label) {
+    if (sortingTask.getLabel() == label) {
       searchResult.push_back(sortingTask);
     }
   }
   if (searchResult.size() == 0) std::cout << "No tasks found." << std::endl;
   else {
     std::cout << searchResult.size() << " tasks found." << std::endl;
-    for (auto itemTask : searchResult) itemTask->showTask();
+    for (auto itemTask : searchResult) TaskOutput::printTask(itemTask);
   }
 }
-
-
-/*std::shared_ptr<FullTask> TaskManager::getTaskByID(const TaskID &user_id) {
-  for(auto task : tasks) {
-    if(task->getUserID() == user_id) {
-      return task;
-    }
-  }
-}*/
-
 
 void TaskManager::addTask(const Task &task) {
   auto task_ptr = std::make_shared<FullTask>(task, newID.generateID());
@@ -88,9 +77,9 @@ void TaskManager::addTask(const Task &task) {
 
 void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
   for (auto task : tasks) {
-    if (task->getUserID() == id) {
+    if (task.getUserID() == id) {
       auto subptr = std::make_shared<FullTask>(subtask, id);
-      task->AddSubtask(subptr);
+      task.AddSubtask(subptr);
       addTask(subtask);
       return;
     }
@@ -98,19 +87,19 @@ void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
 }
 
 void TaskManager::removeTask(const TaskID &id) {
-  auto taskToRemove = std::make_shared<FullTask>();
+  auto taskToRemove = FullTaskDTO(); //std::make_shared<FullTaskDTO>();
   size_t NumInVector;
   auto IteratorInMultimap = sortedTasks.begin();
 
-  for(auto counter = 0; counter < tasks.size(); counter++) {
-    if(tasks[counter]->getUserID() == id) {
+  for (auto counter = 0; counter < tasks.size(); counter++) {
+    if (tasks[counter].getUserID() == id) {
       taskToRemove = tasks[counter];
       NumInVector = counter;
       break;
     }
   }
-  for(auto it = sortedTasks.begin(); it != sortedTasks.end(); ++it) {
-    if(it->second->getUserID() == id) {
+  for (auto it = sortedTasks.begin(); it != sortedTasks.end(); ++it) {
+    if (it->second.getUserID() == id) {
       IteratorInMultimap = it;
       break;
     }
@@ -118,29 +107,12 @@ void TaskManager::removeTask(const TaskID &id) {
 
   tasks.erase(tasks.begin() + NumInVector);
   sortedTasks.erase(IteratorInMultimap);
-
-
-/*  if(taskToRemove->getSubtasks().empty()) {
-    tasks.erase(tasks.begin() + NumInVector);
-    sortedTasks.erase(IteratorInMultimap);
- }
-  else {
-    auto subtasks = taskToRemove->getSubtasks();
-    for(auto subtask : subtasks) {
-      auto subtaskID = subtask->getUserID();
-      removeTask(subtaskID);
-    }
-    tasks.erase(tasks.begin() + NumInVector);
-    sortedTasks.erase(IteratorInMultimap);
-  }*/
 }
-
-
 
 void TaskManager::completeTask(const TaskID &id) {
   for(auto task : tasks) {
-    if(task->getUserID() == id) {
-      task->setComplete();
+    if(task.getUserID() == id) {
+      task.setComplete();
       return;
     }
   }
@@ -148,10 +120,9 @@ void TaskManager::completeTask(const TaskID &id) {
 
 void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
   for(auto task : tasks) {
-    if(task->getUserID() == id) {
-      auto oldtask = task->getTask();
-      auto newtask = Task(oldtask.getName(), oldtask.getLabel(), oldtask.getPriority(), newtime);
-      task->postponeTask(newtask);
+    if(task.getUserID() == id) {
+      auto newtask = Task(task.getName(), task.getLabel(), task.getPriority(), newtime);
+      task.postponeTask(newtask);
    }
   }
 }
