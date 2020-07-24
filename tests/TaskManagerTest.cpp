@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "../src/TaskManager.h"
-#include "../src/TaskManagerHidden.h"
+#include "../src/TaskManagerDTO.h"
 
 using testing::Eq;
 
@@ -13,7 +13,7 @@ class TaskManagerTest : public testing::Test {
 
 TEST_F(TaskManagerTest, addTask) {
   auto dir = std::make_shared<TaskManager>(TaskManager());
-  TaskManagerHidden check(dir);
+  TaskManagerDTO check(dir);
 
   dir->addTask(Task("Eat", "fish", Task::Priority::HIGH, DateTime(2021, 8, 8, 8, 8)));
 
@@ -23,7 +23,7 @@ TEST_F(TaskManagerTest, addTask) {
 
   auto vec = check.getAllTasks();
 
-  ASSERT_EQ(1, vec[0].getUserID());
+  ASSERT_EQ(1, vec[0]->getUserID());
 
   auto task = check.getTask(1);
 
@@ -36,7 +36,7 @@ TEST_F(TaskManagerTest, addTask) {
 
 TEST_F(TaskManagerTest, addSubtask) {
   auto dir = std::make_shared<TaskManager>(TaskManager());
-  TaskManagerHidden check(dir);
+  TaskManagerDTO check(dir);
 
   dir->addTask(Task("Eat", "fish", Task::Priority::HIGH, DateTime(2021, 8, 8, 8, 8)));
   dir->addSubtask(1, Task("Subtask", "SubtaskLabel", Task::Priority::MEDIUM, DateTime(2021, 8, 8, 8, 8)));
@@ -44,8 +44,8 @@ TEST_F(TaskManagerTest, addSubtask) {
   auto vec = check.getAllTasks();
 
   ASSERT_EQ(2, vec.size());
-  ASSERT_EQ(1, vec[0].getUserID());
-  ASSERT_EQ(2, vec[1].getUserID());
+  ASSERT_EQ(1, vec[0]->getUserID());
+  ASSERT_EQ(2, vec[1]->getUserID());
 
   auto task = check.getTask(1);
 
@@ -60,19 +60,19 @@ TEST_F(TaskManagerTest, removeTask) {
 
   dir.removeTask(1);
 
-  TaskManagerHidden check(std::make_shared<TaskManager>(dir));
+  TaskManagerDTO check(std::make_shared<TaskManager>(dir));
   ASSERT_EQ(2, check.getTasksAmount());
 
   auto vec = check.getAllTasks();
-  ASSERT_EQ(2, vec[0].getUserID());
-  ASSERT_EQ(3, vec[1].getUserID());
+  ASSERT_EQ(2, vec[0]->getUserID());
+  ASSERT_EQ(3, vec[1]->getUserID());
 }
 
 TEST_F(TaskManagerTest, completeTask) {
   TaskManager dir;
   dir.addTask(Task("Eat", "fish", Task::Priority::HIGH, DateTime(2021, 8, 8, 8, 8)));
 
-  TaskManagerHidden check(std::make_shared<TaskManager>(dir));
+  TaskManagerDTO check(std::make_shared<TaskManager>(dir));
   auto task = check.getTask(1);
 
   ASSERT_EQ(false, task.getStatus());
@@ -87,7 +87,7 @@ TEST_F(TaskManagerTest, postponeTask) {
   TaskManager dir;
   dir.addTask(Task("Eat", "fish", Task::Priority::HIGH, oldtime));
 
-  TaskManagerHidden check(std::make_shared<TaskManager>(dir));
+  TaskManagerDTO check(std::make_shared<TaskManager>(dir));
   auto task = check.getTask(1);
 
   ASSERT_EQ(oldtime, task.getDueTime());

@@ -12,11 +12,6 @@ class TestTask : public testing::Test {
 
 };
 /*
-TEST_F(TestTask, shouldReturnFalse) {
-  Task task("Name", "Label", Task::Priority::HIGH, DateTime(1945, 8, 9, 3, 1, 2));
-  ASSERT_EQ(false, task.getStatus());
-}
-
 TEST_F(TestTask, shouldChangeStatusToOpposite) {
   Task task("Name", "Label", Task::Priority::HIGH, DateTime(1945, 8, 9, 3, 1, 2));
   bool oldstatus = task.getStatus();

@@ -31,11 +31,11 @@ class TaskManager {
   void postponeTask(const TaskID &id, const DateTime &newtime);
 
  public:
-  friend class TaskManagerHidden;
+  friend class TaskManagerDTO;
 
  private:
-  std::vector<FullTaskDTO> tasks;
-  std::multimap<Task::Priority, FullTaskDTO, std::greater<Task::Priority>> sortedTasks;
+  std::vector<std::shared_ptr<FullTask>> tasks;
+  std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>> sortedTasks;
   GenerateID newID;
 };
 

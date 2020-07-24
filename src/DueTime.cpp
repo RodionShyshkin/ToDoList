@@ -6,19 +6,17 @@
 #include "DueTime.h"
 
 DueTime::DueTime() = default;
-DueTime::DueTime(const DateTime& time) : time_(time) {
-  //... timer ...
-}
+DueTime::DueTime(const DateTime& time) : time_(time) {}
 DueTime::~DueTime() = default;
 
 
 DateTime DueTime::getTime() const { return time_; }
 
-void DueTime::changeDueTime(const DateTime &newDueTime) {
+/*void DueTime::changeDueTime(const DateTime &newDueTime) {
   DueTime current = getCurrentTime();
   if(newDueTime <= current) throw std::invalid_argument("You can plan to do task in the past or just now.");
   this->time_ = newDueTime;
-}
+}*/
 
 std::ostream& operator<< (std::ostream &out, const DueTime &duetime) {
   out << duetime.time_;

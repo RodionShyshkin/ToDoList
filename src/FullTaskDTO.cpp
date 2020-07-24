@@ -24,7 +24,7 @@ bool FullTaskDTO::getStatus() const { return task->getStatus(); }
 
 size_t FullTaskDTO::getSubtasksAmount() const { return task->getSubtasks().size(); }
 
-void FullTaskDTO::AddSubtask(const std::shared_ptr<FullTask> &subtask) { task->AddSubtask(subtask); }
+/*void FullTaskDTO::AddSubtask(const std::shared_ptr<FullTask> &subtask) { task->AddSubtask(subtask); }
 
 void FullTaskDTO::setComplete() {
   task->setComplete();
@@ -33,3 +33,4 @@ void FullTaskDTO::setComplete() {
 void FullTaskDTO::postponeTask(const Task &newtask) {
   task->postponeTask(newtask);
 }
+*/

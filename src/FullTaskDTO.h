@@ -23,9 +23,9 @@ class FullTaskDTO {
   size_t getSubtasksAmount() const;
 
  public:
-  void AddSubtask(const std::shared_ptr<FullTask> &subtask);
-  void setComplete();
-  void postponeTask(const Task &newtask);
+//  void AddSubtask(const std::shared_ptr<FullTask> &subtask);
+//  void setComplete();
+//  void postponeTask(const Task &newtask);
 
  private:
   std::shared_ptr<FullTask> task;

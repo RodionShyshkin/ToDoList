@@ -29,7 +29,7 @@ void TaskManager::showTasksForToday() const {
     std::vector<FullTaskDTO> todayTasks;
     for(auto [priority, task] : sortedTasks) {
       auto now = getCurrentTime();
-      auto taskDate = task.getDueTime().getTime();
+      auto taskDate = task->getTime().getTime();
 
       if(now.getYear() == taskDate.getYear() && now.getMonth() == taskDate.getMonth() && now.getDay() == taskDate.getDay()) {
         todayTasks.push_back(task);
@@ -58,7 +58,7 @@ void TaskManager::showTasksForToday() const {
 void TaskManager::showTasksForLabel(const std::string &label) const {
   Vector searchResult;
   for (auto[priority, sortingTask] : sortedTasks) {
-    if (sortingTask.getLabel() == label) {
+    if (sortingTask->getLabel() == label) {
       searchResult.push_back(sortingTask);
     }
   }
@@ -77,9 +77,9 @@ void TaskManager::addTask(const Task &task) {
 
 void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
   for (auto task : tasks) {
-    if (task.getUserID() == id) {
+    if (task->getUserID() == id) {
       auto subptr = std::make_shared<FullTask>(subtask, id);
-      task.AddSubtask(subptr);
+      task->AddSubtask(subptr);
       addTask(subtask);
       return;
     }
@@ -92,14 +92,14 @@ void TaskManager::removeTask(const TaskID &id) {
   auto IteratorInMultimap = sortedTasks.begin();
 
   for (auto counter = 0; counter < tasks.size(); counter++) {
-    if (tasks[counter].getUserID() == id) {
+    if (tasks[counter]->getUserID() == id) {
       taskToRemove = tasks[counter];
       NumInVector = counter;
       break;
     }
   }
   for (auto it = sortedTasks.begin(); it != sortedTasks.end(); ++it) {
-    if (it->second.getUserID() == id) {
+    if (it->second->getUserID() == id) {
       IteratorInMultimap = it;
       break;
     }
@@ -111,8 +111,8 @@ void TaskManager::removeTask(const TaskID &id) {
 
 void TaskManager::completeTask(const TaskID &id) {
   for(auto task : tasks) {
-    if(task.getUserID() == id) {
-      task.setComplete();
+    if(task->getUserID() == id) {
+      task->setComplete();
       return;
     }
   }
@@ -120,9 +120,9 @@ void TaskManager::completeTask(const TaskID &id) {
 
 void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
   for(auto task : tasks) {
-    if(task.getUserID() == id) {
-      auto newtask = Task(task.getName(), task.getLabel(), task.getPriority(), newtime);
-      task.postponeTask(newtask);
+    if(task->getUserID() == id) {
+      auto newtask = Task(task->getName(), task->getLabel(), task->getPriority(), newtime);
+      task->postponeTask(newtask);
    }
   }
 }
