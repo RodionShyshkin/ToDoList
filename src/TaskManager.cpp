@@ -18,7 +18,7 @@ void TaskManager::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
   else {
     for (auto[key, value] : sortedTasks) {
-      TaskOutput::printTask(value);
+      TaskOutput::printTask(FullTaskDTO(value));
     }
   }
 }
@@ -37,7 +37,7 @@ void TaskManager::showTasksForToday() const {
     }
     if(todayTasks.empty()) { std::cout << "There are no tasks for today." << std::endl; }
     else {
-      for(auto todayTask : todayTasks) { TaskOutput::printTask(todayTask); }
+      for(auto todayTask : todayTasks) { TaskOutput::printTask(FullTaskDTO(todayTask)); }
     }
   }
 }
@@ -65,7 +65,7 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
   if (searchResult.size() == 0) std::cout << "No tasks found." << std::endl;
   else {
     std::cout << searchResult.size() << " tasks found." << std::endl;
-    for (auto itemTask : searchResult) TaskOutput::printTask(itemTask);
+    for (auto itemTask : searchResult) TaskOutput::printTask(FullTaskDTO(itemTask));
   }
 }
 
