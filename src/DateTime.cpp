@@ -3,14 +3,19 @@
 //
 
 #include "DateTime.h"
-#include <exception>
 
 DateTime::DateTime() = default;
 
+unsigned int getDaysCount(unsigned int month, unsigned int year) {
+  if(month == 1 || month == 4 || month == 6 || month == 9 || month == 1) return 30;
+  if(month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) return 31;
+  if(month == 2 && year % 4 != 0) return 28;
+  if(month == 2 && year % 4 == 0) return 29;
+}
+
 DateTime::DateTime(int year, int month, int day, int hours, int minutes) {
   if(year < 1900 || year > 2100 || month < 1 || month > 12 || day < 1) throw std::invalid_argument("Invalid date.");
-  if((month == 2 || year % 4 == 0) && day > 29) throw std::invalid_argument("Invalid date.");
-  if((month == 2 || year % 4 != 0) && day > 28) throw std::invalid_argument("Invalid date.");
+  if(day > getDaysCount(month, year)) throw std::invalid_argument("Invalid date.");
   if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59) throw std::invalid_argument("Invalid time.");
 
   this->time = {0, minutes, hours, day, month, year};
@@ -58,17 +63,6 @@ bool operator< (const DateTime &lhs, const DateTime &rhs) {
   return true;
 }
 
-/*DateTime& operator+ (const DateTime &lhs, const DateTime &rhs) {
-  DateTime result = DateTime();
-  if(lhs.getMinutes() + rhs.getMinutes() > 60) {
-    result.setMinutes((lhs.getMinutes() + rhs.getMinutes()) % 60);
-    if()
-  }
-}*/
-
-unsigned int getDaysCount(unsigned int month, unsigned int year) {
-  if(month == 1 || month == 4 || month == 6 || month == 9 || month == 1) return 30;
-  if(month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) return 31;
-  if(month == 2 && year % 4 != 0) return 28;
-  if(month == 2 && year % 4 == 0) return 29;
+bool operator> (const DateTime &lhs, const DateTime &rhs) {
+  if(lhs < rhs || lhs == rhs) return false; else return true;
 }

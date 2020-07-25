@@ -12,6 +12,20 @@ DueTime::~DueTime() = default;
 
 DateTime DueTime::getTime() const { return time_; }
 
+DateTime addWeek(const DateTime &oldtime) {
+  DateTime newtime = oldtime;
+  newtime.setDay(newtime.getDay() + 7);
+  if(newtime.getDay() > getDaysCount(newtime.getMonth(), newtime.getYear())) {
+    newtime.setDay(newtime.getDay() % getDaysCount(newtime.getMonth(), newtime.getYear()));
+    newtime.setMonth(newtime.getMonth() + 1);
+    if(newtime.getMonth() > 12) {
+      newtime.setMonth(1);
+      newtime.setYear(newtime.getYear() + 1);
+    }
+  }
+  return newtime;
+}
+
 /*void DueTime::changeDueTime(const DateTime &newDueTime) {
   DueTime current = getCurrentTime();
   if(newDueTime <= current) throw std::invalid_argument("You can plan to do task in the past or just now.");
@@ -25,6 +39,7 @@ std::ostream& operator<< (std::ostream &out, const DueTime &duetime) {
 bool operator== (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ == rhs.time_); }
 bool operator< (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ < rhs.time_; }
 bool operator<= (const DueTime &lhs, const DueTime &rhs) { return (lhs == rhs && lhs < rhs); }
+bool operator> (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ > rhs.time_); }
 
 DateTime getCurrentTime() {
   time_t t = time(0);

@@ -31,3 +31,10 @@ TEST_F(GenerateIDTest, UserIDsGenerating) {
 
   ASSERT_EQ(4, vec[3]->getUserID());
 }
+
+TEST_F(GenerateIDTest, checkTime) {
+  auto dir = std::make_shared<TaskManager>(TaskManager());
+  TaskManagerDTO check(dir);
+
+  dir->showTasksForWeek();
+}

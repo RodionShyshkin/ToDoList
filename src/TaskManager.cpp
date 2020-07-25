@@ -32,28 +32,32 @@ void TaskManager::showTasksForToday() const {
       auto taskDate = task->getTime().getTime();
 
       if(now.getYear() == taskDate.getYear() && now.getMonth() == taskDate.getMonth() && now.getDay() == taskDate.getDay()) {
-        todayTasks.push_back(task);
+        todayTasks.push_back(FullTaskDTO(task));
       }
     }
     if(todayTasks.empty()) { std::cout << "There are no tasks for today." << std::endl; }
     else {
-      for(auto todayTask : todayTasks) { TaskOutput::printTask(FullTaskDTO(todayTask)); }
+      for(auto todayTask : todayTasks) { TaskOutput::printTask(todayTask); }
     }
   }
 }
 
-/*void TaskManager::showTasksForWeek() const {
-  if(sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
+void TaskManager::showTasksForWeek() const {
+  if (sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
   else {
-    std::vector<FullTask> weekTasks;
-    for(auto [priority, task] : sortedTasks) {
-      auto now = getCurrentTime();
+    std::vector<FullTaskDTO> weekTasks;
+    auto now = getCurrentTime();
+    auto nowPlusWeek = addWeek(now);
+    for (auto[priority, task] : sortedTasks) {
       auto taskDate = task->getTime().getTime();
-
-
+      if (taskDate > now && taskDate < nowPlusWeek) weekTasks.push_back(FullTaskDTO(task));
+    }
+    if (weekTasks.empty()) { std::cout << "no tasks" << std::endl; }
+    else {
+      for (auto weekTask : weekTasks) { TaskOutput::printTask(weekTask); }
     }
   }
-}*/
+}
 
 void TaskManager::showTasksForLabel(const std::string &label) const {
   Vector searchResult;

@@ -35,12 +35,12 @@ class DateTime {
   friend bool operator== (const DateTime &lhs, const DateTime &rhs);
   friend bool operator!= (const DateTime &lhs, const DateTime &rhs);
   friend bool operator< (const DateTime &lhs, const DateTime &rhs);
-  friend DateTime& operator+ (const DateTime &lhs, const DateTime &rhs);
+  friend bool operator> (const DateTime &lhs, const DateTime &rhs);
 
  private:
   tm time;
 };
 
-unsigned int getDaysCount(unsigned int month);
+unsigned int getDaysCount(unsigned int month, unsigned int year);
 
 #endif //TODOLIST__DUETIME_H_
