@@ -49,7 +49,7 @@ void TaskManager::showTasksForWeek() const {
     auto now = getCurrentTime();
     auto nowPlusWeek = addWeek(now);
     for (auto[priority, task] : sortedTasks) {
-      auto taskDate = task->getTime().getTime();
+      auto taskDate = task->getTime();
       if (taskDate > now && taskDate < nowPlusWeek) weekTasks.push_back(FullTaskDTO(task));
     }
     if (weekTasks.empty()) { std::cout << "no tasks" << std::endl; }
@@ -91,7 +91,7 @@ void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
 }
 
 void TaskManager::removeTask(const TaskID &id) {
-  auto taskToRemove = FullTaskDTO(); //std::make_shared<FullTaskDTO>();
+  auto taskToRemove = std::make_shared<FullTask>();
   size_t NumInVector;
   auto IteratorInMultimap = sortedTasks.begin();
 
@@ -126,7 +126,7 @@ void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
   for(auto task : tasks) {
     if(task->getUserID() == id) {
       auto newtask = Task(task->getName(), task->getLabel(), task->getPriority(), newtime);
-      task->postponeTask(newtask);
+      task->substituteTask(newtask);
    }
   }
 }

@@ -10,9 +10,7 @@ TaskManagerDTO::~TaskManagerDTO() = default;
 
 size_t TaskManagerDTO::getTasksAmount() const { return dir->tasks.size(); }
 
-std::vector<std::shared_ptr<FullTask>> TaskManagerDTO::getAllTasks() const {
-  return dir->tasks;
-}
+std::vector<std::shared_ptr<FullTask>> TaskManagerDTO::getAllTasks() const { return dir->tasks; }
 
 FullTaskDTO TaskManagerDTO::getTask(const TaskID &userid) const {
   for(auto task : dir->tasks) {

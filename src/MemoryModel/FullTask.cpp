@@ -10,10 +10,8 @@ FullTask::FullTask(const Task &task, const TaskID &id) {
   this->user_id = id;
   this->task = std::make_shared<Task>(task);
   this->status = false;
-  this->id = UUID();
 }
 
-UUID FullTask::getUUID() const { return this->id; }
 TaskID FullTask::getUserID() const { return user_id; }
 std::string FullTask::getName() const { return task->getName(); }
 std::string FullTask::getLabel() const { return task->getLabel(); }
@@ -32,13 +30,6 @@ void FullTask::setComplete() {
   this->status = true;
 }
 
-void FullTask::postponeTask(const Task &newtask) {
+void FullTask::substituteTask(const Task &newtask) {
   this->task = std::make_shared<Task>(newtask);
 }
-
-void FullTask::showTask() {
-  std::cout << "Task " << getUserID() << ": " << task->getName() << " (" << task->getLabel() << "), Priority: "
-            << task->getPriority() << ". Deadline: " << task->getDate()
-            << ". Subtasks number is " << getSubtasks().size() << ". Status: " << getStatus() << std::endl;
-}
-

@@ -4,14 +4,36 @@
 
 #include "DateTime.h"
 
-DateTime::DateTime() = default;
+DateTime addWeek(const DateTime &oldtime) {
+  DateTime newtime = oldtime;
+  newtime.setDay(newtime.getDay() + 7);
+  if(newtime.getDay() > getDaysCount(newtime.getMonth(), newtime.getYear())) {
+    newtime.setDay(newtime.getDay() % getDaysCount(newtime.getMonth(), newtime.getYear()));
+    newtime.setMonth(newtime.getMonth() + 1);
+    if(newtime.getMonth() > 12) {
+      newtime.setMonth(1);
+      newtime.setYear(newtime.getYear() + 1);
+    }
+  }
+  return newtime;
+}
+
+DateTime getCurrentTime() {
+  time_t t = time(0);
+  struct tm * now = localtime(&t);
+  return DateTime(now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min);
+}
 
 unsigned int getDaysCount(unsigned int month, unsigned int year) {
-  if(month == 1 || month == 4 || month == 6 || month == 9 || month == 1) return 30;
-  if(month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) return 31;
+  if(month == 4 || month == 6 || month == 9 || month == 11) return 30;
+  if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) return 31;
   if(month == 2 && year % 4 != 0) return 28;
   if(month == 2 && year % 4 == 0) return 29;
 }
+
+
+
+DateTime::DateTime() = default;
 
 DateTime::DateTime(int year, int month, int day, int hours, int minutes) {
   if(year < 1900 || year > 2100 || month < 1 || month > 12 || day < 1) throw std::invalid_argument("Invalid date.");
@@ -25,6 +47,7 @@ DateTime::DateTime(tm tmtime) : DateTime(tmtime.tm_year, tmtime.tm_mon, tmtime.t
 DateTime::~DateTime() = default;
 
 
+
 unsigned int DateTime::getYear() const { return time.tm_year; }
 unsigned int DateTime::getMonth() const { return time.tm_mon; }
 unsigned int DateTime::getDay() const { return time.tm_mday; }
@@ -34,8 +57,7 @@ unsigned int DateTime::getMinutes() const { return time.tm_min; }
 void DateTime::setYear(unsigned int value) { this->time.tm_year = value; }
 void DateTime::setMonth(unsigned int value) { this->time.tm_mon = value; }
 void DateTime::setDay(unsigned int value) { this->time.tm_mday = value; }
-void DateTime::setHours(unsigned int value) { this->time.tm_hour = value; }
-void DateTime::setMinutes(unsigned int value) { this->time.tm_min = value; }
+
 
 std::ostream& operator<< (std::ostream &out, const DateTime &time) {
   out << time.time.tm_year << "-" << time.time.tm_mon << "-" << time.time.tm_mday << " " << time.time.tm_hour << ":" << time.time.tm_min;
@@ -53,7 +75,6 @@ bool operator== (const DateTime &lhs, const DateTime &rhs) {
   if(lhs.getYear() != rhs.getYear()) return false;
   return true;
 }
-bool operator!= (const DateTime &lhs, const DateTime &rhs) { return !(lhs == rhs); }
 bool operator< (const DateTime &lhs, const DateTime &rhs) {
   if(lhs.getMinutes() != rhs.getMinutes()) return false;
   if(lhs.getHours() != rhs.getHours()) return false;
@@ -66,3 +87,4 @@ bool operator< (const DateTime &lhs, const DateTime &rhs) {
 bool operator> (const DateTime &lhs, const DateTime &rhs) {
   if(lhs < rhs || lhs == rhs) return false; else return true;
 }
+

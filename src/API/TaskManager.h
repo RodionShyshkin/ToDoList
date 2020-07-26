@@ -5,7 +5,7 @@
 #ifndef TODOLIST__TASKMANAGER_H_
 #define TODOLIST__TASKMANAGER_H_
 
-#include "FullTask.h"
+#include "../MemoryModel/FullTask.h"
 #include "GenerateID.h"
 #include "FullTaskDTO.h"
 #include <map>

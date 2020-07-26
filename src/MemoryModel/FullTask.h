@@ -6,9 +6,8 @@
 #define TODOLIST_SRC_FULLTASK_H_
 
 #include "Task.h"
-#include "GenerateID.h"
+#include "../API/GenerateID.h"
 #include "TaskID.h"
-#include "UUID.h"
 
 class FullTask {
  public:
@@ -16,7 +15,6 @@ class FullTask {
   FullTask(const Task &task, const TaskID &id);
 
  public:
-  UUID getUUID() const;
   TaskID getUserID() const;
   std::string getName() const;
   std::string getLabel() const;
@@ -29,14 +27,10 @@ class FullTask {
  public:
   void AddSubtask(const std::shared_ptr<FullTask> &task);
   void setComplete();
-  void postponeTask(const Task &newtask);
-
- public:
-  void showTask();
+  void substituteTask(const Task &newtask);
 
  private:
   TaskID user_id;
-  UUID id;
   bool status;
   std::shared_ptr<Task> task;
   std::vector<std::shared_ptr<FullTask>> subtasks;

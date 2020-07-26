@@ -26,14 +26,11 @@ class DateTime {
   void setYear(unsigned int value);
   void setMonth(unsigned int value);
   void setDay(unsigned int value);
-  void setHours(unsigned int value);
-  void setMinutes(unsigned int value);
 
  public:
   friend std::ostream& operator<< (std::ostream &out, const DateTime &time);
   friend std::istream& operator>> (std::istream &in, DateTime &time);
   friend bool operator== (const DateTime &lhs, const DateTime &rhs);
-  friend bool operator!= (const DateTime &lhs, const DateTime &rhs);
   friend bool operator< (const DateTime &lhs, const DateTime &rhs);
   friend bool operator> (const DateTime &lhs, const DateTime &rhs);
 
@@ -42,5 +39,8 @@ class DateTime {
 };
 
 unsigned int getDaysCount(unsigned int month, unsigned int year);
+
+DateTime getCurrentTime();
+DateTime addWeek(const DateTime &oldtime);
 
 #endif //TODOLIST__DUETIME_H_

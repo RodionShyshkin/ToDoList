@@ -16,6 +16,6 @@ std::ostream& operator<< (std::ostream &out, const TaskID &taskid) {
  out << taskid.id_;
  return out;
 }
-bool operator== (const TaskID &lhs, const TaskID rhs) {
+bool operator== (const TaskID &lhs, const TaskID &rhs) {
   return lhs.id_ == rhs.id_;
 }

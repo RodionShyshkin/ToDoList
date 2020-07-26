@@ -15,7 +15,7 @@ class TaskID {
 
  public:
   friend std::ostream& operator<< (std::ostream &out, const TaskID &taskid);
-  friend bool operator== (const TaskID &lhs, const TaskID rhs);
+  friend bool operator== (const TaskID &lhs, const TaskID &rhs);
   TaskID& operator++() { ++id_; return *this; }
 
  private:

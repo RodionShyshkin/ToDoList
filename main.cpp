@@ -1,6 +1,6 @@
 #include <iostream>
-#include "src/Task.h"
-#include "src/TaskManager.h"
+#include "src/MemoryModel/Task.h"
+#include "src/API/TaskManager.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char* argv[]) {
