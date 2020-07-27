@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_FULLTASKDTO_H_
 #define TODOLIST_SRC_FULLTASKDTO_H_
 
-#include "../MemoryModel/FullTask.h"
+#include "FullTask.h"
 
 class FullTaskDTO {
  public:

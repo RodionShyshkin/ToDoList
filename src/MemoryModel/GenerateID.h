@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_GENERATEID_H_
 
 #include <iostream>
-#include "../MemoryModel/TaskID.h"
+#include "TaskID.h"
 
 class GenerateID {
  public:
@@ -16,12 +16,8 @@ class GenerateID {
  public:
   TaskID generateID();
 
- public:
-  friend std::ostream& operator<< (std::ostream& out, const GenerateID& taskid);
-  friend bool operator==(const GenerateID& lhs, const GenerateID& rhs);
-
  private:
-  TaskID ids;
+  unsigned int ids;
 };
 
 #endif //TODOLIST_SRC_GENERATEID_H_

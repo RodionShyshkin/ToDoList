@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_FULLTASK_H_
 
 #include "Task.h"
-#include "../API/GenerateID.h"
+#include "GenerateID.h"
 #include "TaskID.h"
 
 class FullTask {
@@ -32,7 +32,7 @@ class FullTask {
  private:
   TaskID user_id;
   bool status;
-  std::shared_ptr<Task> task;
+  Task task;
   std::vector<std::shared_ptr<FullTask>> subtasks;
 };
 

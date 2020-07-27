@@ -5,7 +5,7 @@
 #ifndef TODOLIST__TASKMANAGER_H_
 #define TODOLIST__TASKMANAGER_H_
 
-#include "../MemoryModel/FullTask.h"
+#include "FullTask.h"
 #include "GenerateID.h"
 #include "FullTaskDTO.h"
 #include <map>
@@ -16,10 +16,10 @@ class TaskService {
   ~TaskService();
 
  public:
-  void showAllTasks() const;
-  void showTasksForToday() const;
-  void showTasksForWeek() const;
-  void showTasksForLabel(const std::string &label) const;
+  std::vector<FullTaskDTO> getAllTasks() const;
+  std::vector<FullTaskDTO> getTasksForToday() const;
+  std::vector<FullTaskDTO> getTasksForWeek() const;
+  std::vector<FullTaskDTO> getTasksForLabel(const std::string &label) const;
 
 
   void addTask(const Task &task);

@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "../src/API/GenerateID.h"
+#include "GenerateID.h"
 #include "../src/API/TaskService.h"
 #include "../src/API/TaskManagerDTO.h"
 
