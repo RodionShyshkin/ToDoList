@@ -26,7 +26,7 @@ std::vector<FullTaskDTO> TaskService::getTasksForToday() const {
   std::vector<FullTaskDTO> todayTasks;
   for(auto [priority, task] : sortedTasks) {
     auto now = getCurrentTime();
-    auto taskDate = task->getTime().getTime();
+    auto taskDate = task->getDueTime().getTime();
 
     if(now.getYear() == taskDate.getYear() && now.getMonth() == taskDate.getMonth() && now.getDay() == taskDate.getDay()) {
       todayTasks.push_back(FullTaskDTO(task));
@@ -40,7 +40,7 @@ std::vector<FullTaskDTO> TaskService::getTasksForWeek() const {
   auto now = getCurrentTime();
   auto nowPlusWeek = addWeek(now);
   for (auto[priority, task] : sortedTasks) {
-    auto taskDate = task->getTime();
+    auto taskDate = task->getDueTime();
     if (taskDate > now && taskDate < nowPlusWeek) weekTasks.push_back(FullTaskDTO(task));
   }
   return weekTasks;
@@ -54,6 +54,12 @@ std::vector<FullTaskDTO> TaskService::getTasksForLabel(const std::string &label)
     }
   }
   return searchResult;
+}
+
+std::shared_ptr<FullTask> TaskService::getTaskByID(const TaskID &id) const {
+  for(auto task : tasks) {
+    if(task->getUserID() == id) return task;
+  }
 }
 
 void TaskService::addTask(const Task &task) {

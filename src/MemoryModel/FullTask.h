@@ -19,7 +19,7 @@ class FullTask {
   std::string getName() const;
   std::string getLabel() const;
   Task::Priority getPriority() const;
-  DueTime getTime() const;
+  DueTime getDueTime() const;
   bool getStatus() const;
   Task getTask() const;
   std::vector<std::shared_ptr<FullTask>> getSubtasks() const;

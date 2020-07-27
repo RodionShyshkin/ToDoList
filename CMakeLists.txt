@@ -12,7 +12,7 @@ include_directories(lib/googletest-master/googletest/include)
 include_directories(src/MemoryModel)
 include_directories(src/API)
 
-add_executable(Tests tests/DateTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskManagerTest.cpp
-        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/FullTask.cpp src/MemoryModel/Task.cpp src/API/TaskOutput.cpp src/API/TaskOutput.h src/API/FullTaskDTO.cpp src/API/FullTaskDTO.h src/API/TaskManagerDTO.cpp src/API/TaskManagerDTO.h tests/FullTaskTest.cpp)
+add_executable(Tests tests/DateTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskServiceTest.cpp
+        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/FullTask.cpp src/MemoryModel/Task.cpp src/API/TaskOutput.cpp src/API/TaskOutput.h src/MemoryModel/FullTaskDTO.cpp src/MemoryModel/FullTaskDTO.h tests/FullTaskTest.cpp)
 target_link_libraries(Tests gtest gtest_main)
 

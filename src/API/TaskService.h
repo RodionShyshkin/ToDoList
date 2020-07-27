@@ -20,6 +20,7 @@ class TaskService {
   std::vector<FullTaskDTO> getTasksForToday() const;
   std::vector<FullTaskDTO> getTasksForWeek() const;
   std::vector<FullTaskDTO> getTasksForLabel(const std::string &label) const;
+  std::shared_ptr<FullTask> getTaskByID(const TaskID &id) const;
 
 
   void addTask(const Task &task);

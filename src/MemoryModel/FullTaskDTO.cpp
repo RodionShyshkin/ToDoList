@@ -18,7 +18,7 @@ std::string FullTaskDTO::getLabel() const { return task->getLabel(); }
 
 Task::Priority FullTaskDTO::getPriority() const { return task->getPriority(); }
 
-DueTime FullTaskDTO::getDueTime() const { return task->getTime(); }
+DueTime FullTaskDTO::getDueTime() const { return task->getDueTime(); }
 
 bool FullTaskDTO::getStatus() const { return task->getStatus(); }
 

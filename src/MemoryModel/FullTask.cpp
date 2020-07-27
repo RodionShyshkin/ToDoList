@@ -16,7 +16,7 @@ TaskID FullTask::getUserID() const { return user_id; }
 std::string FullTask::getName() const { return task.getName(); }
 std::string FullTask::getLabel() const { return task.getLabel(); }
 Task::Priority FullTask::getPriority() const { return task.getPriority(); }
-DueTime FullTask::getTime() const { return task.getDate(); }
+DueTime FullTask::getDueTime() const { return task.getDate(); }
 bool FullTask::getStatus() const { return status; }
 Task FullTask::getTask() const { return task; }
 std::vector<std::shared_ptr<FullTask>> FullTask::getSubtasks() const { return subtasks; }
