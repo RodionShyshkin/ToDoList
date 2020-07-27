@@ -1,10 +1,10 @@
 #include <iostream>
 #include "src/MemoryModel/Task.h"
-#include "src/API/TaskManager.h"
+#include "src/API/TaskService.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char* argv[]) {
-  TaskManager dir;
+  TaskService dir;
 
   dir.addTask(Task("Eating", "dinner", Task::Priority::HIGH, DateTime(2020, 07, 19, 16, 0)));
   dir.addTask(Task("Write code", "C++", Task::Priority::MEDIUM, DateTime(2020, 07, 21, 23, 0)));

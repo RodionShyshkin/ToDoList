@@ -10,10 +10,10 @@
 #include "FullTaskDTO.h"
 #include <map>
 
-class TaskManager {
+class TaskService {
  public:
-  TaskManager();
-  ~TaskManager();
+  TaskService();
+  ~TaskService();
 
  public:
   void showAllTasks() const;

@@ -3,18 +3,18 @@
 //
 
 #include <algorithm>
-#include "TaskManager.h"
+#include "TaskService.h"
 #include "TaskOutput.h"
 
 using Pointer = std::shared_ptr<FullTask>;
 using Vector = std::vector<FullTaskDTO>;
 using Multimap = std::multimap<Task::Priority, Pointer>;
 
-TaskManager::TaskManager() : newID() {}
-TaskManager::~TaskManager() = default;
+TaskService::TaskService() : newID() {}
+TaskService::~TaskService() = default;
 
 
-void TaskManager::showAllTasks() const {
+void TaskService::showAllTasks() const {
   if (sortedTasks.empty()) { std::cout << "No tasks" << std::endl; }
   else {
     for (auto[key, value] : sortedTasks) {
@@ -23,7 +23,7 @@ void TaskManager::showAllTasks() const {
   }
 }
 
-void TaskManager::showTasksForToday() const {
+void TaskService::showTasksForToday() const {
   if(sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
   else {
     std::vector<FullTaskDTO> todayTasks;
@@ -42,7 +42,7 @@ void TaskManager::showTasksForToday() const {
   }
 }
 
-void TaskManager::showTasksForWeek() const {
+void TaskService::showTasksForWeek() const {
   if (sortedTasks.empty()) { std::cout << "no tasks" << std::endl; }
   else {
     std::vector<FullTaskDTO> weekTasks;
@@ -59,7 +59,7 @@ void TaskManager::showTasksForWeek() const {
   }
 }
 
-void TaskManager::showTasksForLabel(const std::string &label) const {
+void TaskService::showTasksForLabel(const std::string &label) const {
   Vector searchResult;
   for (auto[priority, sortingTask] : sortedTasks) {
     if (sortingTask->getLabel() == label) {
@@ -73,13 +73,13 @@ void TaskManager::showTasksForLabel(const std::string &label) const {
   }
 }
 
-void TaskManager::addTask(const Task &task) {
+void TaskService::addTask(const Task &task) {
   auto task_ptr = std::make_shared<FullTask>(task, newID.generateID());
   tasks.push_back(task_ptr);
   sortedTasks.insert(std::pair<Task::Priority, std::shared_ptr<FullTask>>(task.getPriority(), task_ptr));
 }
 
-void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
+void TaskService::addSubtask(const TaskID &id, const Task &subtask) {
   for (auto task : tasks) {
     if (task->getUserID() == id) {
       auto subptr = std::make_shared<FullTask>(subtask, id);
@@ -90,7 +90,7 @@ void TaskManager::addSubtask(const TaskID &id, const Task &subtask) {
   }
 }
 
-void TaskManager::removeTask(const TaskID &id) {
+void TaskService::removeTask(const TaskID &id) {
   auto taskToRemove = std::make_shared<FullTask>();
   size_t NumInVector;
   auto IteratorInMultimap = sortedTasks.begin();
@@ -113,7 +113,7 @@ void TaskManager::removeTask(const TaskID &id) {
   sortedTasks.erase(IteratorInMultimap);
 }
 
-void TaskManager::completeTask(const TaskID &id) {
+void TaskService::completeTask(const TaskID &id) {
   for(auto task : tasks) {
     if(task->getUserID() == id) {
       task->setComplete();
@@ -122,7 +122,7 @@ void TaskManager::completeTask(const TaskID &id) {
   }
 }
 
-void TaskManager::postponeTask(const TaskID &id, const DateTime &newtime) {
+void TaskService::postponeTask(const TaskID &id, const DateTime &newtime) {
   for(auto task : tasks) {
     if(task->getUserID() == id) {
       auto newtask = Task(task->getName(), task->getLabel(), task->getPriority(), newtime);

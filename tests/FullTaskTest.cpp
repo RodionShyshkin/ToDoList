@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 #include "../src/MemoryModel/FullTask.h"
-#include "../src/API/TaskManager.h"
+#include "../src/API/TaskService.h"
 
 using testing::Eq;
 

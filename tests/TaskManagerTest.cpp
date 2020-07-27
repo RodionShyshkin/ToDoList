@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "../src/API/TaskManager.h"
+#include "../src/API/TaskService.h"
 #include "../src/API/TaskManagerDTO.h"
 
 using testing::Eq;
@@ -12,7 +12,7 @@ class TaskManagerTest : public testing::Test {
 };
 
 TEST_F(TaskManagerTest, addTask) {
-  auto dir = std::make_shared<TaskManager>(TaskManager());
+  auto dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
 
   dir->addTask(Task("Eat", "fish", Task::Priority::HIGH, DateTime(2020, 10, 10, 10, 10)));
@@ -29,7 +29,7 @@ TEST_F(TaskManagerTest, addTask) {
 }
 
 TEST_F(TaskManagerTest, addSubtask) {
-  auto dir = std::make_shared<TaskManager>(TaskManager());
+  auto dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
 
   dir->addTask(Task("Eat", "fish", Task::Priority::HIGH, DateTime(2021, 8, 8, 8, 8)));
@@ -44,7 +44,7 @@ TEST_F(TaskManagerTest, addSubtask) {
 }
 
 TEST_F(TaskManagerTest, removeTaskWithoutSubtasks) {
-  auto dir = std::make_shared<TaskManager>(TaskManager());
+  auto dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
   dir->addTask(Task("One", "test", Task::Priority::EMPTY, DateTime(2020, 10, 10, 10, 10)));
   dir->addTask(Task("Two", "test", Task::Priority::EMPTY, DateTime(2020, 10, 10, 10, 10)));
@@ -56,7 +56,7 @@ TEST_F(TaskManagerTest, removeTaskWithoutSubtasks) {
 }
 
 /*TEST_F(TaskManagerTest, removeTaskWithSomeSubtasks) {
-  autio dir = std::make_shared<TaskManager>(TaskManager());
+  autio dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
   dir->addTask(Task("One", "test", Task::Priority::EMPTY, DateTime(2020, 10, 10, 10, 10)));
   dir->addTask(Task("Two", "test", Task::Priority::EMPTY, DateTime(2020, 10, 10, 10, 10)));
@@ -70,7 +70,7 @@ TEST_F(TaskManagerTest, removeTaskWithoutSubtasks) {
 }*/
 
 TEST_F(TaskManagerTest, completeTask) {
-  auto dir = std::make_shared<TaskManager>(TaskManager());
+  auto dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
   dir->addTask(Task("Eat", "fish", Task::Priority::HIGH, DateTime(2021, 8, 8, 8, 8)));
 
@@ -85,7 +85,7 @@ TEST_F(TaskManagerTest, postponeTask) {
   DateTime oldtime = DateTime(2021, 8, 8, 8, 8);
   DateTime newtime = DateTime(2021, 10, 10, 10, 10);
 
-  auto dir = std::make_shared<TaskManager>(TaskManager());
+  auto dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
   dir->addTask(Task("Eat", "fish", Task::Priority::HIGH, oldtime));
 

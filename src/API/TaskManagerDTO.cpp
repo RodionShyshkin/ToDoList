@@ -4,7 +4,7 @@
 
 #include "TaskManagerDTO.h"
 
-TaskManagerDTO::TaskManagerDTO(const std::shared_ptr<TaskManager> &dir) : dir(dir) {}
+TaskManagerDTO::TaskManagerDTO(const std::shared_ptr<TaskService> &dir) : dir(dir) {}
 
 TaskManagerDTO::~TaskManagerDTO() = default;
 

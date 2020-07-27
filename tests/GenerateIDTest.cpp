@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "../src/API/GenerateID.h"
-#include "../src/API/TaskManager.h"
+#include "../src/API/TaskService.h"
 #include "../src/API/TaskManagerDTO.h"
 
 using testing::Eq;
@@ -14,7 +14,7 @@ class GenerateIDTest : public testing::Test {
 };
 
 TEST_F(GenerateIDTest, GenerateID) {
-  auto dir = std::make_shared<TaskManager>(TaskManager());
+  auto dir = std::make_shared<TaskService>(TaskService());
   TaskManagerDTO check(dir);
 
   dir->addTask(Task("Name 1", "label", Task::Priority::HIGH, DateTime(2020, 10, 10, 10, 10)));
