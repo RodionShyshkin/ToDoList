@@ -10,13 +10,14 @@
 class TaskID {
  public:
   TaskID();
-  TaskID(const unsigned int &id);
+  explicit TaskID(const unsigned int &id);
 
  public:
-  friend bool operator== (const TaskID &lhs, const TaskID &rhs);
+  friend bool       operator== (const TaskID &lhs, const TaskID &rhs);
+  friend bool       operator< (const TaskID& lhs, const TaskID& rhs);
 
  private:
-  unsigned int id_;
+  unsigned int      id_;
 };
 
 #endif //TODOLIST_SRC_TASKID_H_

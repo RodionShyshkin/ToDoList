@@ -5,9 +5,11 @@
 #ifndef TODOLIST__TASKMANAGER_H_
 #define TODOLIST__TASKMANAGER_H_
 
-#include "FullTask.h"
+#include "TaskEntity.h"
 #include "GenerateID.h"
-#include "FullTaskDTO.h"
+#include "TaskDTO.h"
+#include "TaskView.h"
+#include "TaskFactory.h"
 #include <map>
 
 class TaskService {
@@ -16,28 +18,24 @@ class TaskService {
   ~TaskService();
 
  public:
-  std::vector<FullTaskDTO> getAllTasks() const;
-  std::vector<FullTaskDTO> getTasksForToday() const;
-  std::vector<FullTaskDTO> getTasksForWeek() const;
-  std::vector<FullTaskDTO> getTasksForLabel(const std::string &label) const;
-  std::shared_ptr<FullTask> getTaskByID(const TaskID &id) const;
+  std::vector<TaskDTO>              getAllTasks();
+  std::vector<TaskDTO>              getTasksForToday();
+  std::vector<TaskDTO>              getTasksForWeek();
+  std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
+  TaskDTO                           getTaskByID(const TaskID &id);
 
 
-  void addTask(const Task &task);
-  void addSubtask(const TaskID &id, const Task &subtask);
-  void removeTask(const TaskID &id);
+  void                              addTask(const Task &task);
+  bool                              addSubtask(const TaskID &id, const Task &subtask);
+//  void                              removeTask(const TaskID &id);
 
 
-  void completeTask(const TaskID &id);
-  void postponeTask(const TaskID &id, const DateTime &newtime);
-
- public:
-  friend class TaskManagerDTO;
+//  void                              completeTask(const TaskID &id);
+//  void                              postponeTask(const TaskID &id, const DateTime &newtime);
 
  private:
-  std::vector<std::shared_ptr<FullTask>> tasks;
-  std::multimap<Task::Priority, std::shared_ptr<FullTask>, std::greater<Task::Priority>> sortedTasks;
-  GenerateID newID;
+  TaskView                          task_view_;
+  TaskFactory                       task_factory_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

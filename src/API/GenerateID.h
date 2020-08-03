@@ -14,10 +14,10 @@ class GenerateID {
   ~GenerateID();
 
  public:
-  TaskID generateID();
+  TaskID            generateID();
 
  private:
-  unsigned int ids;
+  unsigned int      ids;
 };
 
 #endif //TODOLIST_SRC_GENERATEID_H_

@@ -21,22 +21,20 @@ class Task {
  public:
   Task();
   Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duetime);
+  Task(const Task &task);
   ~Task();
 
  public:
-  std::string getName() const;
-  std::string getLabel() const;
-  Priority getPriority() const;
-  DueTime getDate() const;
-
- public:
-  Task(const Task &task);
+  [[nodiscard]] std::string       getName() const;
+  [[nodiscard]] std::string       getLabel() const;
+  [[nodiscard]] Priority          getPriority() const;
+  [[nodiscard]] DueTime           getDate() const;
 
  private:
-  std::string name;
-  std::string label;
-  DueTime duetime;
-  Priority priority;
+  std::string                     name;
+  std::string                     label;
+  DueTime                         duetime;
+  Priority                        priority;
 };
 
 #endif //TODOLIST__TASK_H_

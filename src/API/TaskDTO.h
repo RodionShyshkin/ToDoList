@@ -5,13 +5,13 @@
 #ifndef TODOLIST_SRC_FULLTASKDTO_H_
 #define TODOLIST_SRC_FULLTASKDTO_H_
 
-#include "FullTask.h"
+#include "TaskEntity.h"
 
-class FullTaskDTO {
+class TaskDTO {
  public:
-  FullTaskDTO();
-  FullTaskDTO(std::shared_ptr<FullTask> task);
-  ~FullTaskDTO();
+  TaskDTO();
+  TaskDTO(const TaskEntity& task);
+  ~TaskDTO();
 
  public:
   TaskID getUserID() const;
@@ -23,7 +23,7 @@ class FullTaskDTO {
   size_t getSubtasksAmount() const;
 
  private:
-  std::shared_ptr<FullTask> task;
+  TaskEntity task;
 };
 
 #endif //TODOLIST_SRC_FULLTASKDTO_H_

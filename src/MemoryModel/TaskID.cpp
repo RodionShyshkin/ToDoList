@@ -14,3 +14,7 @@ TaskID::TaskID(const unsigned int &id) {
 bool operator== (const TaskID &lhs, const TaskID &rhs) {
   return lhs.id_ == rhs.id_;
 }
+
+bool operator< (const TaskID& lhs, const TaskID& rhs) {
+  return lhs.id_ < rhs.id_;
+}

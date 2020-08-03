@@ -59,32 +59,21 @@ void DateTime::setMonth(unsigned int value) { this->time.tm_mon = value; }
 void DateTime::setDay(unsigned int value) { this->time.tm_mday = value; }
 
 
-std::ostream& operator<< (std::ostream &out, const DateTime &time) {
-  out << time.time.tm_year << "-" << time.time.tm_mon << "-" << time.time.tm_mday << " " << time.time.tm_hour << ":" << time.time.tm_min;
-  return out;
-}
-std::istream& operator>> (std::istream &in, DateTime &time) {
-  in >> time.time.tm_year >> time.time.tm_mon >> time.time.tm_mday >> time.time.tm_hour >> time.time.tm_min;
-  return in;
-}
 bool operator== (const DateTime &lhs, const DateTime &rhs) {
   if(lhs.getMinutes() != rhs.getMinutes()) return false;
   if(lhs.getHours() != rhs.getHours()) return false;
   if(lhs.getDay() != rhs.getDay()) return false;
   if(lhs.getMonth() != rhs.getMonth()) return false;
-  if(lhs.getYear() != rhs.getYear()) return false;
-  return true;
+  return lhs.getYear() == rhs.getYear();
 }
 bool operator< (const DateTime &lhs, const DateTime &rhs) {
-  if(lhs.getMinutes() != rhs.getMinutes()) return false;
-  if(lhs.getHours() != rhs.getHours()) return false;
-  if(lhs.getDay() != rhs.getDay()) return false;
-  if(lhs.getMonth() != rhs.getMonth()) return false;
-  if(lhs.getYear() != rhs.getYear()) return false;
-  return true;
+  if(lhs.getYear() < rhs.getYear()) return true;
+  if(lhs.getMonth() < rhs.getMonth()) return true;
+  if(lhs.getDay() < rhs.getDay()) return true;
+  if(lhs.getHours() < rhs.getHours()) return true;
+  return lhs.getMinutes() < rhs.getMinutes();
 }
-
 bool operator> (const DateTime &lhs, const DateTime &rhs) {
-  if(lhs < rhs || lhs == rhs) return false; else return true;
+  return !(lhs < rhs || lhs == rhs);
 }
 

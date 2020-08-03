@@ -14,17 +14,15 @@ class DueTime {
   ~DueTime();
 
  public:
-  DateTime getTime() const;
+  [[nodiscard]] DateTime      getTime() const;
 
  public:
-  friend std::ostream& operator<< (std::ostream &out, const DueTime &duetime);
-  friend bool operator== (const DueTime &lhs, const DueTime &rhs);
-  friend bool operator< (const DueTime &lhs, const DueTime &rhs);
-  friend bool operator<= (const DueTime &lhs, const DueTime &rhs);
-  friend bool operator> (const DueTime &lhs, const DueTime &rhs);
+  friend bool                 operator== (const DueTime &lhs, const DueTime &rhs);
+  friend bool                 operator< (const DueTime &lhs, const DueTime &rhs);
+  friend bool                 operator> (const DueTime &lhs, const DueTime &rhs);
 
  private:
-  DateTime time_;
+  DateTime                    time_;
 };
 
 #endif //TODOLIST_SRC_DUETIME_H_
