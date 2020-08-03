@@ -20,6 +20,7 @@ std::optional<std::shared_ptr<TaskEntity>> TaskFactory::addSubtask(const TaskID 
     auto newid = newID.generateID();
     auto task_ptr = std::make_shared<TaskEntity>(subtask, newid);
     tasks.insert(std::make_pair(newid, task_ptr));
+    return task_ptr;
   }
   return std::nullopt;
 }

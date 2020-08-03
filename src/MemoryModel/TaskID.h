@@ -10,7 +10,7 @@
 class TaskID {
  public:
   TaskID();
-  explicit TaskID(const unsigned int &id);
+  TaskID(const unsigned int &id);
 
  public:
   friend bool       operator== (const TaskID &lhs, const TaskID &rhs);
