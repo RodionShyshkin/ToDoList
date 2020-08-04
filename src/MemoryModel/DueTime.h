@@ -20,6 +20,8 @@ class DueTime {
   friend bool                 operator== (const DueTime &lhs, const DueTime &rhs);
   friend bool                 operator< (const DueTime &lhs, const DueTime &rhs);
   friend bool                 operator> (const DueTime &lhs, const DueTime &rhs);
+  friend bool                 operator<= (const DueTime& lhs, const DueTime& rhs);
+  friend bool                 operator>= (const DueTime& lhs, const DueTime& rhs);
 
  private:
   DateTime                    time_;

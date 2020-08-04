@@ -12,7 +12,7 @@ TaskEntity::TaskEntity(const Task &task, const TaskID &id) {
   this->status = false;
 }
 
-TaskID TaskEntity::getUserID() const { return user_id; }
+TaskID TaskEntity::getID() const { return user_id; }
 std::string TaskEntity::getName() const { return task.getName(); }
 std::string TaskEntity::getLabel() const { return task.getLabel(); }
 Task::Priority TaskEntity::getPriority() const { return task.getPriority(); }
@@ -26,10 +26,11 @@ void TaskEntity::AddSubtask(const std::shared_ptr<TaskEntity> &task) {
   subtasks.push_back(task);
 }
 
-void TaskEntity::setComplete() {
+/*void TaskEntity::setComplete() {
   this->status = true;
 }
 
 void TaskEntity::substituteTask(const Task &newtask) {
   this->task = newtask;
 }
+*/

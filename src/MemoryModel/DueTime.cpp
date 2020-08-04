@@ -15,4 +15,5 @@ DateTime DueTime::getTime() const { return time_; }
 bool operator== (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ == rhs.time_); }
 bool operator< (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ < rhs.time_; }
 bool operator> (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ > rhs.time_); }
-
+bool operator<= (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ <= rhs.time_; }
+bool operator>= (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ >= rhs.time_; }

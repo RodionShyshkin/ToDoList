@@ -7,6 +7,9 @@
 
 #include <ctime>
 #include <iostream>
+//#include <boost/chrono.hpp>
+//#include <boost/chrono/chrono_io.hpp>
+//#include <boost/chrono/duration.hpp>
 
 class DateTime {
  public:
@@ -31,6 +34,8 @@ class DateTime {
   friend bool                   operator== (const DateTime &lhs, const DateTime &rhs);
   friend bool                   operator< (const DateTime &lhs, const DateTime &rhs);
   friend bool                   operator> (const DateTime& lhs, const DateTime& rhs);
+  friend bool                   operator<= (const DateTime& lhs, const DateTime& rhs);
+  friend bool                   operator>= (const DateTime& lhs, const DateTime& rhs);
 
  private:
   tm                            time;

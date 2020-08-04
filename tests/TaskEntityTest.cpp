@@ -23,3 +23,7 @@ TEST_F(TaskEntityTest, AddSubtask) {
   ASSERT_NE(old_subtasks.size(), new_subtasks.size());
   ASSERT_EQ(old_subtasks.size() + 1, new_subtasks.size());
 }
+
+TEST_F(TaskEntityTest, defaultConstructor) {
+  EXPECT_NO_THROW(TaskEntity());
+}

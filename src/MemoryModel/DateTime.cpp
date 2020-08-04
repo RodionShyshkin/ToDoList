@@ -5,6 +5,9 @@
 #include "DateTime.h"
 
 DateTime addWeek(const DateTime &oldtime) {
+//  std::chrono::system_clock::time_point newerr = std::chrono::system_clock::now() + std::chrono::hours(24);
+ //std::cout << newerr << std::endl;
+
   DateTime newtime = oldtime;
   newtime.setDay(newtime.getDay() + 7);
   if(newtime.getDay() > getDaysCount(newtime.getMonth(), newtime.getYear())) {
@@ -19,6 +22,8 @@ DateTime addWeek(const DateTime &oldtime) {
 }
 
 DateTime getCurrentTime() {
+ // auto local_time = boost::chrono::system_clock::now();
+
   time_t t = time(0);
   struct tm * now = localtime(&t);
   return DateTime(now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min);
@@ -43,7 +48,7 @@ DateTime::DateTime(int year, int month, int day, int hours, int minutes) {
   this->time = {0, minutes, hours, day, month, year};
 }
 
-DateTime::DateTime(tm tmtime) : DateTime(tmtime.tm_year, tmtime.tm_mon, tmtime.tm_mday, tmtime.tm_hour, tmtime.tm_min) { }
+DateTime::DateTime(tm tmtime) : DateTime(tmtime.tm_year+1900, tmtime.tm_mon+1, tmtime.tm_mday, tmtime.tm_hour, tmtime.tm_min) { }
 DateTime::~DateTime() = default;
 
 
@@ -68,12 +73,27 @@ bool operator== (const DateTime &lhs, const DateTime &rhs) {
 }
 bool operator< (const DateTime &lhs, const DateTime &rhs) {
   if(lhs.getYear() < rhs.getYear()) return true;
-  if(lhs.getMonth() < rhs.getMonth()) return true;
-  if(lhs.getDay() < rhs.getDay()) return true;
-  if(lhs.getHours() < rhs.getHours()) return true;
-  return lhs.getMinutes() < rhs.getMinutes();
+  else if(lhs.getYear() == rhs.getYear()) {
+    if(lhs.getMonth() < rhs.getMonth()) return true;
+    else if(lhs.getMonth() == rhs.getMonth()) {
+      if(lhs.getDay() < rhs.getDay()) return true;
+      else if(lhs.getDay() == rhs.getDay()) {
+        if(lhs.getHours() < rhs.getHours()) return true;
+        else if(lhs.getHours() == rhs.getHours()) {
+          if(lhs.getMinutes() < rhs.getMinutes()) return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 bool operator> (const DateTime &lhs, const DateTime &rhs) {
   return !(lhs < rhs || lhs == rhs);
+}
+bool operator<= (const DateTime& lhs, const DateTime& rhs) {
+  return (lhs < rhs || lhs == rhs);
+}
+bool operator>= (const DateTime& lhs, const DateTime& rhs) {
+  return (lhs > rhs || lhs == rhs);
 }
 

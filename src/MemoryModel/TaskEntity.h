@@ -15,7 +15,7 @@ class TaskEntity {
   TaskEntity(const Task &task, const TaskID &id);
 
  public:
-  [[nodiscard]] TaskID                                     getUserID() const;
+  TaskID                                     getID() const;
   [[nodiscard]] std::string                                getName() const;
   [[nodiscard]] std::string                                getLabel() const;
   [[nodiscard]] Task::Priority                             getPriority() const;

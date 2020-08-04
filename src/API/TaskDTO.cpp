@@ -10,7 +10,7 @@ TaskDTO::TaskDTO(const TaskEntity& task) : task(task) {}
 
 TaskDTO::~TaskDTO() = default;
 
-TaskID TaskDTO::getUserID() const { return task.getUserID(); }
+TaskID TaskDTO::getID() const { return task.getID(); }
 
 std::string TaskDTO::getName() const { return task.getTask().getName(); }
 
@@ -22,4 +22,3 @@ DueTime TaskDTO::getDueTime() const { return task.getDueTime(); }
 
 bool TaskDTO::getStatus() const { return task.getStatus(); }
 
-size_t TaskDTO::getSubtasksAmount() const { return task.getSubtasks().size(); }
