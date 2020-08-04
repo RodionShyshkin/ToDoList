@@ -14,13 +14,12 @@ class TaskDTO {
   ~TaskDTO();
 
  public:
-  TaskID getUserID() const;
+  TaskID getID() const;
   std::string getName() const;
   std::string getLabel() const;
   Task::Priority getPriority() const;
   DueTime getDueTime() const;
   bool getStatus() const;
-  size_t getSubtasksAmount() const;
 
  private:
   TaskEntity task;

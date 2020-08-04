@@ -34,6 +34,8 @@ class DateTime {
   friend bool                   operator== (const DateTime &lhs, const DateTime &rhs);
   friend bool                   operator< (const DateTime &lhs, const DateTime &rhs);
   friend bool                   operator> (const DateTime& lhs, const DateTime& rhs);
+  friend bool                   operator<= (const DateTime& lhs, const DateTime& rhs);
+  friend bool                   operator>= (const DateTime& lhs, const DateTime& rhs);
 
  private:
   tm                            time;

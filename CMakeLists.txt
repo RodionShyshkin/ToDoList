@@ -19,6 +19,6 @@ include_directories(${Boost_INCLUDE_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
 add_executable(Tests tests/DateTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskServiceTest.cpp
-        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskOwner.cpp src/MemoryModel/TaskOwner.h src/API/TaskView.cpp src/API/TaskView.h)
+        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskOwner.cpp src/MemoryModel/TaskOwner.h src/API/TaskView.cpp src/API/TaskView.h tests/TaskViewTest.cpp)
 target_link_libraries(Tests gtest gtest_main)
 

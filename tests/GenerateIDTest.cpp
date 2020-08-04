@@ -19,7 +19,7 @@ TEST_F(GenerateIDTest, GenerateID) {
 
   auto allTasks = service.getAllTasks();
 
-  ASSERT_EQ(1, allTasks[0].getUserID());
-  ASSERT_EQ(2, allTasks[1].getUserID());
-  ASSERT_EQ(3, allTasks[2].getUserID());
+  ASSERT_EQ(1, allTasks[0].getID());
+  ASSERT_EQ(2, allTasks[1].getID());
+  ASSERT_EQ(3, allTasks[2].getID());
 }

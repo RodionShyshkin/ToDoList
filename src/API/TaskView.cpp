@@ -37,7 +37,7 @@ std::vector<TaskEntity> TaskView::getWeekTasks() {
   auto leftBorder = getCurrentTime();
   auto rightBorder = addWeek(leftBorder);
   for(auto [date, task] : date_sorted) {
-    if(date > leftBorder && date < rightBorder) searchResult.push_back(*task);
+    if(date >= leftBorder && date <= rightBorder) searchResult.push_back(*task);
   }
   return searchResult;
 }

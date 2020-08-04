@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "DateTime.h"
+#include "DueTime.h"
 
 using testing::Eq;
 
@@ -64,4 +64,65 @@ TEST_F(DateTimeTest, addWeek) {
   ASSERT_EQ(2021, addWeek(check).getYear());
   ASSERT_EQ(1, addWeek(check).getMonth());
   ASSERT_EQ(4, addWeek(check).getDay());
+}
+
+TEST_F(DateTimeTest, getCurrentTime) {
+  auto check = getCurrentTime();
+
+  time_t t = time(0);
+  struct tm * now = localtime(&t);
+
+  ASSERT_EQ(now->tm_year + 1900, check.getYear());
+  ASSERT_EQ(now->tm_mon + 1, check.getMonth());
+  ASSERT_EQ(now->tm_mday, check.getDay());
+  ASSERT_EQ(now->tm_hour, check.getHours());
+  ASSERT_EQ(now->tm_min, check.getMinutes());
+}
+
+TEST_F(DateTimeTest, copyConstructor) {
+  tm time = {11, 12, 13, 8, 0, 34};
+  auto check = DateTime(time);
+
+  ASSERT_EQ(check.getYear(), 1934);
+  ASSERT_EQ(check.getMonth(), 1);
+  ASSERT_EQ(check.getDay(), 8);
+  ASSERT_EQ(check.getHours(), 13);
+  ASSERT_EQ(check.getMinutes(), 12);
+}
+
+TEST_F(DateTimeTest, lessOperator) {
+  auto lhs = DueTime(DateTime(1934, 2, 8, 13, 12));
+  auto rhs = DueTime(DateTime(1933, 2, 8, 13, 12));
+  ASSERT_EQ(true, lhs > rhs);
+
+  rhs = DueTime(DateTime(1934, 1, 8, 13, 12));
+  ASSERT_EQ(true, lhs > rhs);
+
+  rhs = DueTime(DateTime(1934, 2, 7, 13, 12));
+  ASSERT_EQ(true, lhs > rhs);
+
+  rhs = DueTime(DateTime(1934, 2, 8, 12, 12));
+  ASSERT_EQ(true, lhs > rhs);
+
+  rhs = DueTime(DateTime(1934, 2, 8, 13, 11));
+  ASSERT_EQ(true, lhs > rhs);
+
+  rhs = DueTime(DateTime(1933, 1, 7, 12, 11));
+  ASSERT_EQ(true, lhs > rhs);
+
+  rhs = DueTime(DateTime(1934, 2, 8, 13, 12));
+  ASSERT_EQ(false, lhs > rhs);
+
+  rhs = DueTime(DateTime(1934, 3, 8, 13, 12));
+  ASSERT_EQ(false, lhs > rhs);
+
+  rhs = DueTime(DateTime(1935, 2, 8, 13, 12));
+  ASSERT_EQ(false, lhs > rhs);
+}
+
+TEST_F(DateTimeTest, getTime) {
+  auto date_time = DateTime(1934, 2, 8, 13, 12);
+  auto due_time = DueTime(date_time);
+
+  ASSERT_EQ(due_time.getTime(), date_time);
 }

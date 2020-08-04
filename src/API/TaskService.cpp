@@ -52,7 +52,7 @@ std::vector<TaskDTO> TaskService::getTasksForLabel(const std::string &label) {
 TaskDTO TaskService::getTaskByID(const TaskID &id) {
   auto tasks = task_view_.getAllTasks();
   for(auto task : tasks) {
-    if(task.getUserID() == id) return TaskDTO(task);
+    if(task.getID() == id) return TaskDTO(task);
   }
 }
 
@@ -73,28 +73,3 @@ bool TaskService::addSubtask(const TaskID &id, const Task &subtask) {
   }
   return false;
 }
-
-/*void TaskService::removeTask(const TaskID &id) {
-  auto taskToRemove = std::make_shared<TaskEntity>();
-  size_t NumInVector;
-  auto IteratorInMultimap = sortedTasks.begin();
-
-  for (auto counter = 0; counter < tasks.size(); counter++) {
-    if (tasks[counter]->getUserID() == id) {
-      taskToRemove = tasks[counter];
-      NumInVector = counter;
-      break;
-    }
-  }
-  for (auto it = sortedTasks.begin(); it != sortedTasks.end(); ++it) {
-    if (it->second->getUserID() == id) {
-      IteratorInMultimap = it;
-      break;
-    }
-  }
-
-  tasks.erase(tasks.begin() + NumInVector);
-  sortedTasks.erase(IteratorInMultimap);
-}
-
-*/
