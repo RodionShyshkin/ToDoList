@@ -5,6 +5,9 @@
 #include "DateTime.h"
 
 DateTime addWeek(const DateTime &oldtime) {
+//  std::chrono::system_clock::time_point newerr = std::chrono::system_clock::now() + std::chrono::hours(24);
+ //std::cout << newerr << std::endl;
+
   DateTime newtime = oldtime;
   newtime.setDay(newtime.getDay() + 7);
   if(newtime.getDay() > getDaysCount(newtime.getMonth(), newtime.getYear())) {
@@ -19,6 +22,8 @@ DateTime addWeek(const DateTime &oldtime) {
 }
 
 DateTime getCurrentTime() {
+ // auto local_time = boost::chrono::system_clock::now();
+
   time_t t = time(0);
   struct tm * now = localtime(&t);
   return DateTime(now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min);
