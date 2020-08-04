@@ -9,7 +9,7 @@ using Pointer = std::shared_ptr<TaskEntity>;
 using Vector = std::vector<TaskDTO>;
 using Multimap = std::multimap<Task::Priority, Pointer>;
 
-TaskService::TaskService() : task_factory_(TaskFactory()) {}
+TaskService::TaskService() : owner_(TaskOwner()) {}
 TaskService::~TaskService() = default;
 
 
@@ -57,13 +57,16 @@ TaskDTO TaskService::getTaskByID(const TaskID &id) {
 }
 
 void TaskService::addTask(const Task &task) {
-  task_view_.addTask(task_factory_.addTask(task));
+  auto newid = owner_.generateID();
+  auto task_ptr = std::make_shared<TaskEntity>(task, newid);
+  owner_.pushTask(std::make_pair(newid, task_ptr));
 }
 
 bool TaskService::addSubtask(const TaskID &id, const Task &subtask) {
-  auto task = task_factory_.addSubtask(id, subtask);
-  if(task.has_value()) {
-    task_view_.addTask(task.value());
+  if(owner_.if_exist(id)) {
+    auto newid = owner_.generateID();
+    auto task_ptr = std::make_shared<TaskEntity>(subtask, newid);
+    owner_.pushTask(std::make_pair(newid, task_ptr));
     return true;
   }
   return false;

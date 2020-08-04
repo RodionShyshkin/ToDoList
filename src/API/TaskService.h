@@ -9,7 +9,7 @@
 #include "GenerateID.h"
 #include "TaskDTO.h"
 #include "TaskView.h"
-#include "TaskFactory.h"
+#include "TaskOwner.h"
 #include <map>
 
 class TaskService {
@@ -35,7 +35,7 @@ class TaskService {
 
  private:
   TaskView                          task_view_;
-  TaskFactory                       task_factory_;
+  TaskOwner                         owner_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

@@ -18,6 +18,6 @@ include_directories(src/API)
 include_directories(tests)
 
 add_executable(Tests tests/DateTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskServiceTest.cpp
-        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskFactory.cpp src/MemoryModel/TaskFactory.h src/API/TaskView.cpp src/API/TaskView.h)
+        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskOwner.cpp src/MemoryModel/TaskOwner.h src/API/TaskView.cpp src/API/TaskView.h)
 target_link_libraries(Tests gtest gtest_main)
 
