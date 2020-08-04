@@ -23,7 +23,7 @@ class TaskOwner {
 
  private:
   std::map<TaskID, std::shared_ptr<TaskEntity>>     tasks;
-  GenerateID                                        newID;
+  GenerateID                                        generate_id_;
 };
 
 #endif //TODOLIST_SRC_API_TASKFACTORY_H_

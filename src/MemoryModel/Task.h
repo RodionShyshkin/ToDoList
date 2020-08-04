@@ -33,7 +33,7 @@ class Task {
  private:
   std::string                     name;
   std::string                     label;
-  DueTime                         duetime;
+  DueTime                         due_time;
   Priority                        priority;
 };
 

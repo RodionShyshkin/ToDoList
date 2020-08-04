@@ -11,6 +11,3 @@ GenerateID::~GenerateID() = default;
 TaskID GenerateID::generateID() {
   return TaskID(++ids);
 }
-
-
-

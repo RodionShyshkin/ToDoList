@@ -4,11 +4,11 @@
 
 #include "TaskOwner.h"
 
-TaskOwner::TaskOwner() : newID(GenerateID()) {}
+TaskOwner::TaskOwner() : generate_id_(GenerateID()) {}
 
 TaskOwner::~TaskOwner() = default;
 
-TaskID TaskOwner::generateID() { return newID.generateID(); }
+TaskID TaskOwner::generateID() { return generate_id_.generateID(); }
 
 void TaskOwner::pushTask(const std::pair<TaskID, std::shared_ptr<TaskEntity> >& task) {
   tasks.insert(task);

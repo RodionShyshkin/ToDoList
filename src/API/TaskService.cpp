@@ -60,6 +60,7 @@ void TaskService::addTask(const Task &task) {
   auto newid = owner_.generateID();
   auto task_ptr = std::make_shared<TaskEntity>(task, newid);
   owner_.pushTask(std::make_pair(newid, task_ptr));
+  task_view_.addTask(task_ptr);
 }
 
 bool TaskService::addSubtask(const TaskID &id, const Task &subtask) {
@@ -67,6 +68,7 @@ bool TaskService::addSubtask(const TaskID &id, const Task &subtask) {
     auto newid = owner_.generateID();
     auto task_ptr = std::make_shared<TaskEntity>(subtask, newid);
     owner_.pushTask(std::make_pair(newid, task_ptr));
+    task_view_.addTask(task_ptr);
     return true;
   }
   return false;
