@@ -7,6 +7,7 @@
 
 #include <ctime>
 #include <iostream>
+#include <memory>
 //#include <boost/chrono.hpp>
 //#include <boost/chrono/chrono_io.hpp>
 //#include <boost/chrono/duration.hpp>
@@ -26,16 +27,20 @@ class DateTime {
   [[nodiscard]] unsigned int    getMinutes() const;
 
  public:
-  void                          setYear(unsigned int value);
-  void                          setMonth(unsigned int value);
-  void                          setDay(unsigned int value);
+  void                          setYear(const unsigned int& value);
+  void                          setMonth(const unsigned int& value);
+  void                          setDay(const unsigned int& value);
+  void                          setHours(const unsigned int& value);
+  void                          setMinutes(const unsigned int& value);
+
+  DateTime                      validateTime();
 
  public:
-  bool operator==(DateTime time) const;
-  bool operator< (DateTime time) const;
-  bool operator> (DateTime time) const;
-  bool operator<= (DateTime time) const;
-  bool operator>= (DateTime time) const;
+  bool                          operator==(DateTime time) const;
+  bool                          operator< (DateTime time) const;
+  bool                          operator> (DateTime time) const;
+  bool                          operator<= (DateTime time) const;
+  bool                          operator>= (DateTime time) const;
 
  private:
   tm                            time;
@@ -44,5 +49,6 @@ class DateTime {
 unsigned int                    getDaysCount(unsigned int month, unsigned int year);
 DateTime                        getCurrentTime();
 DateTime                        addWeek(const DateTime &oldtime);
+DateTime                        updateTime(std::shared_ptr<DateTime> time);
 
 #endif //TODOLIST__DUETIME_H_

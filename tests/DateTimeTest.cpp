@@ -60,10 +60,17 @@ TEST_F(DateTimeTest, CorrectDay) {
 TEST_F(DateTimeTest, addWeek) {
   DateTime check(2020, 12, 28, 10, 10);
   EXPECT_NO_THROW(DateTime(addWeek(check)));
-
+  auto add_week = addWeek(check);
   ASSERT_EQ(2021, addWeek(check).getYear());
   ASSERT_EQ(1, addWeek(check).getMonth());
   ASSERT_EQ(4, addWeek(check).getDay());
+
+  add_week = addWeek(DateTime(2020, 8, 5, 13, 35));
+  ASSERT_EQ(2020, add_week.getYear());
+  ASSERT_EQ(8, add_week.getMonth());
+  ASSERT_EQ(12, add_week.getDay());
+  ASSERT_EQ(13, add_week.getHours());
+  ASSERT_EQ(35, add_week.getMinutes());
 }
 
 TEST_F(DateTimeTest, getCurrentTime) {
@@ -90,8 +97,9 @@ TEST_F(DateTimeTest, copyConstructor) {
   ASSERT_EQ(check.getMinutes(), 12);
 }
 
-TEST_F(DateTimeTest, lessOperator) {
+TEST_F(DateTimeTest, moreOperator) {
   auto lhs = DueTime(DateTime(1934, 2, 8, 13, 12));
+
   auto rhs = DueTime(DateTime(1933, 2, 8, 13, 12));
   ASSERT_EQ(true, lhs > rhs);
 
@@ -118,6 +126,45 @@ TEST_F(DateTimeTest, lessOperator) {
 
   rhs = DueTime(DateTime(1935, 2, 8, 13, 12));
   ASSERT_EQ(false, lhs > rhs);
+}
+
+TEST_F(DateTimeTest, lessOperator) {
+  auto lhs = DateTime(2000, 12, 30, 22, 0); // lhs : 30.12.2000 22:00
+
+  auto rhs = DateTime(2000, 12, 30, 22, 1);
+  ASSERT_EQ(true, lhs < rhs);
+
+  rhs = DateTime(2000, 12, 30, 23, 0);
+  ASSERT_EQ(true, lhs < rhs);
+
+  rhs = DateTime(2000, 12, 31, 22, 0);
+  ASSERT_EQ(true, lhs < rhs);
+
+  rhs = DateTime(2001, 1, 1, 1, 0);
+  ASSERT_EQ(true, lhs < rhs);
+}
+
+TEST_F(DateTimeTest, timeInterval) {
+/*  auto left_border = DateTime(2004, 1, 1, 1, 0);
+  auto right_border = DateTime(2008, 12, 31, 23, 59);
+  std::vector<DateTime> array;
+  array.push_back(DateTime(2010, 02, 17, 6, 7));
+  array.push_back(DateTime(2001, 12, 29, 22, 46));
+  array.push_back(DateTime(2004, 3, 19, 11, 17)); //2
+  array.push_back(DateTime(2013, 6, 4, 19, 44));
+  array.push_back(DateTime(2007, 12, 21, 2, 23)); //4
+  array.push_back(DateTime(2005, 6, 15, 23, 59)); //5
+  array.push_back(DateTime(2004, 2, 2, 17, 34)); //6
+  array.push_back(DateTime(2002, 3, 15, 16, 05));
+  array.push_back(DateTime(2008, 12, 31, 23, 59)); //8
+
+  for(size_t i = 0; i < array.size(); i++) {
+    if(array[i] >= left_border && array[i] <= right_border) {
+      std::cout << i << std::endl;
+    }
+  }
+
+  ASSERT_EQ()*/
 }
 
 TEST_F(DateTimeTest, getTime) {
