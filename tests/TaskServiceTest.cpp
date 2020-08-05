@@ -23,7 +23,7 @@ TEST_F(TaskServiceTest, addTask) {
   ASSERT_EQ("Task", task.getName());
   ASSERT_EQ("test", task.getLabel());
   ASSERT_EQ(Task::Priority::EMPTY, task.getPriority());
-  ASSERT_EQ(DateTime(2020, 10, 10, 10, 10), task.getDueTime());
+  ASSERT_EQ(DueTime(DateTime(2020, 10, 10, 10, 10)), task.getDueTime());
   ASSERT_EQ(false, task.getStatus());
 }
 
@@ -39,8 +39,8 @@ TEST_F(TaskServiceTest, addSubtask) {
 
   auto tasks = service.getAllTasks();
   ASSERT_EQ(2, tasks.size());
-  ASSERT_EQ(1, tasks[0].getID());
-  ASSERT_EQ(2, tasks[1].getID());
+  ASSERT_EQ(tasks[0].getID(), 1);
+  ASSERT_EQ(tasks[1].getID(), 2);
 }
 
 TEST_F(TaskServiceTest, getTasksForToday) {
@@ -92,7 +92,15 @@ TEST_F(TaskServiceTest, getTaskForLabel) {
 
   service.addTask(Task("Task 1", "test", Task::Priority::EMPTY, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 2", "test", Task::Priority::HIGH, DateTime(2020, 1, 1, 1, 1)));
-  service.addTask(Task("Task 3", "test", Task::Priority::HIGH, DateTime(2020, 1, 1, 1, 1)));
+
+ /* bool operator< (const TaskID& task) {
+    return this->id_ < task.get_id();
+  }*/
+
+/*  operator unsigned int() const {
+    return id_;
+  }*/
+service.addTask(Task("Task 3", "test", Task::Priority::HIGH, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 4", "test", Task::Priority::LOW, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 5", "test 2", Task::Priority::MEDIUM, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 6", "test 2", Task::Priority::MEDIUM, DateTime(2020, 1, 1, 1, 1)));

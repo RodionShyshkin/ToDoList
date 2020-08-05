@@ -13,8 +13,17 @@ class TaskID {
   TaskID(const unsigned int &id);
 
  public:
-  friend bool       operator== (const TaskID &lhs, const TaskID &rhs);
-  friend bool       operator< (const TaskID& lhs, const TaskID& rhs);
+  unsigned int get_id() const {
+    return this->id_;
+  }
+
+ public:
+//  friend bool operator== (const TaskID& lhs, const TaskID &rhs);
+  //friend bool operator< (const TaskID& lhs, const TaskID& rhs);
+
+  bool operator== (TaskID id) const;
+  bool operator== (unsigned int num) const;
+  bool operator< (TaskID id) const;
 
  private:
   unsigned int      id_;

@@ -31,11 +31,11 @@ class DateTime {
   void                          setDay(unsigned int value);
 
  public:
-  friend bool                   operator== (const DateTime &lhs, const DateTime &rhs);
-  friend bool                   operator< (const DateTime &lhs, const DateTime &rhs);
-  friend bool                   operator> (const DateTime& lhs, const DateTime& rhs);
-  friend bool                   operator<= (const DateTime& lhs, const DateTime& rhs);
-  friend bool                   operator>= (const DateTime& lhs, const DateTime& rhs);
+  bool operator==(DateTime time) const;
+  bool operator< (DateTime time) const;
+  bool operator> (DateTime time) const;
+  bool operator<= (DateTime time) const;
+  bool operator>= (DateTime time) const;
 
  private:
   tm                            time;

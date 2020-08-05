@@ -64,36 +64,36 @@ void DateTime::setMonth(unsigned int value) { this->time.tm_mon = value; }
 void DateTime::setDay(unsigned int value) { this->time.tm_mday = value; }
 
 
-bool operator== (const DateTime &lhs, const DateTime &rhs) {
-  if(lhs.getMinutes() != rhs.getMinutes()) return false;
-  if(lhs.getHours() != rhs.getHours()) return false;
-  if(lhs.getDay() != rhs.getDay()) return false;
-  if(lhs.getMonth() != rhs.getMonth()) return false;
-  return lhs.getYear() == rhs.getYear();
+bool DateTime::operator== (DateTime time) const {
+  if(this->getMinutes() != time.getMinutes()) return false;
+  if(this->getHours() != time.getHours()) return false;
+  if(this->getDay() != time.getDay()) return false;
+  if(this->getMonth() != time.getMonth()) return false;
+  return this->getYear() == time.getYear();
 }
-bool operator< (const DateTime &lhs, const DateTime &rhs) {
-  if(lhs.getYear() < rhs.getYear()) return true;
-  else if(lhs.getYear() == rhs.getYear()) {
-    if(lhs.getMonth() < rhs.getMonth()) return true;
-    else if(lhs.getMonth() == rhs.getMonth()) {
-      if(lhs.getDay() < rhs.getDay()) return true;
-      else if(lhs.getDay() == rhs.getDay()) {
-        if(lhs.getHours() < rhs.getHours()) return true;
-        else if(lhs.getHours() == rhs.getHours()) {
-          if(lhs.getMinutes() < rhs.getMinutes()) return true;
+bool DateTime::operator< (DateTime time) const {
+  if(this->getYear() < time.getYear()) return true;
+  else if(this->getYear() == time.getYear()) {
+    if(this->getMonth() < time.getMonth()) return true;
+    else if(this->getMonth() == time.getMonth()) {
+      if(this->getDay() < time.getDay()) return true;
+      else if(this->getDay() == time.getDay()) {
+        if(this->getHours() < time.getHours()) return true;
+        else if(this->getHours() == time.getHours()) {
+          if(this->getMinutes() < time.getMinutes()) return true;
         }
       }
     }
   }
   return false;
 }
-bool operator> (const DateTime &lhs, const DateTime &rhs) {
-  return !(lhs < rhs || lhs == rhs);
+bool DateTime::operator> (DateTime time) const {
+  return !(*this < time || *this == time);
 }
-bool operator<= (const DateTime& lhs, const DateTime& rhs) {
-  return (lhs < rhs || lhs == rhs);
+bool DateTime::operator<= (DateTime time) const{
+  return (*this < time || *this == time);
 }
-bool operator>= (const DateTime& lhs, const DateTime& rhs) {
-  return (lhs > rhs || lhs == rhs);
+bool DateTime::operator>= (DateTime time) const {
+  return (*this > time || *this == time);
 }
 

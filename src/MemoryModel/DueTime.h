@@ -17,11 +17,11 @@ class DueTime {
   [[nodiscard]] DateTime      getTime() const;
 
  public:
-  friend bool                 operator== (const DueTime &lhs, const DueTime &rhs);
-  friend bool                 operator< (const DueTime &lhs, const DueTime &rhs);
-  friend bool                 operator> (const DueTime &lhs, const DueTime &rhs);
-  friend bool                 operator<= (const DueTime& lhs, const DueTime& rhs);
-  friend bool                 operator>= (const DueTime& lhs, const DueTime& rhs);
+  bool operator== (DueTime time) const;
+  bool operator< (DueTime time) const;
+  bool operator> (DueTime time) const;
+  bool operator<= (DueTime time) const;
+  bool operator>= (DueTime time) const;
 
  private:
   DateTime                    time_;

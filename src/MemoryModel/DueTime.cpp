@@ -12,8 +12,18 @@ DueTime::~DueTime() = default;
 
 DateTime DueTime::getTime() const { return time_; }
 
-bool operator== (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ == rhs.time_); }
-bool operator< (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ < rhs.time_; }
-bool operator> (const DueTime &lhs, const DueTime &rhs) { return (lhs.time_ > rhs.time_); }
-bool operator<= (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ <= rhs.time_; }
-bool operator>= (const DueTime &lhs, const DueTime &rhs) { return lhs.time_ >= rhs.time_; }
+bool DueTime::operator==(DueTime time) const {
+  return (this->getTime() == time.getTime());
+}
+bool DueTime::operator<(DueTime time) const {
+  return (this->getTime() < time.getTime());
+}
+bool DueTime::operator>(DueTime time) const {
+  return (this->getTime() > time.getTime());
+}
+bool DueTime::operator<=(DueTime time) const {
+  return (this->getTime() <= time.getTime());
+}
+bool DueTime::operator>=(DueTime time) const {
+  return (this->getTime() >= time.getTime());
+}
