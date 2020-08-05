@@ -25,12 +25,3 @@ std::vector<std::shared_ptr<TaskEntity>> TaskEntity::getSubtasks() const { retur
 void TaskEntity::AddSubtask(const std::shared_ptr<TaskEntity> &task) {
   subtasks.push_back(task);
 }
-
-/*void TaskEntity::setComplete() {
-  this->status = true;
-}
-
-void TaskEntity::substituteTask(const Task &newtask) {
-  this->task = newtask;
-}
-*/

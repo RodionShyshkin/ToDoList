@@ -24,14 +24,9 @@ class TaskService {
   std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
   TaskDTO                           getTaskByID(const TaskID &id);
 
-
   void                              addTask(const Task &task);
   bool                              addSubtask(const TaskID &id, const Task &subtask);
-//  void                              removeTask(const TaskID &id);
 
-
-//  void                              completeTask(const TaskID &id);
-//  void                              postponeTask(const TaskID &id, const DateTime &newtime);
 
  private:
   TaskView                          task_view_;

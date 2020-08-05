@@ -77,15 +77,7 @@ TEST_F(TaskServiceTest, getTaskForLabel) {
 
   service.addTask(Task("Task 1", "test", Task::Priority::EMPTY, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 2", "test", Task::Priority::HIGH, DateTime(2020, 1, 1, 1, 1)));
-
- /* bool operator< (const TaskID& task) {
-    return this->id_ < task.get_id();
-  }*/
-
-/*  operator unsigned int() const {
-    return id_;
-  }*/
-service.addTask(Task("Task 3", "test", Task::Priority::HIGH, DateTime(2020, 1, 1, 1, 1)));
+  service.addTask(Task("Task 3", "test", Task::Priority::HIGH, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 4", "test", Task::Priority::LOW, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 5", "test 2", Task::Priority::MEDIUM, DateTime(2020, 1, 1, 1, 1)));
   service.addTask(Task("Task 6", "test 2", Task::Priority::MEDIUM, DateTime(2020, 1, 1, 1, 1)));

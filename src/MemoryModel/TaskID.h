@@ -18,9 +18,6 @@ class TaskID {
   }
 
  public:
-//  friend bool operator== (const TaskID& lhs, const TaskID &rhs);
-  //friend bool operator< (const TaskID& lhs, const TaskID& rhs);
-
   bool operator== (TaskID id) const;
   bool operator== (unsigned int num) const;
   bool operator< (TaskID id) const;
