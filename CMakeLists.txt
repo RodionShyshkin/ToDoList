@@ -17,24 +17,18 @@ set(Boost_USE_RELEASE_LIBS      ON)
 set(Boost_USE_MULTITHREADED     ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
-#find_package(Boost REQUIRED COMPONENTS Chrono)
+find_package(Boost 1.65.1 REQUIRED COMPONENTS)
+
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
-
-
-#add_subdirectory(lib/googletest-master)
-#include_directories(lib/googletest-master/googletest/include)
-#include_directories(src/MemoryModel)
-#include_directories(src/API)
-#include_directories(tests)
 
 include_directories(src)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
-add_executable(Tests tests/DateTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskServiceTest.cpp
-        src/MemoryModel/DateTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskStorage.cpp src/MemoryModel/TaskStorage.h src/MemoryModel/TaskView.cpp src/MemoryModel/TaskView.h tests/TaskViewTest.cpp tests/TaskTest.cpp tests/TaskIDTest.cpp tests/TaskStorageTest.cpp tests/TaskDTOTest.cpp src/MemoryModel/TaskServiceStorage.cpp src/MemoryModel/TaskServiceStorage.h tests/TaskServiceStorageTest.cpp)
+add_executable(Tests tests/MemoryModel/DateTimeTest.cpp tests/MemoryModel/GenerateIDTest.cpp tests/API/TaskServiceTest.cpp
+        src/MemoryModel/DateTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/MemoryModel/TaskEntityTest.cpp src/MemoryModel/TaskStorage.cpp src/MemoryModel/TaskStorage.h src/MemoryModel/TaskView.cpp src/MemoryModel/TaskView.h tests/MemoryModel/TaskViewTest.cpp tests/MemoryModel/TaskTest.cpp tests/MemoryModel/TaskIDTest.cpp tests/MemoryModel/TaskStorageTest.cpp tests/API/TaskDTOTest.cpp src/MemoryModel/TaskServiceStorage.cpp src/MemoryModel/TaskServiceStorage.h tests/MemoryModel/TaskServiceStorageTest.cpp)
 #target_link_libraries(Tests gtest gtest_main)
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})
