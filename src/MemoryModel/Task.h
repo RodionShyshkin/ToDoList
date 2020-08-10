@@ -24,10 +24,10 @@ class Task {
   Task(const Task &task);
 
  public:
-  std::string       getName() const;
-  std::string       getLabel() const;
-  Priority          getPriority() const;
-  DateTime          getDate() const;
+  std::string                     getName() const;
+  std::string                     getLabel() const;
+  Priority                        getPriority() const;
+  DateTime                        getDate() const;
 
  private:
   std::string                     name;

@@ -5,10 +5,6 @@
 #include <algorithm>
 #include "TaskService.h"
 
-using Pointer = std::shared_ptr<TaskEntity>;
-using Vector = std::vector<TaskDTO>;
-using Multimap = std::multimap<Task::Priority, Pointer>;
-
 TaskService::TaskService() : task_service_storage_(TaskServiceStorage()) {}
 
 std::vector<TaskDTO> TaskService::getAllTasks() {
