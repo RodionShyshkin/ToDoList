@@ -8,6 +8,7 @@
 #include <API/TaskDTO.h>
 #include "MemoryModel/TaskStorage.h"
 #include "MemoryModel/TaskView.h"
+#include "OperationResult.h"
 
 class TaskServiceStorage {
  public:
@@ -21,8 +22,9 @@ class TaskServiceStorage {
   std::vector<TaskDTO>              getTasksForName(const std::string &name);
   std::optional<TaskDTO>            getTaskByID(const TaskID &id);
 
-  std::optional<TaskDTO>            AddTask(const Task &task);
-  std::optional<TaskDTO>            AddSubtask(const TaskID &id, const Task &subtask);
+//  std::optional<TaskDTO>            AddTask(const Task &task);
+  OperationResult                   AddTask(const Task &task);
+  OperationResult                   AddSubtask(const TaskID &id, const Task &subtask);
 
  private:
   TaskStorage                       task_storage_;

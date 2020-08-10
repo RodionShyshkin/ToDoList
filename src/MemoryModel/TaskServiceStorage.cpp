@@ -60,7 +60,7 @@ std::optional<TaskDTO> TaskServiceStorage::getTaskByID(const TaskID &id) {
   return std::nullopt;
 }
 
-std::optional<TaskDTO> TaskServiceStorage::AddTask(const Task &task) {
+OperationResult TaskServiceStorage::AddTask(const Task &task) {
   auto newid = generate_id_.generateID();
   auto newtask = TaskEntity(task, newid);
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
@@ -68,13 +68,13 @@ std::optional<TaskDTO> TaskServiceStorage::AddTask(const Task &task) {
   task_storage_.pushTask(std::make_pair(newid, task_ptr));
   task_view_.addTask(task_ptr);
 
-  if(newid.get_id() > 9999) return std::nullopt;
-  return TaskDTO(newid, task, newtask.getStatus());
+  if(newid.get_id() > 9999) return OperationResult(OperationResult::create_error(Error::Code::MEMORY_LIMIT));
+  return OperationResult(std::nullopt);
 }
 
-std::optional<TaskDTO> TaskServiceStorage::AddSubtask(const TaskID &id, const Task &subtask) {
+OperationResult TaskServiceStorage::AddSubtask(const TaskID &id, const Task &subtask) {
   auto task = task_storage_.getTask(id);
-  if(!task.has_value()) return std::nullopt;
+  if(!task.has_value()) return OperationResult(OperationResult::create_error(Error::Code::PARENT_NOT_FOUND));
 
   auto newid = generate_id_.generateID();
   auto newtask = TaskEntity(subtask, newid);
@@ -84,6 +84,6 @@ std::optional<TaskDTO> TaskServiceStorage::AddSubtask(const TaskID &id, const Ta
   task_view_.addTask(task_ptr);
   task.value()->AddSubtask(task_ptr);
 
-  if(newid.get_id() > 9999) return std::nullopt;
-  return TaskDTO(newid, subtask, newtask.getStatus());
+  if(newid.get_id() > 9999) return OperationResult(OperationResult::create_error(Error::Code::MEMORY_LIMIT));
+  return OperationResult(std::nullopt);
 }

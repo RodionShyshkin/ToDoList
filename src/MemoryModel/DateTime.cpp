@@ -18,7 +18,6 @@ DateTime::DateTime() = default;
 
 DateTime::DateTime(boost::gregorian::date due_date) {
   this->due_date = due_date;
-//  this->due_time = due_time;
 }
 
 DateTime::DateTime(int year, int month, int day) {

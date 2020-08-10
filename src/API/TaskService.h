@@ -20,8 +20,8 @@ class TaskService {
   std::vector<TaskDTO>              getTasksForWeek();
   std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
 
-  std::optional<TaskDTO>            addTask(const Task &task);
-  std::optional<TaskDTO>            addSubtask(const TaskID &id, const Task &subtask);
+  OperationResult                   addTask(const Task &task);
+  OperationResult                   addSubtask(const TaskID &id, const Task &subtask);
 
 
  private:
