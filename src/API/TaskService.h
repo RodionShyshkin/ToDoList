@@ -10,6 +10,14 @@
 #include <optional>
 #include <MemoryModel/TaskServiceStorage.h>
 
+/*
+ * API for work with tasks.
+ *
+ * @see TaskService.cpp
+ *
+ * @author: Rodion Shyshkin
+ */
+
 class TaskService {
  public:
   TaskService();

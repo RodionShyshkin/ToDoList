@@ -9,6 +9,14 @@
 #include <optional>
 #include "MemoryModel/Error.h"
 
+/*
+ * Class representing the result of adding tasks or subtasks.
+ *
+ * @see OperationResult.cpp
+ *
+ * @author Rodion Shyshkin
+ */
+
 class OperationResult {
  public:
   OperationResult(std::optional<Error> error);
