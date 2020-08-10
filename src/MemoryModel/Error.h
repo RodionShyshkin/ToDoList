@@ -7,6 +7,14 @@
 
 #include <iostream>
 
+/*
+ * Class which keeps error code and represents its value.
+ *
+ * @see Error.cpp
+ *
+ * @author Rodion Shyshkin
+ */
+
 class Error {
  public:
   enum Code {
