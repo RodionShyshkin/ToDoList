@@ -27,10 +27,10 @@ std::vector<TaskDTO> TaskService::getTasksForLabel(const std::string &label) {
   return task_service_storage_.getTasksForLabel(label);
 }
 
-std::optional<TaskDTO> TaskService::addTask(const Task &task) {
+OperationResult TaskService::addTask(const Task &task) {
   return task_service_storage_.AddTask(task);
 }
 
-std::optional<TaskDTO> TaskService::addSubtask(const TaskID &id, const Task &subtask) {
+OperationResult TaskService::addSubtask(const TaskID &id, const Task &subtask) {
   return task_service_storage_.AddSubtask(id, subtask);
 }

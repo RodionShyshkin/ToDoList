@@ -17,6 +17,9 @@ class OperationResult {
   bool                    get_status() const;
   std::optional<Error>    get_error() const;
 
+ public:
+  static Error            create_error(Error::Code err_code);
+
  private:
   bool                    status_;
   std::optional<Error>    error_;

@@ -22,3 +22,7 @@ bool OperationResult::get_status() const {
 std::optional<Error> OperationResult::get_error() const {
   return this->error_;
 }
+
+Error OperationResult::create_error(Error::Code err_code) {
+  return Error(err_code);
+}
