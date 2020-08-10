@@ -2,35 +2,30 @@
 // Created by rodion on 7/15/20.
 //
 
-#ifndef TODOLIST__TASKMANAGER_H_
-#define TODOLIST__TASKMANAGER_H_
+#ifndef TODOLIST__TASKSERVICE_H_
+#define TODOLIST__TASKSERVICE_H_
 
-#include "TaskEntity.h"
-#include "GenerateID.h"
-#include "TaskDTO.h"
-#include "TaskView.h"
-#include "TaskOwner.h"
+#include "API/TaskDTO.h"
 #include <map>
+#include <optional>
+#include <MemoryModel/TaskServiceStorage.h>
 
 class TaskService {
  public:
   TaskService();
-  ~TaskService();
 
  public:
   std::vector<TaskDTO>              getAllTasks();
   std::vector<TaskDTO>              getTasksForToday();
   std::vector<TaskDTO>              getTasksForWeek();
   std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
-  TaskDTO                           getTaskByID(const TaskID &id);
 
-  void                              addTask(const Task &task);
-  bool                              addSubtask(const TaskID &id, const Task &subtask);
+  std::optional<TaskDTO>            addTask(const Task &task);
+  std::optional<TaskDTO>            addSubtask(const TaskID &id, const Task &subtask);
 
 
  private:
-  TaskView                          task_view_;
-  TaskOwner                         owner_;
+  TaskServiceStorage                task_service_storage_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

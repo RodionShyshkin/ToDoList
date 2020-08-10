@@ -5,7 +5,7 @@
 #ifndef TODOLIST__TASK_H_
 #define TODOLIST__TASK_H_
 
-#include "DueTime.h"
+#include "MemoryModel/DateTime.h"
 #include <vector>
 #include <memory>
 
@@ -20,20 +20,19 @@ class Task {
 
  public:
   Task();
-  Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duetime);
+  Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duedate);
   Task(const Task &task);
-  ~Task();
 
  public:
-  [[nodiscard]] std::string       getName() const;
-  [[nodiscard]] std::string       getLabel() const;
-  [[nodiscard]] Priority          getPriority() const;
-  [[nodiscard]] DueTime           getDate() const;
+  std::string       getName() const;
+  std::string       getLabel() const;
+  Priority          getPriority() const;
+  DateTime          getDate() const;
 
  private:
   std::string                     name;
   std::string                     label;
-  DueTime                         due_time;
+  DateTime                        due_date;
   Priority                        priority;
 };
 

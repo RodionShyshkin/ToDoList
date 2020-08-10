@@ -16,7 +16,7 @@ TaskID TaskEntity::getID() const { return user_id; }
 std::string TaskEntity::getName() const { return task.getName(); }
 std::string TaskEntity::getLabel() const { return task.getLabel(); }
 Task::Priority TaskEntity::getPriority() const { return task.getPriority(); }
-DueTime TaskEntity::getDueTime() const { return task.getDate(); }
+DateTime TaskEntity::getDueTime() const { return task.getDate(); }
 bool TaskEntity::getStatus() const { return status; }
 Task TaskEntity::getTask() const { return task; }
 std::vector<std::shared_ptr<TaskEntity>> TaskEntity::getSubtasks() const { return subtasks; }

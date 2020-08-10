@@ -5,20 +5,39 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(ToDoList main.cpp src/MemoryModel/Task.cpp src/MemoryModel/Task.h src/API/TaskService.cpp src/API/TaskService.h src/MemoryModel/DateTime.cpp
         src/MemoryModel/DateTime.h src/MemoryModel/TaskEntity.cpp src/MemoryModel/TaskEntity.h src/MemoryModel/GenerateID.cpp src/MemoryModel/GenerateID.h
-        src/MemoryModel/DueTime.cpp src/MemoryModel/DueTime.h src/MemoryModel/TaskID.cpp src/MemoryModel/TaskID.h)
+        src/MemoryModel/TaskID.cpp src/MemoryModel/TaskID.h)
 
-add_subdirectory(lib/googletest-master)
-include_directories(lib/googletest-master/googletest/include)
-include_directories(src/MemoryModel)
-include_directories(src/API)
-include_directories(tests)
+include(GoogleTest)
+find_package(GTest REQUIRED)
+enable_testing()
 
-set(BOOST_ROOT "/usr/include/boost/version.hpp")
-include_directories(${Boost_INCLUDE_DIR})
+set(Boost_USE_STATIC_LIBS       ON)
+set(Boost_USE_DEBUG_LIBS        OFF)
+set(Boost_USE_RELEASE_LIBS      ON)
+set(Boost_USE_MULTITHREADED     ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+
+#find_package(Boost REQUIRED COMPONENTS Chrono)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
+
+#add_subdirectory(lib/googletest-master)
+#include_directories(lib/googletest-master/googletest/include)
+#include_directories(src/MemoryModel)
+#include_directories(src/API)
+#include_directories(tests)
+
+include_directories(src)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
 add_executable(Tests tests/DateTimeTest.cpp tests/GenerateIDTest.cpp tests/TaskServiceTest.cpp
-        src/MemoryModel/DateTime.cpp src/MemoryModel/DueTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskOwner.cpp src/MemoryModel/TaskOwner.h src/API/TaskView.cpp src/API/TaskView.h tests/TaskViewTest.cpp)
-target_link_libraries(Tests gtest gtest_main)
+        src/MemoryModel/DateTime.cpp src/MemoryModel/GenerateID.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/TaskEntityTest.cpp src/MemoryModel/TaskStorage.cpp src/MemoryModel/TaskStorage.h src/MemoryModel/TaskView.cpp src/MemoryModel/TaskView.h tests/TaskViewTest.cpp tests/TaskTest.cpp tests/TaskIDTest.cpp tests/TaskStorageTest.cpp tests/TaskDTOTest.cpp src/MemoryModel/TaskServiceStorage.cpp src/MemoryModel/TaskServiceStorage.h tests/TaskServiceStorageTest.cpp)
+#target_link_libraries(Tests gtest gtest_main)
+target_link_libraries(Tests GTest::GTest GTest::Main)
+target_link_libraries(Tests ${Boost_LIBRARIES})
+
+gtest_discover_tests(Tests)
 

@@ -9,67 +9,28 @@ using Pointer = std::shared_ptr<TaskEntity>;
 using Vector = std::vector<TaskDTO>;
 using Multimap = std::multimap<Task::Priority, Pointer>;
 
-TaskService::TaskService() : owner_(TaskOwner()) {}
-TaskService::~TaskService() = default;
-
+TaskService::TaskService() : task_service_storage_(TaskServiceStorage()) {}
 
 std::vector<TaskDTO> TaskService::getAllTasks() {
-  auto tasks = task_view_.getAllTasks();
-  std::vector<TaskDTO> searchResult;
-  for(auto task : tasks) {
-    searchResult.push_back(TaskDTO(task));
-  }
-  return searchResult;
+  return task_service_storage_.getAllTasks();
 }
 
 std::vector<TaskDTO> TaskService::getTasksForToday() {
-  auto tasks = task_view_.getTodayTasks();
-  std::vector<TaskDTO> searchResult;
-  for(auto task : tasks) {
-    searchResult.push_back(TaskDTO(task));
-  }
-  return searchResult;
+  return task_service_storage_.getTasksForToday();
 }
 
 std::vector<TaskDTO> TaskService::getTasksForWeek() {
-  auto tasks = task_view_.getWeekTasks();
-  std::vector<TaskDTO> searchResult;
-  for(auto task : tasks) {
-    searchResult.push_back(TaskDTO(task));
-  }
-  return searchResult;
+  return task_service_storage_.getTasksForWeek();
 }
 
 std::vector<TaskDTO> TaskService::getTasksForLabel(const std::string &label) {
-  auto tasks = task_view_.getTasksByLabel(label);
-  std::vector<TaskDTO> searchResult;
-  for(auto task : tasks) {
-    searchResult.push_back(TaskDTO(task));
-  }
-  return searchResult;
+  return task_service_storage_.getTasksForLabel(label);
 }
 
-TaskDTO TaskService::getTaskByID(const TaskID &id) {
-  auto tasks = task_view_.getAllTasks();
-  for(auto task : tasks) {
-    if(task.getID() == id) return TaskDTO(task);
-  }
+std::optional<TaskDTO> TaskService::addTask(const Task &task) {
+  return task_service_storage_.AddTask(task);
 }
 
-void TaskService::addTask(const Task &task) {
-  auto newid = owner_.generateID();
-  auto task_ptr = std::make_shared<TaskEntity>(task, newid);
-  owner_.pushTask(std::make_pair(newid, task_ptr));
-  task_view_.addTask(task_ptr);
-}
-
-bool TaskService::addSubtask(const TaskID &id, const Task &subtask) {
-  if(owner_.if_exist(id)) {
-    auto newid = owner_.generateID();
-    auto task_ptr = std::make_shared<TaskEntity>(subtask, newid);
-    owner_.pushTask(std::make_pair(newid, task_ptr));
-    task_view_.addTask(task_ptr);
-    return true;
-  }
-  return false;
+std::optional<TaskDTO> TaskService::addSubtask(const TaskID &id, const Task &subtask) {
+  return task_service_storage_.AddSubtask(id, subtask);
 }

@@ -6,19 +6,23 @@
 
 TaskDTO::TaskDTO() = default;
 
-TaskDTO::TaskDTO(const TaskEntity& task) : task(task) {}
+TaskDTO::TaskDTO(const TaskID& id, const Task& task, const bool& status) {
+  this->task_id_ = id;
+  this->task_name_ = task.getName();
+  this->task_label_ = task.getLabel();
+  this->task_priority_ = task.getPriority();
+  this->task_due_date_ = task.getDate();
+  this->task_status_ = status;
+}
 
-TaskDTO::~TaskDTO() = default;
+TaskID TaskDTO::getID() const { return this->task_id_; }
 
-TaskID TaskDTO::getID() const { return task.getID(); }
+std::string TaskDTO::getName() const { return this->task_name_; }
 
-std::string TaskDTO::getName() const { return task.getTask().getName(); }
+std::string TaskDTO::getLabel() const { return this->task_label_; }
 
-std::string TaskDTO::getLabel() const { return task.getLabel(); }
+Task::Priority TaskDTO::getPriority() const { return this->task_priority_; }
 
-Task::Priority TaskDTO::getPriority() const { return task.getPriority(); }
+DateTime TaskDTO::getDueDate() const { return this->task_due_date_; }
 
-DueTime TaskDTO::getDueTime() const { return task.getDueTime(); }
-
-bool TaskDTO::getStatus() const { return task.getStatus(); }
-
+bool TaskDTO::getStatus() const { return this->task_status_; }

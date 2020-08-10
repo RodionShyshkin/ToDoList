@@ -2,8 +2,8 @@
 // Created by rodion on 7/16/20.
 //
 
-#ifndef TODOLIST_SRC_FULLTASK_H_
-#define TODOLIST_SRC_FULLTASK_H_
+#ifndef TODOLIST_SRC_TASKENTITY_H_
+#define TODOLIST_SRC_TASKENTITY_H_
 
 #include "Task.h"
 #include "GenerateID.h"
@@ -16,13 +16,13 @@ class TaskEntity {
 
  public:
   TaskID                                     getID() const;
-  [[nodiscard]] std::string                                getName() const;
-  [[nodiscard]] std::string                                getLabel() const;
-  [[nodiscard]] Task::Priority                             getPriority() const;
-  [[nodiscard]] DueTime                                    getDueTime() const;
-  [[nodiscard]] bool                                       getStatus() const;
-  [[nodiscard]] Task                                       getTask() const;
-  [[nodiscard]] std::vector<std::shared_ptr<TaskEntity>>   getSubtasks() const;
+  std::string                                getName() const;
+  std::string                                getLabel() const;
+  Task::Priority                             getPriority() const;
+  DateTime                                   getDueTime() const;
+  bool                                       getStatus() const;
+  Task                                       getTask() const;
+  std::vector<std::shared_ptr<TaskEntity>>   getSubtasks() const;
 
  public:
   void             AddSubtask(const std::shared_ptr<TaskEntity> &task);
