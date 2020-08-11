@@ -19,16 +19,13 @@ class DateTime {
 
  public:
   static DateTime               get_current_date();
-
   boost::gregorian::date        get_date() const;
 
  public:
   bool operator< (DateTime date) const;
 
  private:
-  tm                            time;
   boost::gregorian::date        due_date;
-  boost::posix_time::ptime      due_time;
 };
 
 bool                            checkWeek(const DateTime &day);

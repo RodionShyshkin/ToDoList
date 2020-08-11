@@ -14,12 +14,14 @@ Task::Task(const std::string &name, const std::string &label, Priority priority,
   this->due_date = duedate;
 }
 
-Task::Task(const Task &task) : name(task.name), label(task.label), priority(task.priority), due_date(task.due_date) {}
+Task Task::create(const std::string &name, const std::string &label, Priority priority, const DateTime &duedate) {
+  return Task(name, label, priority, duedate);
+}
 
 std::string Task::getName() const { return this->name; }
 
 std::string Task::getLabel() const { return this->label; }
 
-Task::Priority Task::getPriority() const { return this->priority; }
+Priority Task::getPriority() const { return this->priority; }
 
 DateTime Task::getDate() const { return this->due_date; }

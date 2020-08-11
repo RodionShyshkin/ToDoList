@@ -8,10 +8,10 @@
 #include <iostream>
 #include "TaskID.h"
 
-class GenerateID {
+class IDGenerator {
  public:
-  GenerateID();
-  ~GenerateID();
+  IDGenerator();
+  ~IDGenerator();
 
  public:
   TaskID            generateID();

@@ -15,13 +15,17 @@ TaskDTO::TaskDTO(const TaskID& id, const Task& task, const bool& status) {
   this->task_status_ = status;
 }
 
+TaskDTO TaskDTO::create(const TaskID &id, const Task &task, const bool &status) {
+  return TaskDTO(id, task, status);
+}
+
 TaskID TaskDTO::getID() const { return this->task_id_; }
 
 std::string TaskDTO::getName() const { return this->task_name_; }
 
 std::string TaskDTO::getLabel() const { return this->task_label_; }
 
-Task::Priority TaskDTO::getPriority() const { return this->task_priority_; }
+Priority TaskDTO::getPriority() const { return this->task_priority_; }
 
 DateTime TaskDTO::getDueDate() const { return this->task_due_date_; }
 

@@ -10,7 +10,7 @@
  * @author Rodion Shyshkin
  */
 
-Error::Error(Code code) : error_code_(code) {}
+//Error::Error(Code code) : error_code_(code) {}
 
 /*
  * Converting error code to string.
@@ -19,7 +19,7 @@ Error::Error(Code code) : error_code_(code) {}
  *
  * @return std::string which tells what the error means.
  */
-
+/*
 std::string Error::code_to_string(const Code& code) {
   switch(code) {
     case Error::MEMORY_LIMIT:
@@ -37,11 +37,11 @@ std::string Error::code_to_string(const Code& code) {
 Error::Code Error::get_code() const {
   return this->error_code_;
 }
-
+*/
 /*
  * @return std::string. A value of the concrete error.
  */
-
+/*
 std::string Error::what() const {
   return Error::code_to_string(this->error_code_);
-}
+}*/

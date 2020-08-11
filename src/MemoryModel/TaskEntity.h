@@ -6,19 +6,21 @@
 #define TODOLIST_SRC_TASKENTITY_H_
 
 #include "Task.h"
-#include "GenerateID.h"
+#include "IDGenerator.h"
 #include "TaskID.h"
 
 class TaskEntity {
  public:
   TaskEntity();
-  TaskEntity(const Task &task, const TaskID &id);
+
+ public:
+  static TaskEntity                          create(const Task& task, const TaskID& id);
 
  public:
   TaskID                                     getID() const;
   std::string                                getName() const;
   std::string                                getLabel() const;
-  Task::Priority                             getPriority() const;
+  Priority                                   getPriority() const;
   DateTime                                   getDueTime() const;
   bool                                       getStatus() const;
   Task                                       getTask() const;
@@ -28,6 +30,9 @@ class TaskEntity {
   void             AddSubtask(const std::shared_ptr<TaskEntity> &task);
   void             setComplete();
   void             substituteTask(const Task &newtask);
+
+ private:
+  TaskEntity(const Task &task, const TaskID &id);
 
  private:
   TaskID                                                   user_id;

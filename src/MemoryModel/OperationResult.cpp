@@ -10,22 +10,17 @@
  * @author Rodion Shyshkin
  */
 
-OperationResult::OperationResult(std::optional<Error> error) {
-  if(error.has_value()) {
-    this->status_ = false;
-    this->error_ = error;
-  }
-  else {
+OperationResult::OperationResult(ErrorCode err_code) : error_(err_code) {
+  if(err_code == ErrorCode::NO_ERRORS) {
     this->status_ = true;
-    this->error_ = std::nullopt;
+  } else {
+    this->status_ = false;
   }
 }
 
-/*
- * @param [none]
- *
- * @return the status of an operation, true or false
- */
+OperationResult OperationResult::create(ErrorCode err_code) {
+  return OperationResult(err_code);
+}
 
 bool OperationResult::get_status() const {
   return this->status_;
@@ -39,18 +34,7 @@ bool OperationResult::get_status() const {
  * @return the Error instance if the status is false & nullopt if the status is true.
  */
 
-std::optional<Error> OperationResult::get_error() const {
+std::optional<ErrorCode> OperationResult::get_error() const {
+  if(this->status_) return std::nullopt;
   return this->error_;
-}
-
-/*
- * Generates Error instance by the code of an error.
- *
- * @param Error::Code code of the error
- *
- * @return Error instance
- */
-
-Error OperationResult::create_error(Error::Code err_code) {
-  return Error(err_code);
 }

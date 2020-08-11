@@ -37,7 +37,7 @@ std::vector<TaskEntity> TaskView::getWeekTasks() {
   return searchResult;
 }
 
-std::vector<TaskEntity> TaskView::getTasksByPriority(const Task::Priority &priority) {
+std::vector<TaskEntity> TaskView::getTasksByPriority(const Priority &priority) {
   auto first = priority_sorted.find(priority);
   std::vector<TaskEntity> searchResult;
 

@@ -8,7 +8,8 @@
 class StorageTest : public ::testing::Test {
  public:
   TaskStorage storage;
-  TaskEntity check = TaskEntity(Task("Task", "test", Task::Priority::HIGH, DateTime(1990, 2, 2)), 1);
+  TaskEntity check = TaskEntity::create(Task::create("Task", "test", Priority::HIGH,
+                                                     DateTime(1990, 2, 2)), 1);
 };
 
 TEST_F(StorageTest, pushTask) {

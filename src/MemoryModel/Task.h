@@ -6,28 +6,25 @@
 #define TODOLIST__TASK_H_
 
 #include "MemoryModel/DateTime.h"
+#include "MemoryModel/Priority.h"
 #include <vector>
 #include <memory>
 
 class Task {
  public:
-  enum Priority {
-    EMPTY,
-    LOW,
-    MEDIUM,
-    HIGH
-  };
-
- public:
   Task();
-  Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duedate);
-  Task(const Task &task);
 
  public:
+  static Task                     create(const std::string& name, const std::string& label,
+                                         Priority priority, const DateTime& duedate);
+
   std::string                     getName() const;
   std::string                     getLabel() const;
   Priority                        getPriority() const;
   DateTime                        getDate() const;
+
+ private:
+  Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duedate);
 
  private:
   std::string                     name;

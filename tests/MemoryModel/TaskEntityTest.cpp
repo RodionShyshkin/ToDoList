@@ -8,18 +8,16 @@
 
  class TaskEntityTest : public ::testing::Test {
  public:
-   TaskEntity check = TaskEntity(Task("Task", "test", Task::Priority::EMPTY, DateTime(2020, 10, 10)), 1);
-   TaskEntity subtask = TaskEntity(Task("Subtask", "test", Task::Priority::HIGH, DateTime(2090, 1, 1)), 2);
+   TaskEntity check = TaskEntity::create(Task::create("Task", "test", Priority::EMPTY,
+                                                      DateTime(2020, 10, 10)),1);
+   TaskEntity subtask = TaskEntity::create(Task::create("Subtask", "test", Priority::HIGH,
+                                                        DateTime(2090, 1, 1)), 2);
 };
-
-/*TEST_F(TaskEntityTest, Constructor) {
-//  EXPECT_NO_THROW()
-}*/
 
 TEST_F(TaskEntityTest, Getters) {
   ASSERT_EQ(check.getName(), "Task");
   ASSERT_EQ(check.getLabel(), "test");
-  ASSERT_EQ(check.getPriority(), Task::Priority::EMPTY);
+  ASSERT_EQ(check.getPriority(), Priority::EMPTY);
   ASSERT_EQ(check.getDueTime().get_date(), DateTime(2020, 10, 10).get_date());
   ASSERT_EQ(check.getID(), 1);
   ASSERT_FALSE(check.getStatus());

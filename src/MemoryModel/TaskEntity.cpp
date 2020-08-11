@@ -12,10 +12,14 @@ TaskEntity::TaskEntity(const Task &task, const TaskID &id) {
   this->status = false;
 }
 
+TaskEntity TaskEntity::create(const Task &task, const TaskID &id) {
+  return TaskEntity(task, id);
+}
+
 TaskID TaskEntity::getID() const { return user_id; }
 std::string TaskEntity::getName() const { return task.getName(); }
 std::string TaskEntity::getLabel() const { return task.getLabel(); }
-Task::Priority TaskEntity::getPriority() const { return task.getPriority(); }
+Priority TaskEntity::getPriority() const { return task.getPriority(); }
 DateTime TaskEntity::getDueTime() const { return task.getDate(); }
 bool TaskEntity::getStatus() const { return status; }
 Task TaskEntity::getTask() const { return task; }

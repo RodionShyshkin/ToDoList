@@ -7,7 +7,8 @@
 class TaskViewTest : public ::testing::Test {
  public:
   TaskView task_view_;
-  TaskEntity entity_ = TaskEntity(Task("Task", "test", Task::Priority::EMPTY, DateTime(2011, 2, 3)), 1);
+  TaskEntity entity_ = TaskEntity::create(Task::create("Task", "test", Priority::EMPTY,
+                                                       DateTime(2011, 2, 3)), 1);
   std::shared_ptr<TaskEntity> ptr = std::make_shared<TaskEntity>(entity_);
 };
 
@@ -47,7 +48,7 @@ TEST_F(TaskViewTest, getTasksByName) {
 
 TEST_F(TaskViewTest, getTasksByPriority) {
   task_view_.addTask(ptr);
-  auto tasks = task_view_.getTasksByPriority(Task::Priority::EMPTY);
+  auto tasks = task_view_.getTasksByPriority(Priority::EMPTY);
   ASSERT_EQ(tasks.size(), 1);
 }
 

@@ -29,7 +29,7 @@ class TaskServiceStorage {
  private:
   TaskStorage                       task_storage_;
   TaskView                          task_view_;
-  GenerateID                        generate_id_;
+  IDGenerator                        generate_id_;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_TASKSERVICESTORAGE_H_

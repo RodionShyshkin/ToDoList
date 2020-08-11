@@ -8,7 +8,7 @@
  class TaskServiceStorageTest : public ::testing::Test {
  public:
   TaskServiceStorage ts_storage;
-  Task task = Task("Task", "test", Task::Priority::HIGH, DateTime(2022, 4, 1));
+  Task task = Task::create("Task", "test", Priority::HIGH, DateTime(2022, 4, 1));
 };
 
 TEST_F(TaskServiceStorageTest, AddingTask) {
