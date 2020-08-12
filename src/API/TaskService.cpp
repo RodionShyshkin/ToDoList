@@ -16,7 +16,7 @@ TaskService::TaskService() : task_service_storage_(TaskServiceStorage()) {}
  * @return vector of TaskDTO instances which forms all tasks user had added.
  */
 std::vector<TaskDTO> TaskService::getAllTasks() {
-  return task_service_storage_.getAllTasks();
+  return task_service_storage_.GetAllTasks();
 }
 
 /*
@@ -26,7 +26,7 @@ std::vector<TaskDTO> TaskService::getAllTasks() {
  */
 
 std::vector<TaskDTO> TaskService::getTasksForToday() {
-  return task_service_storage_.getTasksForToday();
+  return task_service_storage_.GetTasksForToday();
 }
 
 /*
@@ -36,21 +36,21 @@ std::vector<TaskDTO> TaskService::getTasksForToday() {
  */
 
 std::vector<TaskDTO> TaskService::getTasksForWeek() {
-  return task_service_storage_.getTasksForWeek();
+  return task_service_storage_.GetTasksForWeek();
 }
 
 /*
- * @param label   Task field
+ * @param label_   Task field
  *
- * @return vector of TaskDTO instances which forms all tasks which have label from parameter.
+ * @return vector of TaskDTO instances which forms all tasks which have label_ from parameter.
  */
 
 std::vector<TaskDTO> TaskService::getTasksForLabel(const std::string &label) {
-  return task_service_storage_.getTasksForLabel(label);
+  return task_service_storage_.GetTasksForLabel(label);
 }
 
 /*
- * Adding a new task.
+ * Adding a new task_.
  *
  * @param Task    Task instance
  *
@@ -63,9 +63,9 @@ OperationResult TaskService::addTask(const Task &task) {
 }
 
 /*
- * Adding subtask for an existing task.
+ * Adding subtask for an existing task_.
  *
- * @param TaskID  id of parent task, for which we are going to add subtask.
+ * @param TaskID  id of parent task_, for which we are going to add subtask.
  * @param Task    Task instance
  *
  * @see OperationResult.h

@@ -8,10 +8,10 @@ TaskDTO::TaskDTO() = default;
 
 TaskDTO::TaskDTO(const TaskID& id, const Task& task, const bool& status) {
   this->task_id_ = id;
-  this->task_name_ = task.getName();
-  this->task_label_ = task.getLabel();
-  this->task_priority_ = task.getPriority();
-  this->task_due_date_ = task.getDate();
+  this->task_name_ = task.GetName();
+  this->task_label_ = task.GetLabel();
+  this->task_priority_ = task.GetPriority();
+  this->task_due_date_ = task.GetDate();
   this->task_status_ = status;
 }
 
@@ -27,6 +27,6 @@ std::string TaskDTO::getLabel() const { return this->task_label_; }
 
 Priority TaskDTO::getPriority() const { return this->task_priority_; }
 
-DateTime TaskDTO::getDueDate() const { return this->task_due_date_; }
+Date TaskDTO::getDueDate() const { return this->task_due_date_; }
 
 bool TaskDTO::getStatus() const { return this->task_status_; }

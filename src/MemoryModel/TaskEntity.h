@@ -14,31 +14,31 @@ class TaskEntity {
   TaskEntity();
 
  public:
-  static TaskEntity                          create(const Task& task, const TaskID& id);
+  static TaskEntity                                       create(const Task& task, const TaskID& id);
 
  public:
-  TaskID                                     getID() const;
-  std::string                                getName() const;
-  std::string                                getLabel() const;
-  Priority                                   getPriority() const;
-  DateTime                                   getDueTime() const;
-  bool                                       getStatus() const;
-  Task                                       getTask() const;
-  std::vector<std::shared_ptr<TaskEntity>>   getSubtasks() const;
+  TaskID                                                  GetID() const;
+  std::string                                             GetName() const;
+  std::string                                             GetLabel() const;
+  Priority                                                GetPriority() const;
+  Date                                                    GetDueTime() const;
+  bool                                                    GetStatus() const;
+  Task                                                    GetTask() const;
+  std::vector<std::shared_ptr<TaskEntity>>                GetSubtasks() const;
 
  public:
-  void             AddSubtask(const std::shared_ptr<TaskEntity> &task);
-  void             setComplete();
-  void             substituteTask(const Task &newtask);
+  void                                                    AddSubtask(const std::shared_ptr<TaskEntity> &task);
+  void                                                    SetComplete();
+  void                                                    SubstituteTask(const Task &newtask);
 
  private:
   TaskEntity(const Task &task, const TaskID &id);
 
  private:
-  TaskID                                                   user_id;
-  bool                                                     status;
-  Task                                                     task;
-  std::vector<std::shared_ptr<TaskEntity>>                 subtasks;
+  TaskID                                                  user_id_;
+  bool                                                    status_;
+  Task                                                    task_;
+  std::vector<std::shared_ptr<TaskEntity>>                subtasks_;
 };
 
 #endif //TODOLIST_SRC_FULLTASK_H_

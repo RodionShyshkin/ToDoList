@@ -10,14 +10,14 @@ TaskID::TaskID(const unsigned int &id) {
   this->id_ = id;
 }
 
-bool TaskID::operator== (TaskID id) const {
-  return id.get_id() == this->get_id();
+unsigned int TaskID::GetID() const {
+  return this->id_;
 }
 
-bool TaskID::operator== (unsigned int num) const {
-  return this->get_id() == num;
+bool operator== (const TaskID& lhs, const TaskID& rhs) {
+  return lhs.GetID() == rhs.GetID();
 }
 
-bool TaskID::operator<(TaskID id) const {
-  return this->get_id() < id.get_id();
+bool operator< (const TaskID& lhs, const TaskID& rhs) {
+  return lhs.GetID() < rhs.GetID();
 }

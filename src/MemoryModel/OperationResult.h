@@ -10,7 +10,7 @@
 #include "MemoryModel/Error.h"
 
 /*
- * Class representing the result of adding tasks or subtasks.
+ * Class representing the result of adding tasks or subtasks_.
  *
  * @see OperationResult.cpp
  *
@@ -22,15 +22,15 @@ class OperationResult {
   static OperationResult  create(ErrorCode err_code);
 
  public:
-  bool                     get_status() const;
-  std::optional<ErrorCode> get_error() const;
+  bool                      GetStatus() const;
+  std::optional<ErrorCode>  GetError() const;
 
  private:
   OperationResult(ErrorCode err_code);
 
  private:
-  bool                    status_;
-  ErrorCode               error_;
+  bool                      status_;
+  ErrorCode                 error_;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_OPERATIONRESULT_H_

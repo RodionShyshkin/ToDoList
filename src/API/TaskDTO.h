@@ -20,7 +20,7 @@ class TaskDTO {
   std::string     getName() const;
   std::string     getLabel() const;
   Priority        getPriority() const;
-  DateTime        getDueDate() const;
+  Date        getDueDate() const;
   bool            getStatus() const;
 
  private:
@@ -31,7 +31,7 @@ class TaskDTO {
   std::string     task_name_;
   std::string     task_label_;
   Priority        task_priority_;
-  DateTime        task_due_date_;
+  Date        task_due_date_;
   bool            task_status_;
 };
 

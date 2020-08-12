@@ -4,10 +4,10 @@
 
 #include "IDGenerator.h"
 
-IDGenerator::IDGenerator() : ids(0) {}
+IDGenerator::IDGenerator() : ids_amount_(0) {}
 IDGenerator::~IDGenerator() = default;
 
 
-TaskID IDGenerator::generateID() {
-  return TaskID(++ids);
+TaskID IDGenerator::GenerateID() {
+  return TaskID(++ids_amount_);
 }

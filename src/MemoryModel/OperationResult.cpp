@@ -5,7 +5,7 @@
 #include "OperationResult.h"
 
 /*
- * Class representing the result of adding tasks or subtasks.
+ * Class representing the result of adding tasks or subtasks_.
  *
  * @author Rodion Shyshkin
  */
@@ -22,7 +22,7 @@ OperationResult OperationResult::create(ErrorCode err_code) {
   return OperationResult(err_code);
 }
 
-bool OperationResult::get_status() const {
+bool OperationResult::GetStatus() const {
   return this->status_;
 }
 
@@ -31,10 +31,10 @@ bool OperationResult::get_status() const {
  *
  * @see Error.h
  *
- * @return the Error instance if the status is false & nullopt if the status is true.
+ * @return the Error instance if the status_ is false & nullopt if the status_ is true.
  */
 
-std::optional<ErrorCode> OperationResult::get_error() const {
+std::optional<ErrorCode> OperationResult::GetError() const {
   if(this->status_) return std::nullopt;
   return this->error_;
 }

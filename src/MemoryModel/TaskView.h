@@ -10,22 +10,22 @@
 
 class TaskView {
  public:
-  void addTask(const std::shared_ptr<TaskEntity>& task);
+  void                                                        AddTask(const std::shared_ptr<TaskEntity>& task);
 
  public:
-  std::vector<TaskEntity>                                     getTodayTasks();
-  std::vector<TaskEntity>                                     getWeekTasks();
+  std::vector<TaskEntity>                                     GetTodayTasks();
+  std::vector<TaskEntity>                                     GetWeekTasks();
 
-  std::vector<TaskEntity>                                     getAllTasks();
-  std::vector<TaskEntity>                                     getTasksByLabel(const std::string& label);
-  std::vector<TaskEntity>                                     getTasksByName(const std::string& name);
-  std::vector<TaskEntity>                                     getTasksByPriority(const Priority& priority);
+  std::vector<TaskEntity>                                     GetAllTasks();
+  std::vector<TaskEntity>                                     GetTasksByLabel(const std::string& label);
+  std::vector<TaskEntity>                                     GetTasksByName(const std::string& name);
+  std::vector<TaskEntity>                                     GetTasksByPriority(const Priority& priority);
 
  private:
-  std::multimap<Priority, std::weak_ptr<TaskEntity>>          priority_sorted;
-  std::multimap<std::string, std::weak_ptr<TaskEntity>>       name_sorted;
-  std::multimap<std::string, std::weak_ptr<TaskEntity>>       label_sorted;
-  std::multimap<DateTime, std::weak_ptr<TaskEntity>>          date_sorted;
+  std::multimap<Priority, std::weak_ptr<TaskEntity>>          priority_sorted_;
+  std::multimap<std::string, std::weak_ptr<TaskEntity>>       name_sorted_;
+  std::multimap<std::string, std::weak_ptr<TaskEntity>>       label_sorted_;
+  std::multimap<Date, std::weak_ptr<TaskEntity>>              date_sorted_;
 };
 
 #endif //TODOLIST_SRC_API_TASKVIEW_H_

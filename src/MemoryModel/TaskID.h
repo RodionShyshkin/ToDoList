@@ -13,17 +13,13 @@ class TaskID {
   TaskID(const unsigned int &id);
 
  public:
-  unsigned int get_id() const {
-    return this->id_;
-  }
-
- public:
-  bool operator== (TaskID id) const;
-  bool operator== (unsigned int num) const;
-  bool operator< (TaskID id) const;
+  unsigned int      GetID() const;
 
  private:
   unsigned int      id_;
 };
+
+bool operator== (const TaskID& lhs, const TaskID& rhs);
+bool operator< (const TaskID& lhs, const TaskID& rhs);
 
 #endif //TODOLIST_SRC_TASKID_H_

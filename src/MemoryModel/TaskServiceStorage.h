@@ -15,21 +15,20 @@ class TaskServiceStorage {
   TaskServiceStorage();
 
  public:
-  std::vector<TaskDTO>              getAllTasks();
-  std::vector<TaskDTO>              getTasksForToday();
-  std::vector<TaskDTO>              getTasksForWeek();
-  std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
-  std::vector<TaskDTO>              getTasksForName(const std::string &name);
-  std::optional<TaskDTO>            getTaskByID(const TaskID &id);
+  std::vector<TaskDTO>              GetAllTasks();
+  std::vector<TaskDTO>              GetTasksForToday();
+  std::vector<TaskDTO>              GetTasksForWeek();
+  std::vector<TaskDTO>              GetTasksForLabel(const std::string &label);
+  std::vector<TaskDTO>              GetTasksForName(const std::string &name);
+  std::optional<TaskDTO>            GetTaskById(const TaskID &id);
 
-//  std::optional<TaskDTO>            AddTask(const Task &task);
   OperationResult                   AddTask(const Task &task);
   OperationResult                   AddSubtask(const TaskID &id, const Task &subtask);
 
  private:
   TaskStorage                       task_storage_;
   TaskView                          task_view_;
-  IDGenerator                        generate_id_;
+  IDGenerator                       generate_id_;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_TASKSERVICESTORAGE_H_

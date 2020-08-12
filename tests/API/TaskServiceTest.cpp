@@ -8,8 +8,8 @@
  class TaskServiceTest : public ::testing::Test {
  public:
   TaskService service;
-  Task task = Task::create("Task", "test", Priority::EMPTY, DateTime(2020, 10, 10));
-  Task subtask = Task::create("Subtask", "test", Priority::EMPTY, DateTime(2020, 10, 10));
+  Task task = Task::create("Task", "test", Priority::EMPTY, Date(2020, 10, 10));
+  Task subtask = Task::create("Subtask", "test", Priority::EMPTY, Date(2020, 10, 10));
 };
 
 TEST_F(TaskServiceTest, getAllTasks) {
