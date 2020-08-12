@@ -11,22 +11,27 @@
 class TaskDTO {
  public:
   TaskDTO();
-  TaskDTO(const TaskID& id, const Task& task, const bool& status);
 
  public:
-  TaskID getID() const;
-  std::string getName() const;
-  std::string getLabel() const;
-  Task::Priority getPriority() const;
-  DateTime getDueDate() const;
-  bool getStatus() const;
+  static TaskDTO  create(const TaskID& id, const Task& task, const bool& status);
+
+ public:
+  TaskID          getID() const;
+  std::string     getName() const;
+  std::string     getLabel() const;
+  Priority        getPriority() const;
+  Date        getDueDate() const;
+  bool            getStatus() const;
+
+ private:
+  TaskDTO(const TaskID& id, const Task& task, const bool& status);
 
  private:
   TaskID          task_id_;
   std::string     task_name_;
   std::string     task_label_;
-  Task::Priority  task_priority_;
-  DateTime        task_due_date_;
+  Priority        task_priority_;
+  Date        task_due_date_;
   bool            task_status_;
 };
 

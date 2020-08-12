@@ -6,20 +6,22 @@
 
 Task::Task() = default;
 
-Task::Task(const std::string &name, const std::string &label, Priority priority, const DateTime &duedate) {
+Task::Task(const std::string &name, const std::string &label, Priority priority, const Date &duedate) {
   if(name.empty()) throw std::invalid_argument("Task should be named.");
-  this->name = name;
-  this->label = label;
-  this->priority = priority;
-  this->due_date = duedate;
+  this->name_ = name;
+  this->label_ = label;
+  this->priority_ = priority;
+  this->due_date_ = duedate;
 }
 
-Task::Task(const Task &task) : name(task.name), label(task.label), priority(task.priority), due_date(task.due_date) {}
+Task Task::create(const std::string &name, const std::string &label, Priority priority, const Date &duedate) {
+  return Task(name, label, priority, duedate);
+}
 
-std::string Task::getName() const { return this->name; }
+std::string Task::GetName() const { return this->name_; }
 
-std::string Task::getLabel() const { return this->label; }
+std::string Task::GetLabel() const { return this->label_; }
 
-Task::Priority Task::getPriority() const { return this->priority; }
+Priority Task::GetPriority() const { return this->priority_; }
 
-DateTime Task::getDate() const { return this->due_date; }
+Date Task::GetDate() const { return this->due_date_; }

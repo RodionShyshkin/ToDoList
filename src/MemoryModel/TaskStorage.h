@@ -12,9 +12,9 @@
 
 class TaskStorage {
  public:
-  void                                              pushTask(const std::pair<TaskID, std::shared_ptr<TaskEntity>>& task);
-  std::optional<std::shared_ptr<TaskEntity>>        getTask(const TaskID& id);
-  bool                                              if_exist(const TaskID& id);
+  void                                              PushTask(const std::pair<TaskID, std::shared_ptr<TaskEntity>>& task);
+  std::optional<std::shared_ptr<TaskEntity>>        GetTask(const TaskID& id);
+  bool                                              HasTask(const TaskID& id);
 
  private:
   std::map<TaskID, std::shared_ptr<TaskEntity>>     tasks_;

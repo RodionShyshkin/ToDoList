@@ -10,30 +10,30 @@ class TaskTest : public ::testing::Test {
 };
 
 TEST_F(TaskTest, Constructor) {
-  EXPECT_NO_THROW(Task("Name", "label", Task::Priority::EMPTY, DateTime(2044, 1, 1)));
-  EXPECT_ANY_THROW(Task("", "label", Task::Priority::LOW, DateTime(2044, 1, 10)));
-  EXPECT_NO_THROW(Task("Name", "", Task::Priority::MEDIUM, DateTime(2011, 3, 1)));
-  EXPECT_ANY_THROW(Task("", "", Task::Priority::HIGH, DateTime(2010, 4, 2)));
+  EXPECT_NO_THROW(Task::create("Name", "label_", Priority::EMPTY, Date(2044, 1, 1)));
+  EXPECT_ANY_THROW(Task::create("", "label_", Priority::LOW, Date(2044, 1, 10)));
+  EXPECT_NO_THROW(Task::create("Name", "", Priority::MEDIUM, Date(2011, 3, 1)));
+  EXPECT_ANY_THROW(Task::create("", "", Priority::HIGH, Date(2010, 4, 2)));
 }
 
 TEST_F(TaskTest, getters) {
-  auto check = Task("Test", "label", Task::Priority::MEDIUM, DateTime(1980, 7, 8));
-  ASSERT_EQ(check.getName(), "Test");
-  ASSERT_EQ(check.getLabel(), "label");
-  ASSERT_EQ(check.getPriority(), Task::Priority::MEDIUM);
-  ASSERT_EQ(check.getDate().get_date(), DateTime(1980, 7, 8).get_date());
+  auto check = Task::create("Test", "label_", Priority::MEDIUM, Date(1980, 7, 8));
+  ASSERT_EQ(check.GetName(), "Test");
+  ASSERT_EQ(check.GetLabel(), "label_");
+  ASSERT_EQ(check.GetPriority(), Priority::MEDIUM);
+  ASSERT_EQ(check.GetDate().GetDate(), Date(1980, 7, 8).GetDate());
 }
 
 
 bool operator== (const Task& lhs, const Task& rhs) {
-  if(lhs.getName() == rhs.getName() && lhs.getLabel() == rhs.getLabel() && lhs.getPriority() == rhs.getPriority() &&
-      lhs.getDate().get_date() == rhs.getDate().get_date()) return true;
+  if(lhs.GetName() == rhs.GetName() && lhs.GetLabel() == rhs.GetLabel() && lhs.GetPriority() == rhs.GetPriority() &&
+      lhs.GetDate().GetDate() == rhs.GetDate().GetDate()) return true;
   return false;
 }
 
 TEST_F(TaskTest, CopyConstructor) {
 
-  Task check("name", "", Task::Priority::EMPTY, DateTime(1999, 1, 1));
+  Task check = Task::create("name_", "", Priority::EMPTY, Date(1999, 1, 1));
   Task copy = check;
   ASSERT_TRUE(copy == check);
 }

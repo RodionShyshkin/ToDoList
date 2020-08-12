@@ -7,21 +7,25 @@
 TaskEntity::TaskEntity() = default;
 
 TaskEntity::TaskEntity(const Task &task, const TaskID &id) {
-  this->user_id = id;
-  this->task = task;
-  this->status = false;
+  this->user_id_ = id;
+  this->task_ = task;
+  this->status_ = false;
 }
 
-TaskID TaskEntity::getID() const { return user_id; }
-std::string TaskEntity::getName() const { return task.getName(); }
-std::string TaskEntity::getLabel() const { return task.getLabel(); }
-Task::Priority TaskEntity::getPriority() const { return task.getPriority(); }
-DateTime TaskEntity::getDueTime() const { return task.getDate(); }
-bool TaskEntity::getStatus() const { return status; }
-Task TaskEntity::getTask() const { return task; }
-std::vector<std::shared_ptr<TaskEntity>> TaskEntity::getSubtasks() const { return subtasks; }
+TaskEntity TaskEntity::create(const Task &task, const TaskID &id) {
+  return TaskEntity(task, id);
+}
+
+TaskID TaskEntity::GetID() const { return user_id_; }
+std::string TaskEntity::GetName() const { return task_.GetName(); }
+std::string TaskEntity::GetLabel() const { return task_.GetLabel(); }
+Priority TaskEntity::GetPriority() const { return task_.GetPriority(); }
+Date TaskEntity::GetDueTime() const { return task_.GetDate(); }
+bool TaskEntity::GetStatus() const { return status_; }
+Task TaskEntity::GetTask() const { return task_; }
+std::vector<std::shared_ptr<TaskEntity>> TaskEntity::GetSubtasks() const { return subtasks_; }
 
 
 void TaskEntity::AddSubtask(const std::shared_ptr<TaskEntity> &task) {
-  subtasks.push_back(task);
+  subtasks_.push_back(task);
 }

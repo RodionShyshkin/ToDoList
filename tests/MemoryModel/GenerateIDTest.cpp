@@ -3,14 +3,14 @@
 //
 
 #include <gtest/gtest.h>
-#include "MemoryModel/GenerateID.h"
+#include "MemoryModel/IDGenerator.h"
 
  class GenerateIDTest : public ::testing::Test {
 
 };
 
 TEST_F(GenerateIDTest, GenerateID) {
-  GenerateID id;
-  ASSERT_EQ(id.generateID(), 1);
-  ASSERT_EQ(id.generateID(), 2);
+  IDGenerator id;
+  ASSERT_EQ(id.GenerateID(), 1);
+  ASSERT_EQ(id.GenerateID(), 2);
 }
