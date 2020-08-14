@@ -5,17 +5,24 @@
 #ifndef TODOLIST__TASK_H_
 #define TODOLIST__TASK_H_
 
-#include "MemoryModel/Date.h"
-#include "MemoryModel/Priority.h"
-#include <vector>
-#include <memory>
+#include "Date.h"
+#include "Priority.h"
+
+/*
+ * \brief Basic class which holds task.
+ *
+ * @author Rodion Shyshkin
+ */
 
 class Task {
  public:
   Task();
 
  public:
-  static Task                     create(const std::string& name, const std::string& label,
+  /*
+   * Factory method for task.
+   */
+  static std::optional<Task>      create(const std::string& name, const std::string& label,
                                          Priority priority, const Date& duedate);
 
   std::string                     GetName() const;

@@ -5,16 +5,16 @@
 #ifndef TODOLIST_SRC_API_TASKSTORAGE_H_
 #define TODOLIST_SRC_API_TASKSTORAGE_H_
 
-#include <iostream>
-#include <memory>
-#include <MemoryModel/TaskEntity.h>
+#include <MemoryModel/Task/TaskEntity.h>
 #include <map>
 
 class TaskStorage {
  public:
-  void                                              PushTask(const std::pair<TaskID, std::shared_ptr<TaskEntity>>& task);
-  std::optional<std::shared_ptr<TaskEntity>>        GetTask(const TaskID& id);
+  bool                                              PushTask(const std::shared_ptr<TaskEntity>& task);
+  bool                                              RemoveTask(const TaskID& id);
+
   bool                                              HasTask(const TaskID& id);
+  std::shared_ptr<TaskEntity>                       GetTask(const TaskID& id);
 
  private:
   std::map<TaskID, std::shared_ptr<TaskEntity>>     tasks_;

@@ -4,74 +4,62 @@
 
 #include "TaskService.h"
 
-/*
- * API for working with tasks.
- */
+TaskService::TaskService() : task_service_storage_(FullStorage()) {}
 
-TaskService::TaskService() : task_service_storage_(TaskServiceStorage()) {}
-
-/*
- * @param [none]
- *
- * @return vector of TaskDTO instances which forms all tasks user had added.
- */
 std::vector<TaskDTO> TaskService::getAllTasks() {
-  return task_service_storage_.GetAllTasks();
+  auto allTasks = task_service_storage_.GetTaskView().GetAllTasks();
+  std::vector<TaskDTO> searchResult;
+  for(auto task : allTasks) {
+    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+  }
+  return searchResult;
 }
-
-/*
- * @param [none]
- *
- * @return vector of TaskDTO instances which forms all tasks for current day (local date).
- */
 
 std::vector<TaskDTO> TaskService::getTasksForToday() {
-  return task_service_storage_.GetTasksForToday();
+  auto todayTasks = task_service_storage_.GetTaskView().GetTodayTasks();
+  std::vector<TaskDTO> searchResult;
+  for(auto task : todayTasks) {
+    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+  }
+  return searchResult;
 }
-
-/*
- * @param [none]
- *
- * @return vector of TaskDTO instances which forms all tasks for this week (until the next Monday).
- */
 
 std::vector<TaskDTO> TaskService::getTasksForWeek() {
-  return task_service_storage_.GetTasksForWeek();
+  auto weekTasks = task_service_storage_.GetTaskView().GetWeekTasks();
+  std::vector<TaskDTO> searchResult;
+  for(auto task : weekTasks) {
+    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+  }
+  return searchResult;
 }
 
-/*
- * @param label_   Task field
- *
- * @return vector of TaskDTO instances which forms all tasks which have label_ from parameter.
- */
-
-std::vector<TaskDTO> TaskService::getTasksForLabel(const std::string &label) {
-  return task_service_storage_.GetTasksForLabel(label);
+std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label) {
+  auto labelTasks = task_service_storage_.GetTaskView().GetTasksByLabel(label);
+  std::vector<TaskDTO> searchResult;
+  for(auto task : labelTasks) {
+    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+  }
+  return searchResult;
 }
-
-/*
- * Adding a new task_.
- *
- * @param Task    Task instance
- *
- * @see OperationResult.h
- * @return the result of adding Task
- */
 
 OperationResult TaskService::addTask(const Task &task) {
   return task_service_storage_.AddTask(task);
 }
 
-/*
- * Adding subtask for an existing task_.
- *
- * @param TaskID  id of parent task_, for which we are going to add subtask.
- * @param Task    Task instance
- *
- * @see OperationResult.h
- * @return the result of adding Task
- */
-
 OperationResult TaskService::addSubtask(const TaskID &id, const Task &subtask) {
   return task_service_storage_.AddSubtask(id, subtask);
 }
+
+OperationResult TaskService::RemoveTask(const TaskID &id) {
+  return task_service_storage_.RemoveTask(id);
+}
+
+std::vector<TaskEntity> TaskService::getDebug() {
+  return task_service_storage_.GetTaskView().GetAllTasks();
+}
+
+TaskStorage TaskService::getDebug2() {
+  return task_service_storage_.GetTaskStorage();
+}
+
+

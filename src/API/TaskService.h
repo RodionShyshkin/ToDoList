@@ -6,9 +6,7 @@
 #define TODOLIST__TASKSERVICE_H_
 
 #include "API/TaskDTO.h"
-#include <map>
-#include <optional>
-#include <MemoryModel/TaskServiceStorage.h>
+#include <MemoryModel/Storage/FullStorage.h>
 
 /*
  * API for work with tasks.
@@ -26,14 +24,17 @@ class TaskService {
   std::vector<TaskDTO>              getAllTasks();
   std::vector<TaskDTO>              getTasksForToday();
   std::vector<TaskDTO>              getTasksForWeek();
-  std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
+  std::vector<TaskDTO>              getTasksByLabel(const std::string &label);
 
   OperationResult                   addTask(const Task &task);
   OperationResult                   addSubtask(const TaskID &id, const Task &subtask);
+  OperationResult                   RemoveTask(const TaskID& id);
 
+  std::vector<TaskEntity>           getDebug();
+  TaskStorage                       getDebug2();
 
  private:
-  TaskServiceStorage                task_service_storage_;
+  FullStorage                task_service_storage_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

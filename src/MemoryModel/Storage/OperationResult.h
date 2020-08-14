@@ -5,21 +5,21 @@
 #ifndef TODOLIST_SRC_MEMORYMODEL_OPERATIONRESULT_H_
 #define TODOLIST_SRC_MEMORYMODEL_OPERATIONRESULT_H_
 
-#include <iostream>
 #include <optional>
-#include "MemoryModel/Error.h"
+#include "Error.h"
 
 /*
- * Class representing the result of adding tasks or subtasks_.
- *
- * @see OperationResult.cpp
+ * Class representing the result of adding tasks or subtasks.
  *
  * @author Rodion Shyshkin
  */
 
 class OperationResult {
  public:
-  static OperationResult  create(ErrorCode err_code);
+  /*
+   * Factory method for OperationResult.
+   */
+  static OperationResult    create(ErrorCode err_code);
 
  public:
   bool                      GetStatus() const;

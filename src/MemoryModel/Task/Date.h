@@ -5,11 +5,16 @@
 #ifndef TODOLIST__DATETIME_H_
 #define TODOLIST__DATETIME_H_
 
-#include <ctime>
-#include <iostream>
-#include <memory>
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
+
+/*
+ * \brief Date wrapper.
+ *
+ * This class wraps boost date and implements functions we need to use when we manage our tasks.
+ *
+ * @author Rodion Shyshkin
+ */
 
 class Date {
  public:
@@ -17,9 +22,25 @@ class Date {
   Date(boost::gregorian::date due_date);
   Date(int year, int month, int day);
 
+
  public:
+
+  /*
+   * Gives a current local time.
+   *
+   * @return Date current local time
+   */
   static Date                   GetCurrentDate();
+
+  /*
+   * Check if the date belong to this week.
+   *
+   * @param Date the date which we need to check.
+   *
+   * @return bool True if this week, False in another case.
+   */
   static bool                   CheckWeek(const Date& day);
+
   boost::gregorian::date        GetDate() const;
 
  private:

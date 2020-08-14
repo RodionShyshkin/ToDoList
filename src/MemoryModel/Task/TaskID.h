@@ -5,15 +5,28 @@
 #ifndef TODOLIST_SRC_TASKID_H_
 #define TODOLIST_SRC_TASKID_H_
 
-#include <iostream>
+#include <optional>
+
+/*
+ * \brief Holder of Task identifier.
+ *
+ * A class for {Task} identifying which guarantees its uniqueness.
+ *
+ * @author Rodion Shyshkin
+ */
 
 class TaskID {
  public:
   TaskID();
-  TaskID(const unsigned int &id);
+
+ public:
+  static std::optional<TaskID>    create(const unsigned int& id);
 
  public:
   unsigned int      GetID() const;
+
+ private:
+  TaskID(const unsigned int& id);
 
  private:
   unsigned int      id_;

@@ -5,8 +5,6 @@
 #ifndef TODOLIST_SRC_MEMORYMODEL_ERRORCODE_H_
 #define TODOLIST_SRC_MEMORYMODEL_ERRORCODE_H_
 
-#include <iostream>
-
 /*
  * Class which keeps error code and represents its value.
  *
@@ -18,7 +16,9 @@ enum class ErrorCode {
   MEMORY_LIMIT,
   TASK_NOT_FOUND,
   PARENT_NOT_FOUND,
-  INVALID_DATE
+  INVALID_DATE,
+  WRONG_TASK_ID,
+  INVALID_TASK
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_ERROR_H_

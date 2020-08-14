@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "MemoryModel/Error.h"
+#include "MemoryModel/Storage/Error.h"
 
  class ErrorTest : public ::testing::Test {
 /* public:

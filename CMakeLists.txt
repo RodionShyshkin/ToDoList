@@ -3,9 +3,9 @@ project(ToDoList)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ToDoList main.cpp src/MemoryModel/Task.cpp src/MemoryModel/Task.h src/API/TaskService.cpp src/API/TaskService.h src/MemoryModel/Date.cpp
-        src/MemoryModel/Date.h src/MemoryModel/TaskEntity.cpp src/MemoryModel/TaskEntity.h src/MemoryModel/IDGenerator.cpp src/MemoryModel/IDGenerator.h
-        src/MemoryModel/TaskID.cpp src/MemoryModel/TaskID.h)
+add_executable(ToDoList main.cpp src/MemoryModel/Task/Task.cpp src/MemoryModel/Task/Task.h src/API/TaskService.cpp src/API/TaskService.h src/MemoryModel/Task/Date.cpp
+        src/MemoryModel/Task/Date.h src/MemoryModel/Task/TaskEntity.cpp src/MemoryModel/Task/TaskEntity.h src/MemoryModel/Storage/IDGenerator.cpp src/MemoryModel/Storage/IDGenerator.h
+        src/MemoryModel/Task/TaskID.cpp src/MemoryModel/Task/TaskID.h)
 
 include(GoogleTest)
 find_package(GTest REQUIRED)
@@ -28,7 +28,7 @@ include_directories(src)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
 add_executable(Tests tests/MemoryModel/DateTimeTest.cpp tests/MemoryModel/GenerateIDTest.cpp tests/API/TaskServiceTest.cpp
-        src/MemoryModel/Date.cpp src/MemoryModel/IDGenerator.cpp src/MemoryModel/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/TaskEntity.cpp src/MemoryModel/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/MemoryModel/TaskEntityTest.cpp src/MemoryModel/TaskStorage.cpp src/MemoryModel/TaskStorage.h src/MemoryModel/TaskView.cpp src/MemoryModel/TaskView.h tests/MemoryModel/TaskViewTest.cpp tests/MemoryModel/TaskTest.cpp tests/MemoryModel/TaskIDTest.cpp tests/MemoryModel/TaskStorageTest.cpp tests/API/TaskDTOTest.cpp src/MemoryModel/TaskServiceStorage.cpp src/MemoryModel/TaskServiceStorage.h tests/MemoryModel/TaskServiceStorageTest.cpp src/MemoryModel/OperationResult.cpp src/MemoryModel/OperationResult.h src/MemoryModel/Error.h tests/MemoryModel/ErrorTest.cpp tests/MemoryModel/OperationResultTest.cpp src/MemoryModel/Priority.h)
+        src/MemoryModel/Task/Date.cpp src/MemoryModel/Storage/IDGenerator.cpp src/MemoryModel/Task/TaskID.cpp src/API/TaskService.cpp src/MemoryModel/Task/TaskEntity.cpp src/MemoryModel/Task/Task.cpp src/API/TaskDTO.cpp src/API/TaskDTO.h tests/MemoryModel/TaskEntityTest.cpp src/MemoryModel/Storage/TaskStorage.cpp src/MemoryModel/Storage/TaskStorage.h src/MemoryModel/Storage/TaskView.cpp src/MemoryModel/Storage/TaskView.h tests/MemoryModel/TaskViewTest.cpp tests/MemoryModel/TaskTest.cpp tests/MemoryModel/TaskIDTest.cpp tests/MemoryModel/TaskStorageTest.cpp tests/API/TaskDTOTest.cpp src/MemoryModel/Storage/FullStorage.cpp src/MemoryModel/Storage/FullStorage.h tests/MemoryModel/TaskServiceStorageTest.cpp src/MemoryModel/Storage/OperationResult.cpp src/MemoryModel/Storage/OperationResult.h src/MemoryModel/Storage/Error.h tests/MemoryModel/ErrorTest.cpp tests/MemoryModel/OperationResultTest.cpp src/MemoryModel/Task/Priority.h)
 #target_link_libraries(Tests gtest gtest_main)
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})
