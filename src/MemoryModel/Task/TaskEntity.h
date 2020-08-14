@@ -58,7 +58,7 @@ class TaskEntity {
   /*
    * Changes Task date.
    *
-   * @return bool True if new date is not in the past and valid, False in another case.
+   * @return bool True if new date is not less then old date, False in another case.
    */
   bool                                                    SubstituteTask(const Task &newtask);
 

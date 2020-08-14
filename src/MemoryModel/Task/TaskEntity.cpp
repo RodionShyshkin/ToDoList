@@ -47,3 +47,15 @@ bool TaskEntity::checkParent() {
   if(parent_id_ == user_id_) return false;
   return true;
 }
+
+bool TaskEntity::SetComplete() {
+  if(this->status_) return false;
+  this->status_ = true;
+  return true;
+}
+
+bool TaskEntity::SubstituteTask(const Task &newtask) {
+  if(newtask.GetDate().GetDate() < this->GetDueTime()) return false;
+  this->task_ = newtask;
+  return true;
+}

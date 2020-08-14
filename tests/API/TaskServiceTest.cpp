@@ -10,8 +10,8 @@
 class TaskServiceTest : public ::testing::Test {
  public:
   TaskService service;
-//  auto task = Task::create("Task", "test", Priority::EMPTY, Date(2020, 10, 10));
-//  auto subtask = Task::create("Subtask", "test", Priority::EMPTY, Date(2020, 10, 10));
+  Task task = Task::create("Task", "test", Priority::EMPTY, Date(2020, 10, 10)).value();
+  Task subtask = Task::create("Subtask", "test", Priority::EMPTY, Date(2020, 10, 10)).value();
 };
 
 TEST_F(TaskServiceTest, remove) {
@@ -57,7 +57,27 @@ TEST_F(TaskServiceTest, fullRemove) {
 }
 
 
+TEST_F(TaskServiceTest, postpone) {
+/*  service.addTask(task);
+  service.addSubtask(TaskID::create(1).value(), subtask);
+  service.addSubtask(TaskID::create(1).value(), task);
+  service.addTask(subtask);
 
+  auto tasks = service.getDebug();
+  auto item = service.getDebug2();
+  std::cout << tasks[0].GetStatus() << std::endl;
+
+  auto k = item.GetTask(TaskID::create(1).value());
+  std::cout << k->GetStatus() << std::endl;
+
+  service.completeTask(TaskID::create(1).value());
+
+  tasks = service.getDebug();
+  k = item.GetTask(TaskID::create(1).value());
+
+  std::cout << k->GetStatus() << std::endl;
+  std::cout << tasks[0].GetStatus() << std::endl;*/
+}
 
 
 

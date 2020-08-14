@@ -16,17 +16,11 @@
 
 class OperationResult {
  public:
-  /*
-   * Factory method for OperationResult.
-   */
-  static OperationResult    create(ErrorCode err_code);
+  OperationResult(ErrorCode err_code);
 
  public:
   bool                      GetStatus() const;
   std::optional<ErrorCode>  GetError() const;
-
- private:
-  OperationResult(ErrorCode err_code);
 
  private:
   bool                      status_;

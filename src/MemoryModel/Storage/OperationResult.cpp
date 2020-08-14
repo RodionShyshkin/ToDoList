@@ -12,10 +12,6 @@ OperationResult::OperationResult(ErrorCode err_code) : error_(err_code) {
   }
 }
 
-OperationResult OperationResult::create(ErrorCode err_code) {
-  return OperationResult(err_code);
-}
-
 bool OperationResult::GetStatus() const {
   return this->status_;
 }

@@ -23,6 +23,18 @@ bool removeFromMap(const TaskID& id, std::multimap<T, std::pair<TaskID, std::wea
   return false;
 }
 
+template <typename T>
+bool substituteInMap(const TaskID& id, const Task& newtask, std::multimap<T, std::pair<TaskID,
+                     std::weak_ptr<TaskEntity>>> map) {
+  for(auto it = map.begin(); it != map.end(); ++it) {
+    if(it->second.first == id) {
+      it->second.second.lock()->SubstituteTask(newtask);
+      return true;
+    }
+  }
+  return false;
+}
+
 bool TaskView::AddTask(const std::weak_ptr<TaskEntity> &task) {
   auto id = task.lock()->GetID();
   auto pairTask = std::make_pair(task.lock()->GetID(), task);
@@ -37,8 +49,6 @@ bool TaskView::AddTask(const std::weak_ptr<TaskEntity> &task) {
 }
 
 bool TaskView::RemoveTask(const TaskID& id) {
-  bool flag = false;
-
   if(!removeFromMap(id, priority_sorted_)) return false;
   if(!removeFromMap(id, name_sorted_)) return false;
   if(!removeFromMap(id, label_sorted_)) return false;
