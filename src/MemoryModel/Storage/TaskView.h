@@ -23,13 +23,13 @@ class TaskView {
   std::vector<TaskEntity>                                     GetTasksByPriority(const Priority& priority);
 
  private:
-  std::multimap<Priority, std::pair<TaskID, std::weak_ptr<TaskEntity>>>          priority_sorted_;
-  std::multimap<std::string, std::pair<TaskID, std::weak_ptr<TaskEntity>>>       name_sorted_;
-  std::multimap<std::string, std::pair<TaskID, std::weak_ptr<TaskEntity>>>       label_sorted_;
-  std::multimap<Date, std::pair<TaskID, std::weak_ptr<TaskEntity>>>              date_sorted_;
+  std::map<Priority, std::map<TaskID, std::weak_ptr<TaskEntity>>>                priority_sorted_;
+  std::map<std::string, std::map<TaskID, std::weak_ptr<TaskEntity>>>             name_sorted_;
+  std::map<std::string, std::map<TaskID, std::weak_ptr<TaskEntity>>>             label_sorted_;
+  std::map<Date, std::map<TaskID, std::weak_ptr<TaskEntity>>>                    date_sorted_;
 };
 
-template<typename T>
-bool checkIDUniqness(const TaskID& id, std::multimap<T, std::pair<TaskID, std::weak_ptr<TaskEntity>>> map);
+//template<typename T>
+//bool checkIDUniqness(const TaskID& id, std::multimap<T, std::pair<TaskID, std::weak_ptr<TaskEntity>>> map);
 
 #endif //TODOLIST_SRC_API_TASKVIEW_H_

@@ -5,31 +5,23 @@
 #include "TaskView.h"
 
 template <typename T>
-bool findByID(const TaskID& id, std::multimap<T, std::pair<TaskID, std::weak_ptr<TaskEntity>>> map) {
-  for(auto [first, second] : map) {
-    if(second.first == id) return true;
-  }
-  return false;
-}
-
-template <typename T>
-bool removeFromMap(const TaskID& id, std::multimap<T, std::pair<TaskID, std::weak_ptr<TaskEntity>>> map) {
-  for(auto it = map.begin(); it != map.end(); ++it) {
-    if(it->second.first == id) {
-      map.erase(it);
-      return true;
+bool findByID(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<TaskEntity>>> map) {
+  for(const auto& [type, tasks] : map) {
+    for(const auto& [ID, task] : tasks) {
+      if (ID == id) return true;
     }
   }
   return false;
 }
 
 template <typename T>
-bool substituteInMap(const TaskID& id, const Task& newtask, std::multimap<T, std::pair<TaskID,
-                     std::weak_ptr<TaskEntity>>> map) {
-  for(auto it = map.begin(); it != map.end(); ++it) {
-    if(it->second.first == id) {
-      it->second.second.lock()->SubstituteTask(newtask);
-      return true;
+bool removeFromMap(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<TaskEntity>>> map) {
+  for(auto& [type, tasks] : map) {
+    for(const auto& [ID, task] : tasks) {
+      if(ID == id) {
+        tasks.erase(ID);
+        return true;
+      }
     }
   }
   return false;
@@ -41,25 +33,25 @@ bool TaskView::AddTask(const std::weak_ptr<TaskEntity> &task) {
 
   if(findByID(id, priority_sorted_) || findByID(id, name_sorted_) ||
     findByID(id, label_sorted_) || findByID(id, date_sorted_)) return false;
-  priority_sorted_.insert(std::make_pair(task.lock()->GetPriority(), pairTask));
-  name_sorted_.insert(std::make_pair(task.lock()->GetName(), pairTask));
-  label_sorted_.insert(std::make_pair(task.lock()->GetLabel(), pairTask));
-  date_sorted_.insert(std::make_pair(task.lock()->GetDueTime(), pairTask));
+  priority_sorted_[task.lock()->GetPriority()].insert(std::make_pair(task.lock()->GetID(), task));
+  name_sorted_[task.lock()->GetName()].insert(std::make_pair(task.lock()->GetID(), task));
+  label_sorted_[task.lock()->GetLabel()].insert(std::make_pair(task.lock()->GetID(), task));
+  date_sorted_[task.lock()->GetDueTime()].insert(std::make_pair(task.lock()->GetID(), task));
   return true;
 }
 
 bool TaskView::RemoveTask(const TaskID& id) {
-  if(!removeFromMap(id, priority_sorted_)) return false;
-  if(!removeFromMap(id, name_sorted_)) return false;
-  if(!removeFromMap(id, label_sorted_)) return false;
-  if(!removeFromMap(id, date_sorted_)) return false;
+  if(!removeFromMap(id, priority_sorted_) || !removeFromMap(id, name_sorted_)
+        || !removeFromMap(id, label_sorted_) || !removeFromMap(id, date_sorted_)) return false;
   return true;
 }
 
 std::vector<TaskEntity> TaskView::GetAllTasks() {
   std::vector<TaskEntity> searchResult;
-  for(auto [key, value] : priority_sorted_) {
-    searchResult.push_back(*(value.second.lock()));
+  for(const auto& [priority, tasks] : priority_sorted_) {
+    for(const auto& [ID, task] : tasks) {
+      searchResult.push_back(*(task.lock()));
+    }
   }
   return searchResult;
 }
@@ -67,29 +59,35 @@ std::vector<TaskEntity> TaskView::GetAllTasks() {
 std::vector<TaskEntity> TaskView::GetTodayTasks() {
   std::vector<TaskEntity> searchResult;
   auto today = Date::GetCurrentDate();
-  for(auto [date, task] : date_sorted_) {
-    if(date.GetDate() == today.GetDate()) searchResult.push_back(*(task.second.lock()));
+  for(const auto& [date, tasks] : date_sorted_) {
+    if(date.GetDate() == today.GetDate()) {
+      for(const auto& [ID, task] : tasks) {
+        searchResult.push_back(*task.lock());
+      }
+    }
   }
   return searchResult;
 }
 
 std::vector<TaskEntity> TaskView::GetWeekTasks() {
   std::vector<TaskEntity> searchResult;
-  for(auto [date, task] : date_sorted_) {
-    if(Date::CheckWeek(date)) searchResult.push_back(*(task.second.lock()));
+  for(const auto& [date, tasks] : date_sorted_) {
+    if(Date::CheckWeek(date)) {
+      for(const auto& [ID, task] : tasks) {
+        searchResult.push_back(*task.lock());
+      }
+    }
   }
   return searchResult;
 }
 
 std::vector<TaskEntity> TaskView::GetTasksByPriority(const Priority &priority) {
-  auto first = priority_sorted_.find(priority);
   std::vector<TaskEntity> searchResult;
 
-  if(first == priority_sorted_.end()) return searchResult;
+  if(priority_sorted_.find(priority) == priority_sorted_.end()) return searchResult;
   else {
-    for(auto it = first; it != priority_sorted_.end(); ++it) {
-      if(it->first != priority) break;
-      searchResult.push_back(*it->second.second.lock());
+    for(const auto& [ID, task] : priority_sorted_[priority]) {
+      searchResult.push_back(*task.lock());
     }
   }
   return searchResult;
@@ -98,19 +96,24 @@ std::vector<TaskEntity> TaskView::GetTasksByPriority(const Priority &priority) {
 std::vector<TaskEntity> TaskView::GetTasksByName(const std::string &name) {
   auto first = name_sorted_.find(name);
   std::vector<TaskEntity> searchResult;
-  for(auto it = first; it != name_sorted_.end(); ++it) {
-    if(it->first != name) break;
-    searchResult.push_back(*it->second.second.lock());
+
+  if(name_sorted_.find(name) == name_sorted_.end()) return searchResult;
+  else {
+    for(const auto& [ID, task] : name_sorted_[name]) {
+      searchResult.push_back(*task.lock());
+    }
   }
   return searchResult;
 }
 
 std::vector<TaskEntity> TaskView::GetTasksByLabel(const std::string &label) {
-  auto first = label_sorted_.find(label);
   std::vector<TaskEntity> searchResult;
-  for(auto it = first; it != label_sorted_.end(); ++it) {
-    if(it->first != label) break;
-    searchResult.push_back(*it->second.second.lock());
+
+  if(label_sorted_.find(label) == label_sorted_.end()) return searchResult;
+  else {
+    for(const auto& [ID, task] : label_sorted_[label]) {
+      searchResult.push_back(*task.lock());
+    }
   }
   return searchResult;
 }

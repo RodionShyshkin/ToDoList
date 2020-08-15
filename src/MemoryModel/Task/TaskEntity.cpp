@@ -22,18 +22,26 @@ TaskEntity TaskEntity::createSubtask(const Task &task, const TaskID &id, const T
 }
 
 TaskID TaskEntity::GetID() const { return user_id_; }
+
 std::string TaskEntity::GetName() const { return task_.GetName(); }
+
 std::string TaskEntity::GetLabel() const { return task_.GetLabel(); }
+
 Priority TaskEntity::GetPriority() const { return task_.GetPriority(); }
+
 Date TaskEntity::GetDueTime() const { return task_.GetDate(); }
+
 bool TaskEntity::GetStatus() const { return status_; }
+
 Task TaskEntity::GetTask() const { return task_; }
-std::map<TaskID, std::shared_ptr<TaskEntity>> TaskEntity::GetSubtasks() const { return subtasks_; }
+
+std::map<TaskID, std::weak_ptr<TaskEntity>> TaskEntity::GetSubtasks() const { return subtasks_; }
+
 TaskID TaskEntity::GetParentID() const { return parent_id_; }
 
 
-void TaskEntity::AddSubtask(const std::shared_ptr<TaskEntity> &task) {
-  subtasks_.insert(std::make_pair(task->GetID(), task));
+void TaskEntity::AddSubtask(const std::weak_ptr<TaskEntity> &task) {
+  subtasks_.insert(std::make_pair(task.lock()->GetID(), task));
 }
 
 bool TaskEntity::RemoveSubtask(const TaskID &id) {

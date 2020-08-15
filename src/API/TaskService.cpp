@@ -9,7 +9,7 @@ TaskService::TaskService() : task_service_storage_(FullStorage()) {}
 std::vector<TaskDTO> TaskService::getAllTasks() {
   auto allTasks = task_service_storage_.GetTaskView().GetAllTasks();
   std::vector<TaskDTO> searchResult;
-  for(auto task : allTasks) {
+  for(const auto& task : allTasks) {
     searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
   }
   return searchResult;
@@ -18,7 +18,7 @@ std::vector<TaskDTO> TaskService::getAllTasks() {
 std::vector<TaskDTO> TaskService::getTasksForToday() {
   auto todayTasks = task_service_storage_.GetTaskView().GetTodayTasks();
   std::vector<TaskDTO> searchResult;
-  for(auto task : todayTasks) {
+  for(const auto& task : todayTasks) {
     searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
   }
   return searchResult;
@@ -27,7 +27,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday() {
 std::vector<TaskDTO> TaskService::getTasksForWeek() {
   auto weekTasks = task_service_storage_.GetTaskView().GetWeekTasks();
   std::vector<TaskDTO> searchResult;
-  for(auto task : weekTasks) {
+  for(const auto& task : weekTasks) {
     searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
   }
   return searchResult;
@@ -36,7 +36,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek() {
 std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label) {
   auto labelTasks = task_service_storage_.GetTaskView().GetTasksByLabel(label);
   std::vector<TaskDTO> searchResult;
-  for(auto task : labelTasks) {
+  for(const auto& task : labelTasks) {
     searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
   }
   return searchResult;
@@ -45,7 +45,7 @@ std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label) {
 std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name) {
   auto nameTasks = task_service_storage_.GetTaskView().GetTasksByName(name);
   std::vector<TaskDTO> searchResult;
-  for(auto task : nameTasks) {
+  for(const auto& task : nameTasks) {
     searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
   }
   return searchResult;
@@ -54,7 +54,7 @@ std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name) {
 std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority &priority) {
   auto priorityTasks = task_service_storage_.GetTaskView().GetTasksByPriority(priority);
   std::vector<TaskDTO> searchResult;
-  for(auto task : priorityTasks) {
+  for(const auto& task : priorityTasks) {
     searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
   }
   return searchResult;

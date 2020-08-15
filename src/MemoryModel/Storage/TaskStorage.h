@@ -10,7 +10,7 @@
 
 class TaskStorage {
  public:
-  bool                                              PushTask(const std::shared_ptr<TaskEntity>& task);
+  bool                                              AddTask(const std::shared_ptr<TaskEntity>& task);
   bool                                              RemoveTask(const TaskID& id);
 
   bool                                              HasTask(const TaskID& id);

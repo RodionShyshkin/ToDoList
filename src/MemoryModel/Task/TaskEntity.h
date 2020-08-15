@@ -37,7 +37,7 @@ class TaskEntity {
   Date                                                    GetDueTime() const;
   bool                                                    GetStatus() const;
   Task                                                    GetTask() const;
-  std::map<TaskID, std::shared_ptr<TaskEntity>>           GetSubtasks() const;
+  std::map<TaskID, std::weak_ptr<TaskEntity>>             GetSubtasks() const;
   TaskID                                                  GetParentID() const;
 
  public:
@@ -46,7 +46,7 @@ class TaskEntity {
    *
    * @param const std::shared_ptr<TaskEntity>& reference to the TaskEntity smart pointer.
    */
-  void                                                    AddSubtask(const std::shared_ptr<TaskEntity> &task);
+  void                                                    AddSubtask(const std::weak_ptr<TaskEntity> &task);
 
   /*
    * Changes task status.
@@ -86,7 +86,7 @@ class TaskEntity {
   TaskID                                                  user_id_;
   bool                                                    status_;
   Task                                                    task_;
-  std::map<TaskID, std::shared_ptr<TaskEntity>>           subtasks_;
+  std::map<TaskID, std::weak_ptr<TaskEntity>>             subtasks_;
   TaskID                                                  parent_id_;
 };
 

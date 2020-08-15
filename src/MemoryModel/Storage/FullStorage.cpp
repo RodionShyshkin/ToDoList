@@ -20,7 +20,7 @@ OperationResult FullStorage::AddTask(const Task &task) {
   auto newtask = TaskEntity::createTask(task, newid.value());
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!task_storage_.PushTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
+  if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
   if(!task_view_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
 
   return OperationResult{ErrorCode::NO_ERRORS};
@@ -35,7 +35,7 @@ OperationResult FullStorage::AddSubtask(const TaskID &id, const Task &subtask) {
   auto newtask = TaskEntity::createSubtask(subtask, newid.value(), id);
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!task_storage_.PushTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
+  if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
   if(!task_view_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
   task->AddSubtask(task_ptr);
 
@@ -48,12 +48,12 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
   std::vector<TaskID> subtasksToRemove;
 
   auto subtasks = task->GetSubtasks();
-  for(auto subtask : subtasks) {
+  for(const auto& subtask : subtasks) {
     subtasksToRemove.push_back(subtask.first);
     RemoveTask(subtask.first);
   }
 
-  for(auto subtask : subtasksToRemove) {
+  for(const auto& subtask : subtasksToRemove) {
     if(!task_storage_.RemoveTask(subtask)) return OperationResult{ErrorCode::WRONG_TASK_ID};
     if(!task_view_.RemoveTask(subtask)) return OperationResult{ErrorCode::WRONG_TASK_ID};
   }
