@@ -29,7 +29,4 @@ class TaskView {
   std::map<Date, std::map<TaskID, std::weak_ptr<TaskEntity>>>                    date_sorted_;
 };
 
-//template<typename T>
-//bool checkIDUniqness(const TaskID& id, std::multimap<T, std::pair<TaskID, std::weak_ptr<TaskEntity>>> map);
-
 #endif //TODOLIST_SRC_API_TASKVIEW_H_

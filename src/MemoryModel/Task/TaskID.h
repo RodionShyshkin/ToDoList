@@ -8,9 +8,7 @@
 #include <optional>
 
 /*
- * \brief Holder of Task identifier.
- *
- * A class for {Task} identifying which guarantees its uniqueness.
+ * \brief A class for {Task} identifying which guarantees its uniqueness.
  *
  * @author Rodion Shyshkin
  */
@@ -23,13 +21,13 @@ class TaskID {
   static std::optional<TaskID>    create(const unsigned int& id);
 
  public:
-  unsigned int      GetID() const;
+  unsigned int                    GetID() const;
+
+ private:
+  unsigned int                    id_;
 
  private:
   TaskID(const unsigned int& id);
-
- private:
-  unsigned int      id_;
 };
 
 bool operator== (const TaskID& lhs, const TaskID& rhs);

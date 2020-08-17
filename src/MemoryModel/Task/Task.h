@@ -30,14 +30,15 @@ class Task {
   Priority                        GetPriority() const;
   Date                            GetDate() const;
 
- private:
-  Task(const std::string &name, const std::string &label, Priority priority, const Date &duedate);
 
  private:
   std::string                     name_;
   std::string                     label_;
   Date                            due_date_;
   Priority                        priority_;
+
+ private:
+  Task(const std::string &name, const std::string &label, Priority priority, const Date &duedate);
 };
 
 #endif //TODOLIST__TASK_H_

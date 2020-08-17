@@ -19,12 +19,12 @@ class OperationResult {
   OperationResult(ErrorCode err_code);
 
  public:
-  bool                      GetStatus() const;
-  std::optional<ErrorCode>  GetError() const;
+  bool                        GetStatus() const;
+  std::optional<ErrorCode>    GetError() const;
 
  private:
-  bool                      status_;
-  ErrorCode                 error_;
+  bool                        status_;
+  ErrorCode                   error_;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_OPERATIONRESULT_H_

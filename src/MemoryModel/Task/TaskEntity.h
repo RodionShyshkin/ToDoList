@@ -10,9 +10,7 @@
 #include "TaskID.h"
 
 /*
- * \brief Full task with subtasks and status.
- *
- * TaskEntity contains current task with its ID and subtasks.
+ * \brief Full task with ID, subtasks and status.
  *
  * @author Rodion Shyshkin
  */

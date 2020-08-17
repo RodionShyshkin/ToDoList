@@ -22,7 +22,7 @@ class IDGenerator {
   /*
    * Generates task identifier {TaskID} and increases amount of IDs.
    *
-   * @return TaskID generated ID
+   * @return optional TaskID generated ID if it's valid and nullopt in another case.
    */
   std::optional<TaskID>            GenerateID();
 

@@ -18,8 +18,8 @@ class FullStorage {
   TaskView                          GetTaskView() const;
   TaskStorage                       GetTaskStorage() const;
 
-  OperationResult                   AddTask(const Task &task);
-  OperationResult                   AddSubtask(const TaskID &id, const Task &subtask);
+  OperationResult                   AddTask(const TaskDTO& task);
+  OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask);
   OperationResult                   RemoveTask(const TaskID& id);
 
  private:

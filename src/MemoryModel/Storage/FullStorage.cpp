@@ -14,10 +14,12 @@ TaskStorage FullStorage::GetTaskStorage() const {
   return task_storage_;
 }
 
-OperationResult FullStorage::AddTask(const Task &task) {
+OperationResult FullStorage::AddTask(const TaskDTO& task) {
+  auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
+  if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
-  auto newtask = TaskEntity::createTask(task, newid.value());
+  auto newtask = TaskEntity::createTask(taskInstance.value(), newid.value());
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
@@ -26,13 +28,16 @@ OperationResult FullStorage::AddTask(const Task &task) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::AddSubtask(const TaskID &id, const Task &subtask) {
+OperationResult FullStorage::AddSubtask(const TaskID &id, const TaskDTO& subtask) {
+  auto taskInstance = Task::create(subtask.getName(), subtask.getLabel(), subtask.getPriority(), subtask.getDueDate());
+  if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
+
   auto task = task_storage_.GetTask(id);
   if(task == nullptr) return OperationResult{ErrorCode::PARENT_NOT_FOUND};
 
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
-  auto newtask = TaskEntity::createSubtask(subtask, newid.value(), id);
+  auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid.value(), id);
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};

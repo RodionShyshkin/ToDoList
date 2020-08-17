@@ -11,11 +11,28 @@
 #include <MemoryModel/Task/Date.h>
 #include <MemoryModel/Task/Task.h>
 
+/*
+ * Data-Transfer-Object class which contains information about task.
+ *
+ * @author: Rodion Shyshkin
+ */
+
 class TaskDTO {
  public:
   TaskDTO();
 
  public:
+  /*
+   * Factory method for TaskDTO instance.
+   *
+   * @param TaskID identifier of a task.
+   *
+   * @param Task task.
+   *
+   * @param bool status, True if task is completed, False in another case.
+   *
+   * @return TaskDTO instance.
+   */
   static TaskDTO  create(const TaskID& id, const Task& task, const bool& status);
 
  public:
