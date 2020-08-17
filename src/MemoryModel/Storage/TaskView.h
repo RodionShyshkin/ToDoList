@@ -7,20 +7,21 @@
 
 #include <map>
 #include <MemoryModel/Task/TaskEntity.h>
+#include <MemoryModel/Storage/TaskViewInterface.h>
 
-class TaskView {
+class TaskView : public TaskViewInterface {
  public:
-  bool                                                        AddTask(const std::weak_ptr<TaskEntity>& task);
-  bool                                                        RemoveTask(const TaskID& id);
+  bool                                                        AddTask(const std::weak_ptr<TaskEntity>& task) override;
+  bool                                                        RemoveTask(const TaskID& id) override;
 
  public:
-  std::vector<TaskEntity>                                     GetTodayTasks();
-  std::vector<TaskEntity>                                     GetWeekTasks();
+  std::vector<TaskEntity>                                     GetTodayTasks() override;
+  std::vector<TaskEntity>                                     GetWeekTasks() override;
 
-  std::vector<TaskEntity>                                     GetAllTasks();
-  std::vector<TaskEntity>                                     GetTasksByLabel(const std::string& label);
-  std::vector<TaskEntity>                                     GetTasksByName(const std::string& name);
-  std::vector<TaskEntity>                                     GetTasksByPriority(const Priority& priority);
+  std::vector<TaskEntity>                                     GetAllTasks() override;
+  std::vector<TaskEntity>                                     GetTasksByLabel(const std::string& label) override;
+  std::vector<TaskEntity>                                     GetTasksByName(const std::string& name) override;
+  std::vector<TaskEntity>                                     GetTasksByPriority(const Priority& priority) override;
 
  private:
   std::map<Priority, std::map<TaskID, std::weak_ptr<TaskEntity>>>                priority_sorted_;

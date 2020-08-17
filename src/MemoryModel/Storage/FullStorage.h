@@ -6,21 +6,19 @@
 #define TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 
 #include <API/TaskDTO.h>
-#include "TaskStorage.h"
-#include "TaskView.h"
-#include "OperationResult.h"
+#include <MemoryModel/Storage/FullStorageInterface.h>
 
-class FullStorage {
+class FullStorage : public FullStorageInterface {
  public:
   FullStorage();
 
  public:
-  TaskView                          GetTaskView() const;
-  TaskStorage                       GetTaskStorage() const;
+  TaskView                          GetTaskView() const override;
+  TaskStorage                       GetTaskStorage() const override;
 
-  OperationResult                   AddTask(const TaskDTO& task);
-  OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask);
-  OperationResult                   RemoveTask(const TaskID& id);
+  OperationResult                   AddTask(const TaskDTO& task) override;
+  OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) override;
+  OperationResult                   RemoveTask(const TaskID& id) override;
 
  private:
   TaskStorage                       task_storage_;
