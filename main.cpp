@@ -1,5 +1,5 @@
 #include <iostream>
-#include "src/MemoryModel/Task.h"
+#include "MemoryModel/Task/Task.h"
 #include "src/API/TaskService.h"
 #include <gtest/gtest.h>
 

@@ -14,7 +14,8 @@ Task::Task(const std::string &name, const std::string &label, Priority priority,
   this->due_date_ = duedate;
 }
 
-Task Task::create(const std::string &name, const std::string &label, Priority priority, const Date &duedate) {
+std::optional<Task> Task::create(const std::string &name, const std::string &label, Priority priority, const Date &duedate) {
+  if(name == "" || label == "") return std::nullopt;
   return Task(name, label, priority, duedate);
 }
 

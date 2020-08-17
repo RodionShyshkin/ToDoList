@@ -2,14 +2,15 @@
 // Created by rodion on 8/4/20.
 //
 #include <gtest/gtest.h>
-#include <MemoryModel/TaskView.h>
+#include <MemoryModel/Storage/TaskView.h>
 
 class TaskViewTest : public ::testing::Test {
  public:
   TaskView task_view_;
-  TaskEntity entity_ = TaskEntity::create(Task::create("Task", "test", Priority::EMPTY,
-                                                       Date(2011, 2, 3)), 1);
-  std::shared_ptr<TaskEntity> ptr = std::make_shared<TaskEntity>(entity_);
+  std::optional<Task> task = Task::create("Task", "test", Priority::EMPTY,
+                                          Date(2011, 2, 3));
+  std::optional<TaskEntity> entity_ = TaskEntity::createTask(task.value(), TaskID::create(1).value());
+  std::shared_ptr<TaskEntity> ptr = std::make_shared<TaskEntity>(entity_.value());
 };
 
 TEST_F(TaskViewTest, addTask) {

@@ -6,14 +6,12 @@
 #define TODOLIST__TASKSERVICE_H_
 
 #include "API/TaskDTO.h"
-#include <map>
-#include <optional>
-#include <MemoryModel/TaskServiceStorage.h>
+#include <MemoryModel/Storage/FullStorage.h>
 
 /*
- * API for work with tasks.
+ * \brief Entry point for tasks management.
  *
- * @see TaskService.cpp
+ * @see TaskDTO.h
  *
  * @author: Rodion Shyshkin
  */
@@ -23,17 +21,119 @@ class TaskService {
   TaskService();
 
  public:
-  std::vector<TaskDTO>              getAllTasks();
-  std::vector<TaskDTO>              getTasksForToday();
-  std::vector<TaskDTO>              getTasksForWeek();
-  std::vector<TaskDTO>              getTasksForLabel(const std::string &label);
+  /*
+   * \brief Gives all actual tasks.
+   *
+   * @param bool flag for sorting tasks by priority
+   *
+   * @return TaskDTO vector Vector which contains all tasks, if param is true they are sorted by priority, in
+   * another case they are not
+   */
+  std::vector<TaskDTO>              getAllTasks(const bool& sortByPriority) const;
 
-  OperationResult                   addTask(const Task &task);
-  OperationResult                   addSubtask(const TaskID &id, const Task &subtask);
+  /*
+   * \brief Gives all tasks for today by local time.
+   *
+   * @param bool flag for sorting tasks by priority
+   *
+   * @return TaskDTO vector which contains all tasks for today, if param is true they are sorted by priority, in
+   * another case they are not
+   */
+  std::vector<TaskDTO>              getTasksForToday(const bool& sortByPriority) const;
 
+  /*
+   * \brief Gives all tasks for current week until Monday by local time.
+   *
+   * @param bool flag for sorting tasks by priority
+   *
+   * @return TaskDTO vector which contains all tasks for this week, if param is true they are sorted by priority, in
+   * another case they are not
+   */
+  std::vector<TaskDTO>              getTasksForWeek(const bool& sortByPriority) const;
+
+  /*
+   * \brief Gives all tasks with label which is pointed as parameter.
+   *
+   * @param string label
+   * @param bool flag for sorting tasks by priority
+   *
+   * @return TaskDTO vector which contains all tasks with this label
+   */
+  std::vector<TaskDTO>              getTasksByLabel(const std::string &label, const bool& sortByPriority) const;
+
+  /*
+   * \brief Gives all tasks with name which is pointed as parameter.
+   *
+   * @param string name
+   * @param bool flag for sorting tasks by priority
+   *
+   * @return TaskDTO vector which contains all tasks with this name
+   */
+  std::vector<TaskDTO>              getTasksByName(const std::string& name, const bool& sortByPriority) const;
+
+  /*
+   * \brief Gives all tasks with priority which is pointed as parameter.
+   *
+   * @param Priority priority (EMPTY, LOW, MEDIUM, HIGH).
+   *
+   * @return TaskDTO vector which contains all tasks with this priority.
+   */
+  std::vector<TaskDTO>              getTasksByPriority(const Priority& priority) const;
+
+  /*
+   * \brief Adds task.
+   *
+   * @param TaskDTO object with internal task information.
+   *
+   * @return OperationResult information about result of adding (contains error or message about success).
+   */
+  OperationResult                   addTask(const TaskDTO& task);
+
+  /*
+   * \brief Adds subtask for a task which already exists.
+   *
+   * @param TaskID identifier of a task for which you are going to add subtask.
+   *
+   * @param TaskDTO obbject with internal subtask information.
+   *
+   * @return OperationResult information about result of adding (contains error or message about success).
+   */
+  OperationResult                   addSubtask(const TaskID &id, const TaskDTO& subtask);
+
+  /*
+   * \brief Removes task.
+   *
+   * @param TaskID identifier of a task which you are going to delete.
+   *
+   * @return OperationResult information about result of removing (contains error or message about success).
+   */
+  OperationResult                   RemoveTask(const TaskID& id);
+
+  /*
+   * \brief Postpones task.
+   *
+   * @param TaskID identifier of a task in which you are going to change date.
+   *
+   * @param Date New deadline for task.
+   *
+   * @return OperationResult information about result of postpone (contains error or message about success).
+   */
+  OperationResult                   postponeTask(const TaskID& id, const Date& newdate);
+
+  /*
+   * \brief Completes task.
+   *
+   * @param TaskID identifier of a task you want to mark as completed.
+   *
+   * @return OperationResult information about result of completing (contains error or message about success).
+   */
+  OperationResult                   completeTask(const TaskID& id);
 
  private:
-  TaskServiceStorage                task_service_storage_;
+  static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
+
+ private:
+  FullStorage                task_service_storage_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

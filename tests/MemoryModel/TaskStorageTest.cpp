@@ -3,30 +3,29 @@
 //
 
 #include <gtest/gtest.h>
-#include "MemoryModel/TaskStorage.h"
+#include "MemoryModel/Storage/TaskStorage.h"
 
 class StorageTest : public ::testing::Test {
  public:
   TaskStorage storage;
-  TaskEntity check = TaskEntity::create(Task::create("Task", "test", Priority::HIGH,
-                                                     Date(1990, 2, 2)), 1);
+  TaskEntity check = TaskEntity::createTask(Task::create("Task", "test", Priority::HIGH,
+                                                         Date(1990, 2, 2)).value(), TaskID::create(1).value());
 };
 
 TEST_F(StorageTest, pushTask) {
-
-  EXPECT_NO_THROW(storage.PushTask(std::make_pair(1, std::make_shared<TaskEntity>(check))));
-  EXPECT_THROW(storage.PushTask(std::make_pair(2, std::make_shared<TaskEntity>(check))), std::invalid_argument);
+  EXPECT_NO_THROW(storage.AddTask(std::make_shared<TaskEntity>(check)));
 }
 
 TEST_F(StorageTest, getTask) {
-  storage.PushTask(std::make_pair(1, std::make_shared<TaskEntity>(check)));
-  EXPECT_NO_THROW(storage.GetTask(1));
-  auto check = storage.GetTask(1);
-  ASSERT_EQ(check.value()->GetName(), "Task");
+  storage.AddTask(std::make_shared<TaskEntity>(check));
+  EXPECT_NO_THROW(storage.GetTask(TaskID::create(1).value()));
+  auto check = storage.GetTask(TaskID::create(1).value());
+  ASSERT_NE(check, nullptr);
+  ASSERT_EQ(check->GetName(), "Task");
 }
 
 TEST_F(StorageTest, ifExist) {
-  storage.PushTask(std::make_pair(1, std::make_shared<TaskEntity>(check)));
-  ASSERT_TRUE(storage.HasTask(TaskID(1)));
-  ASSERT_FALSE(storage.HasTask(TaskID(2)));
+  storage.AddTask(std::make_shared<TaskEntity>(check));
+  ASSERT_TRUE(storage.HasTask(TaskID::create(1).value()));
+  ASSERT_FALSE(storage.HasTask(TaskID::create(2).value()));
 }
