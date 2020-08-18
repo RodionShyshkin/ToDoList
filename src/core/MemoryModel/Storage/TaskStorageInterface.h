@@ -16,7 +16,6 @@ class TaskStorageInterface {
   virtual bool                                    AddTask(const std::shared_ptr<TaskEntity>& task) = 0;
   virtual bool                                    RemoveTask(const TaskID& id) = 0;
 
-  virtual bool                                    HasTask(const TaskID& id) = 0;
   virtual std::shared_ptr<TaskEntity>             GetTask(const TaskID& id) = 0;
 };
 

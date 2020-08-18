@@ -5,7 +5,7 @@
 #ifndef TODOLIST__TASKSERVICE_H_
 #define TODOLIST__TASKSERVICE_H_
 
-#include "API/TaskDTO.h"
+#include "TaskDTO.h"
 #include <MemoryModel/Storage/FullStorage.h>
 
 /*

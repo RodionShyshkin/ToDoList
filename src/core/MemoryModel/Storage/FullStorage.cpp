@@ -65,7 +65,7 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
 
   if(task->checkParent()) {
     auto parentID = task->GetParentID();
-    if(!task_storage_.HasTask(parentID)) throw std::runtime_error("Parent was lost.");
+    if(task_storage_.GetTask(parentID) == nullptr) throw std::runtime_error("Parent was lost.");
     auto parent = task_storage_.GetTask(parentID);
     if(!parent->RemoveSubtask(id)) throw std::runtime_error("Subtask was lost.");
   }

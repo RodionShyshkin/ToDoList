@@ -7,10 +7,10 @@
 
 class TaskIDTest : public ::testing::Test {
  public:
-/*  TaskID lhs = TaskID(3);
-  TaskID lhs_equal = TaskID(3);
-  TaskID rhs = TaskID(4);
-  unsigned int rhs_equal = 4;*/
+  TaskID lhs = TaskID{3};
+  TaskID lhs_equal = TaskID{3};
+  TaskID rhs = TaskID{4};
+  unsigned int rhs_equal = 4;
 };
 
 TEST_F(TaskIDTest, defaultConstructor) {
@@ -18,7 +18,7 @@ TEST_F(TaskIDTest, defaultConstructor) {
 }
 
 TEST_F(TaskIDTest, Operators) {
-/*  ASSERT_TRUE(lhs < rhs);
+  ASSERT_TRUE(lhs < rhs);
   ASSERT_TRUE(lhs == lhs_equal);
-  ASSERT_TRUE(rhs == rhs_equal);*/
+  ASSERT_TRUE(rhs == rhs_equal);
 }

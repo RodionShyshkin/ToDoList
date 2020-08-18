@@ -21,9 +21,26 @@ class TaskEntity {
 
  public:
   /*
-   * Factory method for TaskEntity.
+   * Factory method for TaskEntity. Doesn't return an optional because
+   * all its params are already validated.
+   *
+   * @param Task task with the main information
+   * @param TaskID identifier for task.
+   *
+   * @return TaskEntity Task without any parent tasks (it isn't a subtask of some task).
    */
   static TaskEntity                                       createTask(const Task& task, const TaskID& id);
+
+  /*
+   * Factory method for TaskEntity. Doesn't return an optional because
+   * all its params are already validated.
+   *
+   * @param Task task with the main information
+   * @param TaskID identifier for task
+   * @param TaskID identifier of parent task
+   *
+   * @return TaskEntity Task which is a subtask of some another task => has a parent task.
+   */
   static TaskEntity                                       createSubtask(const Task& task, const TaskID& id,
                                                                         const TaskID& parent);
 
@@ -67,7 +84,6 @@ class TaskEntity {
    *
    * @return True if the task has subtask with this id and it was removed, False in another case.
    */
-
   bool                                                    RemoveSubtask(const TaskID& id);
 
   /*

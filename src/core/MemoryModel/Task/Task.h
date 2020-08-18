@@ -21,6 +21,13 @@ class Task {
  public:
   /*
    * Factory method for task.
+   *
+   * @param std::string Task Name
+   * @param std::string Task label
+   * @param Priority Task priority (EMPTY, LOW, MEDIUM, HIGH)
+   * @param Date boost::date Task Deadline
+   *
+   * @return optional<Task> created Task or nullopt in case one of the arguments is invalid.
    */
   static std::optional<Task>      create(const std::string& name, const std::string& label,
                                          Priority priority, const Date& duedate);
