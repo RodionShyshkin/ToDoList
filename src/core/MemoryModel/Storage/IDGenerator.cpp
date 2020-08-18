@@ -9,5 +9,5 @@ IDGenerator::~IDGenerator() = default;
 
 
 std::optional<TaskID> IDGenerator::GenerateID() {
-  return TaskID::create(++ids_amount_);
+  return TaskID(++ids_amount_);
 }

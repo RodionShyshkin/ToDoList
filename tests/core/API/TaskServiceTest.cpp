@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "API/TaskService.h"
+#include <API/TaskService.h>
 
 class TaskServiceTest : public ::testing::Test {
  public:
@@ -15,15 +15,10 @@ class TaskServiceTest : public ::testing::Test {
     std::optional<Task> task3 = Task::create("Task 2", "label", Priority::HIGH, Date::GetCurrentDate());
     std::optional<Task> task4 = Task::create("Task 2", "label", Priority::LOW, Date::GetCurrentDate());
 
-    std::optional<TaskID> firstID = TaskID::create(1);
-    std::optional<TaskID> secondID = TaskID::create(2);
-    std::optional<TaskID> thirdID = TaskID::create(3);
-    std::optional<TaskID> fourthID = TaskID::create(4);
-
-    service.addTask(TaskDTO::create(firstID.value(), task.value(), false));
-    service.addTask(TaskDTO::create(secondID.value(), task2.value(), true));
-    service.addSubtask(firstID.value(), TaskDTO::create(thirdID.value(), task3.value(), true));
-    service.addSubtask(thirdID.value(), TaskDTO::create(fourthID.value(), task4.value(), false));
+    service.addTask(TaskDTO::create(TaskID{1}, task.value(), false));
+    service.addTask(TaskDTO::create(TaskID{2}, task2.value(), true));
+    service.addSubtask(TaskID{1}, TaskDTO::create(TaskID{3}, task3.value(), true));
+    service.addSubtask(TaskID{3}, TaskDTO::create(TaskID{4}, task4.value(), false));
   }
 
   virtual void TearDown() {  }

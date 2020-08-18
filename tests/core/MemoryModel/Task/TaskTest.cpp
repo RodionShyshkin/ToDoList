@@ -9,11 +9,20 @@ class TaskTest : public ::testing::Test {
 
 };
 
-TEST_F(TaskTest, Constructor) {
+TEST_F(TaskTest, invalidTaskWithoutName) {
+  std::optional<Task> task;
+  EXPECT_NO_THROW(task = Task::create("", "label", Priority::MEDIUM, Date(2044, 1, 1)));
+  ASSERT_FALSE(task.has_value());
+}
+
+TEST_F(TaskTest, invalidTaskWithoutLabel) {
+  std::optional<Task> task;
+  EXPECT_NO_THROW(task = Task::create("Name", "", Priority::MEDIUM, Date(2044, 1, 1)));
+  ASSERT_FALSE(task.has_value());
+}
+
+TEST_F(TaskTest, ValidTask) {
   EXPECT_TRUE(Task::create("Name", "label_", Priority::EMPTY, Date(2044, 1, 1)).has_value());
-  EXPECT_FALSE(Task::create("", "label_", Priority::LOW, Date(2044, 1, 10)).has_value());
-  EXPECT_FALSE(Task::create("Name", "", Priority::MEDIUM, Date(2011, 3, 1)).has_value());
-  EXPECT_FALSE(Task::create("", "", Priority::HIGH, Date(2010, 4, 2)).has_value());
 }
 
 TEST_F(TaskTest, getters) {
@@ -31,9 +40,8 @@ bool operator== (const Task& lhs, const Task& rhs) {
   return false;
 }
 
-/*TEST_F(TaskTest, CopyConstructor) {
-
-  Task check = Task::create("name_", "", Priority::EMPTY, Date(1999, 1, 1)).value();
+TEST_F(TaskTest, CopyConstructor) {
+  Task check = Task::create("name_", "label", Priority::EMPTY, Date(1999, 1, 1)).value();
   Task copy = check;
   ASSERT_TRUE(copy == check);
-}*/
+}

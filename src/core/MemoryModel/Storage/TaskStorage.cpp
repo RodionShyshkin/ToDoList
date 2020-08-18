@@ -24,7 +24,3 @@ std::shared_ptr<TaskEntity> TaskStorage::GetTask(const TaskID &id) {
   }
   return nullptr;
 }
-
-bool TaskStorage::HasTask(const TaskID &id) {
-  return (tasks_.find(id) != tasks_.end());
-}

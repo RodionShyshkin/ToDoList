@@ -15,7 +15,7 @@ bool findByID(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<TaskE
 }
 
 template <typename T>
-bool removeFromMap(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<TaskEntity>>> map) {
+bool removeFromMap(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<TaskEntity>>>& map) {
   for(auto& [type, tasks] : map) {
     for(const auto& [ID, task] : tasks) {
       if(ID == id) {
@@ -48,7 +48,7 @@ bool TaskView::RemoveTask(const TaskID& id) {
 
 std::vector<TaskEntity> TaskView::GetAllTasks() {
   std::vector<TaskEntity> searchResult;
-  for(const auto& [priority, tasks] : priority_sorted_) {
+  for(const auto& [priority, tasks] : date_sorted_) {
     for(const auto& [ID, task] : tasks) {
       searchResult.push_back(*(task.lock()));
     }

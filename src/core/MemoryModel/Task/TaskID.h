@@ -16,18 +16,13 @@
 class TaskID {
  public:
   TaskID();
-
- public:
-  static std::optional<TaskID>    create(const unsigned int& id);
+  TaskID(const unsigned int& id);
 
  public:
   unsigned int                    GetID() const;
 
  private:
   unsigned int                    id_;
-
- private:
-  TaskID(const unsigned int& id);
 };
 
 bool operator== (const TaskID& lhs, const TaskID& rhs);
