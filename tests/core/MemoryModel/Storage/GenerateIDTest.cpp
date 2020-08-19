@@ -10,7 +10,7 @@
 };
 
 TEST_F(GenerateIDTest, GenerateID) {
-  /*IDGenerator id;
+  IDGenerator id;
   ASSERT_EQ(id.GenerateID(), 1);
-  ASSERT_EQ(id.GenerateID(), 2);*/
+  ASSERT_EQ(id.GenerateID(), 2);
 }

@@ -8,7 +8,7 @@
 
  class TaskEntityTest : public ::testing::Test {
  public:
-  virtual void SetUp() {
+  void SetUp() override {
     Task undertaskOne = Task::create("Task", "test", Priority::EMPTY,
                                      Date(2020, 10, 10)).value();
     Task undertaskTwo = Task::create("Subtask", "test", Priority::HIGH,
@@ -16,6 +16,11 @@
 
     task = TaskEntity::createTask(undertaskOne, TaskID{1});
     subtask = TaskEntity::createSubtask(undertaskTwo, TaskID{2}, TaskID{1});
+  }
+
+  void TearDown() override {
+    task = TaskEntity{};
+    subtask = TaskEntity{};
   }
 
   TaskEntity task;
@@ -45,3 +50,4 @@ TEST_F(TaskEntityTest, AddSubtask) {
 TEST_F(TaskEntityTest, defaultConstructor) {
   EXPECT_NO_THROW(TaskEntity{});
 }
+

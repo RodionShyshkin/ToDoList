@@ -9,7 +9,7 @@
 class TaskServiceTest : public ::testing::Test {
  public:
 
-  virtual void SetUp() {
+  void SetUp() override {
     std::optional<Task> task = Task::create("Task", "label", Priority::EMPTY, Date(2040, 9, 20));
     std::optional<Task> task2 = Task::create("Task", "label", Priority::MEDIUM, Date(2019, 4, 12));
     std::optional<Task> task3 = Task::create("Task 2", "label", Priority::HIGH, Date::GetCurrentDate());
@@ -21,7 +21,9 @@ class TaskServiceTest : public ::testing::Test {
     service.addSubtask(TaskID{3}, TaskDTO::create(TaskID{4}, task4.value(), false));
   }
 
-  virtual void TearDown() {  }
+  void TearDown() override {
+
+  }
 
   TaskService service;
 };
@@ -32,7 +34,7 @@ class TaskServiceTest : public ::testing::Test {
 
 };
 */
-
+/*
 TEST_F(TaskServiceTest, getAlltasks) {
   std::vector<TaskDTO> tasks;
   EXPECT_NO_THROW(tasks = service.getAllTasks(true));
@@ -104,7 +106,7 @@ TEST_F(TaskServiceTest, getWeekEmptyVector) {
   EXPECT_NO_THROW(tasks = empty.getTasksForWeek(true));
   ASSERT_TRUE(tasks.empty());
 }
-
+*/
 TEST_F(TaskServiceTest, remove) {
   /*service.addTask(task);
   service.addSubtask(1, subtask);
@@ -156,7 +158,7 @@ TEST_F(TaskServiceTest, RemoveTaskWithSubtasks) {
 }
 
 
-TEST_F(TaskServiceTest, postpone) {
+//TEST_F(TaskServiceTest, postpone) {
 /*  service.addTask(task);
   service.addSubtask(TaskID::create(1).value(), subtask);
   service.addSubtask(TaskID::create(1).value(), task);
@@ -176,29 +178,21 @@ TEST_F(TaskServiceTest, postpone) {
 
   std::cout << k->GetStatus() << std::endl;
   std::cout << tasks[0].GetStatus() << std::endl;*/
-}
+/*}
 
 
-
-
-
-
-
-
-
-
-TEST_F(TaskServiceTest, addTask) {
+TEST_F(TaskServiceTest, addTask) {*/
 /*  service.addTask(task);
   auto tasks = service.getAllTasks();
   ASSERT_EQ(tasks.size(), 1);*/
-}
+/*}
 
-TEST_F(TaskServiceTest, addSubtask) {
+TEST_F(TaskServiceTest, addSubtask) {*/
 /*  service.addTask(task);
   service.addSubtask(1, subtask);
   auto tasks = service.getAllTasks();
   ASSERT_EQ(tasks.size(), 2);*/
-}
+/*}
 
 TEST_F(TaskServiceTest, getTaskByName) {
   std::vector<TaskDTO> tasks;
@@ -238,4 +232,4 @@ TEST_F(TaskServiceTest, getTaskByPriority) {
 
   ASSERT_EQ(tasks.size(), 1);
   ASSERT_EQ(tasks[0].getPriority(), Priority::MEDIUM);
-}
+}*/

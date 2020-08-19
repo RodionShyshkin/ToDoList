@@ -6,6 +6,7 @@
 #define TODOLIST_SRC_GENERATEID_H_
 
 #include "MemoryModel/Task/TaskID.h"
+#include <MemoryModel/Storage/IDGeneratorInterface.h>
 
 /*
  * Class which generates a counter of {TaskID} instances.
@@ -13,10 +14,9 @@
  * @author Rodion Shyshkin
  */
 
-class IDGenerator {
+class IDGenerator : public IDGeneratorInterface {
  public:
   IDGenerator();
-  ~IDGenerator();
 
  public:
   /*
@@ -24,7 +24,7 @@ class IDGenerator {
    *
    * @return optional TaskID generated ID if it's valid and nullopt in another case.
    */
-  std::optional<TaskID>            GenerateID();
+  std::optional<TaskID>            GenerateID() override;
 
  private:
   unsigned int                     ids_amount_;
