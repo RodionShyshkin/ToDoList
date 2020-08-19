@@ -6,7 +6,7 @@
 
 class TaskViewTest : public ::testing::Test {
  public:
-  virtual void SetUp() {
+  void SetUp() override {
     std::optional<Task> validTask = Task::create("Val.Task", "test", Priority::HIGH,
                                                  Date(2025, 9, 9));
     std::optional<TaskEntity> validEntity = TaskEntity::createTask(validTask.value(), TaskID{1});
@@ -48,15 +48,18 @@ class TaskViewTest : public ::testing::Test {
     std::optional<TaskEntity> taskEntity = TaskEntity::createTask(task.value(), TaskID{5000});
     ptr = std::make_shared<TaskEntity>(taskEntity.value());
   }
+
+  void TearDown() override {
+
+  }
+
   TaskView task_view_;
 
   std::shared_ptr<TaskEntity> ptrValid;
   std::shared_ptr<TaskEntity> ptrInvalid;
-
   std::shared_ptr<TaskEntity> todayPtr;
   std::shared_ptr<TaskEntity> thisWeek;
   std::shared_ptr<TaskEntity> notThisWeek;
-
   std::shared_ptr<TaskEntity> ptr;
 };
 

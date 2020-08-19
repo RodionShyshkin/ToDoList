@@ -7,15 +7,23 @@
 
 class StorageTest : public ::testing::Test {
  public:
+  void SetUp() override {
+    check = TaskEntity::createTask(Task::create("Task", "test", Priority::HIGH,
+                                                Date{1990, 2, 2}).value(), TaskID{1});
+    second = TaskEntity::createTask(Task::create("Task 2", "test", Priority::LOW,
+                                                 Date{2022, 8, 8}).value(), TaskID{2});
+    invalidTask = TaskEntity::createTask(Task::create("Invalid task", "test", Priority::MEDIUM,
+                                                      Date{2088, 9, 11}).value(), TaskID{1});
+  }
+
+  void TearDown() override {
+
+  }
+
   TaskStorage storage;
-  TaskEntity check = TaskEntity::createTask(Task::create("Task", "test", Priority::HIGH,
-                                                         Date{1990, 2, 2}).value(), TaskID{1});
-
-  TaskEntity second = TaskEntity::createTask(Task::create("Task 2", "test", Priority::LOW,
-                                                          Date{2022, 8, 8}).value(), TaskID{2});
-
-  TaskEntity invalidTask = TaskEntity::createTask(Task::create("Invalid task", "test", Priority::MEDIUM,
-                                                               Date{2088, 9, 11}).value(), TaskID{1});
+  TaskEntity check;
+  TaskEntity second;
+  TaskEntity invalidTask;
 };
 
 TEST_F(StorageTest, pushTask) {
@@ -41,12 +49,3 @@ TEST_F(StorageTest, removeTask) {
   ASSERT_EQ(storage.GetTask(1), nullptr);
   ASSERT_NE(storage.GetTask(2), nullptr);
 }
-
-
-
-/*TEST_F(StorageTest, ifExist) {
-  storage.AddTask(std::make_shared<TaskEntity>(check));
-  ASSERT_TRUE(storage.HasTask(TaskID{1}));
-  ASSERT_FALSE(storage.HasTask(TaskID{2}));
-}
-*/

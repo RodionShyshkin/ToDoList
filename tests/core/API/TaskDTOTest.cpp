@@ -8,7 +8,15 @@
 
 class TaskDTOTest : public ::testing::Test {
  public:
-  Task validTask = Task::create("Name", "Valid task", Priority::EMPTY, Date(2090, 1, 1)).value();
+  void SetUp() override {
+    validTask = Task::create("Name", "Valid task", Priority::EMPTY, Date(2090, 1, 1)).value();
+  }
+
+  void TearDown() override {
+
+  }
+
+  Task validTask;
 };
 
 TEST_F(TaskDTOTest, ExceptionWithInvalidTask) {
