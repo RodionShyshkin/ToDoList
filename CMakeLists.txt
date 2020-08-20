@@ -3,7 +3,7 @@ project(ToDoList)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ToDoList main.cpp src/core/MemoryModel/Task/Task.cpp src/core/MemoryModel/Task/Task.h src/core/API/TaskService.cpp src/core/API/TaskService.h src/core/MemoryModel/Task/Date.cpp
+add_executable(ToDoList src/main.cpp src/core/MemoryModel/Task/Task.cpp src/core/MemoryModel/Task/Task.h src/core/API/TaskService.cpp src/core/API/TaskService.h src/core/MemoryModel/Task/Date.cpp
         src/core/MemoryModel/Task/Date.h src/core/MemoryModel/Task/TaskEntity.cpp src/core/MemoryModel/Task/TaskEntity.h src/core/MemoryModel/Storage/IDGenerator.cpp src/core/MemoryModel/Storage/IDGenerator.h
         src/core/MemoryModel/Task/TaskID.cpp src/core/MemoryModel/Task/TaskID.h)
 
@@ -25,11 +25,12 @@ if(Boost_FOUND)
 endif()
 
 include_directories(src/core)
+include_directories(src/CLI)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
 add_executable(Tests tests/core/MemoryModel/Task/DateTest.cpp tests/core/MemoryModel/Storage/GenerateIDTest.cpp tests/core/API/TaskServiceTest.cpp
-        src/core/MemoryModel/Task/Date.cpp src/core/MemoryModel/Storage/IDGenerator.cpp src/core/MemoryModel/Task/TaskID.cpp src/core/API/TaskService.cpp src/core/MemoryModel/Task/TaskEntity.cpp src/core/MemoryModel/Task/Task.cpp src/core/API/TaskDTO.cpp src/core/API/TaskDTO.h tests/core/MemoryModel/Task/TaskEntityTest.cpp src/core/MemoryModel/Storage/TaskStorage.cpp src/core/MemoryModel/Storage/TaskStorage.h src/core/MemoryModel/Storage/TaskView.cpp src/core/MemoryModel/Storage/TaskView.h tests/core/MemoryModel/Storage/TaskViewTest.cpp tests/core/MemoryModel/Task/TaskTest.cpp tests/core/MemoryModel/Task/TaskIDTest.cpp tests/core/MemoryModel/Storage/TaskStorageTest.cpp tests/core/API/TaskDTOTest.cpp src/core/MemoryModel/Storage/FullStorage.cpp src/core/MemoryModel/Storage/FullStorage.h tests/core/MemoryModel/Storage/FullStorageTest.cpp src/core/MemoryModel/Storage/OperationResult.cpp src/core/MemoryModel/Storage/OperationResult.h src/core/MemoryModel/Storage/Error.h tests/core/MemoryModel/Storage/OperationResultTest.cpp src/core/MemoryModel/Task/Priority.h src/core/MemoryModel/Storage/TaskViewInterface.h src/core/MemoryModel/Storage/TaskStorageInterface.h src/core/MemoryModel/Storage/FullStorageInterface.h src/core/MemoryModel/Storage/IDGeneratorInterface.h)
+        src/core/MemoryModel/Task/Date.cpp src/core/MemoryModel/Storage/IDGenerator.cpp src/core/MemoryModel/Task/TaskID.cpp src/core/API/TaskService.cpp src/core/MemoryModel/Task/TaskEntity.cpp src/core/MemoryModel/Task/Task.cpp src/core/API/TaskDTO.cpp src/core/API/TaskDTO.h tests/core/MemoryModel/Task/TaskEntityTest.cpp src/core/MemoryModel/Storage/TaskStorage.cpp src/core/MemoryModel/Storage/TaskStorage.h src/core/MemoryModel/Storage/TaskView.cpp src/core/MemoryModel/Storage/TaskView.h tests/core/MemoryModel/Storage/TaskViewTest.cpp tests/core/MemoryModel/Task/TaskTest.cpp tests/core/MemoryModel/Task/TaskIDTest.cpp tests/core/MemoryModel/Storage/TaskStorageTest.cpp tests/core/API/TaskDTOTest.cpp src/core/MemoryModel/Storage/FullStorage.cpp src/core/MemoryModel/Storage/FullStorage.h tests/core/MemoryModel/Storage/FullStorageTest.cpp src/core/MemoryModel/Storage/OperationResult.cpp src/core/MemoryModel/Storage/OperationResult.h src/core/MemoryModel/Storage/Error.h tests/core/MemoryModel/Storage/OperationResultTest.cpp src/core/MemoryModel/Task/Priority.h src/core/MemoryModel/Storage/TaskViewInterface.h src/core/MemoryModel/Storage/TaskStorageInterface.h src/core/MemoryModel/Storage/FullStorageInterface.h src/core/MemoryModel/Storage/IDGeneratorInterface.h src/CLI/States/StartState.cpp src/CLI/States/StartState.h src/CLI/States/StateInterface.h src/CLI/Context.cpp src/CLI/Context.h src/CLI/States/AddTaskState.cpp src/CLI/States/AddTaskState.h src/CLI/States/GetTaskState.cpp src/CLI/States/GetTaskState.h src/CLI/States/RemoveTaskState.cpp src/CLI/States/RemoveTaskState.h tests/CLI/base.cpp)
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})
