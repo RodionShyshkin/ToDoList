@@ -10,7 +10,16 @@
 };
 
 TEST_F(Base, sss) {
-  Context cont;
-  cont.readState();
-  cont.execute();
+/*  Context cont;
+  cont.printState();
+  cont.execute();*/
+
+  StateStorage k;
+  k.execute();
+
+
+
+/*  std::shared_ptr<StateInterface> k = std::make_shared<RemoveTaskState>();
+  cont.changeState(k);
+  cont.printState();*/
 }

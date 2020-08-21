@@ -1,31 +1,24 @@
 //
-// Created by rodion on 8/19/20.
+// Created by rodion on 8/21/20.
 //
 
+#include <iostream>
 #include "StartState.h"
+#include "ExitState.h"
 
 bool StartState::input() {
-//  std::cout << "> ";
- // std::cin >> command_;
- command_ = "add";
-  //if(!validateCommand(command_)) return false;
   return true;
 }
 
-bool StartState::run() {
-  if(command_ == "add") {
-    std::shared_ptr<StateInterface> k = std::make_shared<AddTaskState>();
-    this->context_->changeState(k);
-    return true;
-  }
-  return false;
+
+
+std::unique_ptr<StateInterface> StartState::run() {
+  std::cout << "runned" << std::endl;
+  return std::make_unique<ExitState>();
 }
 
+
+
 void StartState::output() {
-  std::cout << "Start State" << std::endl;
+  std::cout << "S";
 }
-/*
-bool StartState::validateCommand(const std::string &com) {
-  if(com == "add") return true;
-  return false;
-}*/

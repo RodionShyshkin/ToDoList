@@ -6,8 +6,8 @@
 #define TODOLIST_SRC_CLI_CONTEXT_H_
 
 #include <memory>
-//#include <StateInterface.h>
 #include <API/TaskService.h>
+#include <StateStorage.h>
 
 class StateInterface;
 
@@ -15,18 +15,8 @@ class Context {
  public:
   Context();
 
- public:
-  void changeState(std::shared_ptr<StateInterface>& newstate);
-
-  void readState();
-  void printState();
-
-  void execute();
-
-
  private:
-//  std::unique_ptr<TaskService> ts_;
-  std::shared_ptr<StateInterface> state_;
+  std::unique_ptr<StateStorage> storage_;
 };
 
 #endif //TODOLIST_SRC_CLI_CONTEXT_H_
