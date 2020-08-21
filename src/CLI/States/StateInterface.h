@@ -5,8 +5,8 @@
 #ifndef TODOLIST_SRC_CLI_STATEINTERFACE_H_
 #define TODOLIST_SRC_CLI_STATEINTERFACE_H_
 
-//#include "Context.h"
 #include <memory>
+#include "CommandParser.h"
 
 class StateInterface {
  public:
@@ -22,6 +22,7 @@ class StateInterface {
   bool virtual              validateCommand(const std::string&) = 0;*/
 
  protected:
+  Command command_;
 //  std::shared_ptr<Context>  context_;
 };
 
