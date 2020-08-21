@@ -20,7 +20,7 @@ bool StartState::input() {
 std::unique_ptr<StateInterface> StartState::run() {
   input();
   if(command_ == Command::ADDTASK) {
-    std::cout << "runned" << std::endl;
+    std::cout << "started" << std::endl;
     return std::make_unique<AddTaskState>();
   }
   else if(command_ == Command::EXIT) {
