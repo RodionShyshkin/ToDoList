@@ -2,12 +2,12 @@
 // Created by rodion on 8/21/20.
 //
 
-#ifndef TODOLIST_SRC_CLI_STATES_GETTASKSTATE_H_
-#define TODOLIST_SRC_CLI_STATES_GETTASKSTATE_H_
+#ifndef TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
+#define TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
 
 #include <States/StateInterface.h>
 
-class GetTaskState : public StateInterface {
+class ViewTaskState : public StateInterface {
  public:
   bool input() override;
   std::unique_ptr<StateInterface> run() override;
@@ -17,4 +17,4 @@ class GetTaskState : public StateInterface {
   unsigned int task_id_;
 };
 
-#endif //TODOLIST_SRC_CLI_STATES_GETTASKSTATE_H_
+#endif //TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_

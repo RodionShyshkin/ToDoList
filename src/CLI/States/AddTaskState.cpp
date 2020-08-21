@@ -5,7 +5,7 @@
 #include "AddTaskState.h"
 #include "StartState.h"
 #include "ExitState.h"
-#include "GetTaskState.h"
+#include "ViewTaskState.h"
 
 bool AddTaskState::input() {
   std::string parameters;
@@ -18,7 +18,7 @@ bool AddTaskState::input() {
 std::unique_ptr<StateInterface> AddTaskState::run() {
   input();
   std::cout << "task added" << std::endl;
-  return std::make_unique<GetTaskState>();
+  return std::make_unique<ViewTaskState>();
 }
 
 void AddTaskState::parseParameters(const std::string& params) {

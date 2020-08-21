@@ -6,5 +6,6 @@
 
 Command parseCommand(const std::string& command) {
   if(command == "add") return Command::ADDTASK;
+  if(command == "view") return Command::GETTASK;
   if(command == "exit") return Command::EXIT;
 }
