@@ -4,6 +4,7 @@
 
 #include "ViewTaskState.h"
 #include "ExitState.h"
+#include "TaskState.h"
 
 bool ViewTaskState::input() {
   unsigned int parameter;
@@ -17,7 +18,7 @@ std::unique_ptr<StateInterface> ViewTaskState::run() {
   input();
 
   std::cout << "The task #" << task_id_ << " was shown." << std::endl;
-  return std::make_unique<ExitState>();
+  return std::make_unique<TaskState>();
 }
 
 void ViewTaskState::output() {

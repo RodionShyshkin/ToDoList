@@ -10,6 +10,7 @@
 enum class Command {
   ADDTASK = 1,
   GETTASK,
+  REMOVETASK,
   EXIT
 };
 
