@@ -5,17 +5,19 @@
 #ifndef TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_
 
+
 #include <States/StateInterface.h>
+#include <Operation.h>
 #include "boost/date_time/gregorian/gregorian.hpp"
 
 class AddTaskState : public StateInterface {
  public:
   bool input() override;
-  std::unique_ptr<StateInterface> run() override;
+  std::shared_ptr<StateInterface> run() override;
   void output() override;
 
  private:
-  void parseParameters(const std::string&);
+//  void parseParameters(const std::string&);
 
  private:
   std::string task_name_;

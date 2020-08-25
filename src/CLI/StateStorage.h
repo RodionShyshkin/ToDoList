@@ -15,7 +15,7 @@ class StateStorage {
   void execute();
 
  private:
-  std::unique_ptr<StateInterface> state_;
+  std::shared_ptr<StateInterface> state_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATESTORAGE_H_

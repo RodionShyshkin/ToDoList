@@ -8,8 +8,10 @@
 #include <iostream>
 
 enum class Command {
-  ADDTASK = 1,
+  UNKNOWN,
+  ADDTASK,
   GETTASK,
+  GETTASKLIST,
   REMOVETASK,
   EXIT
 };

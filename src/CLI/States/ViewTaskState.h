@@ -4,7 +4,7 @@
 
 #ifndef TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
-
+/*
 #include <States/StateInterface.h>
 
 class ViewTaskState : public StateInterface {
@@ -12,9 +12,6 @@ class ViewTaskState : public StateInterface {
   bool input() override;
   std::unique_ptr<StateInterface> run() override;
   void output() override;
-
- private:
-  unsigned int task_id_;
 };
-
+*/
 #endif //TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_

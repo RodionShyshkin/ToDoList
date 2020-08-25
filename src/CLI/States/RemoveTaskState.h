@@ -5,7 +5,8 @@
 #ifndef TODOLIST_SRC_CLI_STATES_REMOVETASKSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_REMOVETASKSTATE_H_
 
-#include <States/StateInterface.h>
+
+/*#include <States/StateInterface.h>
 
 class RemoveTaskState : public StateInterface {
  public:
@@ -22,6 +23,6 @@ class RemoveTaskState : public StateInterface {
  private:
   bool has_id;
   unsigned int task_id_;
-};
+};*/
 
 #endif //TODOLIST_SRC_CLI_STATES_REMOVETASKSTATE_H_

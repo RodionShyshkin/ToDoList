@@ -5,22 +5,22 @@
 #include "AddTaskState.h"
 #include "StartState.h"
 #include "ExitState.h"
-#include "ViewTaskState.h"
+#include "GetTaskState.h"
 
 bool AddTaskState::input() {
   std::string parameters;
 //  std::cin >> parameters;
   parameters = "Task label High 2002/10/10";
-  parseParameters(parameters);
+//  parseParameters(parameters);
   return true;
 }
 
-std::unique_ptr<StateInterface> AddTaskState::run() {
+std::shared_ptr<StateInterface> AddTaskState::run() {
   input();
   std::cout << "task added" << std::endl;
-  return std::make_unique<ViewTaskState>();
+  return std::make_unique<ExitState>();
 }
-
+/*
 void AddTaskState::parseParameters(const std::string& params) {
   int spaceNum = 0;
   std::string temp;
@@ -45,7 +45,7 @@ void AddTaskState::parseParameters(const std::string& params) {
     }
   }
 }
-
+*/
 void AddTaskState::output() {
 
 }

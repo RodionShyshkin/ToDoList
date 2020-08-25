@@ -6,11 +6,12 @@
 #define TODOLIST_SRC_CLI_STATES_STARTSTATE_H_
 
 #include <States/StateInterface.h>
+#include <Operation.h>
 
 class StartState : public StateInterface {
  public:
   bool input() override;
-  std::unique_ptr<StateInterface> run() override;
+  std::shared_ptr<StateInterface> run() override;
   void output() override;
 };
 

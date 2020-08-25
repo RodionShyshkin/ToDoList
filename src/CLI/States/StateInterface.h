@@ -8,13 +8,15 @@
 #include <memory>
 #include "CommandParser.h"
 
+class Operation;
+
 class StateInterface {
  public:
   ~StateInterface() = default;
 
  public:
   bool virtual              input() = 0;
-  std::unique_ptr<StateInterface> virtual              run() = 0;
+  std::shared_ptr<StateInterface> virtual              run() = 0;
   void virtual              output() = 0;
 
 /*
@@ -22,7 +24,10 @@ class StateInterface {
   bool virtual              validateCommand(const std::string&) = 0;*/
 
  protected:
-  Command command_;
+  std::shared_ptr<Operation> operation_;
+//  std::unique_ptr<Operation> operation_;
+//  std::unique_ptr<Operation> operation_;
+ // Command command_;
 //  std::shared_ptr<Context>  context_;
 };
 

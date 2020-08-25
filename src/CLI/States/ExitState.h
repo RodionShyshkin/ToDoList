@@ -5,12 +5,14 @@
 #ifndef TODOLIST_SRC_CLI_STATES_EXITSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_EXITSTATE_H_
 
+
 #include <States/StateInterface.h>
+#include <Operation.h>
 
 class ExitState : public StateInterface {
  public:
   bool input() override;
-  std::unique_ptr<StateInterface> run() override;
+  std::shared_ptr<StateInterface> run() override;
   void output() override;
 };
 
