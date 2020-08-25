@@ -6,6 +6,7 @@
 #define TODOLIST_SRC_CLI_STATEINTERFACE_H_
 
 #include <memory>
+#include <set>
 #include "CommandParser.h"
 
 class Operation;
@@ -25,6 +26,7 @@ class StateInterface {
 
  protected:
   std::shared_ptr<Operation> operation_;
+  std::set<Command> available_operations_;
 //  std::unique_ptr<Operation> operation_;
 //  std::unique_ptr<Operation> operation_;
  // Command command_;

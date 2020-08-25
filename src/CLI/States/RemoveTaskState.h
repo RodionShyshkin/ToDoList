@@ -6,23 +6,23 @@
 #define TODOLIST_SRC_CLI_STATES_REMOVETASKSTATE_H_
 
 
-/*#include <States/StateInterface.h>
+#include <States/StateInterface.h>
 
 class RemoveTaskState : public StateInterface {
  public:
-  RemoveTaskState(const bool&);
+  RemoveTaskState(std::optional<unsigned int> task_id);
 
  public:
   bool input() override;
-  std::unique_ptr<StateInterface> run() override;
+  std::shared_ptr<StateInterface> run() override;
   void output() override;
 
  private:
   bool validateParams(const unsigned int& param);
 
  private:
-  bool has_id;
+  bool has_id_;
   unsigned int task_id_;
-};*/
+};
 
 #endif //TODOLIST_SRC_CLI_STATES_REMOVETASKSTATE_H_

@@ -7,6 +7,10 @@
 #include "ExitState.h"
 #include "GetTaskState.h"
 
+AddTaskState::AddTaskState() {
+  available_operations_.clear();
+}
+
 bool AddTaskState::input() {
   std::string parameters;
 //  std::cin >> parameters;
@@ -47,5 +51,5 @@ void AddTaskState::parseParameters(const std::string& params) {
 }
 */
 void AddTaskState::output() {
-
+  std::cout << "[Output]: Adding new task." << std::endl;
 }

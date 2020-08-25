@@ -10,6 +10,8 @@
 
 class StartState : public StateInterface {
  public:
+  StartState();
+
   bool input() override;
   std::shared_ptr<StateInterface> run() override;
   void output() override;

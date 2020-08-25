@@ -3,7 +3,7 @@
 //
 
 #include "ViewTaskListState.h"
-/*
+
 ViewTaskListState::ViewTaskListState() {
 }
 
@@ -11,10 +11,10 @@ bool ViewTaskListState::input() {
   return true;
 }
 
-std::unique_ptr<StateInterface> ViewTaskListState::run() {
-
+std::shared_ptr<StateInterface> ViewTaskListState::run() {
+  return nullptr;
 }
 
 void ViewTaskListState::output() {
-
-}*/
+  std::cout << "[Output]: Tasks list view mode." << std::endl;
+}

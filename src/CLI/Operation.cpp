@@ -17,7 +17,7 @@ Operation::Operation(const std::string &command,
   this->command_ = command;
   this->pointer_ = std::move(ptr);
   this->argc = argc;
-  this->command_number_ = com;
+  this->command_id_ = com;
 }
 
 std::shared_ptr<Operation> Operation::create(const std::string &command) {
@@ -32,12 +32,18 @@ std::shared_ptr<Operation> Operation::create(const std::string &command) {
   if(operation == Command::EXIT) {
     return std::make_unique<Operation>(Operation{command, std::make_unique<ExitState>(), operation, 0});
   }
+  if(operation == Command::REMOVETASK) {
+    return std::make_unique<Operation>(Operation{command, std::make_unique<RemoveTaskState>(true), operation, 1});
+  }
   return nullptr;
-//  else if()
 }
 
 std::string Operation::getCommand() const {
   return command_;
+}
+
+Command Operation::getCommandID() const {
+  return command_id_;
 }
 
 std::shared_ptr<StateInterface> Operation::getNextState() const {

@@ -29,6 +29,7 @@ class Operation {
 
  public:
   std::string                       getCommand() const;
+  Command                           getCommandID() const;
   std::shared_ptr<StateInterface>   getNextState() const;
 
  private:
@@ -38,7 +39,7 @@ class Operation {
  private:
   std::shared_ptr<StateInterface> pointer_;
   std::string command_;
-  Command command_number_;
+  Command command_id_;
   unsigned int argc;
 };
 

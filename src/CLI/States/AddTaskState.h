@@ -12,6 +12,8 @@
 
 class AddTaskState : public StateInterface {
  public:
+  AddTaskState();
+
   bool input() override;
   std::shared_ptr<StateInterface> run() override;
   void output() override;

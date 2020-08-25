@@ -1,7 +1,7 @@
 //
 // Created by rodion on 8/21/20.
 //
-/*
+
 #include "GetTaskListState.h"
 #include "ViewTaskListState.h"
 
@@ -16,7 +16,7 @@ bool GetTaskListState::input() {
   return true;
 }
 
-std::unique_ptr<StateInterface> GetTaskListState::run() {
+std::shared_ptr<StateInterface> GetTaskListState::run() {
   input();
 
   if(this->modifier_ == Modifier::ALL) {
@@ -31,10 +31,11 @@ std::unique_ptr<StateInterface> GetTaskListState::run() {
   if(this->modifier_ == Modifier::BY_LABEL) {
     std::cout << "view by label";
   }
-  return std::make_unique<ViewTaskListState>();
+  return std::make_shared<ViewTaskListState>();
 }
 
 void GetTaskListState::output() {
+  std::cout << "[Output]: Getting tasks list." << std::endl;
 
 }
 
@@ -48,4 +49,4 @@ Modifier GetTaskListState::parseModifier(const std::string &mod) {
 bool GetTaskListState::parseFlag(const std::string &flag) {
   if(flag == "yes") return true;
   else return false;
-}*/
+}

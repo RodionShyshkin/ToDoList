@@ -10,6 +10,8 @@
 
 class GetTaskState : public StateInterface {
  public:
+  GetTaskState();
+
   bool input() override;
   std::shared_ptr<StateInterface> run() override;
   void output() override;

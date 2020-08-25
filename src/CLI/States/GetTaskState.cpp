@@ -7,6 +7,14 @@
 #include "ExitState.h"
 #include "ViewTaskState.h"
 
+GetTaskState::GetTaskState() {
+  available_operations_.clear();
+  available_operations_.insert(Command::REMOVETASK);
+  available_operations_.insert(Command::ADDSUBTASK);
+  available_operations_.insert(Command::POSTPONETASK);
+  available_operations_.insert(Command::COMPLETETASK);
+}
+
 bool GetTaskState::input() {
   unsigned int parameter;
 //  std::cin >> parameter;
@@ -25,5 +33,5 @@ return nullptr;
 }
 
 void GetTaskState::output() {
-  std::cout << "Task was got." << std::endl;
+  std::cout << "[Output]: Getting single task." << std::endl;
 }
