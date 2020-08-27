@@ -12,6 +12,7 @@ Command parseCommand(const std::string& command) {
   if(command == "remove") return Command::REMOVETASK;
   if(command == "postpone") return Command::POSTPONETASK;
   if(command == "complete") return Command::COMPLETETASK;
+  if(command == "mm") return Command::MAINMENU;
   if(command == "exit") return Command::EXIT;
   return Command::UNKNOWN;
 }

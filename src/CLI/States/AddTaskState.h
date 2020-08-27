@@ -20,12 +20,6 @@ class AddTaskState : public StateInterface {
 
  private:
 //  void parseParameters(const std::string&);
-
- private:
-  std::string task_name_;
-  std::string task_label_;
-  std::string task_priority_;
-  std::string task_deadline_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_

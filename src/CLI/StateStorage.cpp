@@ -12,7 +12,11 @@ StateStorage::StateStorage() {
 }
 
 void StateStorage::execute() {
-  while(this->state_ != nullptr) {
+  while(this->state_ != std::shared_ptr<ExitState>()) {
+/*    if(this->state_ == nullptr) {
+      std::cout << "ERROR" << std::endl;
+      break;
+    }*/
     this->state_ = std::move(state_->run());
   }
 }

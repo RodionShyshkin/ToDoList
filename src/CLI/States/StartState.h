@@ -7,6 +7,7 @@
 
 #include <States/StateInterface.h>
 #include <Operation.h>
+#include <random>
 
 class StartState : public StateInterface {
  public:
@@ -15,6 +16,9 @@ class StartState : public StateInterface {
   bool input() override;
   std::shared_ptr<StateInterface> run() override;
   void output() override;
+
+ private:
+  std::mt19937 mersenne;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_STARTSTATE_H_

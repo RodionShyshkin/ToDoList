@@ -9,10 +9,7 @@
 
 GetTaskState::GetTaskState() {
   available_operations_.clear();
-  available_operations_.insert(Command::REMOVETASK);
-  available_operations_.insert(Command::ADDSUBTASK);
-  available_operations_.insert(Command::POSTPONETASK);
-  available_operations_.insert(Command::COMPLETETASK);
+  available_operations_.insert(Command::EXIT);
 }
 
 bool GetTaskState::input() {
@@ -26,10 +23,9 @@ bool GetTaskState::input() {
 std::shared_ptr<StateInterface> GetTaskState::run() {
   input();
 
-  std::cout << "The task #" << task_id_ << " was shown." << std::endl;
+  std::cout << "The task #" << task_id_ << " was got." << std::endl;
 
-//  return std::make_unique<ViewTaskState>();
-return nullptr;
+  return std::make_unique<ViewTaskState>();
 }
 
 void GetTaskState::output() {

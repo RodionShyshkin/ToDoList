@@ -18,28 +18,24 @@
 #include <CommandParser.h>
 #include <optional>
 
-//class StateInterface;
-
 class Operation {
  public:
   Operation();
 
  public:
-  static std::shared_ptr<Operation>   create(const std::string& command);
+  static std::shared_ptr<Operation>   create(const Command&);
 
  public:
-  std::string                       getCommand() const;
-  Command                           getCommandID() const;
+  Command                           getCommand() const;
   std::shared_ptr<StateInterface>   getNextState() const;
 
  private:
-  Operation(const std::string& command, std::unique_ptr<StateInterface> ptr,
+  Operation(std::shared_ptr<StateInterface> ptr,
             const Command& number, const unsigned int& argc);
 
  private:
   std::shared_ptr<StateInterface> pointer_;
-  std::string command_;
-  Command command_id_;
+  Command command_;
   unsigned int argc;
 };
 

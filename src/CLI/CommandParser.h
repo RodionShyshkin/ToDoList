@@ -16,6 +16,7 @@ enum class Command {
   REMOVETASK,
   POSTPONETASK,
   COMPLETETASK,
+  MAINMENU,
   EXIT
 };
 

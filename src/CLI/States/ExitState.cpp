@@ -11,14 +11,14 @@ ExitState::ExitState() {
 }
 
 bool ExitState::input() {
-  this->operation_ = Operation::create("exit");
+  this->operation_ = Operation::create(parseCommand("exit"));
   return true;
 }
 
 std::shared_ptr<StateInterface> ExitState::run() {
   input();
-  std::cout << "Exit" << std::endl;
-  return nullptr;
+  output();
+  return std::shared_ptr<ExitState>();
 }
 
 void ExitState::output() {

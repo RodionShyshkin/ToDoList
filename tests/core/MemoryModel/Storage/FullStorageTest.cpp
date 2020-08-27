@@ -9,7 +9,7 @@
  class FullStorageTest : public ::testing::Test {
  public:
   void SetUp() override {
-    task = Task::create("Task", "test", Priority::HIGH, Date(2022, 4, 1)).value();
+    task = Task::create("Task", "test", Priority::HIGH, Date{"2022-4-1"}).value();
   }
 
   void TearDown() override {

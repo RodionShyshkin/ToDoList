@@ -9,6 +9,9 @@
 #include "GetTaskListState.h"
 
 RemoveTaskState::RemoveTaskState(std::optional<unsigned int> task_id) {
+  available_operations_.clear();
+  available_operations_.insert(Command::EXIT);
+
   if(task_id.has_value()) {
     this->task_id_ = task_id.value();
     this->has_id_ = true;
@@ -31,7 +34,7 @@ bool RemoveTaskState::input() {
 std::shared_ptr<StateInterface> RemoveTaskState::run() {
   if(!input()) return nullptr;
   std::cout << "removed" << std::endl;
-  if(this->has_id_) std::make_unique<GetTaskListState>();
+  if(this->has_id_) return std::make_unique<GetTaskListState>();
   else return std::make_unique<ViewTaskState>();
 }
 

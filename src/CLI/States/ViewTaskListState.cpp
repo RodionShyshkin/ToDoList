@@ -5,6 +5,7 @@
 #include "ViewTaskListState.h"
 
 ViewTaskListState::ViewTaskListState() {
+  available_operations_.clear();
 }
 
 bool ViewTaskListState::input() {

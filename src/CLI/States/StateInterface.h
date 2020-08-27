@@ -27,10 +27,6 @@ class StateInterface {
  protected:
   std::shared_ptr<Operation> operation_;
   std::set<Command> available_operations_;
-//  std::unique_ptr<Operation> operation_;
-//  std::unique_ptr<Operation> operation_;
- // Command command_;
-//  std::shared_ptr<Context>  context_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATEINTERFACE_H_

@@ -9,7 +9,7 @@
 class TaskDTOTest : public ::testing::Test {
  public:
   void SetUp() override {
-    validTask = Task::create("Name", "Valid task", Priority::EMPTY, Date(2090, 1, 1)).value();
+    validTask = Task::create("Name", "Valid task", Priority::EMPTY, Date{"2090-1-1"}).value();
   }
 
   void TearDown() override {
@@ -22,15 +22,16 @@ class TaskDTOTest : public ::testing::Test {
 TEST_F(TaskDTOTest, ExceptionWithInvalidTask) {
   EXPECT_ANY_THROW(TaskDTO::create(TaskID{900},
                                    Task::create("", "Invalid task", Priority::EMPTY,
-                                                Date(2090, 1, 1)).value(), true));
-  EXPECT_ANY_THROW(TaskDTO::create(TaskID{900},
-                                   Task::create("Invalid", "", Priority::EMPTY,
-                                                Date(2020, 9, 8)).value(), true));
+                                                Date{"2090-1-1"}).value(), true));
+
 }
 
 TEST_F(TaskDTOTest, validTask) {
   TaskDTO dto;
   EXPECT_NO_THROW(dto = TaskDTO::create(TaskID{5}, validTask, false));
+  EXPECT_NO_THROW(TaskDTO::create(TaskID{900},
+                                   Task::create("Invalid", "", Priority::EMPTY,
+                                                Date{"2020-9-8"}).value(), true));
 
   ASSERT_EQ(validTask.GetName(), dto.getName());
   ASSERT_EQ(validTask.GetLabel(), dto.getLabel());

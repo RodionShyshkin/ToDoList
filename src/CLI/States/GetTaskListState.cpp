@@ -5,6 +5,11 @@
 #include "GetTaskListState.h"
 #include "ViewTaskListState.h"
 
+GetTaskListState::GetTaskListState() {
+  available_operations_.clear();
+  available_operations_.insert(Command::EXIT);
+}
+
 bool GetTaskListState::input() {
   std::string paramFirst;
   std::string paramSecond;
@@ -19,17 +24,21 @@ bool GetTaskListState::input() {
 std::shared_ptr<StateInterface> GetTaskListState::run() {
   input();
 
-  if(this->modifier_ == Modifier::ALL) {
+  if(this->modifier_ == ListModifier::ALL) {
     std::cout << "view all";
   }
-  if(this->modifier_ == Modifier::TODAY) {
+  else if(this->modifier_ == ListModifier::TODAY) {
     std::cout << "view today";
   }
-  if(this->modifier_ == Modifier::WEEK) {
+  else if(this->modifier_ == ListModifier::WEEK) {
     std::cout << "view week";
   }
-  if(this->modifier_ == Modifier::BY_LABEL) {
+  else if(this->modifier_ == ListModifier::BY_LABEL) {
     std::cout << "view by label";
+  }
+  else {
+    std::cout << "error";
+    return nullptr;
   }
   return std::make_shared<ViewTaskListState>();
 }
@@ -39,11 +48,12 @@ void GetTaskListState::output() {
 
 }
 
-Modifier GetTaskListState::parseModifier(const std::string &mod) {
-  if(mod == "all") return Modifier::ALL;
-  else if(mod == "today") return Modifier::TODAY;
-  else if(mod == "this_week") return Modifier::WEEK;
-  else if(mod == "label") return Modifier::BY_LABEL;
+ListModifier GetTaskListState::parseModifier(const std::string &mod) {
+  if(mod == "all") return ListModifier::ALL;
+  else if(mod == "today") return ListModifier::TODAY;
+  else if(mod == "this_week") return ListModifier::WEEK;
+  else if(mod == "label") return ListModifier::BY_LABEL;
+  else return ListModifier::UNKNOWN;
 }
 
 bool GetTaskListState::parseFlag(const std::string &flag) {

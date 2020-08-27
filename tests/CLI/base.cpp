@@ -4,8 +4,9 @@
 
 #include <gtest/gtest.h>
 #include <StateStorage.h>
+#include <fstream>
 
- class Base : public ::testing::Test {
+class Base : public ::testing::Test {
 
 };
 
@@ -16,8 +17,6 @@ TEST_F(Base, sss) {
 
   StateStorage k;
   k.execute();
-
-
 
 /*  std::shared_ptr<StateInterface> k = std::make_shared<RemoveTaskState>();
   cont.changeState(k);

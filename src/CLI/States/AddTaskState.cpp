@@ -2,6 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
+#include <States/AddingTask/AddTaskStateMachine.h>
 #include "AddTaskState.h"
 #include "StartState.h"
 #include "ExitState.h"
@@ -9,20 +10,31 @@
 
 AddTaskState::AddTaskState() {
   available_operations_.clear();
+  available_operations_.insert(Command::EXIT);
 }
 
 bool AddTaskState::input() {
-  std::string parameters;
+  /*std::string parameters;
 //  std::cin >> parameters;
-  parameters = "Task label High 2002/10/10";
+  parameters = "Task label High 2002/10/10";*/
 //  parseParameters(parameters);
   return true;
 }
 
 std::shared_ptr<StateInterface> AddTaskState::run() {
-  input();
+
+  AddTaskStateMachine machine_;
+  if(machine_.execute()) {
+    std::cout << "task added" << std::endl;
+  }
+  else {
+    std::cout << "Error with adding task!" << std::endl;
+  }
+  return std::make_shared<StartState>();
+
+/*  input();
   std::cout << "task added" << std::endl;
-  return std::make_unique<ExitState>();
+  return std::make_unique<StartState>();*/
 }
 /*
 void AddTaskState::parseParameters(const std::string& params) {

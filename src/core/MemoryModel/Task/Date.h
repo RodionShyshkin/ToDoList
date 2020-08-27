@@ -20,6 +20,7 @@ class Date {
  public:
   Date();
   Date(boost::gregorian::date due_date);
+  Date(std::string str);
   Date(int year, int month, int day);
 
 

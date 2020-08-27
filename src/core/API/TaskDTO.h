@@ -7,7 +7,7 @@
 
 #include <MemoryModel/Task/TaskID.h>
 #include <iostream>
-#include <MemoryModel/Task/Priority.h>
+#include <API/Priority.h>
 #include <MemoryModel/Task/Date.h>
 #include <MemoryModel/Task/Task.h>
 

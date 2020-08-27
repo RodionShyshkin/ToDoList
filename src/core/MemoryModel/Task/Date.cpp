@@ -13,11 +13,14 @@ bool Date::CheckWeek(const Date& date) {
   else return false;
 }
 
-
 Date::Date() = default;
 
 Date::Date(boost::gregorian::date due_date) {
   this->due_date_ = due_date;
+}
+
+Date::Date(std::string str) {
+  this->due_date_ = boost::gregorian::from_string(str);
 }
 
 Date::Date(int year, int month, int day) {

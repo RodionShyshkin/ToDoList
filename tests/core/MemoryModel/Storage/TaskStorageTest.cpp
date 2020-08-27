@@ -9,11 +9,11 @@ class StorageTest : public ::testing::Test {
  public:
   void SetUp() override {
     check = TaskEntity::createTask(Task::create("Task", "test", Priority::HIGH,
-                                                Date{1990, 2, 2}).value(), TaskID{1});
+                                                Date{"1990-2-2"}).value(), TaskID{1});
     second = TaskEntity::createTask(Task::create("Task 2", "test", Priority::LOW,
-                                                 Date{2022, 8, 8}).value(), TaskID{2});
+                                                 Date{"2022-8-8"}).value(), TaskID{2});
     invalidTask = TaskEntity::createTask(Task::create("Invalid task", "test", Priority::MEDIUM,
-                                                      Date{2088, 9, 11}).value(), TaskID{1});
+                                                      Date{"2088-9-11"}).value(), TaskID{1});
   }
 
   void TearDown() override {
