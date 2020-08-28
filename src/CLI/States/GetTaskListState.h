@@ -16,14 +16,6 @@ class GetTaskListState : public StateInterface {
   bool input() override;
   std::shared_ptr<StateInterface>  run(std::unique_ptr<Context> &context) override;
   void output() override;
-
- private:
-  ListModifier parseModifier(const std::string&);
-  bool      parseFlag(const std::string&);
-
- private:
-  ListModifier modifier_;
-  bool is_sorted_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_GETTASKLISTSTATE_H_
