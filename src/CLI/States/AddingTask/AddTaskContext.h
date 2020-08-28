@@ -8,16 +8,9 @@
 #include <string>
 #include <API/Priority.h>
 #include <boost/date_time/gregorian/greg_date.hpp>
+#include <ContextInterface.h>
 
-class AddTaskContext {
- public:
-  enum class Param {
-    NAME,
-    LABEL,
-    PRIORITY,
-    DATE
-  };
-
+class AddTaskContext : public ContextInterface {
  public:
   AddTaskContext();
 

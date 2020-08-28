@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <set>
+#include <Context.h>
 #include "CommandParser.h"
 
 class Operation;
@@ -17,7 +18,7 @@ class StateInterface {
 
  public:
   bool virtual              input() = 0;
-  std::shared_ptr<StateInterface> virtual              run() = 0;
+  std::shared_ptr<StateInterface> virtual run(std::unique_ptr<Context> &context) = 0;
   void virtual              output() = 0;
 
 /*

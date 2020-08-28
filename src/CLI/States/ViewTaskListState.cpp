@@ -12,7 +12,7 @@ bool ViewTaskListState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> ViewTaskListState::run() {
+std::shared_ptr<StateInterface>  ViewTaskListState::run(std::unique_ptr<Context> &context) {
   return nullptr;
 }
 

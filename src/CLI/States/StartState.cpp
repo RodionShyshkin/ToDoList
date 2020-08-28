@@ -36,7 +36,7 @@ bool StartState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> StartState::run() {
+std::shared_ptr<StateInterface> StartState::run(std::unique_ptr<Context> &context) {
   //std::cout << "RUNS" << std::endl;
   auto inputResult = input();
   if(!inputResult) return nullptr;

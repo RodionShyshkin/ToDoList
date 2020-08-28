@@ -7,7 +7,9 @@
 
 #include <memory>
 #include <API/TaskService.h>
-class Context {
+#include <ContextInterface.h>
+
+class Context : public ContextInterface {
  public:
 
  private:

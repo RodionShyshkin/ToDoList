@@ -31,7 +31,7 @@ bool RemoveTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> RemoveTaskState::run() {
+std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &context) {
   if(!input()) return nullptr;
   std::cout << "removed" << std::endl;
   if(this->has_id_) return std::make_unique<GetTaskListState>();

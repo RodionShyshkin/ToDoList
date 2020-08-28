@@ -27,7 +27,7 @@ bool PostponeTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> PostponeTaskState::run() {
+std::shared_ptr<StateInterface>  PostponeTaskState::run(std::unique_ptr<Context> &context) {
   if(!input()) return nullptr;
 
   //postponeTask(task_id_, new_date_);

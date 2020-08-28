@@ -21,7 +21,7 @@ bool AddTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> AddTaskState::run() {
+std::shared_ptr<StateInterface>  AddTaskState::run(std::unique_ptr<Context> &context) {
 
   AddTaskStateMachine machine_;
   if(machine_.execute()) {

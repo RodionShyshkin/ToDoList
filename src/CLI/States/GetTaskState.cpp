@@ -20,7 +20,7 @@ bool GetTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> GetTaskState::run() {
+std::shared_ptr<StateInterface>  GetTaskState::run(std::unique_ptr<Context> &context) {
   input();
 
   std::cout << "The task #" << task_id_ << " was got." << std::endl;

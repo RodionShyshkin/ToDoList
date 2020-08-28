@@ -15,7 +15,7 @@ bool ExitState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> ExitState::run() {
+std::shared_ptr<StateInterface>  ExitState::run(std::unique_ptr<Context> &context) {
   input();
   output();
   return std::shared_ptr<ExitState>();

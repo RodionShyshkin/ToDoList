@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <States/StateInterface.h>
+#include "Context.h"
 
 class StateStorage {
  public:
@@ -16,6 +17,7 @@ class StateStorage {
 
  private:
   std::shared_ptr<StateInterface> state_;
+  std::unique_ptr<Context> context_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATESTORAGE_H_

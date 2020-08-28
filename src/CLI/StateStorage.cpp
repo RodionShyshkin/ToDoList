@@ -7,8 +7,8 @@
 #include <iostream>
 
 StateStorage::StateStorage() {
-  std::unique_ptr<StateInterface> s = std::make_unique<StartState>();
-  state_ = std::make_unique<StartState>();
+  state_ = std::make_shared<StartState>();
+  context_ = std::make_unique<Context>();
 }
 
 void StateStorage::execute() {
@@ -17,6 +17,6 @@ void StateStorage::execute() {
       std::cout << "ERROR" << std::endl;
       break;
     }*/
-    this->state_ = std::move(state_->run());
+    this->state_ = std::move(state_->run(context_));
   }
 }

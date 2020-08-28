@@ -13,7 +13,7 @@ class GetTaskState : public StateInterface {
   GetTaskState();
 
   bool input() override;
-  std::shared_ptr<StateInterface> run() override;
+  std::shared_ptr<StateInterface>  run(std::unique_ptr<Context> &context) override;
   void output() override;
 
  private:

@@ -21,7 +21,7 @@ bool GetTaskListState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> GetTaskListState::run() {
+std::shared_ptr<StateInterface>  GetTaskListState::run(std::unique_ptr<Context> &context) {
   input();
 
   if(this->modifier_ == ListModifier::ALL) {

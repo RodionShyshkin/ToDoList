@@ -27,7 +27,7 @@ bool CompleteTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> CompleteTaskState::run() {
+std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context> &context) {
   if(!input()) return nullptr;
 
   //completeTask(task_id_);
