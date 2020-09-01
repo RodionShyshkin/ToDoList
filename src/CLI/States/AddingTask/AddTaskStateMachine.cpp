@@ -6,8 +6,8 @@
 #include "AddTaskStartState.h"
 #include "AddTaskExitState.h"
 
-AddTaskStateMachine::AddTaskStateMachine() {
-  state_ = std::make_shared<AddTaskStartState>();
+AddTaskStateMachine::AddTaskStateMachine(const bool& is_subtask) {
+  state_ = std::make_shared<AddTaskStartState>(is_subtask);
   context_ = std::make_unique<AddTaskContext>();
 }
 

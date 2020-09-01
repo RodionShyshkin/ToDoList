@@ -11,7 +11,7 @@
 
 class AddTaskStateMachine {
  public:
-  AddTaskStateMachine();
+  AddTaskStateMachine(const bool& is_subtask);
 
   bool execute();
 

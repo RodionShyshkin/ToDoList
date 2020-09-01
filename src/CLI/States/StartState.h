@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_STARTSTATE_H_
 
 #include <States/StateInterface.h>
-#include <Operation.h>
+#include <States/StateFactory.h>
 #include <random>
 
 class StartState : public StateInterface {
@@ -18,7 +18,7 @@ class StartState : public StateInterface {
   void output() override;
 
  private:
-  std::mt19937 mersenne;
+  Command command_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_STARTSTATE_H_

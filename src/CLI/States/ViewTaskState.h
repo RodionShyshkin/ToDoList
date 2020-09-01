@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
 
 #include <States/StateInterface.h>
-#include <Operation.h>
+#include <random>
 
 class ViewTaskState : public StateInterface {
  public:
@@ -16,6 +16,9 @@ class ViewTaskState : public StateInterface {
   bool input() override;
   std::shared_ptr<StateInterface>  run(std::unique_ptr<Context> &context) override;
   void output() override;
+
+ private:
+  Command command_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_

@@ -6,7 +6,7 @@
 #include "RemoveTaskState.h"
 #include "StartState.h"
 #include "ViewTaskState.h"
-#include "GetTaskListState.h"
+#include "ViewTaskListState.h"
 
 RemoveTaskState::RemoveTaskState(std::optional<unsigned int> task_id) {
   available_operations_.clear();
@@ -34,7 +34,7 @@ bool RemoveTaskState::input() {
 std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &context) {
   if(!input()) return nullptr;
   std::cout << "removed" << std::endl;
-  if(this->has_id_) return std::make_unique<GetTaskListState>();
+  if(this->has_id_) return std::make_unique<ViewTaskListState>();
   else return std::make_unique<ViewTaskState>();
 }
 

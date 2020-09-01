@@ -14,7 +14,6 @@ StartState::StartState() {
 
   std::random_device rd;
   std::mt19937 mersenne(rd());
-  int m = mersenne();
 }
 
 bool StartState::input() {
@@ -31,17 +30,16 @@ bool StartState::input() {
   else stringCommand = "exit";
 //  stringCommand = "add";
 
-  operation_ = Operation::create(parseCommand(stringCommand));
-  if(available_operations_.find(operation_->getCommand()) == available_operations_.end()) return false;
+  this->command_ = parseCommand(stringCommand);
+  if(available_operations_.find(this->command_) == available_operations_.end()) return false;
   return true;
 }
 
 std::shared_ptr<StateInterface> StartState::run(std::unique_ptr<Context> &context) {
-  //std::cout << "RUNS" << std::endl;
   auto inputResult = input();
   if(!inputResult) return nullptr;
   output();
-  return operation_->getNextState();
+  return StateFactory::create(this->command_);
 }
 
 void StartState::output() {

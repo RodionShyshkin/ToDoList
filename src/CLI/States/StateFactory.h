@@ -5,13 +5,12 @@
 #ifndef TODOLIST_SRC_CLI_STATES_STATEFACTORY_H_
 #define TODOLIST_SRC_CLI_STATES_STATEFACTORY_H_
 
+#include <CommandParser.h>
+#include "StateInterface.h"
+
 class StateFactory {
  public:
-//  static      create(st)
-
- private:
-
- private:
+  static std::shared_ptr<StateInterface>     create(const Command& command);
 
 };
 

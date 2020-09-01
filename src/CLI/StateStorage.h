@@ -13,7 +13,7 @@ class StateStorage {
  public:
   StateStorage();
 
-  void execute();
+  bool execute();
 
  private:
   std::shared_ptr<StateInterface> state_;

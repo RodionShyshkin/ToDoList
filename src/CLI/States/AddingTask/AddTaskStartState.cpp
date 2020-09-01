@@ -4,15 +4,18 @@
 
 #include "AddTaskStartState.h"
 #include "NameParamState.h"
+#include "ParentTaskParamState.h"
+
+AddTaskStartState::AddTaskStartState(const bool &is_subtask) : is_subtask_(is_subtask) {}
 
 bool AddTaskStartState::input() {
-
   return true;
 }
 
 std::shared_ptr<AddTaskStateInterface> AddTaskStartState::run(std::unique_ptr<AddTaskContext> &context) {
   output();
 //  return nullptr;
+  if(this->is_subtask_) return std::make_shared<ParentTaskParamState>();
   return std::make_shared<NameParamState>();
 }
 

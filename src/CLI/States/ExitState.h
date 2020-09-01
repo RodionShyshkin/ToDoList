@@ -7,7 +7,6 @@
 
 
 #include <States/StateInterface.h>
-#include <Operation.h>
 
 class ExitState : public StateInterface {
  public:

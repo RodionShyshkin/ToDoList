@@ -16,7 +16,9 @@ TEST_F(Base, sss) {
   cont.execute();*/
 
   StateStorage k;
-  k.execute();
+  if(!k.execute()) {
+    std::cout << "ERROR" << std::endl;
+  }
 
 /*  std::shared_ptr<StateInterface> k = std::make_shared<RemoveTaskState>();
   cont.changeState(k);

@@ -11,7 +11,6 @@ ExitState::ExitState() {
 }
 
 bool ExitState::input() {
-  this->operation_ = Operation::create(parseCommand("exit"));
   return true;
 }
 

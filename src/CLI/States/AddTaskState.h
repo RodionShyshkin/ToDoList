@@ -7,7 +7,6 @@
 
 
 #include <States/StateInterface.h>
-#include <Operation.h>
 #include "boost/date_time/gregorian/gregorian.hpp"
 
 class AddTaskState : public StateInterface {
@@ -19,7 +18,7 @@ class AddTaskState : public StateInterface {
   void output() override;
 
  private:
-//  void parseParameters(const std::string&);
+
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_

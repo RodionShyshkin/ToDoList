@@ -10,8 +10,6 @@
 #include <Context.h>
 #include "CommandParser.h"
 
-class Operation;
-
 class StateInterface {
  public:
   ~StateInterface() = default;
@@ -26,7 +24,7 @@ class StateInterface {
   bool virtual              validateCommand(const std::string&) = 0;*/
 
  protected:
-  std::shared_ptr<Operation> operation_;
+  std::shared_ptr<StateInterface> next_state_;
   std::set<Command> available_operations_;
 };
 

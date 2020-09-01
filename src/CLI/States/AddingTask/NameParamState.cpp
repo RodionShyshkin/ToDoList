@@ -22,7 +22,7 @@ std::shared_ptr<AddTaskStateInterface> NameParamState::run(std::unique_ptr<AddTa
   if(!validateParam()) return nullptr;
   else {
 //    context->name_ = param_;
-    context->updateContext(param_, context->getLabel(), context->getPriority(), context->getDate());
+    context->updateContext(param_, context->getLabel(), context->getPriority(), context->getDate(), context->getParent());
     return std::make_shared<LabelParamState>();
   return nullptr;
   }

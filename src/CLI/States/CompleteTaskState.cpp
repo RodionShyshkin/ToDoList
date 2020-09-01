@@ -3,6 +3,8 @@
 //
 
 #include "CompleteTaskState.h"
+#include "ViewTaskListState.h"
+#include "ViewTaskState.h"
 
 CompleteTaskState::CompleteTaskState(std::optional<unsigned int> task_id) {
   available_operations_.clear();
@@ -32,7 +34,7 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context>
 
   //completeTask(task_id_);
 
-  if(this->has_id_) return std::make_shared<GetTaskListState>();
+  if(this->has_id_) return std::make_shared<ViewTaskListState>();
   else return std::make_shared<ViewTaskState>();
 }
 

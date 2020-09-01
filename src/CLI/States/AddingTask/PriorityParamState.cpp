@@ -23,7 +23,7 @@ std::shared_ptr<AddTaskStateInterface> PriorityParamState::run(std::unique_ptr<A
   if(!param.has_value()) return nullptr;
   else {
 //    context->priority_ = param.value();
-    context->updateContext(context->getName(), context->getLabel(), param.value(), context->getDate());
+    context->updateContext(context->getName(), context->getLabel(), param.value(), context->getDate(), context->getParent());
     return std::make_shared<DateParamState>();
   }
 }

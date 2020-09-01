@@ -5,14 +5,19 @@
 #include "AddTaskContext.h"
 
 AddTaskContext::AddTaskContext() {
-  updateContext("", "", Priority::EMPTY, this->getDate());
+  updateContext("", "", Priority::EMPTY, this->getDate(), 0);
 }
 
-void AddTaskContext::updateContext(std::string name, std::string label, Priority priority, boost::gregorian::date date) {
+void AddTaskContext::updateContext(const std::string& name,
+                                   const std::string& label,
+                                   const Priority& priority,
+                                   const boost::gregorian::date& date,
+                                   const unsigned int& parent_id) {
   this->name_ = name;
   this->label_ = label;
   this->priority_ = priority;
   this->date_ = date;
+  this->parent_id_ = parent_id;
 }
 
 std::string AddTaskContext::getName() const {
@@ -29,4 +34,8 @@ Priority AddTaskContext::getPriority() const {
 
 boost::gregorian::date AddTaskContext::getDate() const {
   return date_;
+}
+
+unsigned int AddTaskContext::getParent() const {
+  return parent_id_;
 }

@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_VIEWTASKLISTSTATE_H_
 
 #include <States/StateInterface.h>
-#include <ListModifier.h>
+#include <random>
 
 class ViewTaskListState : public StateInterface {
  public:
@@ -18,8 +18,7 @@ class ViewTaskListState : public StateInterface {
   void output() override;
 
  private:
-  ListModifier modifier_;
-  bool is_sorted_;
+  Command command_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_VIEWTASKLISTSTATE_H_

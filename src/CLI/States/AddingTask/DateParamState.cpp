@@ -25,7 +25,8 @@ std::shared_ptr<AddTaskStateInterface> DateParamState::run(std::unique_ptr<AddTa
   if(!validated.has_value()) return nullptr;
   else {
     //context->date_ = validated.value();
-    context->updateContext(context->getName(), context->getLabel(), context->getPriority(), validated.value());
+    context->updateContext(context->getName(), context->getLabel(), context->getPriority(), validated.value(),
+                           context->getParent());
     return std::make_shared<AddTaskExitState>();
   }
 }
