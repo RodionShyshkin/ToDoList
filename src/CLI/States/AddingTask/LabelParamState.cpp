@@ -16,13 +16,14 @@ bool LabelParamState::input() {
   return true;
 }
 
-std::shared_ptr<AddTaskStateInterface> LabelParamState::run(std::unique_ptr<AddTaskContext> &context) {
+std::shared_ptr<StateInterface> LabelParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
   if(!validateParam()) return nullptr;
   else {
 //    context->label_ = param_;
-    context->updateContext(context->getName(), param_, context->getPriority(), context->getDate(), context->getParent());
+//    context->updateContext(context->getName(), param_, context->getPriority(), context->getDate(), context->getParent());
+    context->add_task_struct_.label_ = param_;
     return std::make_shared<PriorityParamState>();
   }
 }
@@ -34,4 +35,8 @@ void LabelParamState::output() {
 bool LabelParamState::validateParam() const {
   if(parseCommand(param_) == Command::EXIT) return false;
   return true;
+}
+
+StateType LabelParamState::getType() {
+  return StateType::ADD_TASK_LABEL_PARAM_STATE;
 }

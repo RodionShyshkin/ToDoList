@@ -1,0 +1,15 @@
+//
+// Created by rodion on 9/1/20.
+//
+
+#ifndef TODOLIST_SRC_CLI_STATESGRAPHTYPE_H_
+#define TODOLIST_SRC_CLI_STATESGRAPHTYPE_H_
+
+enum class StatesGraphType {
+  MAIN,
+  ADDTASK,
+  ADDSUBTASK,
+  VIEW_TASKS_LIST
+};
+
+#endif //TODOLIST_SRC_CLI_STATESGRAPHTYPE_H_

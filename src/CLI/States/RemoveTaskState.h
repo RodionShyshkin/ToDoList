@@ -17,6 +17,8 @@ class RemoveTaskState : public StateInterface {
   std::shared_ptr<StateInterface>  run(std::unique_ptr<Context> &context) override;
   void output() override;
 
+  StateType getType() override;
+
  private:
   bool validateParams(const unsigned int& param);
 

@@ -3,8 +3,9 @@
 //
 
 #include <gtest/gtest.h>
-#include <StateStorage.h>
+#include <StateMachine.h>
 #include <fstream>
+#include <States/StartState.h>
 
 class Base : public ::testing::Test {
 
@@ -15,7 +16,10 @@ TEST_F(Base, sss) {
   cont.printState();
   cont.execute();*/
 
-  StateStorage k;
+
+//  auto k = StateMachine<Context, StateInterface, StartState>::create(StatesGraphType::MAIN);\
+
+  StateMachine k = StateMachine::create(StatesGraphType::MAIN);
   if(!k.execute()) {
     std::cout << "ERROR" << std::endl;
   }

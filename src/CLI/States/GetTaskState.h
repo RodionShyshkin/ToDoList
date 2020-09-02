@@ -15,6 +15,7 @@ class GetTaskState : public StateInterface {
   bool input() override;
   std::shared_ptr<StateInterface>  run(std::unique_ptr<Context> &context) override;
   void output() override;
+  StateType getType() override;
 
  private:
   unsigned int task_id_;

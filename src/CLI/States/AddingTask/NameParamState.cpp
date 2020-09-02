@@ -16,13 +16,14 @@ bool NameParamState::input() {
   return true;
 }
 
-std::shared_ptr<AddTaskStateInterface> NameParamState::run(std::unique_ptr<AddTaskContext> &context) {
+std::shared_ptr<StateInterface> NameParamState::run(std::unique_ptr<Context> &context) {
   input();
   output();
   if(!validateParam()) return nullptr;
   else {
 //    context->name_ = param_;
-    context->updateContext(param_, context->getLabel(), context->getPriority(), context->getDate(), context->getParent());
+//    context->updateContext(param_, context->getLabel(), context->getPriority(), context->getDate(), context->getParent());
+    context->add_task_struct_.name_ = param_;
     return std::make_shared<LabelParamState>();
   return nullptr;
   }
@@ -36,4 +37,8 @@ bool NameParamState::validateParam() {
   if(param_.empty()) return false;
   if(parseCommand(param_) == Command::EXIT) return false;
   return true;
+}
+
+StateType NameParamState::getType() {
+  return StateType::ADD_TASK_NAME_PARAM_STATE;
 }

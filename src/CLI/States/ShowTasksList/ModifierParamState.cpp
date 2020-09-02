@@ -24,12 +24,12 @@ bool ModifierParamState::input() {
   return true;
 }
 
-std::shared_ptr<ShowListStateInterface> ModifierParamState::run(std::unique_ptr<ShowListContext> &context) {
+std::shared_ptr<StateInterface> ModifierParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
   auto parsed = parseParam();
   if(parsed == ListModifier::UNKNOWN) return nullptr;
-  context->updateContext(parsed, context->getSorted());
+  context->show_list_struct_.modifier_ = parsed;
   return std::make_shared<SortedParamState>();
 }
 
@@ -43,4 +43,8 @@ ListModifier ModifierParamState::parseParam() const {
   else if(param_ == "week") return ListModifier::WEEK;
   else if(param_ == "by_label") return ListModifier::BY_LABEL;
   return ListModifier::UNKNOWN;
+}
+
+StateType ModifierParamState::getType() {
+  return StateType::SHOW_LIST_MODIFIER_PARAM_STATE;
 }

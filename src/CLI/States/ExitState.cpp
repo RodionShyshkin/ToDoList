@@ -17,9 +17,13 @@ bool ExitState::input() {
 std::shared_ptr<StateInterface>  ExitState::run(std::unique_ptr<Context> &context) {
   input();
   output();
-  return std::shared_ptr<ExitState>();
+  return nullptr;
 }
 
 void ExitState::output() {
-  std::cout << "[Output]: Finishes program.";
+  std::cout << "[Output]: Finishes state machine.";
+}
+
+StateType ExitState::getType() {
+  return StateType::EXIT_STATE;
 }

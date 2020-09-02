@@ -1,8 +1,8 @@
 #include <iostream>
-#include <StateStorage.h>
+#include <StateMachine.h>
 
 int main(int argc, char* argv[]) {
-  StateStorage storage_;
+  StateMachine storage_;
   storage_.execute();
   return 0;
 }

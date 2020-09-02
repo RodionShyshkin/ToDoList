@@ -3,8 +3,8 @@
 //
 
 #include <random>
+#include <States/ExitState.h>
 #include "SortedParamState.h"
-#include "ShowListExitState.h"
 
 bool SortedParamState::input() {
   std::string stringParam;
@@ -22,15 +22,16 @@ bool SortedParamState::input() {
   return true;
 }
 
-std::shared_ptr<ShowListStateInterface> SortedParamState::run(std::unique_ptr<ShowListContext> &context) {
+std::shared_ptr<StateInterface> SortedParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
   auto parsed = parseParam();
   if(!parsed.has_value()) return nullptr;
   else {
-    context->updateContext(context->getModifier(), parsed.value());
+//    context->updateContext(context->getModifier(), parsed.value());
+    context->show_list_struct_.is_sorted_ = parsed.value();
   }
-  return std::make_shared<ShowListExitState>();
+  return std::make_shared<ExitState>();
 }
 
 void SortedParamState::output() {
@@ -41,4 +42,8 @@ std::optional<bool> SortedParamState::parseParam() const {
   if(this->param_ == "sort") return true;
   else if(this->param_ == "no_sort") return false;
   else return std::nullopt;
+}
+
+StateType SortedParamState::getType() {
+  return StateType::SHOW_LIST_SORTED_PARAM_STATE;
 }

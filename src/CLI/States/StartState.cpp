@@ -39,9 +39,14 @@ std::shared_ptr<StateInterface> StartState::run(std::unique_ptr<Context> &contex
   auto inputResult = input();
   if(!inputResult) return nullptr;
   output();
+  std::cout << "WORKS" << std::endl;
   return StateFactory::create(this->command_);
 }
 
 void StartState::output() {
   std::cout << "[Output]: Main menu." << std::endl;
+}
+
+StateType StartState::getType() {
+  return StateType::START_STATE;
 }

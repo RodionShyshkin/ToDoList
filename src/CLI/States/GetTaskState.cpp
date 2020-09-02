@@ -31,3 +31,7 @@ std::shared_ptr<StateInterface>  GetTaskState::run(std::unique_ptr<Context> &con
 void GetTaskState::output() {
   std::cout << "[Output]: Getting single task." << std::endl;
 }
+
+StateType GetTaskState::getType() {
+  return StateType::VIEW_TASK_STATE;
+}

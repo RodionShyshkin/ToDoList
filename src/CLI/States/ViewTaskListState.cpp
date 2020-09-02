@@ -2,7 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <States/ShowTasksList/ShowListStateMachine.h>
+#include <StateMachine.h>
 #include "ViewTaskListState.h"
 #include "StateFactory.h"
 
@@ -33,7 +33,7 @@ bool ViewTaskListState::input() {
 }
 
 std::shared_ptr<StateInterface>  ViewTaskListState::run(std::unique_ptr<Context> &context) {
-  ShowListStateMachine machine_;
+  auto machine_ = StateMachine::create(StatesGraphType::VIEW_TASKS_LIST);
   if(machine_.execute()) {
     std::cout << "task list got" << std::endl;
   }
@@ -47,4 +47,8 @@ std::shared_ptr<StateInterface>  ViewTaskListState::run(std::unique_ptr<Context>
 
 void ViewTaskListState::output() {
   std::cout << "[Output]: Tasks list view mode." << std::endl;
+}
+
+StateType ViewTaskListState::getType() {
+  return StateType::VIEW_TASK_LIST_STATE;
 }

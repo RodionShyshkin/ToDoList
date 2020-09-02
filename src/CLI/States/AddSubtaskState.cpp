@@ -2,9 +2,9 @@
 // Created by rodion on 8/31/20.
 //
 
-#include <States/AddingTask/AddTaskStateMachine.h>
 #include "AddSubtaskState.h"
 #include "StateFactory.h"
+#include <StateMachine.h>
 
 bool AddSubtaskState::input() {
   available_operations_.clear();
@@ -13,7 +13,8 @@ bool AddSubtaskState::input() {
 }
 
 std::shared_ptr<StateInterface> AddSubtaskState::run(std::unique_ptr<Context> &context) {
-  AddTaskStateMachine machine_(true);
+//  AddTaskStateMachine machine_(true);
+  auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK);
   if(machine_.execute()) {
     std::cout << "subtask added" << std::endl;
   }
@@ -25,4 +26,8 @@ std::shared_ptr<StateInterface> AddSubtaskState::run(std::unique_ptr<Context> &c
 
 void AddSubtaskState::output() {
   std::cout << "[Output]: Adding subtask for an existing task." << std::endl;
+}
+
+StateType AddSubtaskState::getType() {
+  return StateType::ADD_SUBTASK_STATE;
 }

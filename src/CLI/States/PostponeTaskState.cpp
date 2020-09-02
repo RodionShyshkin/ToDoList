@@ -46,3 +46,7 @@ void PostponeTaskState::output() {
 bool PostponeTaskState::validateParams(const unsigned int &param) {
   return true;
 }
+
+StateType PostponeTaskState::getType() {
+  return StateType::POSTPONE_TASK_STATE;
+}

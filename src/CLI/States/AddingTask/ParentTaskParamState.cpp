@@ -11,14 +11,17 @@ bool ParentTaskParamState::input() {
   return true;
 }
 
-std::shared_ptr<AddTaskStateInterface> ParentTaskParamState::run(std::unique_ptr<AddTaskContext> &context) {
+std::shared_ptr<StateInterface> ParentTaskParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
-  context->updateContext(context->getName(), context->getLabel(), context->getPriority(), context->getDate(),
-                         this->param_);
+  context->add_task_struct_.parent_id_ = param_;
   return std::make_shared<NameParamState>();
 }
 
 void ParentTaskParamState::output() {
   std::cout << "[Output]: AddTask state machine / Parent ID" << std::endl;
+}
+
+StateType ParentTaskParamState::getType() {
+  return StateType::ADD_TASK_PARENT_PARAM_STATE;
 }

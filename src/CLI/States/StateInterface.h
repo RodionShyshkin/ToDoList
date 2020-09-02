@@ -9,6 +9,7 @@
 #include <set>
 #include <Context.h>
 #include "CommandParser.h"
+#include "StateType.h"
 
 class StateInterface {
  public:
@@ -19,13 +20,15 @@ class StateInterface {
   std::shared_ptr<StateInterface> virtual run(std::unique_ptr<Context> &context) = 0;
   void virtual              output() = 0;
 
+  StateType virtual         getType() = 0;
+
 /*
  private:
   bool virtual              validateCommand(const std::string&) = 0;*/
 
  protected:
-  std::shared_ptr<StateInterface> next_state_;
   std::set<Command> available_operations_;
+  StateType type_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATEINTERFACE_H_

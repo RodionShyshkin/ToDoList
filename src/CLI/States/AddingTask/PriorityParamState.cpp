@@ -16,14 +16,15 @@ bool PriorityParamState::input() {
   return true;
 }
 
-std::shared_ptr<AddTaskStateInterface> PriorityParamState::run(std::unique_ptr<AddTaskContext> &context) {
+std::shared_ptr<StateInterface> PriorityParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
   auto param = parseParam();
   if(!param.has_value()) return nullptr;
   else {
 //    context->priority_ = param.value();
-    context->updateContext(context->getName(), context->getLabel(), param.value(), context->getDate(), context->getParent());
+//    context->updateContext(context->getName(), context->getLabel(), param.value(), context->getDate(), context->getParent());
+    context->add_task_struct_.priority_ = param.value();
     return std::make_shared<DateParamState>();
   }
 }
@@ -38,4 +39,8 @@ std::optional<Priority> PriorityParamState::parseParam() const {
   else if(param_ == "Medium") return Priority::MEDIUM;
   else if(param_ == "High") return Priority::HIGH;
   else return std::nullopt;
+}
+
+StateType PriorityParamState::getType() {
+  return StateType::ADD_TASK_PRIORITY_PARAM_STATE;
 }

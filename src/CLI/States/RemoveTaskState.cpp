@@ -45,3 +45,7 @@ bool RemoveTaskState::validateParams(const unsigned int &param) {
 void RemoveTaskState::output() {
   std::cout << "[Output]: Removes task." << std::endl;
 }
+
+StateType RemoveTaskState::getType() {
+  return StateType::REMOVE_TASK_STATE;
+}

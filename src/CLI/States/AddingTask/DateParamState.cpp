@@ -4,8 +4,8 @@
 
 #include <boost/date_time/gregorian/parsers.hpp>
 #include <boost/date_time/gregorian/gregorian_io.hpp>
+#include <States/ExitState.h>
 #include "DateParamState.h"
-#include "AddTaskExitState.h"
 
 bool DateParamState::input() {
   std::string stringParam;
@@ -18,16 +18,15 @@ bool DateParamState::input() {
   return true;
 }
 
-std::shared_ptr<AddTaskStateInterface> DateParamState::run(std::unique_ptr<AddTaskContext> &context) {
+std::shared_ptr<StateInterface> DateParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
   auto validated = parseParam();
   if(!validated.has_value()) return nullptr;
   else {
     //context->date_ = validated.value();
-    context->updateContext(context->getName(), context->getLabel(), context->getPriority(), validated.value(),
-                           context->getParent());
-    return std::make_shared<AddTaskExitState>();
+    context->add_task_struct_.date_ = validated.value();
+    return std::make_shared<ExitState>();
   }
 }
 
@@ -43,4 +42,8 @@ std::optional<boost::gregorian::date> DateParamState::parseParam() const {
   catch(const std::out_of_range &e) {
     return std::nullopt;
   }
+}
+
+StateType DateParamState::getType() {
+  return StateType::ADD_TASK_DATE_PARAM_STATE;
 }

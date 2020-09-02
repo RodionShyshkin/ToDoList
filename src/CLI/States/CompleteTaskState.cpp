@@ -45,3 +45,7 @@ void CompleteTaskState::output() {
 bool CompleteTaskState::validateParams(const unsigned int &param) {
   return true;
 }
+
+StateType CompleteTaskState::getType() {
+  return StateType::COMPLETE_TASK_STATE;
+}

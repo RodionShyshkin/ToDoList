@@ -12,7 +12,7 @@ bool AddTaskStartState::input() {
   return true;
 }
 
-std::shared_ptr<AddTaskStateInterface> AddTaskStartState::run(std::unique_ptr<AddTaskContext> &context) {
+std::shared_ptr<StateInterface> AddTaskStartState::run(std::unique_ptr<Context> &context) {
   output();
 //  return nullptr;
   if(this->is_subtask_) return std::make_shared<ParentTaskParamState>();
@@ -21,4 +21,8 @@ std::shared_ptr<AddTaskStateInterface> AddTaskStartState::run(std::unique_ptr<Ad
 
 void AddTaskStartState::output() {
   std::cout << "[Output]: AddTask state machine / Start State" << std::endl;
+}
+
+StateType AddTaskStartState::getType() {
+  return StateType::ADD_TASK_START_STATE;
 }
