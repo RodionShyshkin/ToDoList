@@ -10,8 +10,7 @@
 
 class StateFactory {
  public:
-  static std::shared_ptr<StateInterface>     create(const Command& command);
-
+  static std::shared_ptr<StateInterface>     create(const Command&);
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_STATEFACTORY_H_

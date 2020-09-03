@@ -1,24 +1,18 @@
 //
-// Created by rodion on 8/26/20.
+// Created by rodion on 9/2/20.
 //
 
-#ifndef TODOLIST_SRC_CLI_STATES_ADDINGTASK_ADDTASKSTARTSTATE_H_
-#define TODOLIST_SRC_CLI_STATES_ADDINGTASK_ADDTASKSTARTSTATE_H_
+#ifndef TODOLIST_SRC_CLI_STATES_SHOWSINGLETASK_SINGLETASKSTARTSTATE_H_
+#define TODOLIST_SRC_CLI_STATES_SHOWSINGLETASK_SINGLETASKSTARTSTATE_H_
 
 #include <StateInterface.h>
 
-class AddTaskStartState : public StateInterface {
- public:
-  explicit AddTaskStartState(const bool& is_subtask);
-
+class SingleTaskStartState : public StateInterface {
  public:
   bool                              input()                                   override;
   std::shared_ptr<StateInterface>   run(std::unique_ptr<Context> &context)    override;
   void                              output()                                  override;
   StateType                         getType()                                 override;
-
- private:
-  bool                              is_subtask_;
 };
 
-#endif //TODOLIST_SRC_CLI_STATES_ADDINGTASK_ADDTASKSTARTSTATE_H_
+#endif //TODOLIST_SRC_CLI_STATES_SHOWSINGLETASK_SINGLETASKSTARTSTATE_H_

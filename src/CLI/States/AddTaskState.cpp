@@ -5,8 +5,6 @@
 #include <States/AddingTask/AddTaskStartState.h>
 #include "AddTaskState.h"
 #include "StartState.h"
-#include "ExitState.h"
-#include "GetTaskState.h"
 #include <StateMachine.h>
 
 AddTaskState::AddTaskState() {
@@ -19,9 +17,7 @@ bool AddTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  AddTaskState::run(std::unique_ptr<Context> &context) {
-  //AddTaskStateMachine machine_(false);
   auto machine_ = StateMachine::create(StatesGraphType::ADDTASK);
-//  StateMachine<AddTaskContext, AddTaskStateInterface, AddTaskStartState> machine_;
   if(machine_.execute()) {
     std::cout << "task added" << std::endl;
   }

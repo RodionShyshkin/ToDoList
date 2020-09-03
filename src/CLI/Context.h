@@ -25,9 +25,14 @@ class Context : public ContextInterface {
     bool is_sorted_;
   };
 
+  struct ShowSingleTask {
+    unsigned int id_;
+  };
+
  public:
   AddTask add_task_struct_;
   ShowList show_list_struct_;
+  ShowSingleTask show_single_task_struct_;
 
  public:
   std::unique_ptr<TaskService> service_;

@@ -33,7 +33,7 @@ void NameParamState::output() {
   std::cout << "[Output]: AddTask state machine / Enter name" << std::endl;
 }
 
-bool NameParamState::validateParam() {
+bool NameParamState::validateParam() const {
   if(param_.empty()) return false;
   if(parseCommand(param_) == Command::EXIT) return false;
   return true;

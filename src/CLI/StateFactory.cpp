@@ -3,20 +3,20 @@
 //
 
 #include "StateFactory.h"
-#include "GetTaskState.h"
-#include "AddTaskState.h"
-#include "AddSubtaskState.h"
-#include "CompleteTaskState.h"
-#include "PostponeTaskState.h"
-#include "ExitState.h"
-#include "RemoveTaskState.h"
-#include "ViewTaskListState.h"
-#include "StartState.h"
+#include "States/AddTaskState.h"
+#include "States/AddSubtaskState.h"
+#include "States/CompleteTaskState.h"
+#include "States/PostponeTaskState.h"
+#include "States/ExitState.h"
+#include "States/RemoveTaskState.h"
+#include "States/ViewTaskListState.h"
+#include "States/StartState.h"
+#include "States/ViewTaskState.h"
 
 std::shared_ptr<StateInterface> StateFactory::create(const Command &operation) {
   if(operation == Command::UNKNOWN) return nullptr;
   if(operation == Command::GETTASK) {
-    return std::make_shared<GetTaskState>();
+    return std::make_shared<ViewTaskState>();
   }
   if(operation == Command::ADDTASK) {
     return std::make_shared<AddTaskState>();

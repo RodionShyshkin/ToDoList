@@ -9,6 +9,7 @@ enum class StatesGraphType {
   MAIN,
   ADDTASK,
   ADDSUBTASK,
+  VIEW_SINGLE_TASK,
   VIEW_TASKS_LIST
 };
 

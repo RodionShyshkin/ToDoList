@@ -8,6 +8,7 @@
 #include <States/ExitState.h>
 #include <States/AddingTask/AddTaskStartState.h>
 #include <States/ShowTasksList/ShowListStartState.h>
+#include <States/ShowSingleTask/SingleTaskStartState.h>
 
 StateMachine StateMachine::create(const StatesGraphType &type) {
   if(type == StatesGraphType::MAIN) {
@@ -21,6 +22,9 @@ StateMachine StateMachine::create(const StatesGraphType &type) {
   }
   else if(type == StatesGraphType::VIEW_TASKS_LIST) {
     return StateMachine{std::make_shared<ShowListStartState>()};
+  }
+  else if(type == StatesGraphType::VIEW_SINGLE_TASK) {
+    return StateMachine{std::make_shared<SingleTaskStartState>()};
   }
 }
 
@@ -37,5 +41,6 @@ bool StateMachine::execute() {
     }
     this->state_ = std::move(state_->run(context_));
   }
+  std::cout << "State machine finished." << std::endl;
   return true;
 }

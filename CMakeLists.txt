@@ -6,8 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB core_sources "src/core/API/*.cpp" "src/core/MemoryModel/Storage/*.cpp" "src/core/MemoryModel/Task/*.cpp")
 file(GLOB core_headers "src/core/API/*.h" "src/core/MemoryModel/Storage/*.h" "src/core/MemoryModel/Task/*.h")
 
-file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp" "src/CLI/States/ShowTasksList/*.cpp")
-file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h" "src/CLI/States/ShowTasksList/*.h")
+file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp"
+        "src/CLI/States/ShowTasksList/*.cpp" "src/CLI/States/ShowSingleTask/*.cpp")
+file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h"
+        "src/CLI/States/ShowTasksList/*.h" "src/CLI/States/ShowSingleTask/*.h")
 
 file(GLOB main "src/main.cpp")
 

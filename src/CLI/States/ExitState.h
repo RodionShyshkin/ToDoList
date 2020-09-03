@@ -6,16 +6,16 @@
 #define TODOLIST_SRC_CLI_STATES_EXITSTATE_H_
 
 
-#include <States/StateInterface.h>
+#include <StateInterface.h>
 
 class ExitState : public StateInterface {
  public:
   ExitState();
 
-  bool input() override;
-  std::shared_ptr<StateInterface>  run(std::unique_ptr<Context> &context) override;
-  void output() override;
-  StateType getType() override;
+  bool                              input()                                   override;
+  std::shared_ptr<StateInterface>   run(std::unique_ptr<Context> &context)    override;
+  void                              output()                                  override;
+  StateType                         getType()                                 override;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_EXITSTATE_H_

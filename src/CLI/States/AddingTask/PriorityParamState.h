@@ -5,20 +5,20 @@
 #ifndef TODOLIST_SRC_CLI_STATES_ADDINGTASK_PRIORITYPARAMSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_ADDINGTASK_PRIORITYPARAMSTATE_H_
 
-#include <States/StateInterface.h>
+#include <StateInterface.h>
 
 class PriorityParamState : public StateInterface {
  public:
-  bool input() override;
-  std::shared_ptr<StateInterface> run(std::unique_ptr<Context> &context) override;
-  void output() override;
-  StateType getType() override;
+  bool                              input()                                   override;
+  std::shared_ptr<StateInterface>   run(std::unique_ptr<Context> &context)    override;
+  void                              output()                                  override;
+  StateType                         getType()                                 override;
 
  private:
-  std::optional<Priority> parseParam() const;
+  std::optional<Priority>           parseParam()                              const;
 
  private:
-  std::string param_;
+  std::string                       param_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_ADDINGTASK_PRIORITYPARAMSTATE_H_

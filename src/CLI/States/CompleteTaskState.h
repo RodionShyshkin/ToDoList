@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_COMPLETETASKSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_COMPLETETASKSTATE_H_
 
-#include <States/StateInterface.h>
+#include <StateInterface.h>
 
 class CompleteTaskState : public StateInterface {
  public:

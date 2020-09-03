@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
 
-#include <States/StateInterface.h>
+#include <StateInterface.h>
 #include <random>
 
 class ViewTaskState : public StateInterface {
