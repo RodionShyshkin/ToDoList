@@ -39,6 +39,9 @@ bool StateMachine::execute() {
       std::cout << "ERROR" << std::endl;
       return false;
     }
+    if(this->state_->getType() == StateType::VIEW_TASK_STATE) {
+      std::cout << "VIEW" << std::endl;
+    }
     this->state_ = std::move(state_->run(context_));
   }
   std::cout << "State machine finished." << std::endl;

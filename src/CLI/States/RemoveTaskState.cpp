@@ -3,43 +3,41 @@
 //
 
 
+#include <StateMachine.h>
 #include "RemoveTaskState.h"
 #include "StartState.h"
 #include "ViewTaskState.h"
 #include "ViewTaskListState.h"
 
-RemoveTaskState::RemoveTaskState(std::optional<unsigned int> task_id) {
+RemoveTaskState::RemoveTaskState() {
   available_operations_.clear();
   available_operations_.insert(Command::EXIT);
-
-  if(task_id.has_value()) {
-    this->task_id_ = task_id.value();
-    this->has_id_ = true;
-  }
-  else {
-    this->task_id_ = 0;
-    this->has_id_ = false;
-  }
 }
 
 bool RemoveTaskState::input() {
-  if(!has_id_) {
-//    std::cin >> task_id_;
-    this->task_id_ = 1;
-  }
-  if(!validateParams(task_id_)) return false;
   return true;
 }
 
 std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &context) {
-  if(!input()) return nullptr;
-  std::cout << "removed" << std::endl;
-  if(this->has_id_) return std::make_unique<ViewTaskListState>();
-  else return std::make_unique<ViewTaskState>();
-}
+  bool is_single_state = false;
+  if(context->id_buffer_.has_id_) {
+    is_single_state = true;
+  }
+  else {
+    auto machine_ = StateMachine::create(StatesGraphType::VIEW_SINGLE_TASK);
+    if(machine_.execute()) {
+      std::cout << "task got" << std::endl;
+    }
+    else {
+      std::cout << "Error with getting task!" << std::endl;
+    }
+    output();
+  }
+  this->task_id_ = context->id_buffer_.id_;
 
-bool RemoveTaskState::validateParams(const unsigned int &param) {
-  return true;
+  std::cout << "removed " << this->task_id_ << std::endl;
+  if(is_single_state) return std::make_unique<ViewTaskState>();
+  else return std::make_unique<ViewTaskListState>();
 }
 
 void RemoveTaskState::output() {

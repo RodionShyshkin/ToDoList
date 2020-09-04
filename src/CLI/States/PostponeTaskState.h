@@ -9,7 +9,7 @@
 
 class PostponeTaskState : public StateInterface {
  public:
-  PostponeTaskState(std::optional<unsigned int> task_id);
+  PostponeTaskState();
 
  public:
   bool input() override;
@@ -18,10 +18,6 @@ class PostponeTaskState : public StateInterface {
   StateType getType() override;
 
  private:
-  bool validateParams(const unsigned int& param);
-
- private:
-  bool has_id_;
   unsigned int task_id_;
 };
 

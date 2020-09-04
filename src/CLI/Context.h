@@ -29,10 +29,17 @@ class Context : public ContextInterface {
     unsigned int id_;
   };
 
+  struct IDBuffer {
+    bool has_id_;
+    unsigned int id_;
+  };
+
  public:
   AddTask add_task_struct_;
   ShowList show_list_struct_;
-  ShowSingleTask show_single_task_struct_;
+//  ShowSingleTask show_single_task_struct_;
+
+  IDBuffer id_buffer_;
 
  public:
   std::unique_ptr<TaskService> service_;

@@ -10,7 +10,7 @@
 
 class RemoveTaskState : public StateInterface {
  public:
-  RemoveTaskState(std::optional<unsigned int> task_id);
+  RemoveTaskState();
 
  public:
   bool input() override;
@@ -20,10 +20,6 @@ class RemoveTaskState : public StateInterface {
   StateType getType() override;
 
  private:
-  bool validateParams(const unsigned int& param);
-
- private:
-  bool has_id_;
   unsigned int task_id_;
 };
 

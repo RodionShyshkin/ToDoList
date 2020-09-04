@@ -25,7 +25,6 @@ class StateMachine {
   std::shared_ptr<StateInterface> state_;
   std::unique_ptr<Context> context_;
   std::shared_ptr<StateInterface> start_state_;
-  std::shared_ptr<StateInterface> exit_state_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATEMACHINE_H_

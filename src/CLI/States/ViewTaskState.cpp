@@ -27,9 +27,9 @@ bool ViewTaskState::input() {
   else if(k == 1) stringCommand = "postpone";
   else if(k == 2) stringCommand = "complete";
   else stringCommand = "exit";
-  stringCommand = "complete";
+//  stringCommand = "remove";
 
-  command_ = parseCommand(stringCommand);
+  this->command_ = parseCommand(stringCommand);
   if(available_operations_.find(this->command_) == available_operations_.end()) return false;
   return true;
 }
@@ -42,8 +42,9 @@ std::shared_ptr<StateInterface>  ViewTaskState::run(std::unique_ptr<Context> &co
   else {
     std::cout << "Error with getting task!" << std::endl;
   }
-  input();
-  std::cout << "ITS OK" << std::endl;
+  auto inputResult = input();
+  if(!inputResult) return nullptr;
+  output();
   return StateFactory::create(this->command_);
 }
 

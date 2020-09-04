@@ -9,7 +9,7 @@
 
 class CompleteTaskState : public StateInterface {
  public:
-  CompleteTaskState(std::optional<unsigned int> task_id);
+  CompleteTaskState();
 
  public:
   bool input() override;
@@ -18,10 +18,6 @@ class CompleteTaskState : public StateInterface {
   StateType getType() override;
 
  private:
-  bool validateParams(const unsigned int& param);
-
- private:
-  bool has_id_;
   unsigned int task_id_;
 };
 

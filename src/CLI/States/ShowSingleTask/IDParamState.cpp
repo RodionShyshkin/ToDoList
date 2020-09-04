@@ -13,7 +13,8 @@ bool IDParamState::input() {
 std::shared_ptr<StateInterface> IDParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
-  context->show_single_task_struct_.id_ = param_;
+  //context->show_single_task_struct_.id_ = param_;
+  context->id_buffer_.id_ = param_;
   return std::make_shared<ExitState>();
 }
 

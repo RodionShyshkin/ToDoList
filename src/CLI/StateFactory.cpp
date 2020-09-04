@@ -28,13 +28,13 @@ std::shared_ptr<StateInterface> StateFactory::create(const Command &operation) {
     return std::make_shared<ExitState>();
   }
   if(operation == Command::REMOVETASK) {
-    return std::make_shared<RemoveTaskState>(std::nullopt);
+    return std::make_shared<RemoveTaskState>();
   }
   if(operation == Command::POSTPONETASK) {
-    return std::make_shared<PostponeTaskState>(std::nullopt);
+    return std::make_shared<PostponeTaskState>();
   }
   if(operation == Command::COMPLETETASK) {
-    return std::make_shared<CompleteTaskState>(std::nullopt);
+    return std::make_shared<CompleteTaskState>();
   }
   if(operation == Command::GETTASKLIST) {
     return std::make_shared<ViewTaskListState>();
