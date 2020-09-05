@@ -7,10 +7,6 @@
 
 bool LabelParamState::input() {
   std::string stringParam;
-//  std::cin >> stringCommand;
-//  std::getline(std::cin, stringCommand);
-  srand(time(NULL));
-  auto k = rand() % 4;
   stringParam = "";
   param_ = stringParam;
   return true;

@@ -16,9 +16,6 @@ class PostponeTaskState : public StateInterface {
   std::shared_ptr<StateInterface> run(std::unique_ptr<Context> &context) override;
   void output() override;
   StateType getType() override;
-
- private:
-  unsigned int task_id_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_POSTPONETASKSTATE_H_

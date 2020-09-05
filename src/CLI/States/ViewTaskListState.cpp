@@ -20,10 +20,11 @@ bool ViewTaskListState::input() {
 //  std::cin >> stringCommand;
   std::random_device rd;
   std::mt19937 mersenne(rd());
-  auto k = mersenne() % 4;
-  if(k == 0) stringCommand = "remove";
-  else if(k == 1) stringCommand = "postpone";
-  else if(k == 2) stringCommand = "complete";
+  auto k = mersenne() % 5;
+  if(k == 0) stringCommand = "view";
+  if(k == 1) stringCommand = "remove";
+  else if(k == 2) stringCommand = "postpone";
+  else if(k == 3) stringCommand = "complete";
   else stringCommand = "exit";
 //  stringCommand = "complete";
 
@@ -33,7 +34,7 @@ bool ViewTaskListState::input() {
 }
 
 std::shared_ptr<StateInterface>  ViewTaskListState::run(std::unique_ptr<Context> &context) {
-  auto machine_ = StateMachine::create(StatesGraphType::VIEW_TASKS_LIST);
+  auto machine_ = StateMachine::create(StatesGraphType::GET_TASKS_LIST);
   if(machine_.execute()) {
     std::cout << "task list got" << std::endl;
   }

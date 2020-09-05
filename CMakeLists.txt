@@ -7,9 +7,9 @@ file(GLOB core_sources "src/core/API/*.cpp" "src/core/MemoryModel/Storage/*.cpp"
 file(GLOB core_headers "src/core/API/*.h" "src/core/MemoryModel/Storage/*.h" "src/core/MemoryModel/Task/*.h")
 
 file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp"
-        "src/CLI/States/ShowTasksList/*.cpp" "src/CLI/States/ShowSingleTask/*.cpp")
+        "src/CLI/States/ShowTasksList/*.cpp" "src/CLI/States/GetSingleTask/*.cpp")
 file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h"
-        "src/CLI/States/ShowTasksList/*.h" "src/CLI/States/ShowSingleTask/*.h")
+        "src/CLI/States/ShowTasksList/*.h" "src/CLI/States/GetSingleTask/*.h")
 
 file(GLOB main "src/main.cpp")
 
@@ -44,7 +44,7 @@ include_directories(tests)
 file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp"
         "tests/CLI/base.cpp")
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources})
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/CLI/States/NewDateParamState.cpp src/CLI/States/NewDateParamState.h)
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})

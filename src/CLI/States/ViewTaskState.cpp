@@ -35,12 +35,16 @@ bool ViewTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  ViewTaskState::run(std::unique_ptr<Context> &context) {
-  auto machine_ = StateMachine::create(StatesGraphType::VIEW_SINGLE_TASK);
-  if(machine_.execute()) {
-    std::cout << "task got" << std::endl;
-  }
-  else {
-    std::cout << "Error with getting task!" << std::endl;
+  if(!context->id_buffer_.has_id_) {
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
+    if(machine_.execute()) {
+      std::cout << "task got" << std::endl;
+
+      //getting task
+    }
+    else {
+      std::cout << "Error with getting task!" << std::endl;
+    }
   }
   auto inputResult = input();
   if(!inputResult) return nullptr;

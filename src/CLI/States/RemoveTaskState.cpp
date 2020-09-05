@@ -24,20 +24,21 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &
     is_single_state = true;
   }
   else {
-    auto machine_ = StateMachine::create(StatesGraphType::VIEW_SINGLE_TASK);
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
     if(machine_.execute()) {
       std::cout << "task got" << std::endl;
     }
     else {
       std::cout << "Error with getting task!" << std::endl;
     }
-    output();
   }
   this->task_id_ = context->id_buffer_.id_;
 
-  std::cout << "removed " << this->task_id_ << std::endl;
-  if(is_single_state) return std::make_unique<ViewTaskState>();
-  else return std::make_unique<ViewTaskListState>();
+  output();
+
+  context->id_buffer_.has_id_ = false;
+  context->id_buffer_.id_ = 0;
+  return std::make_unique<ViewTaskListState>();
 }
 
 void RemoveTaskState::output() {

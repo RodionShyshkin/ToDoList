@@ -25,21 +25,22 @@ class Context : public ContextInterface {
     bool is_sorted_;
   };
 
-  struct ShowSingleTask {
-    unsigned int id_;
-  };
-
   struct IDBuffer {
     bool has_id_;
     unsigned int id_;
   };
 
+  struct PostponeDate {
+    boost::gregorian::date new_date_;
+    unsigned int id_;
+    bool is_single_task_;
+  };
+
  public:
   AddTask add_task_struct_;
   ShowList show_list_struct_;
-//  ShowSingleTask show_single_task_struct_;
-
   IDBuffer id_buffer_;
+  PostponeDate postpone_date_;
 
  public:
   std::unique_ptr<TaskService> service_;

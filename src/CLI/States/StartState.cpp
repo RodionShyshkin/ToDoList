@@ -23,10 +23,9 @@ bool StartState::input() {
   std::cout << "RUNS" << std::endl;
   std::random_device rd;
   std::mt19937 mersenne(rd());
-  auto k = mersenne() % 4;
+  auto k = mersenne() % 3;
   if(k == 0) stringCommand = "add";
-  else if(k == 1) stringCommand = "view";
-  else if(k == 2) stringCommand = "show";
+  else if(k == 1) stringCommand = "show";
   else stringCommand = "exit";
 //  stringCommand = "add";
 

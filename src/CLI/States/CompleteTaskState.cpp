@@ -13,7 +13,6 @@ CompleteTaskState::CompleteTaskState() {
 }
 
 bool CompleteTaskState::input() {
-//    std::cin >> task_id_;
   return true;
 }
 
@@ -23,7 +22,7 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context>
     is_single_state = true;
   }
   else {
-    auto machine_ = StateMachine::create(StatesGraphType::VIEW_SINGLE_TASK);
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
     if(machine_.execute()) {
       std::cout << "task got" << std::endl;
     }
@@ -37,7 +36,11 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context>
   //completeTask(task_id_);
 
   if(is_single_state) return std::make_shared<ViewTaskState>();
-  else return std::make_shared<ViewTaskListState>();
+  else {
+    context->id_buffer_.has_id_ = false;
+    context->id_buffer_.id_ = 0;
+    return std::make_shared<ViewTaskListState>();
+  }
 }
 
 void CompleteTaskState::output() {

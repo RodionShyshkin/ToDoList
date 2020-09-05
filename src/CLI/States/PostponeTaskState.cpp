@@ -6,6 +6,7 @@
 #include "PostponeTaskState.h"
 #include "ViewTaskListState.h"
 #include "ViewTaskState.h"
+#include "NewDateParamState.h"
 
 PostponeTaskState::PostponeTaskState() {
   available_operations_.clear();
@@ -22,7 +23,7 @@ std::shared_ptr<StateInterface>  PostponeTaskState::run(std::unique_ptr<Context>
     is_single_state = true;
   }
   else {
-    auto machine_ = StateMachine::create(StatesGraphType::VIEW_SINGLE_TASK);
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
     if(machine_.execute()) {
       std::cout << "task got" << std::endl;
     }
@@ -31,12 +32,11 @@ std::shared_ptr<StateInterface>  PostponeTaskState::run(std::unique_ptr<Context>
     }
     output();
   }
-  this->task_id_ = context->id_buffer_.id_;
-  //postponeTask(task_id_, new_date_);
+  context->postpone_date_.id_ = context->id_buffer_.id_;
+  if(is_single_state) context->postpone_date_.is_single_task_ = true;
+  else context->postpone_date_.is_single_task_ = false;
 
-  if(is_single_state) return std::make_shared<ViewTaskState>();
-  else return std::make_shared<ViewTaskListState>();
-  return nullptr;
+  return std::make_shared<NewDateParamState>();
 }
 
 void PostponeTaskState::output() {
