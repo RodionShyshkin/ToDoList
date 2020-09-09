@@ -45,5 +45,5 @@ std::optional<boost::gregorian::date> DateParamState::parseParam() const {
 }
 
 StateType DateParamState::getType() {
-  return StateType::ADD_TASK_DATE_PARAM_STATE;
+  return StateType::ADD_TASK_STATE;
 }

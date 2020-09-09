@@ -3,6 +3,7 @@
 //
 
 #include <StateMachine.h>
+#include <StateFactory.h>
 #include "CompleteTaskState.h"
 #include "ViewTaskListState.h"
 #include "ViewTaskState.h"
@@ -18,7 +19,7 @@ bool CompleteTaskState::input() {
 
 std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context> &context) {
   bool is_single_state = false;
-  if(context->id_buffer_.has_id_) {
+  if(context->id_buffer_.checkBufferFullness()) {
     is_single_state = true;
   }
   else {
@@ -31,15 +32,14 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context>
     }
     output();
   }
-  this->task_id_ = context->id_buffer_.id_;
+  this->task_id_ = context->id_buffer_.getID().value();
 
   //completeTask(task_id_);
 
-  if(is_single_state) return std::make_shared<ViewTaskState>();
+  if(is_single_state) return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
   else {
-    context->id_buffer_.has_id_ = false;
-    context->id_buffer_.id_ = 0;
-    return std::make_shared<ViewTaskListState>();
+    context->id_buffer_.clearBuffer();
+    return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
   }
 }
 

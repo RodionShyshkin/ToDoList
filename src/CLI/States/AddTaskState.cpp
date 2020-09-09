@@ -24,7 +24,7 @@ std::shared_ptr<StateInterface>  AddTaskState::run(std::unique_ptr<Context> &con
   else {
     std::cout << "Error with adding task!" << std::endl;
   }
-  return StateFactory::create(Command::MAINMENU);
+  return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 
 void AddTaskState::output() {

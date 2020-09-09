@@ -8,6 +8,7 @@
 #include <memory>
 #include <API/TaskService.h>
 #include <ContextInterface.h>
+#include <Context/IDBuffer.h>
 #include "ListModifier.h"
 
 class Context : public ContextInterface {
@@ -25,16 +26,17 @@ class Context : public ContextInterface {
     bool is_sorted_;
   };
 
-  struct IDBuffer {
-    bool has_id_;
-    unsigned int id_;
-  };
-
   struct PostponeDate {
     boost::gregorian::date new_date_;
     unsigned int id_;
     bool is_single_task_;
   };
+
+ public:
+  void clearAddTaskBuffer();
+  void clearShowListBuffer();
+  void clearPostponeBuffer();
+  void resetContext();
 
  public:
   AddTask add_task_struct_;

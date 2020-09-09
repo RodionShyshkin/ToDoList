@@ -2,6 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
+#include <memory>
 #include "CommandParser.h"
 
 Command parseCommand(const std::string& command) {
@@ -15,4 +16,35 @@ Command parseCommand(const std::string& command) {
   if(command == "mm") return Command::MAINMENU;
   if(command == "exit") return Command::EXIT;
   return Command::UNKNOWN;
+}
+
+StateType getStateTypeByCommand(const Command& operation) {
+  if(operation == Command::GETTASK) {
+    return StateType::VIEW_TASK_STATE;
+  }
+  if(operation == Command::ADDTASK) {
+    return StateType::ADD_TASK_STATE;
+  }
+  if(operation == Command::ADDSUBTASK) {
+    return StateType::ADD_SUBTASK_STATE;
+  }
+  if(operation == Command::EXIT) {
+    return StateType::EXIT_STATE;
+  }
+  if(operation == Command::REMOVETASK) {
+    return StateType::REMOVE_TASK_STATE;
+  }
+  if(operation == Command::POSTPONETASK) {
+    return StateType::POSTPONE_TASK_STATE;
+  }
+  if(operation == Command::COMPLETETASK) {
+    return StateType::COMPLETE_TASK_STATE;
+  }
+  if(operation == Command::GETTASKLIST) {
+    return StateType::VIEW_TASK_LIST_STATE;
+  }
+  if(operation == Command::MAINMENU) {
+    return StateType::START_STATE;
+  }
+  return StateType::UNKNOWN_STATE;
 }

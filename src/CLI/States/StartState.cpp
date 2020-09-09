@@ -8,7 +8,6 @@
 StartState::StartState() {
   available_operations_.clear();
   available_operations_.insert(Command::ADDTASK);
-  available_operations_.insert(Command::GETTASK);
   available_operations_.insert(Command::GETTASKLIST);
   available_operations_.insert(Command::EXIT);
 
@@ -39,7 +38,7 @@ std::shared_ptr<StateInterface> StartState::run(std::unique_ptr<Context> &contex
   if(!inputResult) return nullptr;
   output();
   std::cout << "WORKS" << std::endl;
-  return StateFactory::create(this->command_);
+  return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
 void StartState::output() {

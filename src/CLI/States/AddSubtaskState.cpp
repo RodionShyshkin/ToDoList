@@ -21,7 +21,7 @@ std::shared_ptr<StateInterface> AddSubtaskState::run(std::unique_ptr<Context> &c
   else {
     std::cout << "Error with adding subtask!" << std::endl;
   }
-  return StateFactory::create(Command::GETTASK);
+  return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 
 void AddSubtaskState::output() {

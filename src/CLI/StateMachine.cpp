@@ -28,7 +28,7 @@ StateMachine StateMachine::create(const StatesGraphType &type) {
   }
 }
 
-StateMachine::StateMachine(std::shared_ptr<StateInterface> start_state) : start_state_(start_state) {
+StateMachine::StateMachine(std::shared_ptr<StateInterface>&& start_state) : start_state_(start_state) {
   this->state_ = start_state_;
   this->context_ = std::make_unique<Context>();
 }
@@ -39,9 +39,9 @@ bool StateMachine::execute() {
       std::cout << "ERROR" << std::endl;
       return false;
     }
-    if(this->state_->getType() == StateType::VIEW_TASK_STATE) {
+/*    if(this->state_->getType() == StateType::VIEW_TASK_STATE) {
       std::cout << "VIEW" << std::endl;
-    }
+    }*/
     this->state_ = std::move(state_->run(context_));
   }
   std::cout << "State machine finished." << std::endl;

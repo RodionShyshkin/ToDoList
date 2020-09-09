@@ -3,6 +3,7 @@
 //
 
 #include <StateMachine.h>
+#include <StateFactory.h>
 #include "PostponeTaskState.h"
 #include "ViewTaskListState.h"
 #include "ViewTaskState.h"
@@ -19,7 +20,7 @@ bool PostponeTaskState::input() {
 
 std::shared_ptr<StateInterface>  PostponeTaskState::run(std::unique_ptr<Context> &context) {
   bool is_single_state = false;
-  if(context->id_buffer_.has_id_) {
+  if(context->id_buffer_.checkBufferFullness()) {
     is_single_state = true;
   }
   else {
@@ -32,11 +33,11 @@ std::shared_ptr<StateInterface>  PostponeTaskState::run(std::unique_ptr<Context>
     }
     output();
   }
-  context->postpone_date_.id_ = context->id_buffer_.id_;
+  context->postpone_date_.id_ = context->id_buffer_.getID().value();
   if(is_single_state) context->postpone_date_.is_single_task_ = true;
   else context->postpone_date_.is_single_task_ = false;
 
-  return std::make_shared<NewDateParamState>();
+  return StateFactory::create(StateType::POSTPONE_TASK_NEW_DATE_PARAM_STATE);
 }
 
 void PostponeTaskState::output() {

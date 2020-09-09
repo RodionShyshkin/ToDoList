@@ -20,7 +20,7 @@ bool RemoveTaskState::input() {
 
 std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &context) {
   bool is_single_state = false;
-  if(context->id_buffer_.has_id_) {
+  if(context->id_buffer_.checkBufferFullness()) {
     is_single_state = true;
   }
   else {
@@ -32,13 +32,12 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &
       std::cout << "Error with getting task!" << std::endl;
     }
   }
-  this->task_id_ = context->id_buffer_.id_;
+  this->task_id_ = context->id_buffer_.getID().value();
 
   output();
 
-  context->id_buffer_.has_id_ = false;
-  context->id_buffer_.id_ = 0;
-  return std::make_unique<ViewTaskListState>();
+  context->id_buffer_.clearBuffer();
+  return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
 }
 
 void RemoveTaskState::output() {

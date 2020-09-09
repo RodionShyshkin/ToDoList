@@ -8,6 +8,7 @@
 
 ViewTaskListState::ViewTaskListState() {
   available_operations_.clear();
+  available_operations_.insert(Command::GETTASK);
   available_operations_.insert(Command::ADDSUBTASK);
   available_operations_.insert(Command::POSTPONETASK);
   available_operations_.insert(Command::REMOVETASK);
@@ -43,7 +44,7 @@ std::shared_ptr<StateInterface>  ViewTaskListState::run(std::unique_ptr<Context>
   }
   input();
   output();
-  return StateFactory::create(this->command_);
+  return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
 void ViewTaskListState::output() {

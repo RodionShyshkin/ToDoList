@@ -14,8 +14,7 @@ std::shared_ptr<StateInterface> IDParamState::run(std::unique_ptr<Context> &cont
   output();
   input();
   //context->show_single_task_struct_.id_ = param_;
-  context->id_buffer_.id_ = param_;
-  context->id_buffer_.has_id_ = true;
+  context->id_buffer_.setID(param_);
   return std::make_shared<ExitState>();
 }
 

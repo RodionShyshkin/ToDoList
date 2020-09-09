@@ -6,6 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_COMMANDPARSER_H_
 
 #include <iostream>
+#include "StateType.h"
 
 enum class Command {
   UNKNOWN,
@@ -21,5 +22,7 @@ enum class Command {
 };
 
 Command parseCommand(const std::string&);
+
+StateType getStateTypeByCommand(const Command&);
 
 #endif //TODOLIST_SRC_CLI_STATES_COMMANDPARSER_H_
