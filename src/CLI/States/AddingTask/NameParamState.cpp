@@ -23,7 +23,7 @@ std::shared_ptr<StateInterface> NameParamState::run(std::unique_ptr<Context> &co
   else {
 //    context->name_ = param_;
 //    context->updateContext(param_, context->getLabel(), context->getPriority(), context->getDate(), context->getParent());
-    context->add_task_struct_.name_ = param_;
+    context->add_task_buffer_.setName(param_);
     return std::make_shared<LabelParamState>();
   return nullptr;
   }

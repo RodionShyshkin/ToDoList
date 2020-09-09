@@ -14,7 +14,7 @@ bool ParentTaskParamState::input() {
 std::shared_ptr<StateInterface> ParentTaskParamState::run(std::unique_ptr<Context> &context) {
   output();
   input();
-  context->add_task_struct_.parent_id_ = param_;
+  context->add_task_buffer_.setParent(param_);
   return std::make_shared<NameParamState>();
 }
 

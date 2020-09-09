@@ -9,18 +9,11 @@
 #include <API/TaskService.h>
 #include <ContextInterface.h>
 #include <Context/IDBuffer.h>
+#include <Context/AddTaskBuffer.h>
 #include "ListModifier.h"
 
 class Context : public ContextInterface {
  public:
-  struct AddTask {
-    std::string name_;
-    std::string label_;
-    Priority priority_;
-    boost::gregorian::date date_;
-    unsigned int parent_id_;
-  };
-
   struct ShowList {
     ListModifier modifier_;
     bool is_sorted_;
@@ -39,7 +32,7 @@ class Context : public ContextInterface {
   void resetContext();
 
  public:
-  AddTask add_task_struct_;
+  AddTaskBuffer add_task_buffer_;
   ShowList show_list_struct_;
   IDBuffer id_buffer_;
   PostponeDate postpone_date_;

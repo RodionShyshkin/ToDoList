@@ -25,7 +25,7 @@ std::shared_ptr<StateInterface> DateParamState::run(std::unique_ptr<Context> &co
   if(!validated.has_value()) return nullptr;
   else {
     //context->date_ = validated.value();
-    context->add_task_struct_.date_ = validated.value();
+    context->add_task_buffer_.setDate(validated.value());
     return std::make_shared<ExitState>();
   }
 }

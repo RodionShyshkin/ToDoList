@@ -19,7 +19,7 @@ std::shared_ptr<StateInterface> LabelParamState::run(std::unique_ptr<Context> &c
   else {
 //    context->label_ = param_;
 //    context->updateContext(context->getName(), param_, context->getPriority(), context->getDate(), context->getParent());
-    context->add_task_struct_.label_ = param_;
+    context->add_task_buffer_.setLabel(param_);
     return std::make_shared<PriorityParamState>();
   }
 }

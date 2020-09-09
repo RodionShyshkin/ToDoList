@@ -9,11 +9,11 @@ void Context::clearIDBuffer() {
   this->id_buffer_.has_id_ = false;
 }*/
 
-void Context::clearAddTaskBuffer() {
+/*void Context::clearAddTaskBuffer() {
   this->add_task_struct_.name_ = "";
   this->add_task_struct_.label_ = "";
   this->add_task_struct_.priority_ = Priority::EMPTY;
-}
+}*/
 
 void Context::resetContext() {
  // this->clearIDBuffer();
