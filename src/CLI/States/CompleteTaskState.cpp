@@ -9,8 +9,6 @@
 #include "ViewTaskState.h"
 
 CompleteTaskState::CompleteTaskState() {
-  available_operations_.clear();
-  available_operations_.insert(Command::EXIT);
 }
 
 bool CompleteTaskState::input() {

@@ -3,22 +3,16 @@
 //
 
 #include <StateMachine.h>
+#include <AvailableCommands.h>
 #include "ViewTaskListState.h"
 #include "StateFactory.h"
 
 ViewTaskListState::ViewTaskListState() {
-  available_operations_.clear();
-  available_operations_.insert(Command::GETTASK);
-  available_operations_.insert(Command::ADDSUBTASK);
-  available_operations_.insert(Command::POSTPONETASK);
-  available_operations_.insert(Command::REMOVETASK);
-  available_operations_.insert(Command::COMPLETETASK);
-  available_operations_.insert(Command::EXIT);
 }
 
 bool ViewTaskListState::input() {
   std::string stringCommand;
-//  std::cin >> stringCommand;
+
   std::random_device rd;
   std::mt19937 mersenne(rd());
   auto k = mersenne() % 5;
@@ -30,7 +24,8 @@ bool ViewTaskListState::input() {
 //  stringCommand = "complete";
 
   this->command_ = parseCommand(stringCommand);
-  if(available_operations_.find(this->command_) == available_operations_.end()) return false;
+  auto available = AvailableCommands::get(this->getType());
+  if(available.find(this->command_) == available.end()) return false;
   return true;
 }
 

@@ -7,7 +7,6 @@
 #include "ExitState.h"
 
 ExitState::ExitState() {
-  available_operations_.clear();
 }
 
 bool ExitState::input() {

@@ -8,8 +8,6 @@
 #include <StateMachine.h>
 
 AddTaskState::AddTaskState() {
-  available_operations_.clear();
-  available_operations_.insert(Command::EXIT);
 }
 
 bool AddTaskState::input() {

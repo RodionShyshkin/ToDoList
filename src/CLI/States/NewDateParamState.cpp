@@ -19,12 +19,13 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::unique_ptr<Context> 
   auto parsed = parseParam();
   if(!parsed.has_value()) return nullptr;
   else {
-    context->postpone_date_.new_date_ = parsed.value();
+    context->postpone_buffer_.setNewDate(parsed.value());
   }
+  this->task_id_ = context->id_buffer_.getID().value();
 
   // Postpone.
 
-  if(context->postpone_date_.is_single_task_) return std::make_shared<ViewTaskState>();
+  if(context->postpone_buffer_.getSingleTaskFlag()) return std::make_shared<ViewTaskState>();
   else return std::make_shared<ViewTaskListState>();
 }
 

@@ -29,7 +29,7 @@ std::shared_ptr<StateInterface> SortedParamState::run(std::unique_ptr<Context> &
   if(!parsed.has_value()) return nullptr;
   else {
 //    context->updateContext(context->getModifier(), parsed.value());
-    context->show_list_struct_.is_sorted_ = parsed.value();
+    context->show_list_buffer_.setSortedFlag(parsed.value());
   }
   return std::make_shared<ExitState>();
 }

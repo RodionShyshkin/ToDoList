@@ -10,8 +10,6 @@
 #include "ViewTaskListState.h"
 
 RemoveTaskState::RemoveTaskState() {
-  available_operations_.clear();
-  available_operations_.insert(Command::EXIT);
 }
 
 bool RemoveTaskState::input() {

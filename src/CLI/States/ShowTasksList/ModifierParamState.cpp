@@ -29,7 +29,7 @@ std::shared_ptr<StateInterface> ModifierParamState::run(std::unique_ptr<Context>
   input();
   auto parsed = parseParam();
   if(parsed == ListModifier::UNKNOWN) return nullptr;
-  context->show_list_struct_.modifier_ = parsed;
+  context->show_list_buffer_.setModifier(parsed);
   return std::make_shared<SortedParamState>();
 }
 

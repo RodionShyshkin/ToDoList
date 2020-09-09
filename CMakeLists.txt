@@ -44,7 +44,7 @@ include_directories(tests)
 file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp"
         "tests/CLI/base.cpp")
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/CLI/States/NewDateParamState.cpp src/CLI/States/NewDateParamState.h src/core/API/TaskServiceInterface.h src/CLI/Context/BufferInterface.h src/CLI/Context/IDBuffer.cpp src/CLI/Context/IDBuffer.h src/CLI/Context/AddTaskBuffer.cpp src/CLI/Context/AddTaskBuffer.h)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/CLI/States/NewDateParamState.cpp src/CLI/States/NewDateParamState.h src/core/API/TaskServiceInterface.h src/CLI/Context/BufferInterface.h src/CLI/Context/IDBuffer.cpp src/CLI/Context/IDBuffer.h src/CLI/Context/AddTaskBuffer.cpp src/CLI/Context/AddTaskBuffer.h src/CLI/Context/ShowListBuffer.cpp src/CLI/Context/ShowListBuffer.h src/CLI/Context/PostponeBuffer.cpp src/CLI/Context/PostponeBuffer.h src/CLI/AvailableCommands.cpp src/CLI/AvailableCommands.h)
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})

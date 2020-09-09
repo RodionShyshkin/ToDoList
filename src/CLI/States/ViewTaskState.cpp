@@ -3,17 +3,12 @@
 //
 
 #include <StateMachine.h>
+#include <AvailableCommands.h>
 #include "ViewTaskState.h"
 #include "RemoveTaskState.h"
 #include "StateFactory.h"
 
 ViewTaskState::ViewTaskState() {
-  available_operations_.clear();
-  available_operations_.insert(Command::ADDSUBTASK);
-  available_operations_.insert(Command::POSTPONETASK);
-  available_operations_.insert(Command::REMOVETASK);
-  available_operations_.insert(Command::COMPLETETASK);
-  available_operations_.insert(Command::EXIT);
 }
 
 bool ViewTaskState::input() {
@@ -30,7 +25,8 @@ bool ViewTaskState::input() {
 //  stringCommand = "remove";
 
   this->command_ = parseCommand(stringCommand);
-  if(available_operations_.find(this->command_) == available_operations_.end()) return false;
+  auto available = AvailableCommands::get(this->getType());
+  if(available.find(this->command_) == available.end()) return false;
   return true;
 }
 

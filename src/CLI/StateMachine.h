@@ -8,7 +8,7 @@
 #include <memory>
 #include <StateInterface.h>
 #include <States/ExitState.h>
-#include "Context.h"
+#include "Context/Context.h"
 #include "StatesGraphType.h"
 
 class StateMachine {

@@ -7,13 +7,10 @@
 #include <StateMachine.h>
 
 bool AddSubtaskState::input() {
-  available_operations_.clear();
-  available_operations_.insert(Command::EXIT);
   return true;
 }
 
 std::shared_ptr<StateInterface> AddSubtaskState::run(std::unique_ptr<Context> &context) {
-//  AddTaskStateMachine machine_(true);
   auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK);
   if(machine_.execute()) {
     std::cout << "subtask added" << std::endl;
