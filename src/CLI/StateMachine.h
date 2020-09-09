@@ -13,18 +13,18 @@
 
 class StateMachine {
  public:
-  static StateMachine                 create(const StatesGraphType&);
+  static StateMachine                 create(const StatesGraphType&, std::shared_ptr<Context>&);
 
  public:
   bool                                execute();
 
  private:
   std::shared_ptr<StateInterface>     state_;
-  std::unique_ptr<Context>            context_;
+  std::shared_ptr<Context>            context_;
   std::shared_ptr<StateInterface>     start_state_;
 
  private:
-  explicit StateMachine(std::shared_ptr<StateInterface>&& start_state);
+  StateMachine(std::shared_ptr<StateInterface>&& start_state, std::shared_ptr<Context>& context);
 };
 
 #endif //TODOLIST_SRC_CLI_STATEMACHINE_H_

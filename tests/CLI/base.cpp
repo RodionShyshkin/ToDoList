@@ -19,7 +19,8 @@ TEST_F(Base, sss) {
 
 //  auto k = StateMachine<Context, StateInterface, StartState>::create(StatesGraphType::MAIN);\
 
-  StateMachine k = StateMachine::create(StatesGraphType::MAIN);
+  std::shared_ptr<Context> context = std::make_shared<Context>();
+  StateMachine k = StateMachine::create(StatesGraphType::MAIN, context);
   if(!k.execute()) {
     std::cout << "ERROR" << std::endl;
   }

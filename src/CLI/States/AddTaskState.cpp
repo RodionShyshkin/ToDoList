@@ -14,8 +14,8 @@ bool AddTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface>  AddTaskState::run(std::unique_ptr<Context> &context) {
-  auto machine_ = StateMachine::create(StatesGraphType::ADDTASK);
+std::shared_ptr<StateInterface>  AddTaskState::run(std::shared_ptr<Context> &context) {
+  auto machine_ = StateMachine::create(StatesGraphType::ADDTASK, context);
   if(machine_.execute()) {
     std::cout << "task added" << std::endl;
   }

@@ -22,7 +22,7 @@ bool SortedParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> SortedParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &context) {
   output();
   input();
   auto parsed = parseParam();

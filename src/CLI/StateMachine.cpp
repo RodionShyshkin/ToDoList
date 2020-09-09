@@ -10,27 +10,28 @@
 #include <States/ShowTasksList/ShowListStartState.h>
 #include <States/GetSingleTask/SingleTaskStartState.h>
 
-StateMachine StateMachine::create(const StatesGraphType &type) {
+StateMachine StateMachine::create(const StatesGraphType &type, std::shared_ptr<Context>& context) {
   if(type == StatesGraphType::MAIN) {
-    return StateMachine{std::make_shared<StartState>()};
+    return StateMachine{std::make_shared<StartState>(), context};
   }
   else if(type == StatesGraphType::ADDTASK) {
-    return StateMachine{std::make_shared<AddTaskStartState>(false)};
+    return StateMachine{std::make_shared<AddTaskStartState>(false), context};
   }
   else if(type == StatesGraphType::ADDSUBTASK) {
-    return StateMachine{std::make_shared<AddTaskStartState>(true)};
+    return StateMachine{std::make_shared<AddTaskStartState>(true), context};
   }
   else if(type == StatesGraphType::GET_TASKS_LIST) {
-    return StateMachine{std::make_shared<ShowListStartState>()};
+    return StateMachine{std::make_shared<ShowListStartState>(), context};
   }
   else if(type == StatesGraphType::GET_SINGLE_TASK) {
-    return StateMachine{std::make_shared<SingleTaskStartState>()};
+    return StateMachine{std::make_shared<SingleTaskStartState>(), context};
   }
 }
 
-StateMachine::StateMachine(std::shared_ptr<StateInterface>&& start_state) : start_state_(start_state) {
+StateMachine::StateMachine(std::shared_ptr<StateInterface>&& start_state,
+                           std::shared_ptr<Context>& context) : start_state_(start_state) {
   this->state_ = start_state_;
-  this->context_ = std::make_unique<Context>();
+  this->context_ = context;
 }
 
 bool StateMachine::execute() {
@@ -39,9 +40,6 @@ bool StateMachine::execute() {
       std::cout << "ERROR" << std::endl;
       return false;
     }
-/*    if(this->state_->getType() == StateType::VIEW_TASK_STATE) {
-      std::cout << "VIEW" << std::endl;
-    }*/
     this->state_ = std::move(state_->run(context_));
   }
   std::cout << "State machine finished." << std::endl;

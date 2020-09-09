@@ -16,7 +16,7 @@ bool NameParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> NameParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> NameParamState::run(std::shared_ptr<Context> &context) {
   input();
   output();
   if(!validateParam()) return nullptr;

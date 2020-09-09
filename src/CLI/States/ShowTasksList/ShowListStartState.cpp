@@ -10,7 +10,7 @@ bool ShowListStartState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> ShowListStartState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> ShowListStartState::run(std::shared_ptr<Context> &context) {
   output();
   return std::make_shared<ModifierParamState>();
 }

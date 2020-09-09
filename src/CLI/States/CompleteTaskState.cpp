@@ -15,13 +15,9 @@ bool CompleteTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context> &context) {
-  bool is_single_state = false;
-  if(context->id_buffer_.checkBufferFullness()) {
-    is_single_state = true;
-  }
-  else {
-    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
+std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context> &context) {
+  if(!context->id_buffer_.checkBufferFullness()) {
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
       std::cout << "task got" << std::endl;
     }
@@ -30,15 +26,17 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::unique_ptr<Context>
     }
     output();
   }
-  this->task_id_ = context->id_buffer_.getID().value();
+  auto id_from_buffer_ = context->id_buffer_.getID();
+  this->task_id_ = id_from_buffer_.value();
 
-  //completeTask(task_id_);
+  // Request to TaskService
 
-  if(is_single_state) return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
-  else {
+  if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();
     return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
   }
+  context->show_list_buffer_.clearBuffer();
+  return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 
 void CompleteTaskState::output() {

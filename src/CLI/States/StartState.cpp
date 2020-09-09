@@ -19,6 +19,7 @@ bool StartState::input() {
   if(k == 0) stringCommand = "add";
   else if(k == 1) stringCommand = "show";
   else stringCommand = "exit";
+//  stringCommand = "show";
 
   this->command_ = parseCommand(stringCommand);
   auto available = AvailableCommands::get(this->getType());
@@ -27,7 +28,7 @@ bool StartState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> StartState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> StartState::run(std::shared_ptr<Context> &context) {
   auto inputResult = input();
   if(!inputResult) return nullptr;
   output();

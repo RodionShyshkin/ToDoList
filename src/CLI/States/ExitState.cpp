@@ -13,7 +13,7 @@ bool ExitState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface>  ExitState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface>  ExitState::run(std::shared_ptr<Context> &context) {
   input();
   output();
   return nullptr;

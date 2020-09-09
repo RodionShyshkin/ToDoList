@@ -30,9 +30,9 @@ bool ViewTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface>  ViewTaskState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface>  ViewTaskState::run(std::shared_ptr<Context> &context) {
   if(!context->id_buffer_.checkBufferFullness()) {
-    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
       std::cout << "task got" << std::endl;
 

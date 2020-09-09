@@ -11,7 +11,7 @@ bool ParentTaskParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> ParentTaskParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> ParentTaskParamState::run(std::shared_ptr<Context> &context) {
   output();
   input();
   context->add_task_buffer_.setParent(param_);

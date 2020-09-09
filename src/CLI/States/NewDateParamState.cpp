@@ -2,6 +2,7 @@
 // Created by rodion on 9/5/20.
 //
 
+#include <StateFactory.h>
 #include "NewDateParamState.h"
 #include "ViewTaskState.h"
 #include "ViewTaskListState.h"
@@ -13,7 +14,7 @@ bool NewDateParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> NewDateParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> &context) {
   input();
   output();
   auto parsed = parseParam();
@@ -25,8 +26,8 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::unique_ptr<Context> 
 
   // Postpone.
 
-  if(context->postpone_buffer_.getSingleTaskFlag()) return std::make_shared<ViewTaskState>();
-  else return std::make_shared<ViewTaskListState>();
+  if(context->postpone_buffer_.getSingleTaskFlag()) return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
+  return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
 }
 
 void NewDateParamState::output() {

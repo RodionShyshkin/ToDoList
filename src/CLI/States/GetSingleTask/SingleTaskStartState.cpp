@@ -9,7 +9,7 @@ bool SingleTaskStartState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> SingleTaskStartState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> SingleTaskStartState::run(std::shared_ptr<Context> &context) {
   output();
   return std::make_shared<IDParamState>();
 }

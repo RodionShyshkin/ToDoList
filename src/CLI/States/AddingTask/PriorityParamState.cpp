@@ -16,7 +16,7 @@ bool PriorityParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> PriorityParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> PriorityParamState::run(std::shared_ptr<Context> &context) {
   output();
   input();
   auto param = parseParam();

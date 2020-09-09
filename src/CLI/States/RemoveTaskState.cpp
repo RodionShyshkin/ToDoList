@@ -16,13 +16,9 @@ bool RemoveTaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &context) {
-  bool is_single_state = false;
-  if(context->id_buffer_.checkBufferFullness()) {
-    is_single_state = true;
-  }
-  else {
-    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK);
+std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &context) {
+  if(!context->id_buffer_.checkBufferFullness()) {
+    auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
       std::cout << "task got" << std::endl;
     }
@@ -35,7 +31,9 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::unique_ptr<Context> &
   output();
 
   context->id_buffer_.clearBuffer();
-  return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+  if(context->show_list_buffer_.checkBufferFullness()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+  context->show_list_buffer_.clearBuffer();
+  return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 
 void RemoveTaskState::output() {

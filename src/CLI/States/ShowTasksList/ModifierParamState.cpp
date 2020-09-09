@@ -18,13 +18,13 @@ bool ModifierParamState::input() {
   else if(k == 1) stringParam = "today";
   else if(k == 2) stringParam = "week";
   else stringParam = "by_label";
-//  stringParam = "all";
+  stringParam = "all";
 
   this->param_ = stringParam;
   return true;
 }
 
-std::shared_ptr<StateInterface> ModifierParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> ModifierParamState::run(std::shared_ptr<Context> &context) {
   output();
   input();
   auto parsed = parseParam();

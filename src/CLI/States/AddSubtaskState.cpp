@@ -10,8 +10,8 @@ bool AddSubtaskState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> AddSubtaskState::run(std::unique_ptr<Context> &context) {
-  auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK);
+std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &context) {
+  auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK, context);
   if(machine_.execute()) {
     std::cout << "subtask added" << std::endl;
   }

@@ -14,7 +14,7 @@ void ShowListBuffer::clearBuffer() {
 }
 
 bool ShowListBuffer::checkBufferFullness() const {
-  return (this->modifier_ != ListModifier::UNKNOWN && !this->is_sorted_);
+  return (this->modifier_ != ListModifier::UNKNOWN);
 }
 
 void ShowListBuffer::setModifier(const ListModifier &modifier) { this->modifier_ = modifier; }

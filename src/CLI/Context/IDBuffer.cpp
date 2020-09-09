@@ -25,5 +25,5 @@ void IDBuffer::setID(const unsigned int &newid) {
 std::optional<unsigned int> IDBuffer::getID() const {
   if(!this->has_id_) return std::nullopt;
   if(this->id_ == 0) return std::nullopt;
-  return this->id_;
+  return std::make_optional<unsigned int>(this->id_);
 }

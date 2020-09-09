@@ -12,7 +12,7 @@ bool LabelParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> LabelParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &context) {
   output();
   input();
   if(!validateParam()) return nullptr;

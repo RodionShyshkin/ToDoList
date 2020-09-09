@@ -18,7 +18,7 @@ bool DateParamState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface> DateParamState::run(std::unique_ptr<Context> &context) {
+std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &context) {
   output();
   input();
   auto validated = parseParam();

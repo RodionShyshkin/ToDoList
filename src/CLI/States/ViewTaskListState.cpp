@@ -21,7 +21,7 @@ bool ViewTaskListState::input() {
   else if(k == 2) stringCommand = "postpone";
   else if(k == 3) stringCommand = "complete";
   else stringCommand = "exit";
-//  stringCommand = "complete";
+  //stringCommand = "complete";
 
   this->command_ = parseCommand(stringCommand);
   auto available = AvailableCommands::get(this->getType());
@@ -29,13 +29,14 @@ bool ViewTaskListState::input() {
   return true;
 }
 
-std::shared_ptr<StateInterface>  ViewTaskListState::run(std::unique_ptr<Context> &context) {
-  auto machine_ = StateMachine::create(StatesGraphType::GET_TASKS_LIST);
-  if(machine_.execute()) {
-    std::cout << "task list got" << std::endl;
-  }
-  else {
-    std::cout << "Error with getting tasks list!" << std::endl;
+std::shared_ptr<StateInterface>  ViewTaskListState::run(std::shared_ptr<Context> &context) {
+  if(!context->show_list_buffer_.checkBufferFullness()) {
+    auto machine_ = StateMachine::create(StatesGraphType::GET_TASKS_LIST, context);
+    if (machine_.execute()) {
+      std::cout << "task list got" << std::endl;
+    } else {
+      std::cout << "Error with getting tasks list!" << std::endl;
+    }
   }
   input();
   output();
