@@ -9,11 +9,11 @@ file(GLOB core_headers "src/core/API/*.h" "src/core/MemoryModel/Storage/*.h" "sr
 file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp"
         "src/CLI/States/GetTasksList/*.cpp" "src/CLI/States/GetSingleTask/*.cpp"
         "src/CLI/States/EditStates/*.cpp" "src/CLI/States/EditStates/Postpone/*.cpp" "src/CLI/States/MainStates/*.cpp"
-        "src/CLI/Context/*.cpp")
+        "src/CLI/Context/*.cpp" "src/CLI/IO/*.cpp")
 file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h"
         "src/CLI/States/GetTasksList/*.h" "src/CLI/States/GetSingleTask/*.h"
         "src/CLI/States/EditStates/*.h" "src/CLI/States/EditStates/Postpone/*.h" "src/CLI/States/MainStates/*.h"
-        "src/CLI/Context/*.h")
+        "src/CLI/Context/*.h" "src/CLI/IO/*.h")
 
 file(GLOB main "src/main.cpp")
 

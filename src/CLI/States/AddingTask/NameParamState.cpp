@@ -13,9 +13,9 @@ bool NameParamState::input() {
 }
 
 std::shared_ptr<StateInterface> NameParamState::run(std::shared_ptr<Context> &context) {
-  if(!this->input()) return nullptr;
-  if(!this->validateParam()) return nullptr;
   this->output();
+  if(!this->input()) return nullptr;
+  if(!this->validateParam()) return StateFactory::create(this->getType());
 
   context->add_task_buffer_.setName(param_);
   return StateFactory::create(StateType::ADD_TASK_LABEL_PARAM_STATE);
@@ -23,12 +23,11 @@ std::shared_ptr<StateInterface> NameParamState::run(std::shared_ptr<Context> &co
 
 void NameParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: AddTask state machine / Enter name");
+  io.output("Param / AddTask / Enter task name:");
 }
 
 bool NameParamState::validateParam() const {
   if(param_.empty()) return false;
-  if(parseCommand(param_) == Command::EXIT) return false;
   return true;
 }
 

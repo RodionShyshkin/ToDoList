@@ -7,6 +7,7 @@
 
 std::string ConsoleIO::input() const {
   std::string stringInput;
+  std::cout << ">> ";
   std::getline(std::cin, stringInput);
   return stringInput;
 }

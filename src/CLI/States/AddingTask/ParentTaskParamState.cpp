@@ -32,7 +32,7 @@ std::shared_ptr<StateInterface> ParentTaskParamState::run(std::shared_ptr<Contex
 
 void ParentTaskParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: AddTask state machine / Parent ID");
+  io.output("Param / AddTask / Enter parent task ID:");
 }
 
 StateType ParentTaskParamState::getType() {

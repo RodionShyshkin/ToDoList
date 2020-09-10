@@ -10,7 +10,7 @@
 #include <Context/Context.h>
 #include "CommandParser.h"
 #include "StateType.h"
-#include <ConsoleIO.h>
+#include <IO/ConsoleIO.h>
 
 class StateInterface {
  public:

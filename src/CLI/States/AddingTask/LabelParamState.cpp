@@ -22,7 +22,7 @@ std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &c
 
 void LabelParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: AddTask state machine / Enter label");
+  io.output("Param / AddTask / Enter task label (not required):");
 }
 
 bool LabelParamState::validateParam() const {

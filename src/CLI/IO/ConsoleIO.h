@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_CONSOLEIO_H_
 #define TODOLIST_SRC_CLI_CONSOLEIO_H_
 
-#include <IOInterface.h>
+#include <IO/IOInterface.h>
 
 class ConsoleIO : public IOInterface {
  public:

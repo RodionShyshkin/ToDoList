@@ -27,12 +27,14 @@ std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &co
 
 void DateParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: AddTask state machine / Enter date");
+  io.output("Param / AddTask / Enter task deadline (not required):");
 }
 
 std::optional<boost::gregorian::date> DateParamState::parseParam() const {
   try{
-    boost::gregorian::date d = boost::gregorian::from_string(param_);
+    boost::gregorian::date d;
+    if(this->param_.empty()) d = boost::gregorian::date{boost::gregorian::not_a_date_time};
+    else d = boost::gregorian::from_string(param_);
     return std::make_optional<boost::gregorian::date>(d);
   }
   catch(const std::out_of_range &e) {

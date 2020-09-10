@@ -13,10 +13,10 @@ bool PriorityParamState::input() {
 }
 
 std::shared_ptr<StateInterface> PriorityParamState::run(std::shared_ptr<Context> &context) {
+  this->output();
   if(!this->input()) return nullptr;
   auto param = this->parseParam();
   if(!param.has_value()) return nullptr;
-  this->output();
 
   context->add_task_buffer_.setPriority(param.value());
   return StateFactory::create(StateType::ADD_TASK_DATE_PARAM_STATE);
@@ -24,7 +24,7 @@ std::shared_ptr<StateInterface> PriorityParamState::run(std::shared_ptr<Context>
 
 void PriorityParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: AddTask state machine / Enter priority");
+  io.output("Param / AddTask / Enter task priority (not required) [Low, Medium, High]:");
 }
 
 std::optional<Priority> PriorityParamState::parseParam() const {
