@@ -5,8 +5,8 @@
 #include <StateMachine.h>
 #include <AvailableCommands.h>
 #include "ViewTaskState.h"
-#include "RemoveTaskState.h"
-#include "StateFactory.h"
+#include "States/EditStates/RemoveTaskState.h"
+#include "States/StateFactory.h"
 
 ViewTaskState::ViewTaskState() {
 }

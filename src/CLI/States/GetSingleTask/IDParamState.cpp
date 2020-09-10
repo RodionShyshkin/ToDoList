@@ -2,7 +2,7 @@
 // Created by rodion on 9/2/20.
 //
 
-#include <States/ExitState.h>
+#include <States/MainStates/ExitState.h>
 #include "IDParamState.h"
 
 bool IDParamState::input() {

@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_ADDINGTASK_NAMEPARAMSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_ADDINGTASK_NAMEPARAMSTATE_H_
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 
 class NameParamState : public StateInterface {
  public:

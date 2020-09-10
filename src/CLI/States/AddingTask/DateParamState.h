@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_ADDINGTASK_DATEPARAMSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_ADDINGTASK_DATEPARAMSTATE_H_
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 
 class DateParamState : public StateInterface {
  public:

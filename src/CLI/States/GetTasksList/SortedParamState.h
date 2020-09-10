@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_SHOWTASKSLIST_SORTEDPARAMSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_SHOWTASKSLIST_SORTEDPARAMSTATE_H_
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 
 class SortedParamState : public StateInterface {
  public:

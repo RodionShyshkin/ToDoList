@@ -7,7 +7,7 @@
 
 #include <map>
 #include <set>
-#include "StateType.h"
+#include "States/StateType.h"
 #include "CommandParser.h"
 
 class AvailableCommands {

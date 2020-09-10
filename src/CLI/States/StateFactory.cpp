@@ -7,23 +7,23 @@
 #include <States/AddingTask/LabelParamState.h>
 #include <States/AddingTask/PriorityParamState.h>
 #include <States/AddingTask/DateParamState.h>
-#include <States/ShowTasksList/ShowListStartState.h>
-#include <States/ShowTasksList/ModifierParamState.h>
-#include <States/ShowTasksList/SortedParamState.h>
+#include <States/GetTasksList/ShowListStartState.h>
+#include <States/GetTasksList/ModifierParamState.h>
+#include <States/GetTasksList/SortedParamState.h>
 #include <States/GetSingleTask/SingleTaskStartState.h>
 #include <States/GetSingleTask/IDParamState.h>
-#include <States/NewDateParamState.h>
-#include <States/StartState.h>
+#include <States/EditStates/Postpone/NewDateParamState.h>
+#include <States/MainStates/StartState.h>
 #include "StateFactory.h"
-#include "States/AddTaskState.h"
-#include "States/AddSubtaskState.h"
-#include "States/CompleteTaskState.h"
-#include "States/PostponeTaskState.h"
-#include "States/ExitState.h"
-#include "States/RemoveTaskState.h"
-#include "States/ViewTaskListState.h"
-#include "States/MainMenuState.h"
-#include "States/ViewTaskState.h"
+#include "States/MainStates/AddTaskState.h"
+#include "States/EditStates/AddSubtaskState.h"
+#include "States/EditStates/CompleteTaskState.h"
+#include "States/EditStates/Postpone/PostponeTaskState.h"
+#include "States/MainStates/ExitState.h"
+#include "States/EditStates/RemoveTaskState.h"
+#include "States/MainStates/ViewTaskListState.h"
+#include "States/MainStates/MainMenuState.h"
+#include "States/MainStates/ViewTaskState.h"
 
 std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
   if(type == StateType::UNKNOWN_STATE) {

@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_ADDINGTASK_LABELPARAMSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_ADDINGTASK_LABELPARAMSTATE_H_
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 
 class LabelParamState : public StateInterface {
  public:

@@ -2,15 +2,15 @@
 // Created by rodion on 8/21/20.
 //
 
-#ifndef TODOLIST_SRC_CLI_STATES_VIEWTASKLISTSTATE_H_
-#define TODOLIST_SRC_CLI_STATES_VIEWTASKLISTSTATE_H_
+#ifndef TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
+#define TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 #include <random>
 
-class ViewTaskListState : public StateInterface {
+class ViewTaskState : public StateInterface {
  public:
-  ViewTaskListState();
+  ViewTaskState();
 
  public:
   bool input() override;
@@ -22,4 +22,4 @@ class ViewTaskListState : public StateInterface {
   Command command_;
 };
 
-#endif //TODOLIST_SRC_CLI_STATES_VIEWTASKLISTSTATE_H_
+#endif //TODOLIST_SRC_CLI_STATES_VIEWTASKSTATE_H_

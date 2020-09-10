@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CLI_STATES_NEWDATEPARAMSTATE_H_
 #define TODOLIST_SRC_CLI_STATES_NEWDATEPARAMSTATE_H_
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 class NewDateParamState : public StateInterface {

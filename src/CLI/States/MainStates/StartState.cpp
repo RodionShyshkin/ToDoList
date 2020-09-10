@@ -2,7 +2,7 @@
 // Created by rodion on 9/10/20.
 //
 
-#include <StateFactory.h>
+#include <States/StateFactory.h>
 #include "StartState.h"
 
 bool StartState::input() {

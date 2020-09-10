@@ -7,9 +7,13 @@ file(GLOB core_sources "src/core/API/*.cpp" "src/core/MemoryModel/Storage/*.cpp"
 file(GLOB core_headers "src/core/API/*.h" "src/core/MemoryModel/Storage/*.h" "src/core/MemoryModel/Task/*.h")
 
 file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp"
-        "src/CLI/States/ShowTasksList/*.cpp" "src/CLI/States/GetSingleTask/*.cpp")
+        "src/CLI/States/GetTasksList/*.cpp" "src/CLI/States/GetSingleTask/*.cpp"
+        "src/CLI/States/EditStates/*.cpp" "src/CLI/States/EditStates/Postpone/*.cpp" "src/CLI/States/MainStates/*.cpp"
+        "src/CLI/Context/*.cpp")
 file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h"
-        "src/CLI/States/ShowTasksList/*.h" "src/CLI/States/GetSingleTask/*.h")
+        "src/CLI/States/GetTasksList/*.h" "src/CLI/States/GetSingleTask/*.h"
+        "src/CLI/States/EditStates/*.h" "src/CLI/States/EditStates/Postpone/*.h" "src/CLI/States/MainStates/*.h"
+        "src/CLI/Context/*.h")
 
 file(GLOB main "src/main.cpp")
 
@@ -44,7 +48,7 @@ include_directories(tests)
 file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp"
         "tests/CLI/base.cpp")
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/CLI/States/NewDateParamState.cpp src/CLI/States/NewDateParamState.h src/core/API/TaskServiceInterface.h src/CLI/Context/BufferInterface.h src/CLI/Context/IDBuffer.cpp src/CLI/Context/IDBuffer.h src/CLI/Context/AddTaskBuffer.cpp src/CLI/Context/AddTaskBuffer.h src/CLI/Context/ShowListBuffer.cpp src/CLI/Context/ShowListBuffer.h src/CLI/Context/PostponeBuffer.cpp src/CLI/Context/PostponeBuffer.h src/CLI/AvailableCommands.cpp src/CLI/AvailableCommands.h src/CLI/States/StartState.cpp src/CLI/States/StartState.h)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources})
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})

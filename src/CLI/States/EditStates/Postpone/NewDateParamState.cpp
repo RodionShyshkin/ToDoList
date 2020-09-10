@@ -2,10 +2,10 @@
 // Created by rodion on 9/5/20.
 //
 
-#include <StateFactory.h>
+#include <States/StateFactory.h>
 #include "NewDateParamState.h"
-#include "ViewTaskState.h"
-#include "ViewTaskListState.h"
+#include "States/MainStates/ViewTaskState.h"
+#include "States/MainStates/ViewTaskListState.h"
 
 bool NewDateParamState::input() {
   std::string stringParam;

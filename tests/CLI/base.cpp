@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <StateMachine.h>
 #include <fstream>
-#include <States/MainMenuState.h>
+#include <States/MainStates/MainMenuState.h>
 
 class Base : public ::testing::Test {
 

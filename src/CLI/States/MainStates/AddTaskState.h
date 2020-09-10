@@ -2,24 +2,20 @@
 // Created by rodion on 8/21/20.
 //
 
-#ifndef TODOLIST_SRC_CLI_STATES_MAINMENUSTATE_H_
-#define TODOLIST_SRC_CLI_STATES_MAINMENUSTATE_H_
+#ifndef TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_
+#define TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_
 
-#include <StateInterface.h>
-#include <StateFactory.h>
-#include <random>
 
-class MainMenuState : public StateInterface {
+#include <States/StateInterface.h>
+
+class AddTaskState : public StateInterface {
  public:
-  MainMenuState();
+  AddTaskState();
 
   bool                                input()                                   override;
   std::shared_ptr<StateInterface>     run(std::shared_ptr<Context> &context)    override;
   void                                output()                                  override;
   StateType                           getType()                                 override;
-
- private:
-  Command                             command_;
 };
 
-#endif //TODOLIST_SRC_CLI_STATES_MAINMENUSTATE_H_
+#endif //TODOLIST_SRC_CLI_STATES_ADDTASKSTATE_H_

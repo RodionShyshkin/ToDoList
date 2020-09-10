@@ -6,8 +6,8 @@
 #define TODOLIST_SRC_CLI_STATEMACHINE_H_
 
 #include <memory>
-#include <StateInterface.h>
-#include <States/ExitState.h>
+#include <States/StateInterface.h>
+#include <States/MainStates/ExitState.h>
 #include "Context/Context.h"
 #include "StatesGraphType.h"
 

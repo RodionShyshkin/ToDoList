@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_REMOVETASKSTATE_H_
 
 
-#include <StateInterface.h>
+#include <States/StateInterface.h>
 
 class RemoveTaskState : public StateInterface {
  public:

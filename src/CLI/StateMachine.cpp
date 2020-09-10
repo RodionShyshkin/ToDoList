@@ -3,13 +3,13 @@
 //
 
 #include "StateMachine.h"
-#include <States/MainMenuState.h>
+#include <States/MainStates/MainMenuState.h>
 #include <iostream>
-#include <States/ExitState.h>
+#include <States/MainStates/ExitState.h>
 #include <States/AddingTask/AddTaskStartState.h>
-#include <States/ShowTasksList/ShowListStartState.h>
+#include <States/GetTasksList/ShowListStartState.h>
 #include <States/GetSingleTask/SingleTaskStartState.h>
-#include <States/StartState.h>
+#include <States/MainStates/StartState.h>
 
 StateMachine StateMachine::create(const StatesGraphType &type, std::shared_ptr<Context>& context) {
   if(type == StatesGraphType::MAIN) {

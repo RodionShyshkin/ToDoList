@@ -5,9 +5,9 @@
 
 #include <StateMachine.h>
 #include "RemoveTaskState.h"
-#include "MainMenuState.h"
-#include "ViewTaskState.h"
-#include "ViewTaskListState.h"
+#include "States/MainStates/MainMenuState.h"
+#include "States/MainStates/ViewTaskState.h"
+#include "States/MainStates/ViewTaskListState.h"
 
 RemoveTaskState::RemoveTaskState() {
 }

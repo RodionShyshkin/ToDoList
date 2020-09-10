@@ -5,7 +5,7 @@
 #include <StateMachine.h>
 #include <AvailableCommands.h>
 #include "ViewTaskListState.h"
-#include "StateFactory.h"
+#include "States/StateFactory.h"
 
 ViewTaskListState::ViewTaskListState() {
 }

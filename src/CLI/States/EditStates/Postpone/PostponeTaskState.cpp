@@ -3,10 +3,10 @@
 //
 
 #include <StateMachine.h>
-#include <StateFactory.h>
+#include <States/StateFactory.h>
 #include "PostponeTaskState.h"
-#include "ViewTaskListState.h"
-#include "ViewTaskState.h"
+#include "States/MainStates/ViewTaskListState.h"
+#include "States/MainStates/ViewTaskState.h"
 #include "NewDateParamState.h"
 
 PostponeTaskState::PostponeTaskState() {
