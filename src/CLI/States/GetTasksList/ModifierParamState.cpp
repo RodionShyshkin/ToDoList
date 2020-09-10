@@ -25,7 +25,7 @@ std::shared_ptr<StateInterface> ModifierParamState::run(std::shared_ptr<Context>
 
 void ModifierParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: ShowTasksList state machine / getting parameter");
+  io.output("Enter modifier [all/today/week/by_label]: ");
 }
 
 ListModifier ModifierParamState::parseParam() const {

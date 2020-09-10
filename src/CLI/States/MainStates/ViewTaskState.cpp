@@ -10,7 +10,7 @@
 
 bool ViewTaskState::input() {
   ConsoleIO io;
-  this->command_ = parseCommand(io.input());
+  this->command_ = parseCommand(io.inputCommand());
 
   auto available = AvailableCommands::get(this->getType());
   if(available.find(this->command_) == available.end()) return false;
@@ -37,7 +37,7 @@ std::shared_ptr<StateInterface>  ViewTaskState::run(std::shared_ptr<Context> &co
 
 void ViewTaskState::output() {
   ConsoleIO io;
-  io.output("[Output]: Single task view mode.");
+  io.outputWithBreak("[Output]: Single task view mode.");
 }
 
 StateType ViewTaskState::getType() {

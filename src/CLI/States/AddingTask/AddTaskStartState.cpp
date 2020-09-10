@@ -21,7 +21,7 @@ std::shared_ptr<StateInterface> AddTaskStartState::run(std::shared_ptr<Context> 
 
 void AddTaskStartState::output() {
   ConsoleIO io;
-  io.output("[Output]: AddTask state machine / Start State");
+  io.outputWithBreak("[Output]: AddTask state machine / Start State");
 }
 
 StateType AddTaskStartState::getType() {

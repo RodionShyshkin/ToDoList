@@ -13,6 +13,8 @@ bool CompleteTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context> &context) {
+  this->output();
+
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
@@ -27,7 +29,6 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
 
   // Request to TaskService
 
-  this->output();
 
   if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();
@@ -39,7 +40,7 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
 
 void CompleteTaskState::output() {
   ConsoleIO io;
-  io.output("[Output]: Completing task.");
+  io.outputWithBreak("[Output]: Completing task.");
 }
 
 StateType CompleteTaskState::getType() {

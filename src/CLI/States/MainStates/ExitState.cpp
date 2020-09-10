@@ -17,7 +17,7 @@ std::shared_ptr<StateInterface>  ExitState::run(std::shared_ptr<Context> &contex
 
 void ExitState::output() {
   ConsoleIO io;
-  io.output("[Output]: Finishes state machine.");
+  io.outputWithBreak("[Output]: Finishes state machine.");
 }
 
 StateType ExitState::getType() {

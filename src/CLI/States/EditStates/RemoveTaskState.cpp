@@ -12,6 +12,8 @@ bool RemoveTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &context) {
+  this->output();
+
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
@@ -23,7 +25,6 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
   }
   this->task_id_ = context->id_buffer_.getID().value();
 
-  this->output();
 
   context->id_buffer_.clearBuffer();
   if(context->show_list_buffer_.checkBufferFullness()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
@@ -33,7 +34,7 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
 
 void RemoveTaskState::output() {
   ConsoleIO io;
-  io.output("[Output]: Removes task.");
+  io.outputWithBreak("[Output]: Removes task.");
 }
 
 StateType RemoveTaskState::getType() {

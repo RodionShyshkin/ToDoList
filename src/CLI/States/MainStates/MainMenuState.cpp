@@ -8,7 +8,7 @@
 
 bool MainMenuState::input() {
   ConsoleIO console_io;
-  std::string stringCommand = console_io.input();
+  std::string stringCommand = console_io.inputCommand();
 
   this->command_ = parseCommand(stringCommand);
   auto available = AvailableCommands::get(this->getType());
@@ -18,9 +18,9 @@ bool MainMenuState::input() {
 }
 
 std::shared_ptr<StateInterface> MainMenuState::run(std::shared_ptr<Context> &context) {
+  this->output();
   auto inputResult = input();
   if(!inputResult) return nullptr;
-  this->output();
 
   std::cout << "WORKS" << std::endl;
   return StateFactory::create(getStateTypeByCommand(this->command_));
@@ -28,7 +28,7 @@ std::shared_ptr<StateInterface> MainMenuState::run(std::shared_ptr<Context> &con
 
 void MainMenuState::output() {
   ConsoleIO io;
-  io.output("[Output]: Main menu.");
+  io.outputWithBreak("[Output]: Main menu.");
 }
 
 StateType MainMenuState::getType() {

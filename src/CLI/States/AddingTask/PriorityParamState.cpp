@@ -24,7 +24,7 @@ std::shared_ptr<StateInterface> PriorityParamState::run(std::shared_ptr<Context>
 
 void PriorityParamState::output() {
   ConsoleIO io;
-  io.output("Param / AddTask / Enter task priority (not required) [Low, Medium, High]:");
+  io.output("Enter task priority (not required) [Low, Medium, High]: ");
 }
 
 std::optional<Priority> PriorityParamState::parseParam() const {

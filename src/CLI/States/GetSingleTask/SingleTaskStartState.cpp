@@ -17,7 +17,7 @@ std::shared_ptr<StateInterface> SingleTaskStartState::run(std::shared_ptr<Contex
 
 void SingleTaskStartState::output() {
   ConsoleIO io;
-  io.output("[Output]: Show single task / Start");
+  io.outputWithBreak("[Output]: Show single task / Start");
 }
 
 StateType SingleTaskStartState::getType() {

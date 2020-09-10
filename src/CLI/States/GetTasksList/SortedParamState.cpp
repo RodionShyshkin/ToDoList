@@ -14,10 +14,10 @@ bool SortedParamState::input() {
 }
 
 std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &context) {
+  this->output();
   if(!this->input()) return nullptr;
   auto parsed = this->parseParam();
   if(!parsed.has_value()) return nullptr;
-  this->output();
 
   context->show_list_buffer_.setSortedFlag(parsed.value());
   return StateFactory::create(StateType::EXIT_STATE);
@@ -25,12 +25,12 @@ std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &
 
 void SortedParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: ShowTasksList state machine / Sorted parameter");
+  io.output("Do you want to sort list? [y/n]: ");
 }
 
 std::optional<bool> SortedParamState::parseParam() const {
-  if(this->param_ == "sort") return true;
-  else if(this->param_ == "no_sort") return false;
+  if(this->param_ == "y") return true;
+  else if(this->param_ == "n") return false;
   else return std::nullopt;
 }
 

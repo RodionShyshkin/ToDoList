@@ -32,7 +32,7 @@ std::shared_ptr<StateInterface> IDParamState::run(std::shared_ptr<Context> &cont
 
 void IDParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: Show single task / ID parameter");
+  io.output("Enter task ID: ");
 }
 
 StateType IDParamState::getType() {

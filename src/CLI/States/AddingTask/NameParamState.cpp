@@ -23,7 +23,7 @@ std::shared_ptr<StateInterface> NameParamState::run(std::shared_ptr<Context> &co
 
 void NameParamState::output() {
   ConsoleIO io;
-  io.output("Param / AddTask / Enter task name:");
+  io.output("Enter task name: ");
 }
 
 bool NameParamState::validateParam() const {

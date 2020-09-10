@@ -7,11 +7,20 @@
 
 std::string ConsoleIO::input() const {
   std::string stringInput;
-  std::cout << ">> ";
   std::getline(std::cin, stringInput);
   return stringInput;
 }
 
+std::string ConsoleIO::inputCommand() const {
+  std::cout << ">> ";
+  return this->input();
+}
+
 void ConsoleIO::output(const std::string &string) const {
-  std::cout << "[O]: " << string << std::endl;
+  std::cout << string;
+}
+
+void ConsoleIO::outputWithBreak(const std::string &string) const {
+  this->output(string);
+  std::cout << std::endl;
 }

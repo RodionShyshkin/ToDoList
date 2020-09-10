@@ -17,7 +17,7 @@ std::shared_ptr<StateInterface> ShowListStartState::run(std::shared_ptr<Context>
 
 void ShowListStartState::output() {
   ConsoleIO io;
-  io.output("[Output]: ShowTasksList state machine / Start");
+  io.outputWithBreak("[Output]: ShowTasksList state machine / Start");
 }
 
 StateType ShowListStartState::getType() {

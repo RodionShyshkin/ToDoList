@@ -12,7 +12,9 @@ class IOInterface {
 
  public:
   virtual std::string input() const = 0;
+  virtual std::string inputCommand() const = 0;
   virtual void output(const std::string&) const = 0;
+  virtual void outputWithBreak(const std::string&) const = 0;
 };
 
 #endif //TODOLIST_SRC_CLI_IOINTERFACE_H_

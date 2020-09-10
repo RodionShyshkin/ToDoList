@@ -14,8 +14,9 @@ bool NewDateParamState::input() {
 }
 
 std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> &context) {
-  if(!this->input()) return nullptr;
   this->output();
+
+  if(!this->input()) return nullptr;
 
   auto parsed = this->parseParam();
   if(!parsed.has_value()) return nullptr;
@@ -32,7 +33,7 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> 
 
 void NewDateParamState::output() {
   ConsoleIO io;
-  io.output("[Output]: Getting date for postpone.");
+  io.output("Enter new date (not required) [yyyy-mm-dd]: ");
 }
 
 StateType NewDateParamState::getType() {

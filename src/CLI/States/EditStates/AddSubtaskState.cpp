@@ -11,6 +11,8 @@ bool AddSubtaskState::input() {
 }
 
 std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &context) {
+  this->output();
+
   auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK, context);
   if(machine_.execute()) {
     std::cout << "subtask added" << std::endl;
@@ -19,14 +21,13 @@ std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &c
     std::cout << "Error with adding subtask!" << std::endl;
   }
 
-  this->output();
 
   return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 
 void AddSubtaskState::output() {
   ConsoleIO io;
-  io.output("[Output]: Adding subtask for an existing task.");
+  io.outputWithBreak("[Output]: Adding subtask for an existing task.");
 }
 
 StateType AddSubtaskState::getType() {

@@ -27,7 +27,7 @@ std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &co
 
 void DateParamState::output() {
   ConsoleIO io;
-  io.output("Param / AddTask / Enter task deadline (not required):");
+  io.output("Enter task deadline (not required): ");
 }
 
 std::optional<boost::gregorian::date> DateParamState::parseParam() const {

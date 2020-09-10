@@ -16,7 +16,7 @@ std::shared_ptr<StateInterface> StartState::run(std::shared_ptr<Context> &contex
 
 void StartState::output() {
   ConsoleIO io;
-  io.output("[Output]: Start state.");
+  io.outputWithBreak("[Output]: Start state.");
 }
 
 StateType StartState::getType() {
