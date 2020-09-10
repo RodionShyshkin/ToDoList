@@ -2,35 +2,29 @@
 // Created by rodion on 8/27/20.
 //
 
+#include <States/StateFactory.h>
 #include "PriorityParamState.h"
 #include "DateParamState.h"
 
 bool PriorityParamState::input() {
-  std::string stringParam;
-//  std::cin >> stringCommand;
-//  std::getline(std::cin, stringCommand);
-  srand(time(NULL));
-  auto k = rand() % 4;
-  stringParam = "";
-  param_ = stringParam;
+  ConsoleIO io;
+  this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> PriorityParamState::run(std::shared_ptr<Context> &context) {
-  output();
-  input();
-  auto param = parseParam();
+  if(!this->input()) return nullptr;
+  auto param = this->parseParam();
   if(!param.has_value()) return nullptr;
-  else {
-//    context->priority_ = param.value();
-//    context->updateContext(context->getName(), context->getLabel(), param.value(), context->getDate(), context->getParent());
-    context->add_task_buffer_.setPriority(param.value());
-    return std::make_shared<DateParamState>();
-  }
+  this->output();
+
+  context->add_task_buffer_.setPriority(param.value());
+  return StateFactory::create(StateType::ADD_TASK_DATE_PARAM_STATE);
 }
 
 void PriorityParamState::output() {
-  std::cout << "[Output]: AddTask state machine / Enter priority" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: AddTask state machine / Enter priority");
 }
 
 std::optional<Priority> PriorityParamState::parseParam() const {

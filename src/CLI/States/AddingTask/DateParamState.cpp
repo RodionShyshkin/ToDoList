@@ -5,33 +5,29 @@
 #include <boost/date_time/gregorian/parsers.hpp>
 #include <boost/date_time/gregorian/gregorian_io.hpp>
 #include <States/MainStates/ExitState.h>
+#include <States/StateFactory.h>
 #include "DateParamState.h"
 
 bool DateParamState::input() {
-  std::string stringParam;
-//  std::cin >> stringCommand;
-//  std::getline(std::cin, stringCommand);
-  srand(time(NULL));
-  auto k = rand() % 4;
-  stringParam = "2019-1-1";
-  param_ = stringParam;
+  ConsoleIO io;
+  this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &context) {
-  output();
-  input();
-  auto validated = parseParam();
+  this->output();
+  if(!this->input()) return nullptr;
+
+  auto validated = this->parseParam();
   if(!validated.has_value()) return nullptr;
-  else {
-    //context->date_ = validated.value();
-    context->add_task_buffer_.setDate(validated.value());
-    return std::make_shared<ExitState>();
-  }
+
+  context->add_task_buffer_.setDate(validated.value());
+  return StateFactory::create(StateType::EXIT_STATE);
 }
 
 void DateParamState::output() {
-  std::cout << "[Output]: AddTask state machine / Enter date" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: AddTask state machine / Enter date");
 }
 
 std::optional<boost::gregorian::date> DateParamState::parseParam() const {

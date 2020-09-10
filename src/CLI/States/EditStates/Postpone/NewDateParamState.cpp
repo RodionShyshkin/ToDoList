@@ -8,16 +8,16 @@
 #include "States/MainStates/ViewTaskListState.h"
 
 bool NewDateParamState::input() {
-  std::string stringParam;
-  stringParam = "2020-10-10";
-  param_ = stringParam;
+  ConsoleIO io;
+  this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> &context) {
-  input();
-  output();
-  auto parsed = parseParam();
+  if(!this->input()) return nullptr;
+  this->output();
+
+  auto parsed = this->parseParam();
   if(!parsed.has_value()) return nullptr;
   else {
     context->postpone_buffer_.setNewDate(parsed.value());
@@ -31,22 +31,13 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> 
 }
 
 void NewDateParamState::output() {
-  std::cout << "[Output]: Getting date for postpone." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Getting date for postpone.");
 }
 
 StateType NewDateParamState::getType() {
   return StateType::POSTPONE_TASK_STATE;
 }
-/*
-bool NewDateParamState::validateParam() const {
-  try {
-    boost::gregorian::date temporary_ = boost::gregorian::from_string(this->param_);
-  }
-  catch(const std::invalid_argument&) {
-    return false;
-  }
-  return true;
-}*/
 
 std::optional<boost::gregorian::date> NewDateParamState::parseParam() const {
   boost::gregorian::date temporary_;

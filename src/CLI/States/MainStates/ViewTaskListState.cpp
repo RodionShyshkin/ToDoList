@@ -7,23 +7,10 @@
 #include "ViewTaskListState.h"
 #include "States/StateFactory.h"
 
-ViewTaskListState::ViewTaskListState() {
-}
-
 bool ViewTaskListState::input() {
-  std::string stringCommand;
+  ConsoleIO io;
+  this->command_ = parseCommand(io.input());
 
-  std::random_device rd;
-  std::mt19937 mersenne(rd());
-  auto k = mersenne() % 5;
-  if(k == 0) stringCommand = "view";
-  if(k == 1) stringCommand = "remove";
-  else if(k == 2) stringCommand = "postpone";
-  else if(k == 3) stringCommand = "complete";
-  else stringCommand = "exit";
-  //stringCommand = "complete";
-
-  this->command_ = parseCommand(stringCommand);
   auto available = AvailableCommands::get(this->getType());
   if(available.find(this->command_) == available.end()) return false;
   return true;
@@ -38,13 +25,15 @@ std::shared_ptr<StateInterface>  ViewTaskListState::run(std::shared_ptr<Context>
       std::cout << "Error with getting tasks list!" << std::endl;
     }
   }
-  input();
-  output();
+  if(!this->input()) return nullptr;
+
+  this->output();
   return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
 void ViewTaskListState::output() {
-  std::cout << "[Output]: Tasks list view mode." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Tasks list view mode.");
 }
 
 StateType ViewTaskListState::getType() {

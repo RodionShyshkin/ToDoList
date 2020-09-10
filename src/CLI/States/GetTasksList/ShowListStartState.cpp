@@ -2,21 +2,22 @@
 // Created by rodion on 8/28/20.
 //
 
+#include <States/StateFactory.h>
 #include "ShowListStartState.h"
 #include "ModifierParamState.h"
 
 bool ShowListStartState::input() {
-
   return true;
 }
 
 std::shared_ptr<StateInterface> ShowListStartState::run(std::shared_ptr<Context> &context) {
-  output();
-  return std::make_shared<ModifierParamState>();
+  this->output();
+  return StateFactory::create(StateType::SHOW_LIST_MODIFIER_PARAM_STATE);
 }
 
 void ShowListStartState::output() {
-  std::cout << "[Output]: ShowTasksList state machine / Start" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: ShowTasksList state machine / Start");
 }
 
 StateType ShowListStartState::getType() {

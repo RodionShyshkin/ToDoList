@@ -52,6 +52,7 @@ add_executable(Tests ${core_tests} ${core_sources} ${cli_sources})
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})
+target_link_libraries(ToDoList ${Boost_LIBRARIES})
 
 gtest_discover_tests(Tests)
 

@@ -2,35 +2,28 @@
 // Created by rodion on 8/27/20.
 //
 
+#include <States/StateFactory.h>
 #include "NameParamState.h"
 #include "LabelParamState.h"
 
 bool NameParamState::input() {
-  std::string stringParam;
-//  std::cin >> stringCommand;
-//  std::getline(std::cin, stringCommand);
-  srand(time(NULL));
-  auto k = rand() % 4;
-  stringParam = "Task Name";
-  param_ = stringParam;
+  ConsoleIO io;
+  this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> NameParamState::run(std::shared_ptr<Context> &context) {
-  input();
-  output();
-  if(!validateParam()) return nullptr;
-  else {
-//    context->name_ = param_;
-//    context->updateContext(param_, context->getLabel(), context->getPriority(), context->getDate(), context->getParent());
-    context->add_task_buffer_.setName(param_);
-    return std::make_shared<LabelParamState>();
-  return nullptr;
-  }
+  if(!this->input()) return nullptr;
+  if(!this->validateParam()) return nullptr;
+  this->output();
+
+  context->add_task_buffer_.setName(param_);
+  return StateFactory::create(StateType::ADD_TASK_LABEL_PARAM_STATE);
 }
 
 void NameParamState::output() {
-  std::cout << "[Output]: AddTask state machine / Enter name" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: AddTask state machine / Enter name");
 }
 
 bool NameParamState::validateParam() const {

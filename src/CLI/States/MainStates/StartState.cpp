@@ -10,12 +10,13 @@ bool StartState::input() {
 }
 
 std::shared_ptr<StateInterface> StartState::run(std::shared_ptr<Context> &context) {
-  output();
+  this->output();
   return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 
 void StartState::output() {
-  std::cout << "[Output]: Start state." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Start state.");
 }
 
 StateType StartState::getType() {

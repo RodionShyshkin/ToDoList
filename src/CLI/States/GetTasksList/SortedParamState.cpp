@@ -4,38 +4,28 @@
 
 #include <random>
 #include <States/MainStates/ExitState.h>
+#include <States/StateFactory.h>
 #include "SortedParamState.h"
 
 bool SortedParamState::input() {
-  std::string stringParam;
-//  std::cin >> stringCommand;
-//  std::getline(std::cin, stringCommand);
-  std::cout << "RUNS" << std::endl;
-  std::random_device rd;
-  std::mt19937 mersenne(rd());
-  auto k = mersenne() % 2;
-  if(k == 0) stringParam = "no_sort";
-  else if(k == 1) stringParam = "sort";
-//  stringParam = "no_sort";
-
-  this->param_ = stringParam;
+  ConsoleIO io;
+  this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &context) {
-  output();
-  input();
-  auto parsed = parseParam();
+  if(!this->input()) return nullptr;
+  auto parsed = this->parseParam();
   if(!parsed.has_value()) return nullptr;
-  else {
-//    context->updateContext(context->getModifier(), parsed.value());
-    context->show_list_buffer_.setSortedFlag(parsed.value());
-  }
-  return std::make_shared<ExitState>();
+  this->output();
+
+  context->show_list_buffer_.setSortedFlag(parsed.value());
+  return StateFactory::create(StateType::EXIT_STATE);
 }
 
 void SortedParamState::output() {
-  std::cout << "[Output]: ShowTasksList state machine / Sorted parameter" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: ShowTasksList state machine / Sorted parameter");
 }
 
 std::optional<bool> SortedParamState::parseParam() const {

@@ -6,11 +6,6 @@
 #include <StateMachine.h>
 #include "RemoveTaskState.h"
 #include "States/MainStates/MainMenuState.h"
-#include "States/MainStates/ViewTaskState.h"
-#include "States/MainStates/ViewTaskListState.h"
-
-RemoveTaskState::RemoveTaskState() {
-}
 
 bool RemoveTaskState::input() {
   return true;
@@ -28,7 +23,7 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
   }
   this->task_id_ = context->id_buffer_.getID().value();
 
-  output();
+  this->output();
 
   context->id_buffer_.clearBuffer();
   if(context->show_list_buffer_.checkBufferFullness()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
@@ -37,7 +32,8 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
 }
 
 void RemoveTaskState::output() {
-  std::cout << "[Output]: Removes task." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Removes task.");
 }
 
 StateType RemoveTaskState::getType() {

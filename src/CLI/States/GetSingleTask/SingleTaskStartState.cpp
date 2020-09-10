@@ -2,6 +2,7 @@
 // Created by rodion on 9/2/20.
 //
 
+#include <States/StateFactory.h>
 #include "SingleTaskStartState.h"
 #include "IDParamState.h"
 
@@ -10,12 +11,13 @@ bool SingleTaskStartState::input() {
 }
 
 std::shared_ptr<StateInterface> SingleTaskStartState::run(std::shared_ptr<Context> &context) {
-  output();
-  return std::make_shared<IDParamState>();
+  this->output();
+  return StateFactory::create(StateType::SHOW_SINGLE_ID_PARAM_STATE);
 }
 
 void SingleTaskStartState::output() {
-  std::cout << "[Output]: Show single task / Start" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Show single task / Start");
 }
 
 StateType SingleTaskStartState::getType() {

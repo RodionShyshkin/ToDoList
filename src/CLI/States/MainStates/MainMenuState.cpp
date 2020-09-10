@@ -6,20 +6,9 @@
 #include <AvailableCommands.h>
 #include "MainMenuState.h"
 
-MainMenuState::MainMenuState() {
-}
-
 bool MainMenuState::input() {
-  std::string stringCommand;
-
-  std::cout << "RUNS" << std::endl;
-  std::random_device rd;
-  std::mt19937 mersenne(rd());
-  auto k = mersenne() % 3;
-  if(k == 0) stringCommand = "add";
-  else if(k == 1) stringCommand = "show";
-  else stringCommand = "exit";
-//  stringCommand = "show";
+  ConsoleIO console_io;
+  std::string stringCommand = console_io.input();
 
   this->command_ = parseCommand(stringCommand);
   auto available = AvailableCommands::get(this->getType());
@@ -31,13 +20,15 @@ bool MainMenuState::input() {
 std::shared_ptr<StateInterface> MainMenuState::run(std::shared_ptr<Context> &context) {
   auto inputResult = input();
   if(!inputResult) return nullptr;
-  output();
+  this->output();
+
   std::cout << "WORKS" << std::endl;
   return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
 void MainMenuState::output() {
-  std::cout << "[Output]: Main menu." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Main menu.");
 }
 
 StateType MainMenuState::getType() {

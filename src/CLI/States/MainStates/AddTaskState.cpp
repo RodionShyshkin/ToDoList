@@ -7,9 +7,6 @@
 #include "MainMenuState.h"
 #include <StateMachine.h>
 
-AddTaskState::AddTaskState() {
-}
-
 bool AddTaskState::input() {
   return true;
 }
@@ -26,7 +23,8 @@ std::shared_ptr<StateInterface>  AddTaskState::run(std::shared_ptr<Context> &con
 }
 
 void AddTaskState::output() {
-  std::cout << "[Output]: Adding new task." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Adding new task.");
 }
 
 StateType AddTaskState::getType() {

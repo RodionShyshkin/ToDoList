@@ -8,9 +8,6 @@
 #include "States/MainStates/ViewTaskListState.h"
 #include "States/MainStates/ViewTaskState.h"
 
-CompleteTaskState::CompleteTaskState() {
-}
-
 bool CompleteTaskState::input() {
   return true;
 }
@@ -24,12 +21,13 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
     else {
       std::cout << "Error with getting task!" << std::endl;
     }
-    output();
   }
   auto id_from_buffer_ = context->id_buffer_.getID();
   this->task_id_ = id_from_buffer_.value();
 
   // Request to TaskService
+
+  this->output();
 
   if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();
@@ -40,7 +38,8 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
 }
 
 void CompleteTaskState::output() {
-  std::cout << "[Output]: Completing task." << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Completing task.");
 }
 
 StateType CompleteTaskState::getType() {

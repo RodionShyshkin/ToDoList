@@ -3,23 +3,36 @@
 //
 
 #include <States/MainStates/ExitState.h>
+#include <States/StateFactory.h>
 #include "IDParamState.h"
 
 bool IDParamState::input() {
-  this->param_ = 1;
+  ConsoleIO io;
+  try {
+    this->param_ = std::stoi(io.input());
+  }
+  catch(const std::invalid_argument&) {
+    return false;
+  }
+  catch(const std::out_of_range&) {
+    return false;
+  }
   return true;
 }
 
 std::shared_ptr<StateInterface> IDParamState::run(std::shared_ptr<Context> &context) {
-  output();
-  input();
+  this->output();
+  if(!this->input()) return nullptr;
+
   //context->show_single_task_struct_.id_ = param_;
+
   context->id_buffer_.setID(param_);
-  return std::make_shared<ExitState>();
+  return StateFactory::create(StateType::EXIT_STATE);
 }
 
 void IDParamState::output() {
-  std::cout << "[Output]: Show single task / ID parameter" << std::endl;
+  ConsoleIO io;
+  io.output("[Output]: Show single task / ID parameter");
 }
 
 StateType IDParamState::getType() {
