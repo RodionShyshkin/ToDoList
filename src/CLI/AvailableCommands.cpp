@@ -6,7 +6,7 @@
 
 const std::map<StateType, std::set<Command>> AvailableCommands::available_commands_ = {
     {
-        StateType::START_STATE,
+        StateType::MAIN_MENU_STATE,
         {
             Command::ADDTASK,
             Command::GETTASKLIST,

@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <StateMachine.h>
 #include <fstream>
-#include <States/StartState.h>
+#include <States/MainMenuState.h>
 
 class Base : public ::testing::Test {
 
@@ -17,7 +17,7 @@ TEST_F(Base, sss) {
   cont.execute();*/
 
 
-//  auto k = StateMachine<Context, StateInterface, StartState>::create(StatesGraphType::MAIN);\
+//  auto k = StateMachine<Context, StateInterface, MainMenuState>::create(StatesGraphType::MAIN);\
 
   std::shared_ptr<Context> context = std::make_shared<Context>();
   StateMachine k = StateMachine::create(StatesGraphType::MAIN, context);

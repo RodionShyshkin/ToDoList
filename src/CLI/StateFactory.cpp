@@ -13,6 +13,7 @@
 #include <States/GetSingleTask/SingleTaskStartState.h>
 #include <States/GetSingleTask/IDParamState.h>
 #include <States/NewDateParamState.h>
+#include <States/StartState.h>
 #include "StateFactory.h"
 #include "States/AddTaskState.h"
 #include "States/AddSubtaskState.h"
@@ -21,7 +22,7 @@
 #include "States/ExitState.h"
 #include "States/RemoveTaskState.h"
 #include "States/ViewTaskListState.h"
-#include "States/StartState.h"
+#include "States/MainMenuState.h"
 #include "States/ViewTaskState.h"
 
 std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
@@ -30,6 +31,9 @@ std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
   }
   else if(type == StateType::START_STATE) {
     return std::make_shared<StartState>();
+  }
+  else if(type == StateType::MAIN_MENU_STATE) {
+    return std::make_shared<MainMenuState>();
   }
   else if(type == StateType::ADD_TASK_STATE) {
     return std::make_shared<AddTaskState>();

@@ -44,7 +44,7 @@ StateType getStateTypeByCommand(const Command& operation) {
     return StateType::VIEW_TASK_LIST_STATE;
   }
   if(operation == Command::MAINMENU) {
-    return StateType::START_STATE;
+    return StateType::MAIN_MENU_STATE;
   }
   return StateType::UNKNOWN_STATE;
 }

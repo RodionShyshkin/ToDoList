@@ -4,7 +4,7 @@
 
 #include <States/AddingTask/AddTaskStartState.h>
 #include "AddTaskState.h"
-#include "StartState.h"
+#include "MainMenuState.h"
 #include <StateMachine.h>
 
 AddTaskState::AddTaskState() {

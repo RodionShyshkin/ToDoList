@@ -5,7 +5,7 @@
 
 #include <StateMachine.h>
 #include "RemoveTaskState.h"
-#include "StartState.h"
+#include "MainMenuState.h"
 #include "ViewTaskState.h"
 #include "ViewTaskListState.h"
 
