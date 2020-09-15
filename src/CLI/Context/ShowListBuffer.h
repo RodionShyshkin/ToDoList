@@ -7,6 +7,8 @@
 
 #include <Context/BufferInterface.h>
 #include <States/GetTasksList/ListModifier.h>
+#include <API/TaskDTO.h>
+#include <list>
 
 class ShowListBuffer : public BufferInterface {
  public:
@@ -19,14 +21,22 @@ class ShowListBuffer : public BufferInterface {
  public:
   void setModifier(const ListModifier&);
   void setSortedFlag(const bool&);
+  void setLabel(const std::string&);
+
+  void setList(const std::vector<TaskDTO>&);
 
  public:
   ListModifier getModifier() const;
   bool getSortedFlag() const;
+  std::string getLabel() const;
+
+  std::vector<TaskDTO>  getList() const;
 
  private:
   ListModifier modifier_;
   bool is_sorted_;
+  std::string label_;
+  std::vector<TaskDTO> list_;
 };
 
 #endif //TODOLIST_SRC_CLI_CONTEXT_SHOWLISTBUFFER_H_

@@ -37,7 +37,13 @@ std::optional<boost::gregorian::date> DateParamState::parseParam() const {
     else d = boost::gregorian::from_string(param_);
     return std::make_optional<boost::gregorian::date>(d);
   }
-  catch(const std::out_of_range &e) {
+  catch(const std::out_of_range&) {
+    return std::nullopt;
+  }
+  catch(const std::invalid_argument&) {
+    return std::nullopt;
+  }
+  catch(const boost::bad_lexical_cast&) {
     return std::nullopt;
   }
 }

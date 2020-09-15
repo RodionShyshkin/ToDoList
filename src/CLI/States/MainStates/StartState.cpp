@@ -10,7 +10,6 @@ bool StartState::input() {
 }
 
 std::shared_ptr<StateInterface> StartState::run(std::shared_ptr<Context> &context) {
-  this->output();
   return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 

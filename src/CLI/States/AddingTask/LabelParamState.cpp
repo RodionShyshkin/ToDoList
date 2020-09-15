@@ -16,7 +16,8 @@ std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &c
   if(!this->input()) return nullptr;
   if(!validateParam()) return nullptr;
 
-  context->add_task_buffer_.setLabel(param_);
+  if(context->show_list_buffer_.checkBufferFullness()) context->show_list_buffer_.setLabel(this->param_);
+  else context->add_task_buffer_.setLabel(this->param_);
   return std::make_shared<PriorityParamState>();
 }
 

@@ -27,8 +27,9 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
   auto id_from_buffer_ = context->id_buffer_.getID();
   this->task_id_ = id_from_buffer_.value();
 
-  // Request to TaskService
-
+  auto id_ = TaskID{this->task_id_};
+  auto result = context->service_->completeTask(id_);
+  if(!result.GetStatus()) return nullptr;
 
   if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();

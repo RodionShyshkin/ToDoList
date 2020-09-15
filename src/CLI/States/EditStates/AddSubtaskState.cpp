@@ -19,9 +19,18 @@ std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &c
   }
   else {
     std::cout << "Error with adding subtask!" << std::endl;
+    return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
   }
 
+  if(!context->add_task_buffer_.checkBufferFullness()) return nullptr;
+  auto id_ = TaskID{context->add_task_buffer_.getParent()};
+  auto dto_ = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
+                              context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
 
+  auto result = context->service_->addSubtask(id_, dto_);
+  if(!result.GetStatus()) throw std::invalid_argument("Wrong AddSubtask validation.");
+
+  context->add_task_buffer_.clearBuffer();
   return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 

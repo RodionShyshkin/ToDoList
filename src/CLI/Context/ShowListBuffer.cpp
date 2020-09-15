@@ -21,6 +21,14 @@ void ShowListBuffer::setModifier(const ListModifier &modifier) { this->modifier_
 
 void ShowListBuffer::setSortedFlag(const bool &flag) { this->is_sorted_ = flag; }
 
+void ShowListBuffer::setLabel(const std::string& label) { this->label_ = label; }
+
+void ShowListBuffer::setList(const std::vector<TaskDTO>& list) { this->list_ = list; }
+
 ListModifier ShowListBuffer::getModifier() const { return this->modifier_; }
 
 bool ShowListBuffer::getSortedFlag() const { return this->is_sorted_; }
+
+std::string ShowListBuffer::getLabel() const { return this->label_; }
+
+std::vector<TaskDTO> ShowListBuffer::getList() const { return this->list_; }

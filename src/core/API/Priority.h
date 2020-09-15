@@ -12,4 +12,6 @@ enum class Priority {
   HIGH
 };
 
+std::string stringByPriority(const Priority& priority);
+
 #endif //TODOLIST_SRC_MEMORYMODEL_PRIORITY_H_

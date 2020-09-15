@@ -4,3 +4,6 @@
 
 #include "Context.h"
 
+Context::Context() {
+  this->service_ = std::make_unique<FakeService>();
+}

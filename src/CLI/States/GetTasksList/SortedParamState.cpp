@@ -20,6 +20,7 @@ std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &
   if(!parsed.has_value()) return nullptr;
 
   context->show_list_buffer_.setSortedFlag(parsed.value());
+  if(context->show_list_buffer_.getModifier() == ListModifier::BY_LABEL) return StateFactory::create(StateType::ADD_TASK_LABEL_PARAM_STATE);
   return StateFactory::create(StateType::EXIT_STATE);
 }
 

@@ -14,7 +14,6 @@ bool PostponeTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  PostponeTaskState::run(std::shared_ptr<Context> &context) {
-  this->output();
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
@@ -24,6 +23,9 @@ std::shared_ptr<StateInterface>  PostponeTaskState::run(std::shared_ptr<Context>
       std::cout << "Error with getting task!" << std::endl;
     }
   }
+
+
+
   return StateFactory::create(StateType::POSTPONE_TASK_NEW_DATE_PARAM_STATE);
 }
 

@@ -15,7 +15,6 @@ bool NewDateParamState::input() {
 
 std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> &context) {
   this->output();
-
   if(!this->input()) return nullptr;
 
   auto parsed = this->parseParam();
@@ -25,9 +24,12 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> 
   }
   this->task_id_ = context->id_buffer_.getID().value();
 
-  // Postpone.
+  auto id_ = TaskID{this->task_id_};
+  auto result = context->service_->postponeTask(id_, context->postpone_buffer_.getNewDate());
+  if(!result.GetStatus()) return nullptr;
 
   if(context->postpone_buffer_.getSingleTaskFlag()) return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
+  context->id_buffer_.clearBuffer();
   return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
 }
 

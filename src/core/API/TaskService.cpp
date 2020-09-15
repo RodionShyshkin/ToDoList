@@ -6,11 +6,20 @@
 
 TaskService::TaskService() : task_service_storage_(FullStorage()) {}
 
+TaskDTO TaskService::getTask(const TaskID &id) const {
+  auto task = task_service_storage_.GetTaskStorage().GetTask(id);
+  return TaskDTO::create(task->GetID().GetID(), task->GetName(),
+                         task->GetLabel(), task->GetPriority(), task->GetDueTime().GetDate(),
+                         task->GetStatus());
+}
+
 std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
   auto allTasks = task_service_storage_.GetTaskView().GetAllTasks();
   for (const auto &task : allTasks) {
-    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+    searchResult.push_back(TaskDTO::create(task.GetID().GetID(), task.GetName(), task.GetLabel(),
+                                           task.GetPriority(), task.GetDueTime().GetDate(),
+                                           task.GetStatus()));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -20,7 +29,9 @@ std::vector<TaskDTO> TaskService::getTasksForToday(const bool& sortByPriority) c
   auto todayTasks = task_service_storage_.GetTaskView().GetTodayTasks();
   std::vector<TaskDTO> searchResult;
   for(const auto& task : todayTasks) {
-    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+    searchResult.push_back(TaskDTO::create(task.GetID().GetID(), task.GetName(), task.GetLabel(),
+                                           task.GetPriority(), task.GetDueTime().GetDate(),
+                                           task.GetStatus()));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -30,7 +41,9 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(const bool& sortByPriority) co
   auto weekTasks = task_service_storage_.GetTaskView().GetWeekTasks();
   std::vector<TaskDTO> searchResult;
   for(const auto& task : weekTasks) {
-    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+    searchResult.push_back(TaskDTO::create(task.GetID().GetID(), task.GetName(), task.GetLabel(),
+                                           task.GetPriority(), task.GetDueTime().GetDate(),
+                                           task.GetStatus()));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -40,7 +53,9 @@ std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, cons
   auto labelTasks = task_service_storage_.GetTaskView().GetTasksByLabel(label);
   std::vector<TaskDTO> searchResult;
   for(const auto& task : labelTasks) {
-    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+    searchResult.push_back(TaskDTO::create(task.GetID().GetID(), task.GetName(), task.GetLabel(),
+                                           task.GetPriority(), task.GetDueTime().GetDate(),
+                                           task.GetStatus()));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -50,7 +65,9 @@ std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const 
   auto nameTasks = task_service_storage_.GetTaskView().GetTasksByName(name);
   std::vector<TaskDTO> searchResult;
   for(const auto& task : nameTasks) {
-    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+    searchResult.push_back(TaskDTO::create(task.GetID().GetID(), task.GetName(), task.GetLabel(),
+                                           task.GetPriority(), task.GetDueTime().GetDate(),
+                                           task.GetStatus()));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -60,7 +77,9 @@ std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority &priority) c
   auto priorityTasks = task_service_storage_.GetTaskView().GetTasksByPriority(priority);
   std::vector<TaskDTO> searchResult;
   for(const auto& task : priorityTasks) {
-    searchResult.push_back(TaskDTO::create(task.GetID(), task.GetTask(), task.GetStatus()));
+    searchResult.push_back(TaskDTO::create(task.GetID().GetID(), task.GetName(), task.GetLabel(),
+                                           task.GetPriority(), task.GetDueTime().GetDate(),
+                                           task.GetStatus()));
   }
   return searchResult;
 }

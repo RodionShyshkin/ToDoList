@@ -18,8 +18,7 @@ void AddTaskBuffer::clearBuffer() {
 }
 
 bool AddTaskBuffer::checkBufferFullness() const {
-  if(this->date_.is_not_a_date() || this->name_ == "" || this->label_ == "" ||
-  this->priority_ == Priority::EMPTY) return false;
+  if(this->name_ == "") return false;
   if(this->is_subtask_ && this->parent_id_ == 0) return false;
   return true;
 }

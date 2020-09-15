@@ -14,6 +14,7 @@ class TaskServiceInterface {
   ~TaskServiceInterface() = default;
 
  public:
+  virtual TaskDTO                 getTask(const TaskID&) const = 0;
   virtual std::vector<TaskDTO>    getAllTasks(const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksForToday(const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksForWeek(const bool&) const = 0;

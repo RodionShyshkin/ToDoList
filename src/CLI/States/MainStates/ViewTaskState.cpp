@@ -27,11 +27,18 @@ std::shared_ptr<StateInterface>  ViewTaskState::run(std::shared_ptr<Context> &co
     }
     else {
       std::cout << "Error with getting task!" << std::endl;
+      return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
     }
   }
-  auto inputResult = this->input();
-  if(!inputResult) return nullptr;
-  this->output();
+  std::cout << context->id_buffer_.getID().value() << std::endl;
+  if(!context->id_buffer_.checkBufferFullness()) throw std::invalid_argument("IDBuffer SM does not work correctly.");
+
+  auto task_dto_ = context->service_->getTask(TaskID{context->id_buffer_.getID().value()});
+
+  this->showTask(task_dto_);
+
+  context->show_list_buffer_.clearBuffer();
+  if(!input()) return nullptr;
   return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
@@ -42,4 +49,18 @@ void ViewTaskState::output() {
 
 StateType ViewTaskState::getType() {
   return StateType::VIEW_TASK_STATE;
+}
+
+void ViewTaskState::showTask(const TaskDTO& task) const {
+  ConsoleIO io;
+  io.outputWithBreak("Task ID: " + std::to_string(task.getID()));
+  io.outputWithBreak("Task Name: " + task.getName());
+  io.outputWithBreak("Task Label: " + task.getLabel());
+  io.outputWithBreak("Task Priority: " + stringByPriority(task.getPriority()));
+  io.outputWithBreak("Task Deadline: " + boost::gregorian::to_simple_string(task.getDueDate()));
+  io.outputWithBreak("Task Status: " + std::to_string(task.getStatus()));
+  io.outputWithBreak("------------------");
+  io.outputWithBreak("You can do following operations:");
+  io.outputWithBreak(">add_subtask, > complete, > remove, > postpone, > mm, > exit");
+  io.outputWithBreak("------------------");
 }

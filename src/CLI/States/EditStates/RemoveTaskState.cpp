@@ -25,6 +25,9 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
   }
   this->task_id_ = context->id_buffer_.getID().value();
 
+  auto id_ = TaskID{this->task_id_};
+  auto result = context->service_->RemoveTask(id_);
+  if(!result.GetStatus()) return nullptr;
 
   context->id_buffer_.clearBuffer();
   if(context->show_list_buffer_.checkBufferFullness()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
@@ -34,7 +37,6 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
 
 void RemoveTaskState::output() {
   ConsoleIO io;
-  io.outputWithBreak("[Output]: Removes task.");
 }
 
 StateType RemoveTaskState::getType() {

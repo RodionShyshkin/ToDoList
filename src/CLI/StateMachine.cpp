@@ -37,11 +37,11 @@ StateMachine::StateMachine(std::shared_ptr<StateInterface>&& start_state,
 
 bool StateMachine::execute() {
   while(this->state_->getType() != StateType::EXIT_STATE) {
+    this->state_ = std::move(state_->run(context_));
     if(this->state_ == nullptr) {
       std::cout << "ERROR" << std::endl;
       return false;
     }
-    this->state_ = std::move(state_->run(context_));
   }
   std::cout << "State machine finished." << std::endl;
   return true;

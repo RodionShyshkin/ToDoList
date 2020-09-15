@@ -18,11 +18,13 @@ bool MainMenuState::input() {
 }
 
 std::shared_ptr<StateInterface> MainMenuState::run(std::shared_ptr<Context> &context) {
-  this->output();
-  auto inputResult = input();
-  if(!inputResult) return nullptr;
+  context->show_list_buffer_.clearBuffer();
+  context->add_task_buffer_.clearBuffer();
+  context->id_buffer_.clearBuffer();
+  context->postpone_buffer_.clearBuffer();
 
-  std::cout << "WORKS" << std::endl;
+//  this->output();
+  if(!input()) return nullptr;
   return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
