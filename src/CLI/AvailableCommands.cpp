@@ -46,3 +46,9 @@ std::set<Command> AvailableCommands::get(const StateType& type) {
     return std::set<Command>{};
   return AvailableCommands::available_commands_.at(type);
 }
+
+bool AvailableCommands::checkIsCommandAvailable(const StateType &type, const Command &command) {
+  auto available_ = AvailableCommands::get(type);
+  if(available_.find(command) == available_.end()) return false;
+  return true;
+}

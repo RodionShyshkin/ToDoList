@@ -11,7 +11,6 @@ bool SingleTaskStartState::input() {
 }
 
 std::shared_ptr<StateInterface> SingleTaskStartState::run(std::shared_ptr<Context> &context) {
-  this->output();
   return StateFactory::create(StateType::SHOW_SINGLE_ID_PARAM_STATE);
 }
 

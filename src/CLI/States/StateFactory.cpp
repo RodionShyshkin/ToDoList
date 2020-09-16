@@ -14,6 +14,7 @@
 #include <States/GetSingleTask/IDParamState.h>
 #include <States/EditStates/Postpone/NewDateParamState.h>
 #include <States/MainStates/StartState.h>
+#include <States/AddingTask/ParentTaskParamState.h>
 #include "StateFactory.h"
 #include "States/MainStates/AddTaskState.h"
 #include "States/EditStates/AddSubtaskState.h"
@@ -61,6 +62,9 @@ std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
   }
   else if(type == StateType::ADD_SUBTASK_START_STATE) {
     return std::make_shared<AddTaskStartState>(true);
+  }
+  else if(type == StateType::ADD_TASK_PARENT_PARAM_STATE) {
+    return std::make_shared<ParentTaskParamState>();
   }
   else if(type == StateType::ADD_TASK_NAME_PARAM_STATE) {
     return std::make_shared<NameParamState>();

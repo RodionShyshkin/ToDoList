@@ -20,6 +20,9 @@ class Context {
   Context();
 
  public:
+  void clearAllBuffers();
+
+ public:
   AddTaskBuffer add_task_buffer_;
   ShowListBuffer show_list_buffer_;
   IDBuffer id_buffer_;

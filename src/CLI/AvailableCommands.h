@@ -12,6 +12,9 @@
 
 class AvailableCommands {
  public:
+  static bool              checkIsCommandAvailable(const StateType&, const Command&);
+
+ private:
   static std::set<Command> get(const StateType&);
 
  private:

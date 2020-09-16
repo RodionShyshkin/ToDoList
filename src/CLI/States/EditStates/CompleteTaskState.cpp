@@ -13,8 +13,6 @@ bool CompleteTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context> &context) {
-  this->output();
-
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
@@ -24,11 +22,12 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
       std::cout << "Error with getting task!" << std::endl;
     }
   }
+
   auto id_from_buffer_ = context->id_buffer_.getID();
+  if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
   this->task_id_ = id_from_buffer_.value();
 
-  auto id_ = TaskID{this->task_id_};
-  auto result = context->service_->completeTask(id_);
+  auto result = context->service_->completeTask(TaskID{this->task_id_});
   if(!result.GetStatus()) return nullptr;
 
   if(context->show_list_buffer_.checkBufferFullness()) {

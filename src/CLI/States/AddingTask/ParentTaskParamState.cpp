@@ -13,7 +13,6 @@ bool ParentTaskParamState::input() {
 }
 
 std::shared_ptr<StateInterface> ParentTaskParamState::run(std::shared_ptr<Context> &context) {
-  this->output();
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(machine_.execute()) {
