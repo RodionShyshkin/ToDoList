@@ -48,7 +48,12 @@ OperationResult FakeService::addTask(const TaskDTO &task) {
 }
 
 OperationResult FakeService::addSubtask(const TaskID &id, const TaskDTO &subtask) {
-  this->fake_tasks_.push_back(subtask);
+  srand(time(NULL));
+  unsigned int fake_id_ = rand() % 10000;
+  TaskDTO subtask_to_add_ = TaskDTO::create(fake_id_, subtask.getName(), subtask.getLabel(),
+                                         subtask.getPriority(), subtask.getDueDate(),
+                                         subtask.getStatus());
+  this->fake_tasks_.push_back(subtask_to_add_);
   return ErrorCode::NO_ERRORS;
 }
 

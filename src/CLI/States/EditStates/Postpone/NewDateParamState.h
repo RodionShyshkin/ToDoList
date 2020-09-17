@@ -20,7 +20,6 @@ class NewDateParamState : public StateInterface {
 
  private:
   std::string param_;
-  unsigned int task_id_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_NEWDATEPARAMSTATE_H_

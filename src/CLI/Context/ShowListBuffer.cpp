@@ -11,6 +11,8 @@ ShowListBuffer::ShowListBuffer() {
 void ShowListBuffer::clearBuffer() {
   this->modifier_ = ListModifier::UNKNOWN;
   this->is_sorted_ = false;
+  this->label_ = "";
+  this->list_.clear();
 }
 
 bool ShowListBuffer::checkBufferFullness() const {

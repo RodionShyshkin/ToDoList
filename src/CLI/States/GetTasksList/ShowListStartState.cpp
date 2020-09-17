@@ -11,7 +11,6 @@ bool ShowListStartState::input() {
 }
 
 std::shared_ptr<StateInterface> ShowListStartState::run(std::shared_ptr<Context> &context) {
-  this->output();
   return StateFactory::create(StateType::SHOW_LIST_MODIFIER_PARAM_STATE);
 }
 

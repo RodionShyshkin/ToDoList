@@ -12,18 +12,13 @@ bool RemoveTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &context) {
-  this->output();
-
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
-    if(machine_.execute()) {
-      std::cout << "task got" << std::endl;
-    }
-    else {
-      std::cout << "Error with getting task!" << std::endl;
-    }
-  }
-  this->task_id_ = context->id_buffer_.getID().value();
+    if(!machine_.execute()) return StateFactory::create(this->getType());
+ }
+  auto id_from_buffer_ = context->id_buffer_.getID();
+  if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
+  this->task_id_ = id_from_buffer_.value();
 
   auto id_ = TaskID{this->task_id_};
   auto result = context->service_->RemoveTask(id_);
@@ -35,9 +30,7 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
   return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 
-void RemoveTaskState::output() {
-  ConsoleIO io;
-}
+void RemoveTaskState::output() {}
 
 StateType RemoveTaskState::getType() {
   return StateType::REMOVE_TASK_STATE;

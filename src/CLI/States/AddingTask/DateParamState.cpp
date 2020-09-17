@@ -19,7 +19,7 @@ std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &co
   if(!this->input()) return nullptr;
 
   auto validated = this->parseParam();
-  if(!validated.has_value()) return nullptr;
+  if(!validated.has_value()) return StateFactory::create(this->getType());
 
   context->add_task_buffer_.setDate(validated.value());
   return StateFactory::create(StateType::EXIT_STATE);
@@ -49,5 +49,5 @@ std::optional<boost::gregorian::date> DateParamState::parseParam() const {
 }
 
 StateType DateParamState::getType() {
-  return StateType::ADD_TASK_STATE;
+  return StateType::ADD_TASK_DATE_PARAM_STATE;
 }

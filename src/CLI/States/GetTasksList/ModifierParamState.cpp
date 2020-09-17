@@ -17,7 +17,7 @@ std::shared_ptr<StateInterface> ModifierParamState::run(std::shared_ptr<Context>
   this->output();
   if(!this->input()) return nullptr;
   auto parsed = this->parseParam();
-  if(parsed == ListModifier::UNKNOWN) return nullptr;
+  if(parsed == ListModifier::UNKNOWN) return StateFactory::create(this->getType());
 
   context->show_list_buffer_.setModifier(parsed);
   return StateFactory::create(StateType::SHOW_LIST_SORTED_PARAM_STATE);

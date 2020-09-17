@@ -11,18 +11,11 @@ bool AddSubtaskState::input() {
 }
 
 std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &context) {
-  this->output();
-
   auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK, context);
-  if(machine_.execute()) {
-    std::cout << "subtask added" << std::endl;
-  }
-  else {
-    std::cout << "Error with adding subtask!" << std::endl;
-    return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
-  }
+  if(!machine_.execute()) return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 
-  if(!context->add_task_buffer_.checkBufferFullness()) return nullptr;
+  if(!context->add_task_buffer_.checkBufferFullness()) throw std::invalid_argument("Invalid AddSubtask State Machine");
+
   auto id_ = TaskID{context->add_task_buffer_.getParent()};
   auto dto_ = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
                               context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
@@ -31,6 +24,12 @@ std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &c
   if(!result.GetStatus()) throw std::invalid_argument("Wrong AddSubtask validation.");
 
   context->add_task_buffer_.clearBuffer();
+
+  if(context->show_list_buffer_.checkBufferFullness()) {
+    context->id_buffer_.clearBuffer();
+    return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+  }
+  context->show_list_buffer_.clearBuffer();
   return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 

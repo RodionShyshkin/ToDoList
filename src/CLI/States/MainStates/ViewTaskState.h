@@ -15,7 +15,7 @@ class ViewTaskState : public StateInterface {
   void output() override;
   StateType getType() override;
 
-  void showTask(const TaskDTO&) const;
+  static void showTask(const TaskDTO&);
 
  private:
   Command command_;

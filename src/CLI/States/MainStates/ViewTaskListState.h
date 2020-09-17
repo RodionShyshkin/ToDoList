@@ -16,7 +16,7 @@ class ViewTaskListState : public StateInterface {
   StateType getType() override;
 
  private:
-  void showList(const std::vector<TaskDTO>&) const;
+  static void showList(const std::vector<TaskDTO>&);
 
  private:
   Command command_;

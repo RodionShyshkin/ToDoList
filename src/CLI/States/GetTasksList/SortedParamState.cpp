@@ -17,7 +17,7 @@ std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &
   this->output();
   if(!this->input()) return nullptr;
   auto parsed = this->parseParam();
-  if(!parsed.has_value()) return nullptr;
+  if(!parsed.has_value()) return StateFactory::create(this->getType());
 
   context->show_list_buffer_.setSortedFlag(parsed.value());
   if(context->show_list_buffer_.getModifier() == ListModifier::BY_LABEL) return StateFactory::create(StateType::ADD_TASK_LABEL_PARAM_STATE);
@@ -30,8 +30,8 @@ void SortedParamState::output() {
 }
 
 std::optional<bool> SortedParamState::parseParam() const {
-  if(this->param_ == "y") return true;
-  else if(this->param_ == "n") return false;
+  if(this->param_ == "y" || this->param_ == "yes") return true;
+  else if(this->param_ == "n" || this->param_ == "no") return false;
   else return std::nullopt;
 }
 

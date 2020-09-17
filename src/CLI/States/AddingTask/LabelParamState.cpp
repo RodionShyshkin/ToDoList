@@ -2,8 +2,8 @@
 // Created by rodion on 8/27/20.
 //
 
+#include <States/StateFactory.h>
 #include "LabelParamState.h"
-#include "PriorityParamState.h"
 
 bool LabelParamState::input() {
   ConsoleIO io;
@@ -14,11 +14,11 @@ bool LabelParamState::input() {
 std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &context) {
   this->output();
   if(!this->input()) return nullptr;
-  if(!validateParam()) return nullptr;
+  if(!validateParam()) return StateFactory::create(this->getType());
 
   if(context->show_list_buffer_.checkBufferFullness()) context->show_list_buffer_.setLabel(this->param_);
   else context->add_task_buffer_.setLabel(this->param_);
-  return std::make_shared<PriorityParamState>();
+  return StateFactory::create(StateType::ADD_TASK_PRIORITY_PARAM_STATE);
 }
 
 void LabelParamState::output() {

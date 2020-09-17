@@ -8,7 +8,7 @@
 bool MainMenuState::input() {
   ConsoleIO console_io;
   this->command_ = parseCommand(console_io.inputCommand());
-  if(AvailableCommands::checkIsCommandAvailable(this->getType(), this->command_)) return false;
+  if(!AvailableCommands::checkIsCommandAvailable(this->getType(), this->command_)) return false;
   return true;
 }
 

@@ -18,13 +18,13 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> 
   if(!this->input()) return nullptr;
 
   auto parsed = this->parseParam();
-  if(!parsed.has_value()) return nullptr;
-  else {
-    context->postpone_buffer_.setNewDate(parsed.value());
-  }
-  this->task_id_ = context->id_buffer_.getID().value();
+  if(!parsed.has_value()) return StateFactory::create(this->getType());
 
-  auto id_ = TaskID{this->task_id_};
+  context->postpone_buffer_.setNewDate(parsed.value());
+  auto id_from_buffer_ = context->id_buffer_.getID();
+  if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
+
+  auto id_ = TaskID{id_from_buffer_.value()};
   auto result = context->service_->postponeTask(id_, context->postpone_buffer_.getNewDate());
   if(!result.GetStatus()) return nullptr;
 

@@ -4,8 +4,6 @@
 
 #include <States/StateFactory.h>
 #include "AddTaskStartState.h"
-#include "NameParamState.h"
-#include "ParentTaskParamState.h"
 
 AddTaskStartState::AddTaskStartState(const bool &is_subtask) : is_subtask_(is_subtask) {}
 
@@ -14,7 +12,6 @@ bool AddTaskStartState::input() {
 }
 
 std::shared_ptr<StateInterface> AddTaskStartState::run(std::shared_ptr<Context> &context) {
-  this->output();
   if(this->is_subtask_) return StateFactory::create(StateType::ADD_TASK_PARENT_PARAM_STATE);
   return StateFactory::create(StateType::ADD_TASK_NAME_PARAM_STATE);
 }
