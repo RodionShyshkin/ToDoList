@@ -14,6 +14,10 @@ bool PostponeTaskState::input() {
 }
 
 std::shared_ptr<StateInterface>  PostponeTaskState::run(std::shared_ptr<Context> &context) {
+  if(context->show_list_buffer_.checkBufferFullness()) {
+    if(context->show_list_buffer_.getList().empty()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+  }
+
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
     if(!machine_.execute()) return StateFactory::create(this->getType());

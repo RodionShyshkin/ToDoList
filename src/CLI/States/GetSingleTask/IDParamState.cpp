@@ -22,6 +22,7 @@ bool IDParamState::input() {
 
 std::shared_ptr<StateInterface> IDParamState::run(std::shared_ptr<Context> &context) {
   if(!context->show_list_buffer_.checkBufferFullness()) return nullptr;
+
   this->output();
   if(!this->input()) return StateFactory::create(this->getType());
 

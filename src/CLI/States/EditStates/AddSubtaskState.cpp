@@ -11,6 +11,10 @@ bool AddSubtaskState::input() {
 }
 
 std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &context) {
+  if(context->show_list_buffer_.checkBufferFullness()) {
+    if(context->show_list_buffer_.getList().empty()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+  }
+
   auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK, context);
   if(!machine_.execute()) return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 
