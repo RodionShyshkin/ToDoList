@@ -48,7 +48,7 @@ include_directories(tests)
 file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp"
         "tests/CLI/base.cpp")
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/core/API/Priority.cpp tests/CLI/CommandParserTest.cpp)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/core/API/Priority.cpp tests/CLI/CommandParserTest.cpp tests/CLI/AvailableCommandsTest.cpp)
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})

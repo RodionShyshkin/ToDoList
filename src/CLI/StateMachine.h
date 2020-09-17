@@ -13,7 +13,7 @@
 
 class StateMachine {
  public:
-  static StateMachine                 create(const StatesGraphType&, std::shared_ptr<Context>&);
+  static StateMachine                 create(const StatesGraphType& type, std::shared_ptr<Context>& context);
 
  public:
   bool                                execute();

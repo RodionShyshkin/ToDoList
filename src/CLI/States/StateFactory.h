@@ -10,7 +10,6 @@
 
 class StateFactory {
  public:
-//  static std::shared_ptr<StateInterface>     create(const Command&);
   static std::shared_ptr<StateInterface>     create(const StateType&);
 };
 
