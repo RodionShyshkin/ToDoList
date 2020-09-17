@@ -15,10 +15,14 @@ class TaskServiceTest : public ::testing::Test {
     std::optional<Task> task3 = Task::create("Task 2", "label", Priority::HIGH, Date::GetCurrentDate());
     std::optional<Task> task4 = Task::create("Task 2", "label", Priority::LOW, Date::GetCurrentDate());
 
-    service.addTask(TaskDTO::create(TaskID{1}, task.value(), false));
-    service.addTask(TaskDTO::create(TaskID{2}, task2.value(), true));
-    service.addSubtask(TaskID{1}, TaskDTO::create(TaskID{3}, task3.value(), true));
-    service.addSubtask(TaskID{3}, TaskDTO::create(TaskID{4}, task4.value(), false));
+    service.addTask(TaskDTO::create(1, "Task", "label",
+                                    Priority::EMPTY, boost::gregorian::date{2040-9-20}, false));
+    service.addTask(TaskDTO::create(2, "Task", "label",
+                                    Priority::MEDIUM, boost::gregorian::date{2019-4-12}, false));
+    service.addSubtask(1, TaskDTO::create(3, "Task 2", "label",
+                                          Priority::HIGH, Date::GetCurrentDate().GetDate(), true));
+    service.addSubtask(3, TaskDTO::create(4, "Task 2", "label",
+                                          Priority::LOW, Date::GetCurrentDate().GetDate(), false));
   }
 
   void TearDown() override {

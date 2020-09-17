@@ -55,13 +55,15 @@ TEST_F(FullStorageTest, AddingTask) {
 
 
 TEST_F(FullStorageTest, AddingTask) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
   auto tasks = ts_storage.GetTaskView().GetAllTasks();
   ASSERT_EQ(tasks.size(), 1);
 }
 
 TEST_F(FullStorageTest, GetTaskByID) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
   auto check = ts_storage.GetTaskStorage().GetTask(TaskID{1});
   ASSERT_EQ(check->GetName(), "Task");
   check = ts_storage.GetTaskStorage().GetTask(TaskID{2});
@@ -69,29 +71,35 @@ TEST_F(FullStorageTest, GetTaskByID) {
 }
 
 TEST_F(FullStorageTest, AddSubtask) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
-  ts_storage.AddSubtask(TaskID{1},TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
+  ts_storage.AddSubtask(TaskID{1},TaskDTO::create(1, task.GetName(), task.GetLabel(),
+                                                  task.GetPriority(), task.GetDate().GetDate(), false));
 
   auto check = ts_storage.GetTaskStorage().GetTask(TaskID{1});
   auto subcheck = ts_storage.GetTaskStorage().GetTask(TaskID{2});
 }
 
 TEST_F(FullStorageTest, getTodayTasks) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
   ASSERT_TRUE(ts_storage.GetTaskView().GetTodayTasks().empty());
 }
 
 TEST_F(FullStorageTest, getWeekTasks) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
   ASSERT_TRUE(ts_storage.GetTaskView().GetWeekTasks().empty());
 }
 
 TEST_F(FullStorageTest, getTasksByLabel) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
   ASSERT_EQ(ts_storage.GetTaskView().GetTasksByLabel("test").size(), 1);
 }
 
 TEST_F(FullStorageTest, getTasksByName) {
-  ts_storage.AddTask(TaskDTO::create(TaskID{1}, task, false));
+  ts_storage.AddTask(TaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
+                                     task.GetDate().GetDate(), false));
   ASSERT_EQ(ts_storage.GetTaskView().GetTasksByName("Task").size(), 1);
 }
