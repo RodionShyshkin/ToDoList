@@ -8,7 +8,7 @@
 #include "States/MainStates/ViewTaskListState.h"
 #include "States/MainStates/ViewTaskState.h"
 
-bool CompleteTaskState::input() {
+bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -37,7 +37,7 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
   return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 
-void CompleteTaskState::output() {
+void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Completing task.");
 }

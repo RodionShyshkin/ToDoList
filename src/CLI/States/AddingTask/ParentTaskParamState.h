@@ -9,10 +9,12 @@
 
 class ParentTaskParamState : public StateInterface {
  public:
-  bool                              input()                                   override;
   std::shared_ptr<StateInterface>   run(std::shared_ptr<Context> &context)    override;
-  void                              output()                                  override;
   StateType                         getType()                                 override;
+
+ private:
+  bool input(const std::shared_ptr<IOInterface> &io_) override;
+  void output(const std::shared_ptr<IOInterface> &io_) override;
 
  private:
   unsigned int                      param_;

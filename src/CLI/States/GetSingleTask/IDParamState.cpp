@@ -6,7 +6,7 @@
 #include <States/StateFactory.h>
 #include "IDParamState.h"
 
-bool IDParamState::input() {
+bool IDParamState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   try {
     this->param_ = std::stoi(io.input());
@@ -23,8 +23,8 @@ bool IDParamState::input() {
 std::shared_ptr<StateInterface> IDParamState::run(std::shared_ptr<Context> &context) {
   if(!context->show_list_buffer_.checkBufferFullness()) return nullptr;
 
-  this->output();
-  if(!this->input()) return StateFactory::create(this->getType());
+  this->output(context->io_);
+  if(!this->input(context->io_)) return StateFactory::create(this->getType());
 
   auto list = context->show_list_buffer_.getList();
   if(this->param_ >= list.size()) return nullptr;
@@ -33,7 +33,7 @@ std::shared_ptr<StateInterface> IDParamState::run(std::shared_ptr<Context> &cont
   return StateFactory::create(StateType::EXIT_STATE);
 }
 
-void IDParamState::output() {
+void IDParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Enter task ID: ");
 }

@@ -7,15 +7,15 @@
 #include <States/StateFactory.h>
 #include "SortedParamState.h"
 
-bool SortedParamState::input() {
+bool SortedParamState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &context) {
-  this->output();
-  if(!this->input()) return nullptr;
+  this->output(context->io_);
+  if(!this->input(context->io_)) return nullptr;
   auto parsed = this->parseParam();
   if(!parsed.has_value()) return StateFactory::create(this->getType());
 
@@ -24,7 +24,7 @@ std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &
   return StateFactory::create(StateType::EXIT_STATE);
 }
 
-void SortedParamState::output() {
+void SortedParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Do you want to sort list? [y/n]: ");
 }

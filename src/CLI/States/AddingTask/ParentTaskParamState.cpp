@@ -8,7 +8,7 @@
 #include "ParentTaskParamState.h"
 #include "NameParamState.h"
 
-bool ParentTaskParamState::input() {
+bool ParentTaskParamState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -25,7 +25,7 @@ std::shared_ptr<StateInterface> ParentTaskParamState::run(std::shared_ptr<Contex
   return StateFactory::create(StateType::ADD_TASK_NAME_PARAM_STATE);
 }
 
-void ParentTaskParamState::output() {
+void ParentTaskParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Enter parent task ID: ");
 }

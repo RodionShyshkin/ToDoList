@@ -8,7 +8,7 @@
 #include "States/EditStates/RemoveTaskState.h"
 #include "States/StateFactory.h"
 
-bool ViewTaskState::input() {
+bool ViewTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   this->command_ = parseCommand(io.inputCommand());
   if(!AvailableCommands::checkIsCommandAvailable(this->getType(), this->command_)) return false;
@@ -31,11 +31,11 @@ std::shared_ptr<StateInterface>  ViewTaskState::run(std::shared_ptr<Context> &co
   ViewTaskState::showTask(task_dto_);
 
 //  context->show_list_buffer_.clearBuffer();
-  if(!this->input()) return StateFactory::create(this->getType());
+  if(!this->input(context->io_)) return StateFactory::create(this->getType());
   return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
-void ViewTaskState::output() {
+void ViewTaskState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Single task view mode.");
 }

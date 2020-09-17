@@ -4,8 +4,10 @@
 
 #include "Context.h"
 
-Context::Context() {
-  this->service_ = std::make_unique<FakeService>();
+Context::Context(const std::shared_ptr<TaskServiceInterface> &service,
+                 const std::shared_ptr<IOInterface> &io) {
+  this->service_ = service;
+  this->io_ = io;
 }
 
 void Context::clearAllBuffers() {

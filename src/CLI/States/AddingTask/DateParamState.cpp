@@ -8,15 +8,15 @@
 #include <States/StateFactory.h>
 #include "DateParamState.h"
 
-bool DateParamState::input() {
+bool DateParamState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &context) {
-  this->output();
-  if(!this->input()) return nullptr;
+  this->output(context->io_);
+  if(!this->input(context->io_)) return nullptr;
 
   auto validated = this->parseParam();
   if(!validated.has_value()) return StateFactory::create(this->getType());
@@ -25,7 +25,7 @@ std::shared_ptr<StateInterface> DateParamState::run(std::shared_ptr<Context> &co
   return StateFactory::create(StateType::EXIT_STATE);
 }
 
-void DateParamState::output() {
+void DateParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Enter task deadline (not required): ");
 }

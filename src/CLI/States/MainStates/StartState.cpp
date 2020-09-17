@@ -5,7 +5,7 @@
 #include <States/StateFactory.h>
 #include "StartState.h"
 
-bool StartState::input() {
+bool StartState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -13,7 +13,7 @@ std::shared_ptr<StateInterface> StartState::run(std::shared_ptr<Context> &contex
   return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 
-void StartState::output() {
+void StartState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Start state.");
 }

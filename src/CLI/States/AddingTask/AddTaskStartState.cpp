@@ -7,7 +7,7 @@
 
 AddTaskStartState::AddTaskStartState(const bool &is_subtask) : is_subtask_(is_subtask) {}
 
-bool AddTaskStartState::input() {
+bool AddTaskStartState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -16,7 +16,7 @@ std::shared_ptr<StateInterface> AddTaskStartState::run(std::shared_ptr<Context> 
   return StateFactory::create(StateType::ADD_TASK_NAME_PARAM_STATE);
 }
 
-void AddTaskStartState::output() {
+void AddTaskStartState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: AddTask state machine / Start State");
 }

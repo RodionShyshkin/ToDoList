@@ -6,7 +6,7 @@
 #include <iostream>
 #include "ExitState.h"
 
-bool ExitState::input() {
+bool ExitState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -14,7 +14,7 @@ std::shared_ptr<StateInterface>  ExitState::run(std::shared_ptr<Context> &contex
   return nullptr;
 }
 
-void ExitState::output() { }
+void ExitState::output(const std::shared_ptr<IOInterface> &io_) { }
 
 StateType ExitState::getType() {
   return StateType::EXIT_STATE;

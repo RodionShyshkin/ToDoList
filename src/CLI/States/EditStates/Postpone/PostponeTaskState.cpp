@@ -9,7 +9,7 @@
 #include "States/MainStates/ViewTaskState.h"
 #include "NewDateParamState.h"
 
-bool PostponeTaskState::input() {
+bool PostponeTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -25,7 +25,7 @@ std::shared_ptr<StateInterface>  PostponeTaskState::run(std::shared_ptr<Context>
   return StateFactory::create(StateType::POSTPONE_TASK_NEW_DATE_PARAM_STATE);
 }
 
-void PostponeTaskState::output() {
+void PostponeTaskState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Postponing task.");
 }

@@ -7,15 +7,15 @@
 #include "ModifierParamState.h"
 #include "SortedParamState.h"
 
-bool ModifierParamState::input() {
+bool ModifierParamState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> ModifierParamState::run(std::shared_ptr<Context> &context) {
-  this->output();
-  if(!this->input()) return nullptr;
+  this->output(context->io_);
+  if(!this->input(context->io_)) return nullptr;
   auto parsed = this->parseParam();
   if(parsed == ListModifier::UNKNOWN) return StateFactory::create(this->getType());
 
@@ -23,7 +23,7 @@ std::shared_ptr<StateInterface> ModifierParamState::run(std::shared_ptr<Context>
   return StateFactory::create(StateType::SHOW_LIST_SORTED_PARAM_STATE);
 }
 
-void ModifierParamState::output() {
+void ModifierParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Enter modifier [all/today/week/by_label]: ");
 }

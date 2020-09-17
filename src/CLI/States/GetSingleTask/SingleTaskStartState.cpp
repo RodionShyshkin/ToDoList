@@ -6,7 +6,7 @@
 #include "SingleTaskStartState.h"
 #include "IDParamState.h"
 
-bool SingleTaskStartState::input() {
+bool SingleTaskStartState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -14,7 +14,7 @@ std::shared_ptr<StateInterface> SingleTaskStartState::run(std::shared_ptr<Contex
   return StateFactory::create(StateType::SHOW_SINGLE_ID_PARAM_STATE);
 }
 
-void SingleTaskStartState::output() {
+void SingleTaskStartState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Show single task / Start");
 }

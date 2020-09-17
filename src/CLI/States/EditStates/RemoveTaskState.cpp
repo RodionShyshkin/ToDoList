@@ -7,7 +7,7 @@
 #include "RemoveTaskState.h"
 #include "States/MainStates/MainMenuState.h"
 
-bool RemoveTaskState::input() {
+bool RemoveTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -34,7 +34,7 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
   return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
 }
 
-void RemoveTaskState::output() {}
+void RemoveTaskState::output(const std::shared_ptr<IOInterface> &io_) {}
 
 StateType RemoveTaskState::getType() {
   return StateType::REMOVE_TASK_STATE;

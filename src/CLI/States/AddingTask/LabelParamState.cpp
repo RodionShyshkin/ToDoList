@@ -5,15 +5,15 @@
 #include <States/StateFactory.h>
 #include "LabelParamState.h"
 
-bool LabelParamState::input() {
+bool LabelParamState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &context) {
-  this->output();
-  if(!this->input()) return nullptr;
+  this->output(context->io_);
+  if(!this->input(context->io_)) return nullptr;
   if(!validateParam()) return StateFactory::create(this->getType());
 
   if(context->show_list_buffer_.checkBufferFullness()) context->show_list_buffer_.setLabel(this->param_);
@@ -21,7 +21,7 @@ std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &c
   return StateFactory::create(StateType::ADD_TASK_PRIORITY_PARAM_STATE);
 }
 
-void LabelParamState::output() {
+void LabelParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Enter task label (not required): ");
 }

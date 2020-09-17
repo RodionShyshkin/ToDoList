@@ -14,10 +14,12 @@
 #include <API/TaskServiceInterface.h>
 
 #include <FakeService.h>
+#include <IO/IOInterface.h>
 
 class Context {
  public:
-  Context();
+  Context(const std::shared_ptr<TaskServiceInterface>&,
+      const std::shared_ptr<IOInterface>&);
 
  public:
   void clearAllBuffers();
@@ -30,6 +32,7 @@ class Context {
 
  public:
   std::shared_ptr<TaskServiceInterface> service_;
+  std::shared_ptr<IOInterface> io_;
 };
 
 #endif //TODOLIST_SRC_CLI_CONTEXT_H_

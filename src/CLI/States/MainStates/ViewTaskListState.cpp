@@ -8,9 +8,8 @@
 #include "ViewTaskListState.h"
 #include "States/StateFactory.h"
 
-bool ViewTaskListState::input() {
-  ConsoleIO io;
-  this->command_ = parseCommand(io.inputCommand());
+bool ViewTaskListState::input(const std::shared_ptr<IOInterface> &io_) {
+  this->command_ = parseCommand(io_->inputCommand());
   if(!AvailableCommands::checkIsCommandAvailable(this->getType(), this->command_)) return false;
   return true;
 }
@@ -46,11 +45,11 @@ std::shared_ptr<StateInterface> ViewTaskListState::run(std::shared_ptr<Context> 
   ViewTaskListState::showList(context->show_list_buffer_.getList());
 
   //Input.
-  if(!this->input()) return StateFactory::create(this->getType());
+  if(!this->input(context->io_)) return StateFactory::create(this->getType());
   return StateFactory::create(getStateTypeByCommand(this->command_));
 }
 
-void ViewTaskListState::output() {
+void ViewTaskListState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Tasks list view mode.");
 }

@@ -14,13 +14,15 @@
 
 class StateInterface {
  public:
-  ~StateInterface()                                                                   = default;
+  ~StateInterface()                                                                             = default;
 
  public:
-  virtual bool                                input()                                 = 0;
-  virtual std::shared_ptr<StateInterface>     run(std::shared_ptr<Context> &context)  = 0;
-  virtual void                                output()                                = 0;
-  virtual StateType                           getType()                               = 0;
+  virtual std::shared_ptr<StateInterface>     run(std::shared_ptr<Context> &context)            = 0;
+  virtual StateType                           getType()                                         = 0;
+
+ private:
+  virtual bool                                input(const std::shared_ptr<IOInterface> &io_)    = 0;
+  virtual void                                output(const std::shared_ptr<IOInterface> &io_)   = 0;
 };
 
 #endif //TODOLIST_SRC_CLI_STATEINTERFACE_H_

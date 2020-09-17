@@ -6,7 +6,7 @@
 #include "States/StateFactory.h"
 #include <StateMachine.h>
 
-bool AddSubtaskState::input() {
+bool AddSubtaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
@@ -37,7 +37,7 @@ std::shared_ptr<StateInterface> AddSubtaskState::run(std::shared_ptr<Context> &c
   return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
 }
 
-void AddSubtaskState::output() {
+void AddSubtaskState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.outputWithBreak("[Output]: Adding subtask for an existing task.");
 }

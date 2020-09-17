@@ -7,15 +7,15 @@
 #include "States/MainStates/ViewTaskState.h"
 #include "States/MainStates/ViewTaskListState.h"
 
-bool NewDateParamState::input() {
+bool NewDateParamState::input(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   this->param_ = io.input();
   return true;
 }
 
 std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> &context) {
-  this->output();
-  if(!this->input()) return nullptr;
+  this->output(context->io_);
+  if(!this->input(context->io_)) return nullptr;
 
   auto parsed = this->parseParam();
   if(!parsed.has_value()) return StateFactory::create(this->getType());
@@ -33,7 +33,7 @@ std::shared_ptr<StateInterface> NewDateParamState::run(std::shared_ptr<Context> 
   return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
 }
 
-void NewDateParamState::output() {
+void NewDateParamState::output(const std::shared_ptr<IOInterface> &io_) {
   ConsoleIO io;
   io.output("Enter new date (not required) [yyyy-mm-dd]: ");
 }
