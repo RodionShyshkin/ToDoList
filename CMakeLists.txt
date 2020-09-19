@@ -49,7 +49,7 @@ file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cp
 
 file(GLOB cli_tests "tests/CLI/*.cpp")
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests})
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} tests/CLI/StateMachineTest.cpp)
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})
