@@ -23,6 +23,14 @@ class MockService : public TaskServiceInterface {
   MOCK_METHOD(OperationResult, completeTask, (const TaskID&), (override));
 };
 
+class MockIO : public IOInterface {
+ public:
+  MOCK_METHOD(std::string, input, (), (override));
+  MOCK_METHOD(std::string, inputCommand, (), (override));
+  MOCK_METHOD(void, output, (const std::string&), (override));
+  MOCK_METHOD(void, outputWithBreak, (const std::string&), (override));
+};
+
  class StateMachineTest : public ::testing::Test {
 
 };
