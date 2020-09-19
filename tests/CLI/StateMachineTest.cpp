@@ -6,6 +6,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+using ::testing::Return;
+
 class MockService : public TaskServiceInterface {
  public:
   MOCK_METHOD(TaskDTO, getTask, (const TaskID&), (const, override));
@@ -32,6 +34,24 @@ class MockIO : public IOInterface {
 };
 
  class StateMachineTest : public ::testing::Test {
+  public:
 
+   void SetUp() override {
+     this->io_ = std::make_shared<MockIO>();
+     this->service_ = std::make_shared<MockService>();
+   }
+
+   void TearDown() override {
+
+   }
+
+  protected:
+   std::shared_ptr<MockIO> io_;
+   std::shared_ptr<MockService> service_;
 };
 
+TEST_F(StateMachineTest, gsad) {
+//  EXPECT_CALL(*io_, inputCommand).Times(1).WillOnce(Return("add"));
+  EXPECT_CALL(*service_, getAllTasks(true)).Times(1).WillOnce(Return(std::vector<TaskDTO>()));
+
+}
