@@ -45,10 +45,11 @@ include_directories(tests)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
-file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp"
-        "tests/CLI/base.cpp")
+file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp")
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} src/core/API/Priority.cpp tests/CLI/CommandParserTest.cpp tests/CLI/AvailableCommandsTest.cpp tests/CLI/MainMenuTest.cpp)
+file(GLOB cli_tests "tests/CLI/*.cpp")
+
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests})
 
 target_link_libraries(Tests GTest::GTest GTest::Main)
 target_link_libraries(Tests ${Boost_LIBRARIES})

@@ -8,6 +8,7 @@
 #include <States/StateInterface.h>
 #include <States/StateFactory.h>
 #include <random>
+#include <gtest/gtest_prod.h>
 
 class MainMenuState : public StateInterface {
  public:
@@ -17,6 +18,8 @@ class MainMenuState : public StateInterface {
  private:
   bool                                input(const std::shared_ptr<IOInterface> &io_)  override;
   void                                output(const std::shared_ptr<IOInterface> &io_) override;
+
+  FRIEND_TEST(MainMenuTest, rightInput);
 
  private:
   Command                             command_;
