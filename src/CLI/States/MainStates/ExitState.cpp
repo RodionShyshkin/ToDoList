@@ -3,7 +3,6 @@
 //
 
 
-#include <iostream>
 #include "ExitState.h"
 
 bool ExitState::input(const std::shared_ptr<IOInterface> &io_) {

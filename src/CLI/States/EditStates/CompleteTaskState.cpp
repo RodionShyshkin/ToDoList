@@ -2,11 +2,7 @@
 // Created by rodion on 8/25/20.
 //
 
-#include <StateMachine.h>
-#include <States/StateFactory.h>
 #include "CompleteTaskState.h"
-#include "States/MainStates/ViewTaskListState.h"
-#include "States/MainStates/ViewTaskState.h"
 
 bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;

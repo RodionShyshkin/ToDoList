@@ -2,10 +2,7 @@
 // Created by rodion on 8/27/20.
 //
 
-#include <States/StateFactory.h>
 #include "LabelParamState.h"
-
-
 
 StateResult LabelParamState::run(std::shared_ptr<Context> &context) {
   this->output(context->io_);

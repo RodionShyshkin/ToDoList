@@ -3,9 +3,7 @@
 //
 
 
-#include <StateMachine.h>
 #include "RemoveTaskState.h"
-#include "States/MainStates/MainMenuState.h"
 
 bool RemoveTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;

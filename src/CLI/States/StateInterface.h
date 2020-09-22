@@ -8,13 +8,11 @@
 #include <memory>
 #include <set>
 #include <Context/Context.h>
-#include "CommandParser.h"
-#include "StateType.h"
-#include "StateResult.h"
-#include <IO/ConsoleIO.h>
+#include <CommandParser.h>
+#include <States/StateType.h>
+#include <States/StateResult.h>
+#include <States/StateFactory.h>
 #include <ErrorType.h>
-
-//class StateResult;
 
 class StateInterface {
  public:

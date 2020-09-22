@@ -2,11 +2,7 @@
 // Created by rodion on 9/1/20.
 //
 
-#include <StateMachine.h>
-#include <StatesGraphType.h>
-#include <States/StateFactory.h>
 #include "ParentTaskParamState.h"
-#include "NameParamState.h"
 
 bool ParentTaskParamState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
@@ -28,8 +24,7 @@ StateResult ParentTaskParamState::run(std::shared_ptr<Context> &context) {
 }
 
 void ParentTaskParamState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.output("Enter parent task ID: ");
+  io_->output("Enter parent task ID: ");
 }
 
 StateType ParentTaskParamState::getType() {

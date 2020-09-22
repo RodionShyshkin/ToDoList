@@ -2,11 +2,7 @@
 // Created by rodion on 9/2/20.
 //
 
-#include <States/MainStates/ExitState.h>
-#include <States/StateFactory.h>
 #include "IDParamState.h"
-
-
 
 StateResult IDParamState::run(std::shared_ptr<Context> &context) {
   this->output(context->io_);

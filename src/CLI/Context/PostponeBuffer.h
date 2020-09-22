@@ -13,19 +13,18 @@ class PostponeBuffer : public BufferInterface {
   PostponeBuffer();
 
  public:
-  void clearBuffer() override;
-  bool checkBufferFullness() const override;
+  void                    clearBuffer()                                     override;
+  bool                    checkBufferFullness()                       const override;
 
  public:
-  void setSingleTaskFlag(const bool&);
-  void setNewDate(const boost::gregorian::date&);
+  void                    setNewDate(const boost::gregorian::date&);
 
-  bool getSingleTaskFlag() const;
-  boost::gregorian::date getNewDate() const;
+  bool                    getSingleTaskFlag()                         const;
+  boost::gregorian::date  getNewDate()                                const;
 
  private:
-  boost::gregorian::date new_date_;
-  bool is_single_task_;
+  boost::gregorian::date  new_date_;
+  bool                    is_single_task_;
   
 };
 

@@ -2,8 +2,6 @@
 // Created by rodion on 8/26/20.
 //
 
-#include <States/StateFactory.h>
-#include <States/StateResult.h>
 #include "AddTaskStartState.h"
 
 AddTaskStartState::AddTaskStartState(const bool &is_subtask) : is_subtask_(is_subtask) {}
@@ -26,8 +24,7 @@ StateResult AddTaskStartState::run(std::shared_ptr<Context> &context) {
 }
 
 void AddTaskStartState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.outputWithBreak("[Output]: AddTask state machine / Start State");
+  io_->outputWithBreak("[Output]: AddTask state machine / Start State");
 }
 
 StateType AddTaskStartState::getType() {

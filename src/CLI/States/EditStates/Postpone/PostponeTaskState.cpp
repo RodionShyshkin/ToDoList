@@ -2,12 +2,7 @@
 // Created by rodion on 8/25/20.
 //
 
-#include <StateMachine.h>
-#include <States/StateFactory.h>
 #include "PostponeTaskState.h"
-#include "States/MainStates/ViewTaskListState.h"
-#include "States/MainStates/ViewTaskState.h"
-#include "NewDateParamState.h"
 
 bool PostponeTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;

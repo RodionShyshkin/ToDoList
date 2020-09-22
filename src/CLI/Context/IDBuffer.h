@@ -13,17 +13,18 @@ class IDBuffer : public BufferInterface {
   IDBuffer();
 
  public:
-  void clearBuffer() override;
-  bool checkBufferFullness() const override;
+  void            clearBuffer()               override;
+  bool            checkBufferFullness() const override;
 
  public:
-  void setID(const unsigned int&);
+  void            setID(const unsigned int&);
 
-  std::optional<unsigned int> getID() const;
+  std::optional
+  <unsigned int>  getID() const;
 
  private:
-  bool has_id_;
-  unsigned int id_;
+  bool            has_id_;
+  unsigned int    id_;
 };
 
 #endif //TODOLIST_SRC_CLI_CONTEXT_IDBUFFER_H_

@@ -11,18 +11,16 @@ class AddTaskStartState : public StateInterface {
  public:
   explicit AddTaskStartState(const bool& is_subtask);
 
-  explicit AddTaskStartState(AddTaskStartState&) = default;
-
  public:
-  StateResult run(std::shared_ptr<Context> &context)    override;
-  StateType                         getType()                                 override;
+  StateResult     run(std::shared_ptr<Context> &context)            override;
+  StateType       getType()                                         override;
 
  private:
-  bool input(const std::shared_ptr<IOInterface> &io_) override;
-  void output(const std::shared_ptr<IOInterface> &io_) override;
+  bool            input(const std::shared_ptr<IOInterface> &io_)    override;
+  void            output(const std::shared_ptr<IOInterface> &io_)   override;
 
  private:
-  bool                              is_subtask_;
+  bool            is_subtask_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_ADDINGTASK_ADDTASKSTARTSTATE_H_

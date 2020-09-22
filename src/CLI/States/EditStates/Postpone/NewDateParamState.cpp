@@ -2,10 +2,7 @@
 // Created by rodion on 9/5/20.
 //
 
-#include <States/StateFactory.h>
 #include "NewDateParamState.h"
-#include "States/MainStates/ViewTaskState.h"
-#include "States/MainStates/ViewTaskListState.h"
 
 StateResult NewDateParamState::run(std::shared_ptr<Context> &context) {
   this->output(context->io_);
@@ -34,8 +31,7 @@ bool NewDateParamState::input(const std::shared_ptr<IOInterface> &io_) {
 }
 
 void NewDateParamState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.output("Enter new date (not required) [yyyy-mm-dd]: ");
+  io_->output("Enter new date (not required) [yyyy-mm-dd]: ");
 }
 
 StateType NewDateParamState::getType() {

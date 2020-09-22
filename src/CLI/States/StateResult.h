@@ -6,7 +6,6 @@
 #define TODOLIST_SRC_CLI_STATES_STATERESULT_H_
 
 #include <memory>
-//#include <States/StateInterface.h>
 #include <ErrorType.h>
 
 class StateInterface;

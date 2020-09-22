@@ -2,13 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <StateMachine.h>
-#include <AvailableCommands.h>
 #include "ViewTaskState.h"
-#include "States/EditStates/RemoveTaskState.h"
-#include "States/StateFactory.h"
-
-
 
 StateResult ViewTaskState::run(std::shared_ptr<Context> &context) {
 /*  if(!context->show_list_buffer_.checkBufferFullness()) return StateResult::create(ErrorType::FATAL_ERROR, nullptr);

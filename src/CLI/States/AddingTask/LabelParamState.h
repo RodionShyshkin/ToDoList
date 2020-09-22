@@ -9,15 +9,15 @@
 
 class LabelParamState : public StateInterface {
  public:
-  StateResult run(std::shared_ptr<Context> &context)    override;
-  StateType                         getType()                                 override;
+  StateResult     run(std::shared_ptr<Context> &context)            override;
+  StateType       getType()                                         override;
 
  private:
-  bool input(const std::shared_ptr<IOInterface> &io_) override;
-  void output(const std::shared_ptr<IOInterface> &io_) override;
+  bool            input(const std::shared_ptr<IOInterface> &io_)    override;
+  void            output(const std::shared_ptr<IOInterface> &io_)   override;
 
  private:
-  std::string                       param_;
+  std::string     param_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_ADDINGTASK_LABELPARAMSTATE_H_

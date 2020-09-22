@@ -2,10 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <States/AddingTask/AddTaskStartState.h>
 #include "AddTaskState.h"
-#include "MainMenuState.h"
-#include <StateMachine.h>
 
 bool AddTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;

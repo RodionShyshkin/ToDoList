@@ -2,13 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <StateMachine.h>
-#include <AvailableCommands.h>
-#include <gmock/gmock.h>
 #include "ViewTaskListState.h"
-#include "States/StateFactory.h"
-
-
 
 StateResult ViewTaskListState::run(std::shared_ptr<Context> &context) {
   //Fulling buffer.

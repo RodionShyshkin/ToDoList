@@ -17,10 +17,6 @@ bool PostponeBuffer::checkBufferFullness() const {
   return (!this->is_single_task_ && !this->new_date_.is_not_a_date());
 }
 
-void PostponeBuffer::setSingleTaskFlag(const bool &flag) {
-  this->is_single_task_ = flag;
-}
-
 void PostponeBuffer::setNewDate(const boost::gregorian::date &date) {
   this->new_date_ = date;
 }
