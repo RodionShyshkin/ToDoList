@@ -5,6 +5,14 @@
 #ifndef TODOLIST_SRC_CLI_STATES_STATETYPE_H_
 #define TODOLIST_SRC_CLI_STATES_STATETYPE_H_
 
+/*
+ * Represents all types of states which can be created.
+ *
+ * @see States/StateFactory.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 enum class StateType {
   UNKNOWN_STATE,
   START_STATE,

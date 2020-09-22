@@ -14,16 +14,50 @@
 #include <States/StateFactory.h>
 #include <ErrorType.h>
 
+/*
+ * A common interface for all states.
+ *
+ * @see States/StateResult.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class StateInterface {
  public:
   ~StateInterface()                                                                             = default;
 
  public:
+  /*
+   * Method which does work of the state.
+   *
+   * @param shared_ptr<Context> context, which we should use to update system data.
+   *
+   * @return StateResult instance
+   */
   virtual StateResult                         run(std::shared_ptr<Context> &context)            = 0;
+
+  /*
+   * Method which just gets the type of concrete state.
+   *
+   * @return StateType object.
+   */
   virtual StateType                           getType()                                         = 0;
 
  private:
+  /*
+   * Method which gets input and validate or parse data received from user using the IOInterface stream
+   *
+   * @param IOInterface which contains stream to get input.
+   *
+   * @return bool True if received data was validated or parsed successfully, False in another case.
+   */
   virtual bool                                input(const std::shared_ptr<IOInterface> &io_)    = 0;
+
+  /*
+   * Method which shows output using the IOInterface stream.
+   *
+   * @param IOInterface which contains stream to get input.
+   */
   virtual void                                output(const std::shared_ptr<IOInterface> &io_)   = 0;
 };
 
