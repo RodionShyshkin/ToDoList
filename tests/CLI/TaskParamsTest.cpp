@@ -58,7 +58,7 @@ TEST_F(TaskParamsTest, shouldAddTaskWithFilledFields) {
                                         .WillOnce(Return("2012-9-14"));
   EXPECT_CALL(*io_, output).Times(4);
 
-  StateMachine task_machine_ = StateMachine::create(StatesGraphType::ADDTASK, this->context_);
+  StateMachine task_machine_ = StateMachine::create(StatesMachineType::ADDTASK, this->context_);
   auto result = task_machine_.execute();
 
   ASSERT_EQ(result, true);
@@ -77,7 +77,7 @@ TEST_F(TaskParamsTest, shouldAddTaskWithUnfilledFields) {
                                   .WillOnce(Return(""));
   EXPECT_CALL(*io_, output).Times(4);
 
-  StateMachine task_machine_ = StateMachine::create(StatesGraphType::ADDTASK, this->context_);
+  StateMachine task_machine_ = StateMachine::create(StatesMachineType::ADDTASK, this->context_);
   auto result = task_machine_.execute();
 
   ASSERT_EQ(result, true);
@@ -98,7 +98,7 @@ TEST_F(TaskParamsTest, shouldNotAddTaskWithoutName) {
   EXPECT_CALL(*io_, output).Times(5);
   EXPECT_CALL(*io_, outputWithBreak).Times(1);
 
-  StateMachine task_machine_ = StateMachine::create(StatesGraphType::ADDTASK, this->context_);
+  StateMachine task_machine_ = StateMachine::create(StatesMachineType::ADDTASK, this->context_);
   auto result = task_machine_.execute();
 
   ASSERT_EQ(result, true);
@@ -122,7 +122,7 @@ TEST_F(TaskParamsTest, shouldNotAddTaskWithIncorrectParams) {
   EXPECT_CALL(*io_, output).Times(8);
   EXPECT_CALL(*io_, outputWithBreak).Times(4);
 
-  StateMachine task_machine_ = StateMachine::create(StatesGraphType::ADDTASK, this->context_);
+  StateMachine task_machine_ = StateMachine::create(StatesMachineType::ADDTASK, this->context_);
   auto result = task_machine_.execute();
 
   ASSERT_EQ(result, true);
@@ -167,7 +167,7 @@ TEST_F(TaskParamsTest, shouldAddSubtask) {
                                                     .WillOnce(Return(secondVectorToReturn));
   EXPECT_CALL(*service_, addSubtask).Times(1).WillOnce(Return(OperationResult{ErrorCode::NO_ERRORS}));
 
-  StateMachine task_machine_ = StateMachine::create(StatesGraphType::MAIN, this->context_);
+  StateMachine task_machine_ = StateMachine::create(StatesMachineType::MAIN, this->context_);
   auto result = task_machine_.execute();
 
   ASSERT_EQ(result, true);

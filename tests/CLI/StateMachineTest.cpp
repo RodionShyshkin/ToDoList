@@ -42,8 +42,8 @@ class MockIO : public IOInterface {
 
      this->context_ = std::make_shared<Context>(this->service_, this->io_);
 
-     this->first_type_ = StatesGraphType::GET_TASKS_LIST;
-     this->second_type_ = StatesGraphType::MAIN;
+     this->first_type_ = StatesMachineType::GET_TASKS_LIST;
+     this->second_type_ = StatesMachineType::MAIN;
    }
 
    void TearDown() override {
@@ -56,11 +56,11 @@ class MockIO : public IOInterface {
    std::shared_ptr<Context> context_;
 
   protected:
-   StatesGraphType first_type_;
-   StatesGraphType second_type_;
-   StatesGraphType third_type_;
-   StatesGraphType fourth_type_;
-   StatesGraphType all_type_;
+   StatesMachineType first_type_;
+   StatesMachineType second_type_;
+   StatesMachineType third_type_;
+   StatesMachineType fourth_type_;
+   StatesMachineType all_type_;
  };
 
 TEST_F(StateMachineTest, shouldWorkWithoutInternalStateMachines) {

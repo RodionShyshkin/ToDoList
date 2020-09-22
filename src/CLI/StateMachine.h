@@ -8,11 +8,11 @@
 #include <memory>
 #include <States/StateFactory.h>
 #include "Context/Context.h"
-#include "StatesGraphType.h"
+#include "StatesMachineType.h"
 
 class StateMachine {
  public:
-  static StateMachine                 create(const StatesGraphType& type, std::shared_ptr<Context>& context);
+  static StateMachine                 create(const StatesMachineType& type, std::shared_ptr<Context>& context);
 
  public:
   bool                                execute();

@@ -9,7 +9,7 @@ bool AddTaskState::input(const std::shared_ptr<IOInterface> &io_) {
 }
 
 StateResult AddTaskState::run(std::shared_ptr<Context> &context) {
-  auto machine_ = StateMachine::create(StatesGraphType::ADDTASK, context);
+  auto machine_ = StateMachine::create(StatesMachineType::ADDTASK, context);
   if(!machine_.execute()) return StateResult::create(
       ErrorType::FATAL_ERROR,
       nullptr

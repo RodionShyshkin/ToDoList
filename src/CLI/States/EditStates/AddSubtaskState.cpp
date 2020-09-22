@@ -14,7 +14,7 @@ StateResult AddSubtaskState::run(std::shared_ptr<Context> &context) {
                                                                                 StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   }
 
-  auto machine_ = StateMachine::create(StatesGraphType::ADDSUBTASK, context);
+  auto machine_ = StateMachine::create(StatesMachineType::ADDSUBTASK, context);
   if(!machine_.execute()) return StateResult::create(ErrorType::FATAL_ERROR, nullptr);
 
   if(context->add_task_buffer_.checkBufferFullness()) {

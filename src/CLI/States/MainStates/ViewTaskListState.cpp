@@ -7,7 +7,7 @@
 StateResult ViewTaskListState::run(std::shared_ptr<Context> &context) {
   //Fulling buffer.
   if(!context->show_list_buffer_.checkBufferFullness()) {
-    auto machine_ = StateMachine::create(StatesGraphType::GET_TASKS_LIST, context);
+    auto machine_ = StateMachine::create(StatesMachineType::GET_TASKS_LIST, context);
     if(!machine_.execute()) return StateResult::create(ErrorType::FATAL_ERROR, nullptr);
   }
   if(!context->show_list_buffer_.checkBufferFullness()) throw std::invalid_argument("State machine does not work correctly.");

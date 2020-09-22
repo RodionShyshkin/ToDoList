@@ -5,20 +5,20 @@
 #include "StateMachine.h"
 #include <iostream>
 
-StateMachine StateMachine::create(const StatesGraphType &type, std::shared_ptr<Context>& context) {
-  if(type == StatesGraphType::MAIN) {
+StateMachine StateMachine::create(const StatesMachineType &type, std::shared_ptr<Context>& context) {
+  if(type == StatesMachineType::MAIN) {
     return StateMachine{StateFactory::create(StateType::START_STATE), context};
   }
-  else if(type == StatesGraphType::ADDTASK) {
+  else if(type == StatesMachineType::ADDTASK) {
     return StateMachine{StateFactory::create(StateType::ADD_TASK_START_STATE), context};
   }
-  else if(type == StatesGraphType::ADDSUBTASK) {
+  else if(type == StatesMachineType::ADDSUBTASK) {
     return StateMachine{StateFactory::create(StateType::ADD_SUBTASK_START_STATE), context};
   }
-  else if(type == StatesGraphType::GET_TASKS_LIST) {
+  else if(type == StatesMachineType::GET_TASKS_LIST) {
     return StateMachine{StateFactory::create(StateType::SHOW_LIST_START_STATE), context};
   }
-  else if(type == StatesGraphType::GET_SINGLE_TASK) {
+  else if(type == StatesMachineType::GET_SINGLE_TASK) {
     return StateMachine{StateFactory::create(StateType::SHOW_SINGLE_START_STATE), context};
   }
 }
