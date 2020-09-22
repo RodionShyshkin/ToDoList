@@ -109,3 +109,27 @@ TEST_F(TaskParamsTest, shouldNotAddTaskWithoutName) {
   ASSERT_EQ(context_->add_task_buffer_.getDate(), boost::gregorian::date{boost::gregorian::not_a_date_time});
   ASSERT_EQ(context_->add_task_buffer_.getParent(), 0);
 }
+
+TEST_F(TaskParamsTest, shouldNotAddTaskWithIncorrectParams) {
+  EXPECT_CALL(*io_, input).Times(8).WillOnce(Return("name"))
+      .WillOnce(Return(""))
+      .WillOnce(Return("high"))
+      .WillOnce(Return("some priority"))
+      .WillOnce(Return("High"))
+      .WillOnce(Return("some date"))
+      .WillOnce(Return("800-8-8"))
+      .WillOnce(Return("2010-10-10"));
+  EXPECT_CALL(*io_, output).Times(8);
+  EXPECT_CALL(*io_, outputWithBreak).Times(4);
+
+  StateMachine task_machine_ = StateMachine::create(StatesGraphType::ADDTASK, this->context_);
+  auto result = task_machine_.execute();
+
+  ASSERT_EQ(result, true);
+  ASSERT_EQ(context_->add_task_buffer_.checkBufferFullness(), true);
+  ASSERT_EQ(context_->add_task_buffer_.getName(), "name");
+  ASSERT_EQ(context_->add_task_buffer_.getLabel(), "");
+  ASSERT_EQ(context_->add_task_buffer_.getPriority(), Priority::HIGH);
+  ASSERT_EQ(context_->add_task_buffer_.getDate(), boost::gregorian::from_string("2010-10-10"));
+  ASSERT_EQ(context_->add_task_buffer_.getParent(), 0);
+}

@@ -24,11 +24,6 @@ OperationResult FullStorage::AddTask(const TaskDTO& task) {
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
   if(!task_view_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
-
-  for(auto item : task_view_.GetAllTasks()) {
-    std::cout << item.GetName() << std::endl;
-  }
-
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
