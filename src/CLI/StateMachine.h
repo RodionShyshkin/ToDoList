@@ -6,11 +6,9 @@
 #define TODOLIST_SRC_CLI_STATEMACHINE_H_
 
 #include <memory>
-#include <States/StateInterface.h>
-#include <States/MainStates/ExitState.h>
+#include <States/StateFactory.h>
 #include "Context/Context.h"
 #include "StatesGraphType.h"
-#include <gtest/gtest_prod.h>
 
 class StateMachine {
  public:

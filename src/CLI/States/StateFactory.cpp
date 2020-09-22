@@ -27,10 +27,7 @@
 #include "States/MainStates/ViewTaskState.h"
 
 std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
-  if(type == StateType::UNKNOWN_STATE) {
-    return nullptr;
-  }
-  else if(type == StateType::START_STATE) {
+  if(type == StateType::START_STATE) {
     return std::make_shared<StartState>();
   }
   else if(type == StateType::MAIN_MENU_STATE) {
@@ -99,4 +96,5 @@ std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
   else if(type == StateType::EXIT_STATE) {
     return std::make_shared<ExitState>();
   }
+  return nullptr;
 }
