@@ -7,6 +7,14 @@
 
 #include <IO/IOInterface.h>
 
+/*
+ * Realization of input-output using console.
+ *
+ * @see IO/IOInterface.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class ConsoleIO : public IOInterface {
  public:
   std::string     input()                                 override;
