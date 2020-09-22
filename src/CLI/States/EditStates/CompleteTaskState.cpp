@@ -9,7 +9,7 @@ bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io_) {
 }
 
 StateResult CompleteTaskState::run(std::shared_ptr<Context> &context) {
-  if(context->show_list_buffer_.checkBufferFullness() && context->show_list_buffer_.getByLabelFlag()) {
+  if(context->show_list_buffer_.checkBufferFullness()) {
     if(context->show_list_buffer_.getList().empty()) return StateResult::create(ErrorType::NO_ERRORS,
                                                                                 StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   }

@@ -5,6 +5,14 @@
 #ifndef TODOLIST_SRC_CLI_STATESMACHINETYPE_H_
 #define TODOLIST_SRC_CLI_STATESMACHINETYPE_H_
 
+/*
+ * Represents all possible types of StateMachine.
+ *
+ * @see StateMachine.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 enum class StatesMachineType {
   MAIN,
   ADDTASK,

@@ -5,10 +5,6 @@
 #include "SingleTaskStartState.h"
 
 StateResult SingleTaskStartState::run(std::shared_ptr<Context> &context) {
-  if(!context->show_list_buffer_.checkBufferFullness()) return StateResult::create(ErrorType::FATAL_ERROR, nullptr);
-
-  if(context->show_list_buffer_.getList().empty()) return StateResult::create(ErrorType::NO_ERRORS,
-                                                                              StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   return StateResult::create(ErrorType::NO_ERRORS,
                              StateFactory::create(StateType::SHOW_SINGLE_ID_PARAM_STATE));
 }

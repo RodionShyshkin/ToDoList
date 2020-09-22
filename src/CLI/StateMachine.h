@@ -10,11 +10,32 @@
 #include "Context/Context.h"
 #include "StatesMachineType.h"
 
+/*
+ * Finite State Machine class, used to switch states, which change context.
+ *
+ * @see Context.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class StateMachine {
  public:
+  /*
+   * \brief Factory method for finite state machine.
+   *
+   * @param StateMachineType type of #{StateMachineType}
+   * @param Context the state of the system
+   *
+   * @return StateMachine instance
+   */
   static StateMachine                 create(const StatesMachineType& type, std::shared_ptr<Context>& context);
 
  public:
+  /*
+   * \brief Method which starts state machine.
+   *
+   * @return bool True if state machine's work does not have any fatal errors. False in another case.
+   */
   bool                                execute();
 
  private:

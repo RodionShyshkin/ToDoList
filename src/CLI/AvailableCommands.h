@@ -21,4 +21,5 @@ class AvailableCommands {
   static const std::map<StateType, std::set<Command>> available_commands_;
 };
 
+
 #endif //TODOLIST_SRC_CLI_AVAILABLECOMMANDS_H_
