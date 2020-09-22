@@ -8,6 +8,14 @@
 #include <Context/BufferInterface.h>
 #include <boost/date_time/gregorian/greg_date.hpp>
 
+/*
+ * Buffer for temporary information about the process of a task postponing.
+ *
+ * @see BufferInterface.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class PostponeBuffer : public BufferInterface {
  public:
   PostponeBuffer();

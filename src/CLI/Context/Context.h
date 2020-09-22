@@ -14,12 +14,23 @@
 #include <API/TaskServiceInterface.h>
 #include <IO/IOInterface.h>
 
+/*
+ * Context contains the state of our system (API & IO) & temporary buffers to work with it.
+ *
+ * @see State Design Pattern
+ *
+ * @author Rodion Shyshkin
+ */
+
 class Context {
  public:
   Context(const std::shared_ptr<TaskServiceInterface>&,
       const std::shared_ptr<IOInterface>&);
 
  public:
+  /*
+   * \brief Clears all buffers Context has.
+   */
   void            clearAllBuffers();
 
  public:

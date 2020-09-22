@@ -8,6 +8,14 @@
 #include <Context/BufferInterface.h>
 #include <optional>
 
+/*
+ * Buffer which contains data for getting an ID of a task.
+ *
+ * @see BufferInterface.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class IDBuffer : public BufferInterface {
  public:
   IDBuffer();

@@ -9,6 +9,14 @@
 #include <States/GetTasksList/ListModifier.h>
 #include <API/TaskDTO.h>
 
+/*
+ * Buffer for keeping data about process of getting list of tasks.
+ *
+ * @see BufferInterface.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class ShowListBuffer : public BufferInterface {
  public:
   ShowListBuffer();

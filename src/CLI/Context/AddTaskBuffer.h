@@ -9,6 +9,14 @@
 #include <API/Priority.h>
 #include <boost/date_time/gregorian/greg_date.hpp>
 
+/*
+ * Buffer with temporary data for adding task.
+ *
+ * @see BufferInterface.h
+ *
+ * @author: Rodion Shyshkin
+ */
+
 class AddTaskBuffer : public BufferInterface {
  public:
   AddTaskBuffer();
