@@ -22,6 +22,13 @@ class TaskService : public TaskServiceInterface {
   TaskService();
 
  public:
+  /*
+   * \brief Gives a task by its ID.
+   *
+   * @param TaskID identifier of the task
+   *
+   * @return TaskDTO object
+   */
   TaskDTO                           getTask(const TaskID& id) const override;
   /*
    * \brief Gives all actual tasks.
