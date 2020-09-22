@@ -133,3 +133,48 @@ TEST_F(TaskParamsTest, shouldNotAddTaskWithIncorrectParams) {
   ASSERT_EQ(context_->add_task_buffer_.getDate(), boost::gregorian::from_string("2010-10-10"));
   ASSERT_EQ(context_->add_task_buffer_.getParent(), 0);
 }
+
+TEST_F(TaskParamsTest, shouldAddSubtask) {
+  auto task_dto_ = TaskDTO::create(1, "to eat", "beaf", Priority::HIGH, boost::gregorian::from_string("2012-9-14"), false);
+  auto subtask_dto_ = TaskDTO::create(2, "feed the cat", "wiskas", Priority::MEDIUM, boost::gregorian::from_string("2012-9-14"), false);
+  auto vectorToReturn = std::vector<TaskDTO>{};
+  vectorToReturn.push_back(task_dto_);
+  auto secondVectorToReturn = vectorToReturn;
+  secondVectorToReturn.push_back(subtask_dto_);
+
+  EXPECT_CALL(*io_, inputCommand).Times(4).WillOnce(Return("add"))
+                                                .WillOnce(Return("show"))
+                                                .WillOnce(Return("add_subtask"))
+                                                .WillOnce(Return("exit"));
+
+  EXPECT_CALL(*io_, input).Times(11).WillOnce(Return("to eat"))
+                                          .WillOnce(Return("beaf"))
+                                          .WillOnce(Return("High"))
+                                          .WillOnce(Return("2012-9-14"))
+                                          .WillOnce(Return("all"))
+                                          .WillOnce(Return("no"))
+                                          .WillOnce(Return("0"))
+                                          .WillOnce(Return("feed the cat"))
+                                          .WillOnce(Return("wiskas"))
+                                          .WillOnce(Return("Medium"))
+                                          .WillOnce(Return("2012-9-14"));
+
+  EXPECT_CALL(*io_, outputWithBreak).Times(19);
+  EXPECT_CALL(*io_, output).Times(11);
+
+  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult{ErrorCode::NO_ERRORS}));
+  EXPECT_CALL(*service_, getAllTasks).Times(2).WillOnce(Return(vectorToReturn))
+                                                    .WillOnce(Return(secondVectorToReturn));
+  EXPECT_CALL(*service_, addSubtask).Times(1).WillOnce(Return(OperationResult{ErrorCode::NO_ERRORS}));
+
+  StateMachine task_machine_ = StateMachine::create(StatesGraphType::MAIN, this->context_);
+  auto result = task_machine_.execute();
+
+  ASSERT_EQ(result, true);
+  ASSERT_EQ(context_->show_list_buffer_.checkBufferFullness(), true);
+  ASSERT_EQ(context_->show_list_buffer_.getList().size(), 2);
+  ASSERT_EQ(context_->show_list_buffer_.getList()[0].getName(), "to eat");
+  ASSERT_EQ(context_->show_list_buffer_.getList()[1].getName(), "feed the cat");
+  ASSERT_EQ(context_->show_list_buffer_.getList()[0].getID(), 1);
+  ASSERT_EQ(context_->show_list_buffer_.getList()[1].getID(), 2);
+}
