@@ -10,7 +10,7 @@
 
 class AddTaskState : public StateInterface {
  public:
-  std::shared_ptr<StateInterface>     run(std::shared_ptr<Context> &context)    override;
+  StateResult run(std::shared_ptr<Context> &context)    override;
   StateType                           getType()                                 override;
 
  private:

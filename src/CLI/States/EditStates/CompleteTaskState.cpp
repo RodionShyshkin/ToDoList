@@ -12,14 +12,15 @@ bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
-std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context> &context) {
-  if(context->show_list_buffer_.checkBufferFullness()) {
-    if(context->show_list_buffer_.getList().empty()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+StateResult CompleteTaskState::run(std::shared_ptr<Context> &context) {
+  if(context->show_list_buffer_.checkBufferFullness() && context->show_list_buffer_.getByLabelFlag()) {
+    if(context->show_list_buffer_.getList().empty()) return StateResult::create(ErrorType::NO_ERRORS,
+                                                                                StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   }
 
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
-    if(!machine_.execute()) return StateFactory::create(this->getType());
+    if(!machine_.execute()) return StateResult::create(ErrorType::FATAL_ERROR, nullptr);
  }
 
   auto id_from_buffer_ = context->id_buffer_.getID();
@@ -27,19 +28,20 @@ std::shared_ptr<StateInterface>  CompleteTaskState::run(std::shared_ptr<Context>
   this->task_id_ = id_from_buffer_.value();
 
   auto result = context->service_->completeTask(TaskID{this->task_id_});
-  if(!result.GetStatus()) return nullptr;
+  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();
-    return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+    return StateResult::create(ErrorType::NO_ERRORS,
+                               StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   }
   context->show_list_buffer_.clearBuffer();
-  return StateFactory::create(getStateTypeByCommand(Command::GETTASK));
+  return StateResult::create(ErrorType::NO_ERRORS,
+                             StateFactory::create(getStateTypeByCommand(Command::GETTASK)));
 }
 
 void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.outputWithBreak("[Output]: Completing task.");
+  io_->outputWithBreak("[Output]: Completing task.");
 }
 
 StateType CompleteTaskState::getType() {

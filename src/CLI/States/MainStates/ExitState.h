@@ -11,7 +11,7 @@
 class ExitState : public StateInterface {
  public:
   bool input(const std::shared_ptr<IOInterface> &io_) override;
-  std::shared_ptr<StateInterface>   run(std::shared_ptr<Context> &context)    override;
+  StateResult run(std::shared_ptr<Context> &context)    override;
   void output(const std::shared_ptr<IOInterface> &io_) override;
   StateType                         getType()                                 override;
 };

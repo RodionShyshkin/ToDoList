@@ -11,8 +11,10 @@ class AddTaskStartState : public StateInterface {
  public:
   explicit AddTaskStartState(const bool& is_subtask);
 
+  explicit AddTaskStartState(AddTaskStartState&) = default;
+
  public:
-  std::shared_ptr<StateInterface>   run(std::shared_ptr<Context> &context)    override;
+  StateResult run(std::shared_ptr<Context> &context)    override;
   StateType                         getType()                                 override;
 
  private:

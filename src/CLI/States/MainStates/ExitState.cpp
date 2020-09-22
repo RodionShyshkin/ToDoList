@@ -10,8 +10,11 @@ bool ExitState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
-std::shared_ptr<StateInterface>  ExitState::run(std::shared_ptr<Context> &context) {
-  return nullptr;
+StateResult ExitState::run(std::shared_ptr<Context> &context) {
+  return StateResult::create(
+      ErrorType::NO_ERRORS,
+      nullptr
+      );
 }
 
 void ExitState::output(const std::shared_ptr<IOInterface> &io_) { }

@@ -5,29 +5,29 @@
 #include <States/StateFactory.h>
 #include "LabelParamState.h"
 
-bool LabelParamState::input(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  this->param_ = io.input();
-  return true;
+
+
+StateResult LabelParamState::run(std::shared_ptr<Context> &context) {
+  this->output(context->io_);
+  this->input(context->io_);
+
+  if(context->show_list_buffer_.checkBufferFullness() && context->show_list_buffer_.getByLabelFlag()) {
+    context->show_list_buffer_.setLabel(this->param_);
+    return StateResult::create(ErrorType::NO_ERRORS,
+                               StateFactory::create(StateType::EXIT_STATE));
+  }
+  context->add_task_buffer_.setLabel(this->param_);
+  return StateResult::create(ErrorType::NO_ERRORS,
+                               StateFactory::create(StateType::ADD_TASK_PRIORITY_PARAM_STATE));
 }
 
-std::shared_ptr<StateInterface> LabelParamState::run(std::shared_ptr<Context> &context) {
-  this->output(context->io_);
-  if(!this->input(context->io_)) return nullptr;
-  if(!validateParam()) return StateFactory::create(this->getType());
-
-  if(context->show_list_buffer_.checkBufferFullness()) context->show_list_buffer_.setLabel(this->param_);
-  else context->add_task_buffer_.setLabel(this->param_);
-  return StateFactory::create(StateType::ADD_TASK_PRIORITY_PARAM_STATE);
+bool LabelParamState::input(const std::shared_ptr<IOInterface> &io_) {
+  this->param_ = io_->input();
+  return true;
 }
 
 void LabelParamState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.output("Enter task label (not required): ");
-}
-
-bool LabelParamState::validateParam() const {
-  return true;
+  io_->output("Enter task label (not required): ");
 }
 
 StateType LabelParamState::getType() {

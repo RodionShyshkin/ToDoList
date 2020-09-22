@@ -10,14 +10,18 @@
 #include <Context/Context.h>
 #include "CommandParser.h"
 #include "StateType.h"
+#include "StateResult.h"
 #include <IO/ConsoleIO.h>
+#include <ErrorType.h>
+
+//class StateResult;
 
 class StateInterface {
  public:
   ~StateInterface()                                                                             = default;
 
  public:
-  virtual std::shared_ptr<StateInterface>     run(std::shared_ptr<Context> &context)            = 0;
+  virtual StateResult                         run(std::shared_ptr<Context> &context)            = 0;
   virtual StateType                           getType()                                         = 0;
 
  private:

@@ -3,6 +3,7 @@
 //
 
 #include <States/StateFactory.h>
+#include <States/StateResult.h>
 #include "AddTaskStartState.h"
 
 AddTaskStartState::AddTaskStartState(const bool &is_subtask) : is_subtask_(is_subtask) {}
@@ -11,9 +12,17 @@ bool AddTaskStartState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
-std::shared_ptr<StateInterface> AddTaskStartState::run(std::shared_ptr<Context> &context) {
-  if(this->is_subtask_) return StateFactory::create(StateType::ADD_TASK_PARENT_PARAM_STATE);
-  return StateFactory::create(StateType::ADD_TASK_NAME_PARAM_STATE);
+StateResult AddTaskStartState::run(std::shared_ptr<Context> &context) {
+  if(this->is_subtask_) {
+    if(context->show_list_buffer_.checkBufferFullness()) {
+      if (context->show_list_buffer_.getList().empty()) return StateResult::create(ErrorType::NO_ERRORS,
+                                                                                   StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
+    }
+    return StateResult::create(ErrorType::NO_ERRORS,
+                               StateFactory::create(StateType::ADD_TASK_PARENT_PARAM_STATE));
+  }
+  return StateResult::create(ErrorType::NO_ERRORS,
+                             StateFactory::create(StateType::ADD_TASK_NAME_PARAM_STATE));
 }
 
 void AddTaskStartState::output(const std::shared_ptr<IOInterface> &io_) {

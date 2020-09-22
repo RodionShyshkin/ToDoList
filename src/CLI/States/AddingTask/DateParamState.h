@@ -9,17 +9,17 @@
 
 class DateParamState : public StateInterface {
  public:
-  std::shared_ptr<StateInterface>       run(std::shared_ptr<Context> &context)    override;
+  StateResult run(std::shared_ptr<Context> &context)    override;
   StateType                             getType()                                 override;
 
  private:
   bool input(const std::shared_ptr<IOInterface> &io_) override;
   void output(const std::shared_ptr<IOInterface> &io_) override;
 
-  std::optional<boost::gregorian::date> parseParam()                              const;
+  static std::optional<boost::gregorian::date> parseParam(const std::string&);
 
  private:
-  std::string                           param_;
+  boost::gregorian::date                           param_;
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_ADDINGTASK_DATEPARAMSTATE_H_

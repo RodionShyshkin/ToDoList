@@ -30,6 +30,8 @@ class ShowListBuffer : public BufferInterface {
   bool getSortedFlag() const;
   std::string getLabel() const;
 
+  bool getByLabelFlag() const;
+
   std::vector<TaskDTO>  getList() const;
 
  private:
@@ -37,6 +39,7 @@ class ShowListBuffer : public BufferInterface {
   bool is_sorted_;
   std::string label_;
   std::vector<TaskDTO> list_;
+  bool is_by_label_;
 };
 
 #endif //TODOLIST_SRC_CLI_CONTEXT_SHOWLISTBUFFER_H_

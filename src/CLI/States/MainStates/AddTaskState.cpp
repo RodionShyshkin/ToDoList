@@ -11,9 +11,12 @@ bool AddTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
-std::shared_ptr<StateInterface>  AddTaskState::run(std::shared_ptr<Context> &context) {
+StateResult AddTaskState::run(std::shared_ptr<Context> &context) {
   auto machine_ = StateMachine::create(StatesGraphType::ADDTASK, context);
-  if(!machine_.execute()) return StateFactory::create(getStateTypeByCommand(Command::ADDTASK));
+  if(!machine_.execute()) return StateResult::create(
+      ErrorType::FATAL_ERROR,
+      nullptr
+      );
 
   if(!context->add_task_buffer_.checkBufferFullness()) throw std::invalid_argument("Invalid AddTask State machine");
 
@@ -23,7 +26,11 @@ std::shared_ptr<StateInterface>  AddTaskState::run(std::shared_ptr<Context> &con
   if(!result.GetStatus()) throw std::invalid_argument("Wrong AddTask validation");
 
   context->add_task_buffer_.clearBuffer();
-  return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
+
+  return StateResult::create(
+      ErrorType::NO_ERRORS,
+      StateFactory::create(getStateTypeByCommand(Command::MAINMENU))
+      );
 }
 
 void AddTaskState::output(const std::shared_ptr<IOInterface> &io_) {

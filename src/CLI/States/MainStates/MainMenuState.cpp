@@ -3,14 +3,15 @@
 //
 
 #include <AvailableCommands.h>
+#include <States/StateResult.h>
 #include "MainMenuState.h"
 
-std::shared_ptr<StateInterface> MainMenuState::run(std::shared_ptr<Context> &context) {
+StateResult MainMenuState::run(std::shared_ptr<Context> &context) {
   context->clearAllBuffers();
 
   this->output(context->io_);
-  if(!this->input(context->io_)) return StateFactory::create(this->getType());
-  return StateFactory::create(getStateTypeByCommand(this->command_));
+  if(!this->input(context->io_)) return StateResult::create(ErrorType::INCORRECT_INPUT, nullptr);
+  return StateResult::create(ErrorType::NO_ERRORS, StateFactory::create(getStateTypeByCommand(this->command_)));
 }
 
 bool MainMenuState::input(const std::shared_ptr<IOInterface> &io_) {

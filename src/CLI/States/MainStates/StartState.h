@@ -6,10 +6,11 @@
 #define TODOLIST_SRC_CLI_STATES_STARTSTATE_H_
 
 #include <States/StateInterface.h>
+#include <States/StateResult.h>
 
 class StartState : public StateInterface {
  public:
-  std::shared_ptr<StateInterface>   run(std::shared_ptr<Context> &context)            override;
+  StateResult run(std::shared_ptr<Context> &context)            override;
 
  private:
   bool                              input(const std::shared_ptr<IOInterface> &io_)    override;

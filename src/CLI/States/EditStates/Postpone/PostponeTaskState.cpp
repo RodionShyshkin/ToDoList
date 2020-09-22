@@ -13,21 +13,22 @@ bool PostponeTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
-std::shared_ptr<StateInterface>  PostponeTaskState::run(std::shared_ptr<Context> &context) {
+StateResult PostponeTaskState::run(std::shared_ptr<Context> &context) {
   if(context->show_list_buffer_.checkBufferFullness()) {
-    if(context->show_list_buffer_.getList().empty()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+    if(context->show_list_buffer_.getList().empty()) return StateResult::create(ErrorType::NO_ERRORS,
+                                                                                StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   }
 
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
-    if(!machine_.execute()) return StateFactory::create(this->getType());
+    if(!machine_.execute()) return StateResult::create(ErrorType::FATAL_ERROR, nullptr);
   }
-  return StateFactory::create(StateType::POSTPONE_TASK_NEW_DATE_PARAM_STATE);
+  return StateResult::create(ErrorType::NO_ERRORS,
+                             StateFactory::create(StateType::POSTPONE_TASK_NEW_DATE_PARAM_STATE));
 }
 
 void PostponeTaskState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.outputWithBreak("[Output]: Postponing task.");
+  io_->outputWithBreak("[Output]: Postponing task.");
 }
 
 StateType PostponeTaskState::getType() {

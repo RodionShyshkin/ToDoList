@@ -9,14 +9,14 @@
 
 class NameParamState : public StateInterface {
  public:
-  std::shared_ptr<StateInterface>   run(std::shared_ptr<Context> &context)    override;
+  StateResult run(std::shared_ptr<Context> &context)    override;
   StateType                         getType()                                 override;
 
  private:
   bool input(const std::shared_ptr<IOInterface> &io_) override;
   void output(const std::shared_ptr<IOInterface> &io_) override;
 
-  bool                              validateParam()                           const;
+  static bool                              validateParam(const std::string&);
 
  private:
   std::string                       param_;

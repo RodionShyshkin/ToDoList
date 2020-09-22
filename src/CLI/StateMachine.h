@@ -10,6 +10,7 @@
 #include <States/MainStates/ExitState.h>
 #include "Context/Context.h"
 #include "StatesGraphType.h"
+#include <gtest/gtest_prod.h>
 
 class StateMachine {
  public:
@@ -19,9 +20,9 @@ class StateMachine {
   bool                                execute();
 
  private:
-  std::shared_ptr<StateInterface>     state_;
-  std::shared_ptr<Context>            context_;
-  std::shared_ptr<StateInterface>     start_state_;
+          std::shared_ptr<StateInterface>     state_;
+          std::shared_ptr<Context>            context_;
+  const   std::shared_ptr<StateInterface>     start_state_;
 
  private:
   StateMachine(std::shared_ptr<StateInterface>&& start_state, std::shared_ptr<Context>& context);

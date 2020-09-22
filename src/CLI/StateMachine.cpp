@@ -37,9 +37,19 @@ StateMachine::StateMachine(std::shared_ptr<StateInterface>&& start_state,
 
 bool StateMachine::execute() {
   while(this->state_->getType() != StateType::EXIT_STATE) {
-    this->state_ = std::move(state_->run(context_));
-    if(this->state_ == nullptr) {
-      std::cout << "ERROR" << std::endl;
+    auto result = state_->run(context_);
+    if(result.getError() == ErrorType::NO_ERRORS) {
+      this->state_ = std::move(result.getNextState());
+      if(this->state_ == nullptr) throw std::invalid_argument("Beda s bashkoy");
+    }
+    else if(result.getError() == ErrorType::OPERATION_ERROR) {
+      this->context_->io_->outputWithBreak("Error while running this operation!");
+    }
+    else if(result.getError() == ErrorType::INCORRECT_INPUT) {
+      this->context_->io_->outputWithBreak("Incorrect input!");
+    }
+    else if(result.getError() == ErrorType::FATAL_ERROR) {
+      this->context_->io_->outputWithBreak("Fatal error!");
       return false;
     }
   }

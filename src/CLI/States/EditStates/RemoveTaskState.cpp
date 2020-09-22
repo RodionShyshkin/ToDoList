@@ -11,14 +11,15 @@ bool RemoveTaskState::input(const std::shared_ptr<IOInterface> &io_) {
   return true;
 }
 
-std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &context) {
+StateResult RemoveTaskState::run(std::shared_ptr<Context> &context) {
   if(context->show_list_buffer_.checkBufferFullness()) {
-    if(context->show_list_buffer_.getList().empty()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+    if(context->show_list_buffer_.getList().empty()) return StateResult::create(ErrorType::NO_ERRORS,
+                                                                                StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   }
 
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine_ = StateMachine::create(StatesGraphType::GET_SINGLE_TASK, context);
-    if(!machine_.execute()) return StateFactory::create(this->getType());
+    if(!machine_.execute()) return StateResult::create(ErrorType::NO_ERRORS, nullptr);
  }
   auto id_from_buffer_ = context->id_buffer_.getID();
   if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
@@ -26,12 +27,14 @@ std::shared_ptr<StateInterface>  RemoveTaskState::run(std::shared_ptr<Context> &
 
   auto id_ = TaskID{this->task_id_};
   auto result = context->service_->RemoveTask(id_);
-  if(!result.GetStatus()) return nullptr;
+  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   context->id_buffer_.clearBuffer();
-  if(context->show_list_buffer_.checkBufferFullness()) return StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
+  if(context->show_list_buffer_.checkBufferFullness()) return StateResult::create(ErrorType::NO_ERRORS,
+                                                                          StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST)));
   context->show_list_buffer_.clearBuffer();
-  return StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
+  return StateResult::create(ErrorType::NO_ERRORS,
+                             StateFactory::create(getStateTypeByCommand(Command::MAINMENU)));
 }
 
 void RemoveTaskState::output(const std::shared_ptr<IOInterface> &io_) {}

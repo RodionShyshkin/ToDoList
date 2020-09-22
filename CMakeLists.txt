@@ -59,7 +59,7 @@ enable_testing()
 add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests})
 
 set(GMOCK_L "/usr/local/lib/gmock/")
-target_link_libraries(Tests GTest::GTest GTest::Main)
+target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)
 target_link_libraries(Tests ${Boost_LIBRARIES})
 
 target_link_libraries(ToDoList ${Boost_LIBRARIES})

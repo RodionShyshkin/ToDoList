@@ -7,31 +7,34 @@
 #include <States/StateFactory.h>
 #include "SortedParamState.h"
 
+
+
+StateResult SortedParamState::run(std::shared_ptr<Context> &context) {
+  this->output(context->io_);
+  if(!this->input(context->io_)) return StateResult::create(ErrorType::INCORRECT_INPUT, nullptr);
+
+  context->show_list_buffer_.setSortedFlag(this->param_);
+  if(context->show_list_buffer_.getByLabelFlag()) return StateResult::create(ErrorType::NO_ERRORS,
+                                                                                     StateFactory::create(StateType::ADD_TASK_LABEL_PARAM_STATE));
+
+  return StateResult::create(ErrorType::NO_ERRORS,
+                             StateFactory::create(StateType::EXIT_STATE));
+}
+
 bool SortedParamState::input(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  this->param_ = io.input();
+  auto parsed = SortedParamState::parseParam(io_->input());
+  if(!parsed.has_value()) return false;
+  this->param_ = parsed.value();
   return true;
 }
 
-std::shared_ptr<StateInterface> SortedParamState::run(std::shared_ptr<Context> &context) {
-  this->output(context->io_);
-  if(!this->input(context->io_)) return nullptr;
-  auto parsed = this->parseParam();
-  if(!parsed.has_value()) return StateFactory::create(this->getType());
-
-  context->show_list_buffer_.setSortedFlag(parsed.value());
-  if(context->show_list_buffer_.getModifier() == ListModifier::BY_LABEL) return StateFactory::create(StateType::ADD_TASK_LABEL_PARAM_STATE);
-  return StateFactory::create(StateType::EXIT_STATE);
-}
-
 void SortedParamState::output(const std::shared_ptr<IOInterface> &io_) {
-  ConsoleIO io;
-  io.output("Do you want to sort list? [y/n]: ");
+  io_->output("Do you want to sort list? [y/n]: ");
 }
 
-std::optional<bool> SortedParamState::parseParam() const {
-  if(this->param_ == "y" || this->param_ == "yes") return true;
-  else if(this->param_ == "n" || this->param_ == "no") return false;
+std::optional<bool> SortedParamState::parseParam(const std::string& param) {
+  if(param == "y" || param == "yes") return true;
+  else if(param == "n" || param == "no") return false;
   else return std::nullopt;
 }
 
