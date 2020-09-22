@@ -5,8 +5,8 @@
 #ifndef TODOLIST_SRC_CLI_STATES_COMMANDPARSER_H_
 #define TODOLIST_SRC_CLI_STATES_COMMANDPARSER_H_
 
-#include <iostream>
 #include "States/StateType.h"
+#include <string>
 
 enum class Command {
   UNKNOWN,
