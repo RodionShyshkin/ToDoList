@@ -74,3 +74,11 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
 
   return OperationResult{ErrorCode::NO_ERRORS};
 }
+
+OperationResult FullStorage::SaveToDisk(const std::string &) {
+
+}
+
+OperationResult FullStorage::LoadFromDisk(const std::string &) {
+
+}

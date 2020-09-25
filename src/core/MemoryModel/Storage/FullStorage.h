@@ -20,6 +20,9 @@ class FullStorage : public FullStorageInterface {
   OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) override;
   OperationResult                   RemoveTask(const TaskID& id) override;
 
+  OperationResult                   SaveToDisk(const std::string&) override;
+  OperationResult                   LoadFromDisk(const std::string&) override;
+
  private:
   TaskStorage                       task_storage_;
   TaskView                          task_view_;
