@@ -1,0 +1,21 @@
+import "google/protobuf/timestamp.proto";
+
+message TaskDTOProto {
+  enum Priority {
+    EMPTY = 0;
+    LOW = 1;
+    MEDIUM = 2;
+    HIGH = 3;
+  }
+
+  required string name = 1;
+  optional string label = 2;
+  optional Priority priority = 3;
+  optional google.protobuf.Timestamp deadline = 4;
+  required bool completed = 5;
+  required TaskDTOProto subtask = 6;
+}
+
+message StorageProto {
+  repeated TaskDTOProto tasks = 1;
+}
