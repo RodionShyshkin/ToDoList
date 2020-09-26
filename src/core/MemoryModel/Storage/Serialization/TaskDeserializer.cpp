@@ -10,6 +10,7 @@ std::shared_ptr<TaskEntity> TaskDeserializer::DeserializeTask(const TaskProto &t
                             boost::gregorian::date{task.deadline()});
   if(!task_.has_value()) return nullptr;
   TaskEntity entity = TaskEntity::createTask(task_.value(), TaskID{0});
+  if(task.completed()) entity.SetComplete();
   return std::make_shared<TaskEntity>(entity);
 }
 
