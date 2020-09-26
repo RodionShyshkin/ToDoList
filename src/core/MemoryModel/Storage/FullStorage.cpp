@@ -105,7 +105,7 @@ OperationResult FullStorage::LoadFromDisk(const std::string &path) {
   if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
 
   StorageProto storage;
-  storage.ParseFromIstream(&file);
+  if(!storage.ParseFromIstream(&file)) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
   file.close();
 
   FullStorage temp_storage_;

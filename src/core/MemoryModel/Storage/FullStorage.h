@@ -20,7 +20,29 @@ class FullStorage : public FullStorageInterface {
   OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) override;
   OperationResult                   RemoveTask(const TaskID& id) override;
 
+  /*
+   * \brief Method which saves storage to a disk.
+   *
+   * @param std::string path to file in which storage would be saved.
+   *
+   * @return OperationResult The result of saving.
+   * Should return NO_ERRORS in the case of success,
+   * UNKNOWN_PATH if there is a problem with opening file,
+   * SERIALIZATION_ERROR if serialization returns false.
+   */
   OperationResult                   SaveToDisk(const std::string&) override;
+
+  /*
+   * \brief Method which loads storage from a disk.
+   *
+   * @param std::string path to file with storage.
+   *
+   * @return OperationREsult The result of saving.
+   * Should return NO_ERRORS in the case of success.
+   * UNKNOWN_PATH if there are no such a file.
+   * DESERIALIZATION_ERROR if deserialization returns false.
+   * INVALID_TASK if some serialized tasks are invalid.
+   */
   OperationResult                   LoadFromDisk(const std::string&) override;
 
  private:

@@ -8,13 +8,43 @@
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include "task.pb.h"
 
+/*
+ * Class which contains static methods to convert TaskEntity into TaskProto.
+ *
+ * @see task.proto
+ *
+ * @author Rodion Shyshkin
+ */
+
 class TaskSerializer {
  public:
   static TaskProto    SerializeTaskWithSubtasks(const TaskEntity&);
 
  private:
+  /*
+   * Converts TaskEntity instance without subtasks.
+   *
+   * @param TaskEntity instance.
+   *
+   * @return TaskProto* pointer.
+   */
   static TaskProto*   SerializeTask(const TaskEntity&);
+
+  /*
+   * Converts Priority to TaskProto_Priority.
+   *
+   * @param Priority instance.
+   *
+   * @return the TaskProto_Priority one.
+   */
   static TaskProto_Priority     SerializePriority(const Priority&);
+
+  /*
+   * Copies fields about task from TaskEntity instance to the TaskProto one.
+   *
+   * @param TaskProto* a pointer to a TaskProto instance to update its fields.
+   * @param TaskEntity by a reference in which there is new data.
+   */
   static void         SetTaskProtoFields(TaskProto* task, const TaskEntity& task_entity);
 };
 
