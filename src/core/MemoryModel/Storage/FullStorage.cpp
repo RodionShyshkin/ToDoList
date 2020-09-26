@@ -114,12 +114,15 @@ OperationResult FullStorage::LoadFromDisk(const std::string &path) {
     if(task_ == nullptr) return OperationResult{ErrorCode::INVALID_TASK};
     TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
                                    task_->GetDueTime().GetDate(), task_->GetStatus());
+
+    OperationResult result_of_adding{ErrorCode::NO_ERRORS};
     if(task.parent_id() == 0) {
-      temp_storage_.AddTask(dto_);
+      result_of_adding = temp_storage_.AddTask(dto_);
     }
     else {
-      temp_storage_.AddSubtask(TaskID{task.parent_id()}, dto_);
+      result_of_adding = temp_storage_.AddSubtask(TaskID{task.parent_id()}, dto_);
     }
+    if(!result_of_adding.GetStatus()) return result_of_adding;
   }
 
   std::swap(*this, temp_storage_);
