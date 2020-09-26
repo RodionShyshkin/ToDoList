@@ -24,6 +24,7 @@ OperationResult FullStorage::AddTask(const TaskDTO& task) {
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
   auto newtask = TaskEntity::createTask(taskInstance.value(), newid.value());
+  if(task.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
@@ -41,6 +42,7 @@ OperationResult FullStorage::AddSubtask(const TaskID &id, const TaskDTO& subtask
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
   auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid.value(), id);
+  if(subtask.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
@@ -91,8 +93,6 @@ OperationResult FullStorage::SaveToDisk(const std::string &path) {
     temporary = TaskSerializer::SerializeTaskWithSubtasks(task);
     *newTask = temporary;
   }
-  std::cout << storage.tasks_size() << std::endl;
-//  std::cout << storage.tasks(1).subtasks(0).parent_id() << std::endl;
 
   if(!storage.SerializeToOstream(&file)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
   file.close();
