@@ -3,6 +3,9 @@
 //
 
 #include "FullStorage.h"
+#include <MemoryModel/Storage/Serialization/TaskSerializator.h>
+#include <fstream>
+#include "task.pb.h"
 
 FullStorage::FullStorage() : generate_id_(IDGenerator()) {}
 
@@ -75,8 +78,23 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::SaveToDisk(const std::string &) {
+OperationResult FullStorage::SaveToDisk(const std::string &path) {
+  std::ofstream file(path);
+  if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
 
+  auto tasks = this->GetTaskView().GetAllTasks();
+  StorageProto storage;
+  for(const auto& task : tasks) {
+    auto* newTask = storage.add_tasks();
+    TaskProto temporary;
+    temporary = TaskSerializator::SerializeTaskWithSubtasks(task);
+    *newTask = temporary;
+  }
+
+  if(!storage.SerializeToOstream(&file)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
+  file.close();
+
+  return OperationResult{ErrorCode::NO_ERRORS};
 }
 
 OperationResult FullStorage::LoadFromDisk(const std::string &) {

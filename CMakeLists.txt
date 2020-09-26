@@ -42,9 +42,9 @@ find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/core/MemoryModel/Storage/Proto/*.proto")
-message("generated ${PROTO_SOURCES}")
+file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/core/MemoryModel/Storage/Serialization/Proto/*.proto")
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_SOURCES})
+message("generated ${PROTO_SRCS} ${PROTO_HDRS}")
 
 SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
 
@@ -61,7 +61,7 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests})
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} tests/core/asdf.cpp)
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)
