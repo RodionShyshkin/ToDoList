@@ -6,7 +6,7 @@
 #define TODOLIST__TASK_H_
 
 #include "Date.h"
-#include "Priority.h"
+#include "API/Priority.h"
 
 /*
  * \brief Basic class which holds task.
@@ -25,7 +25,7 @@ class Task {
    * @param std::string Task Name
    * @param std::string Task label
    * @param Priority Task priority (EMPTY, LOW, MEDIUM, HIGH)
-   * @param Date boost::date Task Deadline
+   * @param std::string Task Deadline in format YYYY-MM-DD
    *
    * @return optional<Task> created Task or nullopt in case one of the arguments is invalid.
    */

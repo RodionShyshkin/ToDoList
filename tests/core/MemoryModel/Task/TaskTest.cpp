@@ -18,7 +18,7 @@ TEST_F(TaskTest, invalidTaskWithoutName) {
 TEST_F(TaskTest, invalidTaskWithoutLabel) {
   std::optional<Task> task;
   EXPECT_NO_THROW(task = Task::create("Name", "", Priority::MEDIUM, Date(2044, 1, 1)));
-  ASSERT_FALSE(task.has_value());
+  ASSERT_TRUE(task.has_value());
 }
 
 TEST_F(TaskTest, ValidTask) {

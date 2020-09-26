@@ -1,12 +1,36 @@
 cmake_minimum_required(VERSION 3.10)
 project(ToDoList)
 
+set(CMAKE_C_FLAGS_DEBUG "-D_DEBUG")
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(ToDoList main.cpp src/core/MemoryModel/Task/Task.cpp src/core/MemoryModel/Task/Task.h src/core/API/TaskService.cpp src/core/API/TaskService.h src/core/MemoryModel/Task/Date.cpp
-        src/core/MemoryModel/Task/Date.h src/core/MemoryModel/Task/TaskEntity.cpp src/core/MemoryModel/Task/TaskEntity.h src/core/MemoryModel/Storage/IDGenerator.cpp src/core/MemoryModel/Storage/IDGenerator.h
-        src/core/MemoryModel/Task/TaskID.cpp src/core/MemoryModel/Task/TaskID.h)
+######## CORE ########
 
+file(GLOB core_sources "src/core/API/*.cpp" "src/core/MemoryModel/Storage/*.cpp" "src/core/MemoryModel/Task/*.cpp")
+file(GLOB core_headers "src/core/API/*.h" "src/core/MemoryModel/Storage/*.h" "src/core/MemoryModel/Task/*.h")
+
+######## CLI ########
+
+file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp"
+        "src/CLI/States/GetTasksList/*.cpp" "src/CLI/States/GetSingleTask/*.cpp"
+        "src/CLI/States/EditStates/*.cpp" "src/CLI/States/EditStates/Postpone/*.cpp" "src/CLI/States/MainStates/*.cpp"
+        "src/CLI/Context/*.cpp" "src/CLI/IO/*.cpp")
+file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h"
+        "src/CLI/States/GetTasksList/*.h" "src/CLI/States/GetSingleTask/*.h"
+        "src/CLI/States/EditStates/*.h" "src/CLI/States/EditStates/Postpone/*.h" "src/CLI/States/MainStates/*.h"
+        "src/CLI/Context/*.h" "src/CLI/IO/*.h")
+
+file(GLOB main "src/main.cpp")
+
+add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers} ${main})
+
+######## TESTS ########
+file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp")
+
+file(GLOB cli_tests "tests/CLI/*.cpp")
+
+######## BOOST ########
 
 set(Boost_USE_STATIC_LIBS       ON)
 set(Boost_USE_DEBUG_LIBS        OFF)
@@ -14,25 +38,32 @@ set(Boost_USE_RELEASE_LIBS      ON)
 set(Boost_USE_MULTITHREADED     ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
-include(GoogleTest)
-find_package(GTest REQUIRED)
-include_directories(${GMOCK_INCLUDE_DIR})
-enable_testing()
-find_package(Boost 1.65.1 REQUIRED COMPONENTS)
-
+find_package(Boost 1.65.1 COMPONENTS date_time REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
+######## GTEST ########
+
 include_directories(src/core)
+include_directories(src/CLI)
+include_directories(tests)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
 
-add_executable(Tests tests/core/MemoryModel/Task/DateTest.cpp tests/core/MemoryModel/Storage/GenerateIDTest.cpp tests/core/API/TaskServiceTest.cpp
-        src/core/MemoryModel/Task/Date.cpp src/core/MemoryModel/Storage/IDGenerator.cpp src/core/MemoryModel/Task/TaskID.cpp src/core/API/TaskService.cpp src/core/MemoryModel/Task/TaskEntity.cpp src/core/MemoryModel/Task/Task.cpp src/core/API/TaskDTO.cpp src/core/API/TaskDTO.h tests/core/MemoryModel/Task/TaskEntityTest.cpp src/core/MemoryModel/Storage/TaskStorage.cpp src/core/MemoryModel/Storage/TaskStorage.h src/core/MemoryModel/Storage/TaskView.cpp src/core/MemoryModel/Storage/TaskView.h tests/core/MemoryModel/Storage/TaskViewTest.cpp tests/core/MemoryModel/Task/TaskTest.cpp tests/core/MemoryModel/Task/TaskIDTest.cpp tests/core/MemoryModel/Storage/TaskStorageTest.cpp tests/core/API/TaskDTOTest.cpp src/core/MemoryModel/Storage/FullStorage.cpp src/core/MemoryModel/Storage/FullStorage.h tests/core/MemoryModel/Storage/FullStorageTest.cpp src/core/MemoryModel/Storage/OperationResult.cpp src/core/MemoryModel/Storage/OperationResult.h src/core/MemoryModel/Storage/Error.h tests/core/MemoryModel/Storage/OperationResultTest.cpp src/core/MemoryModel/Task/Priority.h src/core/MemoryModel/Storage/TaskViewInterface.h src/core/MemoryModel/Storage/TaskStorageInterface.h src/core/MemoryModel/Storage/FullStorageInterface.h src/core/MemoryModel/Storage/IDGeneratorInterface.h)
+include(GoogleTest)
+find_package(GTest REQUIRED)
+include_directories(${GMOCK_INCLUDE_DIR})
+enable_testing()
 
-target_link_libraries(Tests GTest::GTest GTest::Main)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests})
+
+set(GMOCK_L "/usr/local/lib/gmock/")
+target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)
 target_link_libraries(Tests ${Boost_LIBRARIES})
 
+target_link_libraries(ToDoList ${Boost_LIBRARIES})
+
 gtest_discover_tests(Tests)
+
 

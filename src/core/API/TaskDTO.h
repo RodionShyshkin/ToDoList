@@ -7,7 +7,7 @@
 
 #include <MemoryModel/Task/TaskID.h>
 #include <iostream>
-#include <MemoryModel/Task/Priority.h>
+#include <API/Priority.h>
 #include <MemoryModel/Task/Date.h>
 #include <MemoryModel/Task/Task.h>
 
@@ -33,25 +33,27 @@ class TaskDTO {
    *
    * @return TaskDTO instance.
    */
-  static TaskDTO  create(const TaskID& id, const Task& task, const bool& status);
+  static TaskDTO  create(const unsigned int& id, const std::string& name, const std::string& label,
+                         const Priority& priority, const boost::gregorian::date& date, const bool& status);
 
  public:
-  TaskID          getID() const;
-  std::string     getName() const;
-  std::string     getLabel() const;
-  Priority        getPriority() const;
-  Date            getDueDate() const;
-  bool            getStatus() const;
+  unsigned int                      getID() const;
+  std::string                       getName() const;
+  std::string                       getLabel() const;
+  Priority                          getPriority() const;
+  boost::gregorian::date            getDueDate() const;
+  bool                              getStatus() const;
 
  private:
-  TaskDTO(const TaskID& id, const Task& task, const bool& status);
+  TaskDTO(const unsigned int& id, const std::string& name, const std::string& label,
+          const Priority& priority, const boost::gregorian::date& date, const bool& status);
 
  private:
-  TaskID          task_id_;
+  unsigned int    task_id_;
   std::string     task_name_;
   std::string     task_label_;
   Priority        task_priority_;
-  Date            task_due_date_;
+  boost::gregorian::date task_due_date_;
   bool            task_status_;
 };
 

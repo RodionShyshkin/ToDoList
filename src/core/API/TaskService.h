@@ -6,6 +6,7 @@
 #define TODOLIST__TASKSERVICE_H_
 
 #include "TaskDTO.h"
+#include "TaskServiceInterface.h"
 #include <MemoryModel/Storage/FullStorage.h>
 
 /*
@@ -16,11 +17,19 @@
  * @author: Rodion Shyshkin
  */
 
-class TaskService {
+class TaskService : public TaskServiceInterface {
  public:
   TaskService();
 
  public:
+  /*
+   * \brief Gives a task by its ID.
+   *
+   * @param TaskID identifier of the task
+   *
+   * @return TaskDTO object
+   */
+  TaskDTO                           getTask(const TaskID& id) const override;
   /*
    * \brief Gives all actual tasks.
    *
@@ -29,7 +38,7 @@ class TaskService {
    * @return TaskDTO vector Vector which contains all tasks, if param is true they are sorted by priority, in
    * another case they are not
    */
-  std::vector<TaskDTO>              getAllTasks(const bool& sortByPriority) const;
+  std::vector<TaskDTO>              getAllTasks(const bool& sortByPriority) const override;
 
   /*
    * \brief Gives all tasks for today by local time.
@@ -39,7 +48,7 @@ class TaskService {
    * @return TaskDTO vector which contains all tasks for today, if param is true they are sorted by priority, in
    * another case they are not
    */
-  std::vector<TaskDTO>              getTasksForToday(const bool& sortByPriority) const;
+  std::vector<TaskDTO>              getTasksForToday(const bool& sortByPriority) const override;
 
   /*
    * \brief Gives all tasks for current week until Monday by local time.
@@ -49,7 +58,7 @@ class TaskService {
    * @return TaskDTO vector which contains all tasks for this week, if param is true they are sorted by priority, in
    * another case they are not
    */
-  std::vector<TaskDTO>              getTasksForWeek(const bool& sortByPriority) const;
+  std::vector<TaskDTO>              getTasksForWeek(const bool& sortByPriority) const override;
 
   /*
    * \brief Gives all tasks with label which is pointed as parameter.
@@ -59,7 +68,7 @@ class TaskService {
    *
    * @return TaskDTO vector which contains all tasks with this label
    */
-  std::vector<TaskDTO>              getTasksByLabel(const std::string &label, const bool& sortByPriority) const;
+  std::vector<TaskDTO>              getTasksByLabel(const std::string &label, const bool& sortByPriority) const override;
 
   /*
    * \brief Gives all tasks with name which is pointed as parameter.
@@ -69,7 +78,7 @@ class TaskService {
    *
    * @return TaskDTO vector which contains all tasks with this name
    */
-  std::vector<TaskDTO>              getTasksByName(const std::string& name, const bool& sortByPriority) const;
+  std::vector<TaskDTO>              getTasksByName(const std::string& name, const bool& sortByPriority) const override;
 
   /*
    * \brief Gives all tasks with priority which is pointed as parameter.
@@ -78,7 +87,7 @@ class TaskService {
    *
    * @return TaskDTO vector which contains all tasks with this priority.
    */
-  std::vector<TaskDTO>              getTasksByPriority(const Priority& priority) const;
+  std::vector<TaskDTO>              getTasksByPriority(const Priority& priority) const override;
 
   /*
    * \brief Adds task.
@@ -87,7 +96,7 @@ class TaskService {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addTask(const TaskDTO& task);
+  OperationResult                   addTask(const TaskDTO& task) override;
 
   /*
    * \brief Adds subtask for a task which already exists.
@@ -98,7 +107,7 @@ class TaskService {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addSubtask(const TaskID &id, const TaskDTO& subtask);
+  OperationResult                   addSubtask(const TaskID &id, const TaskDTO& subtask) override;
 
   /*
    * \brief Removes task.
@@ -107,7 +116,7 @@ class TaskService {
    *
    * @return OperationResult information about result of removing (contains error or message about success).
    */
-  OperationResult                   RemoveTask(const TaskID& id);
+  OperationResult                   RemoveTask(const TaskID& id) override;
 
   /*
    * \brief Postpones task.
@@ -118,7 +127,7 @@ class TaskService {
    *
    * @return OperationResult information about result of postpone (contains error or message about success).
    */
-  OperationResult                   postponeTask(const TaskID& id, const Date& newdate);
+  OperationResult                   postponeTask(const TaskID& id, const Date& newdate) override;
 
   /*
    * \brief Completes task.
@@ -127,7 +136,7 @@ class TaskService {
    *
    * @return OperationResult information about result of completing (contains error or message about success).
    */
-  OperationResult                   completeTask(const TaskID& id);
+  OperationResult                   completeTask(const TaskID& id) override;
 
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
