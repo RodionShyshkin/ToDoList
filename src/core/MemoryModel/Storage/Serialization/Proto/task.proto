@@ -16,7 +16,7 @@ message TaskProto {
   uint32 deadline = 4;
   bool completed = 5;
   repeated TaskProto subtasks = 6;
-  repeated int32 test = 7;
+  uint32 parent_id = 7;
 }
 
 message StorageProto {

@@ -54,7 +54,7 @@ TEST_F(DateTest, checkWeek) {
   ASSERT_FALSE(Date::CheckWeek(second_point));
   ASSERT_FALSE(Date::CheckWeek(third_point));
 
-  auto fourth_point = Date(2020, 9, 26);
+  auto fourth_point = Date(2020, 9, 29);
 
   ASSERT_TRUE(Date::CheckWeek(fourth_point));
 }

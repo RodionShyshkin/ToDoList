@@ -29,6 +29,7 @@ TEST_F(asdf, base) {
   storage.AddTask(mmm);
   storage.AddSubtask(mmm.getID(), kkk);
   storage.AddSubtask(mmm.getID(), nnn);
-  auto status = storage.SaveToDisk("asdf");
+  auto status = storage.SaveToDisk("newfile");
   if(status.GetError()) std::cout << "hui";
+  status = storage.LoadFromDisk("newfile");
 }

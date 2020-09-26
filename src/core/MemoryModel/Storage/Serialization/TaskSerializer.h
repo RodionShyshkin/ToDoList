@@ -2,13 +2,13 @@
 // Created by rodion on 9/25/20.
 //
 
-#ifndef TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZATOR_H_
-#define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZATOR_H_
+#ifndef TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZER_H_
+#define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZER_H_
 
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include "task.pb.h"
 
-class TaskSerializator {
+class TaskSerializer {
  public:
   static TaskProto    SerializeTaskWithSubtasks(const TaskEntity&);
 
@@ -18,4 +18,4 @@ class TaskSerializator {
   static void         SetTaskProtoFields(TaskProto* task, const TaskEntity& task_entity);
 };
 
-#endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZATOR_H_
+#endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZER_H_

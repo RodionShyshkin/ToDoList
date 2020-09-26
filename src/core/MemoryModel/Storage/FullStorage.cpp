@@ -3,7 +3,8 @@
 //
 
 #include "FullStorage.h"
-#include <MemoryModel/Storage/Serialization/TaskSerializator.h>
+#include <MemoryModel/Storage/Serialization/TaskSerializer.h>
+#include <MemoryModel/Storage/Serialization/TaskDeserializer.h>
 #include <fstream>
 #include "task.pb.h"
 
@@ -87,9 +88,11 @@ OperationResult FullStorage::SaveToDisk(const std::string &path) {
   for(const auto& task : tasks) {
     auto* newTask = storage.add_tasks();
     TaskProto temporary;
-    temporary = TaskSerializator::SerializeTaskWithSubtasks(task);
+    temporary = TaskSerializer::SerializeTaskWithSubtasks(task);
     *newTask = temporary;
   }
+  std::cout << storage.tasks_size() << std::endl;
+//  std::cout << storage.tasks(1).subtasks(0).parent_id() << std::endl;
 
   if(!storage.SerializeToOstream(&file)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
   file.close();
@@ -97,6 +100,28 @@ OperationResult FullStorage::SaveToDisk(const std::string &path) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::LoadFromDisk(const std::string &) {
+OperationResult FullStorage::LoadFromDisk(const std::string &path) {
+  std::ifstream file(path);
+  if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
 
+  StorageProto storage;
+  storage.ParseFromIstream(&file);
+  file.close();
+
+  FullStorage temp_storage_;
+  for(const auto& task : storage.tasks()) {
+    auto task_ = TaskDeserializer::DeserializeTask(task);
+    if(task_ == nullptr) return OperationResult{ErrorCode::INVALID_TASK};
+    TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
+                                   task_->GetDueTime().GetDate(), task_->GetStatus());
+    if(task.parent_id() == 0) {
+      temp_storage_.AddTask(dto_);
+    }
+    else {
+      temp_storage_.AddSubtask(TaskID{task.parent_id()}, dto_);
+    }
+  }
+
+  std::swap(*this, temp_storage_);
+  return OperationResult{ErrorCode::NO_ERRORS};
 }
