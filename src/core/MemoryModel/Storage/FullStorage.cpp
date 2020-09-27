@@ -3,6 +3,10 @@
 //
 
 #include "FullStorage.h"
+#include <MemoryModel/Storage/Serialization/TaskSerializer.h>
+#include <MemoryModel/Storage/Serialization/TaskDeserializer.h>
+#include <fstream>
+#include "task.pb.h"
 
 FullStorage::FullStorage() : generate_id_(IDGenerator()) {}
 
@@ -20,6 +24,7 @@ OperationResult FullStorage::AddTask(const TaskDTO& task) {
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
   auto newtask = TaskEntity::createTask(taskInstance.value(), newid.value());
+  if(task.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
@@ -37,6 +42,7 @@ OperationResult FullStorage::AddSubtask(const TaskID &id, const TaskDTO& subtask
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
   auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid.value(), id);
+  if(subtask.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_.AddTask(task_ptr)) return OperationResult{ErrorCode::WRONG_TASK_ID};
@@ -72,5 +78,53 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
   task_storage_.RemoveTask(id);
   task_view_.RemoveTask(id);
 
+  return OperationResult{ErrorCode::NO_ERRORS};
+}
+
+OperationResult FullStorage::SaveToDisk(const std::string &path) {
+  std::ofstream file(path);
+  if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
+
+  auto tasks = this->GetTaskView().GetAllTasks();
+  StorageProto storage;
+  for(const auto& task : tasks) {
+    auto* newTask = storage.add_tasks();
+    TaskProto temporary;
+    temporary = TaskSerializer::SerializeTaskWithSubtasks(task);
+    *newTask = temporary;
+  }
+
+  if(!storage.SerializeToOstream(&file)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
+  file.close();
+
+  return OperationResult{ErrorCode::NO_ERRORS};
+}
+
+OperationResult FullStorage::LoadFromDisk(const std::string &path) {
+  std::ifstream file(path);
+  if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
+
+  StorageProto storage;
+  if(!storage.ParseFromIstream(&file)) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
+  file.close();
+
+  FullStorage temp_storage_;
+  for(const auto& task : storage.tasks()) {
+    auto task_ = TaskDeserializer::DeserializeTask(task);
+    if(!task_.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
+    TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
+                                   task_->GetDueTime().GetDate(), task_->GetStatus());
+
+    OperationResult result{ErrorCode::NO_ERRORS};
+    if(task.parent_id() == 0) {
+      result = temp_storage_.AddTask(dto_);
+    }
+    else {
+      result = temp_storage_.AddSubtask(TaskID{task.parent_id()}, dto_);
+    }
+    if(!result.GetStatus()) return result;
+  }
+
+  std::swap(*this, temp_storage_);
   return OperationResult{ErrorCode::NO_ERRORS};
 }

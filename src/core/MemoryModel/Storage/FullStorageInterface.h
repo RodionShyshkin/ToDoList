@@ -21,6 +21,9 @@ class FullStorageInterface {
   virtual OperationResult                   AddTask(const TaskDTO& task) = 0;
   virtual OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) = 0;
   virtual OperationResult                   RemoveTask(const TaskID& id) = 0;
+
+  virtual OperationResult                   SaveToDisk(const std::string&) = 0;
+  virtual OperationResult                   LoadFromDisk(const std::string&) = 0;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_STORAGE_FULLSTORAGEINTERFACE_H_

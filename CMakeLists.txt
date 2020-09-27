@@ -7,28 +7,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ######## CORE ########
 
-file(GLOB core_sources "src/core/API/*.cpp" "src/core/MemoryModel/Storage/*.cpp" "src/core/MemoryModel/Task/*.cpp")
-file(GLOB core_headers "src/core/API/*.h" "src/core/MemoryModel/Storage/*.h" "src/core/MemoryModel/Task/*.h")
+file(GLOB_RECURSE core_sources "src/core/*.cpp")
+file(GLOB_RECURSE core_headers "src/core/*.h")
 
 ######## CLI ########
 
-file(GLOB cli_sources "src/CLI/*.cpp" "src/CLI/States/*.cpp" "src/CLI/States/AddingTask/*.cpp"
-        "src/CLI/States/GetTasksList/*.cpp" "src/CLI/States/GetSingleTask/*.cpp"
-        "src/CLI/States/EditStates/*.cpp" "src/CLI/States/EditStates/Postpone/*.cpp" "src/CLI/States/MainStates/*.cpp"
-        "src/CLI/Context/*.cpp" "src/CLI/IO/*.cpp")
-file(GLOB cli_headers "src/CLI/*.h" "src/CLI/States/*.h" "src/CLI/States/AddingTask/*.h"
-        "src/CLI/States/GetTasksList/*.h" "src/CLI/States/GetSingleTask/*.h"
-        "src/CLI/States/EditStates/*.h" "src/CLI/States/EditStates/Postpone/*.h" "src/CLI/States/MainStates/*.h"
-        "src/CLI/Context/*.h" "src/CLI/IO/*.h")
+file(GLOB_RECURSE cli_sources "src/CLI/*.cpp")
+file(GLOB_RECURSE cli_headers "src/CLI/*.h")
 
 file(GLOB main "src/main.cpp")
 
 add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers} ${main})
 
 ######## TESTS ########
-file(GLOB core_tests "tests/core/API/*.cpp" "tests/core/MemoryModel/Storage/*.cpp" "tests/core/MemoryModel/Task/*.cpp")
-
-file(GLOB cli_tests "tests/CLI/*.cpp")
+file(GLOB_RECURSE core_tests "tests/core/*.cpp")
+file(GLOB_RECURSE cli_tests "tests/CLI/*.cpp")
 
 ######## BOOST ########
 
@@ -43,6 +36,18 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
+######## PROTOBUF ########
+
+find_package(Protobuf REQUIRED)
+include_directories(${Protobuf_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/core/MemoryModel/Storage/Serialization/Proto/*.proto")
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_SOURCES})
+message("generated ${PROTO_SRCS} ${PROTO_HDRS}")
+
+SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
+
 ######## GTEST ########
 
 include_directories(src/core)
@@ -56,13 +61,13 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests})
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} tests/core/asdf.cpp src/core/MemoryModel/Storage/Serialization/TaskDeserializer.cpp src/core/MemoryModel/Storage/Serialization/TaskDeserializer.h tests/core/MemoryModel/Storage/SerializationTest.cpp src/core/MemoryModel/Storage/Serialization/SerializerInterface.h)
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)
-target_link_libraries(Tests ${Boost_LIBRARIES})
+target_link_libraries(Tests ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
 
-target_link_libraries(ToDoList ${Boost_LIBRARIES})
+target_link_libraries(ToDoList ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
 
 gtest_discover_tests(Tests)
 
