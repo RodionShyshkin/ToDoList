@@ -16,6 +16,7 @@ TaskProto TaskSerializer::SerializeTaskWithSubtasks(const TaskEntity &task) {
 }
 
 std::unique_ptr<TaskProto> TaskSerializer::SerializeTask(const TaskEntity &task) {
+//  auto* newtask = new TaskProto;
   auto newtask = std::make_unique<TaskProto>();
   TaskSerializer::SetTaskProtoFields(newtask.get(), task);
   return std::move(newtask);
