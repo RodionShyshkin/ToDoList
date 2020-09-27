@@ -5,7 +5,7 @@
 #include "TaskSerializer.h"
 
 TaskProto TaskSerializer::SerializeTaskWithSubtasks(const TaskEntity &task) {
-  auto* newtask = new TaskProto;
+  auto newtask = std::make_unique<TaskProto>();
   newtask = TaskSerializer::SerializeTask(task);
   for(const auto& [first, second] : task.GetSubtasks()) {
     auto subtask_ptr = newtask->add_subtasks();
@@ -15,10 +15,10 @@ TaskProto TaskSerializer::SerializeTaskWithSubtasks(const TaskEntity &task) {
   return *newtask;
 }
 
-TaskProto* TaskSerializer::SerializeTask(const TaskEntity &task) {
-  auto* newtask = new TaskProto;
-  TaskSerializer::SetTaskProtoFields(newtask, task);
-  return newtask;
+std::unique_ptr<TaskProto> TaskSerializer::SerializeTask(const TaskEntity &task) {
+  auto newtask = std::make_unique<TaskProto>();
+  TaskSerializer::SetTaskProtoFields(newtask.get(), task);
+  return std::move(newtask);
 }
 
 TaskProto_Priority TaskSerializer::SerializePriority(const Priority &priority) {
@@ -29,7 +29,7 @@ TaskProto_Priority TaskSerializer::SerializePriority(const Priority &priority) {
   throw std::runtime_error("Invalid priority serialization.");
 }
 
-void TaskSerializer::SetTaskProtoFields(TaskProto *task, const TaskEntity& task_entity) {
+void TaskSerializer::SetTaskProtoFields(TaskProto* task, const TaskEntity& task_entity) {
   task->set_name(task_entity.GetName());
   task->set_label(task_entity.GetLabel());
   task->set_priority(TaskSerializer::SerializePriority(task_entity.GetPriority()));

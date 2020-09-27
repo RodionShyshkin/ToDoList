@@ -18,7 +18,7 @@
 
 class TaskDeserializer {
  public:
-  static std::shared_ptr<TaskEntity>       DeserializeTask(const TaskProto&);
+  static std::optional<TaskEntity>       DeserializeTask(const TaskProto&);
 
  private:
   /*

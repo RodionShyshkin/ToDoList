@@ -4,14 +4,15 @@
 
 #include "TaskDeserializer.h"
 
-std::shared_ptr<TaskEntity> TaskDeserializer::DeserializeTask(const TaskProto &task) {
+std::optional<TaskEntity> TaskDeserializer::DeserializeTask(const TaskProto &task) {
   auto task_ = Task::create(task.name(), task.label(),
                             TaskDeserializer::DeserializePriority(task.priority()),
                             boost::gregorian::date{task.deadline()});
-  if(!task_.has_value()) return nullptr;
+  if(!task_.has_value()) return std::nullopt;
   TaskEntity entity = TaskEntity::createTask(task_.value(), TaskID{0});
   if(task.completed()) entity.SetComplete();
-  return std::make_shared<TaskEntity>(entity);
+  return entity;
+//  return std::make_shared<TaskEntity>(entity);
 }
 
 Priority TaskDeserializer::DeserializePriority(const TaskProto_Priority &priority) {

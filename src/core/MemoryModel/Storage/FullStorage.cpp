@@ -111,7 +111,7 @@ OperationResult FullStorage::LoadFromDisk(const std::string &path) {
   FullStorage temp_storage_;
   for(const auto& task : storage.tasks()) {
     auto task_ = TaskDeserializer::DeserializeTask(task);
-    if(task_ == nullptr) return OperationResult{ErrorCode::INVALID_TASK};
+    if(!task_.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
     TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
                                    task_->GetDueTime().GetDate(), task_->GetStatus());
 

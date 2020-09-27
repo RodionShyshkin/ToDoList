@@ -28,7 +28,7 @@ class TaskSerializer {
    *
    * @return TaskProto* pointer.
    */
-  static TaskProto*   SerializeTask(const TaskEntity&);
+  static std::unique_ptr<TaskProto>   SerializeTask(const TaskEntity&);
 
   /*
    * Converts Priority to TaskProto_Priority.
