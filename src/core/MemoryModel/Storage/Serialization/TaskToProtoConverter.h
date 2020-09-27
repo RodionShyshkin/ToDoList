@@ -2,8 +2,8 @@
 // Created by rodion on 9/25/20.
 //
 
-#ifndef TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZER_H_
-#define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZER_H_
+#ifndef TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKTOPROTOCONVERTER_H_
+#define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKTOPROTOCONVERTER_H_
 
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include "task.pb.h"
@@ -16,9 +16,9 @@
  * @author Rodion Shyshkin
  */
 
-class TaskSerializer {
+class TaskToProtoConverter {
  public:
-  static TaskProto    SerializeTaskWithSubtasks(const TaskEntity&);
+  static TaskProto    ConvertTaskWithSubtasks(const TaskEntity&);
 
  private:
   /*
@@ -28,7 +28,7 @@ class TaskSerializer {
    *
    * @return TaskProto* pointer.
    */
-  static std::unique_ptr<TaskProto>   SerializeTask(const TaskEntity&);
+  static std::unique_ptr<TaskProto>  ConvertSingleTask(const TaskEntity&);
 
   /*
    * Converts Priority to TaskProto_Priority.
@@ -37,7 +37,7 @@ class TaskSerializer {
    *
    * @return the TaskProto_Priority one.
    */
-  static TaskProto_Priority     SerializePriority(const Priority&);
+  static TaskProto_Priority     ConvertPriority(const Priority&);
 
   /*
    * Copies fields about task from TaskEntity instance to the TaskProto one.
@@ -48,4 +48,4 @@ class TaskSerializer {
   static void         SetTaskProtoFields(TaskProto* task, const TaskEntity& task_entity);
 };
 
-#endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKSERIALIZER_H_
+#endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKTOPROTOCONVERTER_H_

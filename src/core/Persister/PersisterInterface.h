@@ -14,8 +14,8 @@ class PersisterInterface {
   virtual ~PersisterInterface() = default;
 
  public:
-  virtual bool      Save(const std::string& filepath, const StorageProto&);
-  virtual bool      Load(const std::string& filepath, std::unique_ptr<FullStorage>& storage);
+  virtual bool      SaveToDisk(const std::string& filepath, const StorageProto&) = 0;
+  virtual bool      LoadFromDisk(const std::string& filepath, StorageProto& storage) = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_PERSISTER_PERSISTERINTERFACE_H_

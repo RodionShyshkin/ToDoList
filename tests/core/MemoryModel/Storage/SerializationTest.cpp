@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <MemoryModel/Storage/Serialization/TaskSerializer.h>
+#include <MemoryModel/Storage/Serialization/TaskToProtoConverter.h>
 #include <MemoryModel/Storage/Serialization/TaskDeserializer.h>
 
  class SerializationTest : public ::testing::Test {
@@ -30,7 +30,7 @@
 };
 
 TEST_F(SerializationTest, shouldSerializeTask) {
-  TaskProto serialized = TaskSerializer::SerializeTaskWithSubtasks(task_);
+  TaskProto serialized = TaskToProtoConverter::ConvertTaskWithSubtasks(task_);
   ASSERT_EQ(serialized.name(), task_proto_.name());
   ASSERT_EQ(serialized.label(), task_proto_.label());
   ASSERT_EQ(serialized.priority(), task_proto_.priority());
@@ -40,11 +40,13 @@ TEST_F(SerializationTest, shouldSerializeTask) {
 }
 
 TEST_F(SerializationTest, shouldDeserializeTask) {
-  std::shared_ptr<TaskEntity> desir = TaskDeserializer::DeserializeTask(task_proto_);
-  ASSERT_EQ(desir->GetName(), task_.GetName());
-  ASSERT_EQ(desir->GetLabel(), task_.GetLabel());
-  ASSERT_EQ(desir->GetPriority(), task_.GetPriority());
-  ASSERT_EQ(desir->GetDueTime().GetDate(), task_.GetDueTime().GetDate());
-  ASSERT_EQ(desir->GetStatus(), task_.GetStatus());
-  ASSERT_EQ(desir->GetSubtasks().size(), task_.GetSubtasks().size());
+  auto desir = TaskDeserializer::DeserializeTask(task_proto_);
+
+  ASSERT_TRUE(desir.has_value());
+  ASSERT_EQ(desir.value().GetName(), task_.GetName());
+  ASSERT_EQ(desir.value().GetLabel(), task_.GetLabel());
+  ASSERT_EQ(desir.value().GetPriority(), task_.GetPriority());
+  ASSERT_EQ(desir.value().GetDueTime().GetDate(), task_.GetDueTime().GetDate());
+  ASSERT_EQ(desir.value().GetStatus(), task_.GetStatus());
+  ASSERT_EQ(desir.value().GetSubtasks().size(), task_.GetSubtasks().size());
 }

@@ -3,8 +3,9 @@
 //
 
 #include "FullStorage.h"
-#include <MemoryModel/Storage/Serialization/TaskSerializer.h>
 #include <MemoryModel/Storage/Serialization/TaskDeserializer.h>
+#include <MemoryModel/Storage/Serialization/StorageToProtoConverter.h>
+#include <Persister/Persister.h>
 #include <fstream>
 #include "task.pb.h"
 
@@ -82,20 +83,10 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
 }
 
 OperationResult FullStorage::SaveToDisk(const std::string &path) {
-  std::ofstream file(path);
-  if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
-
   auto tasks = this->GetTaskView().GetAllTasks();
-  StorageProto storage;
-  for(const auto& task : tasks) {
-    auto* newTask = storage.add_tasks();
-    TaskProto temporary;
-    temporary = TaskSerializer::SerializeTaskWithSubtasks(task);
-    *newTask = temporary;
-  }
-
-  if(!storage.SerializeToOstream(&file)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
-  file.close();
+  StorageProto storage = StorageToProtoConverter::ConvertStorageToProto(tasks);
+  Persister persister;
+  if(!persister.SaveToDisk(path, storage)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
 
   return OperationResult{ErrorCode::NO_ERRORS};
 }
