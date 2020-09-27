@@ -3,8 +3,9 @@
 //
 
 #include "FullStorage.h"
-#include <MemoryModel/Storage/Serialization/TaskDeserializer.h>
+#include <MemoryModel/Storage/Serialization/ProtoToTaskConverter.h>
 #include <MemoryModel/Storage/Serialization/StorageToProtoConverter.h>
+#include <MemoryModel/Storage/Serialization/ProtoToStorageConverter.h>
 #include <Persister/Persister.h>
 #include <fstream>
 #include "task.pb.h"
@@ -92,30 +93,12 @@ OperationResult FullStorage::SaveToDisk(const std::string &path) {
 }
 
 OperationResult FullStorage::LoadFromDisk(const std::string &path) {
-  std::ifstream file(path);
-  if(!file.is_open()) return OperationResult{ErrorCode::UNKNOWN_PATH};
-
   StorageProto storage;
-  if(!storage.ParseFromIstream(&file)) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
-  file.close();
+  Persister persister;
+  if(!persister.LoadFromDisk(path, storage)) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
 
-  FullStorage temp_storage_;
-  for(const auto& task : storage.tasks()) {
-    auto task_ = TaskDeserializer::DeserializeTask(task);
-    if(!task_.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
-    TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
-                                   task_->GetDueTime().GetDate(), task_->GetStatus());
+  auto temp_storage_ = ProtoToStorageConverter::ConvertFromProto(storage);
 
-    OperationResult result{ErrorCode::NO_ERRORS};
-    if(task.parent_id() == 0) {
-      result = temp_storage_.AddTask(dto_);
-    }
-    else {
-      result = temp_storage_.AddSubtask(TaskID{task.parent_id()}, dto_);
-    }
-    if(!result.GetStatus()) return result;
-  }
-
-  std::swap(*this, temp_storage_);
+  std::swap(*this, *temp_storage_);
   return OperationResult{ErrorCode::NO_ERRORS};
 }

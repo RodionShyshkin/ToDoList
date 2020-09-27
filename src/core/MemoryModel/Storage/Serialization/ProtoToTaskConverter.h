@@ -16,9 +16,9 @@
  * @author Rodion Shyshkin
  */
 
-class TaskDeserializer {
+class ProtoToTaskConverter {
  public:
-  static std::optional<TaskEntity>       DeserializeTask(const TaskProto&);
+  static std::optional<TaskEntity>       UnconvertTask(const TaskProto&);
 
  private:
   /*
@@ -28,7 +28,7 @@ class TaskDeserializer {
    *
    * @return Priority instance.
    */
-  static Priority         DeserializePriority(const TaskProto_Priority&);
+  static Priority         UnconvertPriority(const TaskProto_Priority&);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTO_TASKDESERIALIZER_H_

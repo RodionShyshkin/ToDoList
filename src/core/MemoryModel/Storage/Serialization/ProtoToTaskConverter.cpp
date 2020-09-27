@@ -2,11 +2,11 @@
 // Created by rodion on 9/26/20.
 //
 
-#include "TaskDeserializer.h"
+#include "ProtoToTaskConverter.h"
 
-std::optional<TaskEntity> TaskDeserializer::DeserializeTask(const TaskProto &task) {
+std::optional<TaskEntity> ProtoToTaskConverter::UnconvertTask(const TaskProto &task) {
   auto task_ = Task::create(task.name(), task.label(),
-                            TaskDeserializer::DeserializePriority(task.priority()),
+                            ProtoToTaskConverter::UnconvertPriority(task.priority()),
                             boost::gregorian::date{task.deadline()});
   if(!task_.has_value()) return std::nullopt;
   TaskEntity entity = TaskEntity::createTask(task_.value(), TaskID{0});
@@ -15,7 +15,7 @@ std::optional<TaskEntity> TaskDeserializer::DeserializeTask(const TaskProto &tas
 //  return std::make_shared<TaskEntity>(entity);
 }
 
-Priority TaskDeserializer::DeserializePriority(const TaskProto_Priority &priority) {
+Priority ProtoToTaskConverter::UnconvertPriority(const TaskProto_Priority &priority) {
   if(TaskProto_Priority_EMPTY == priority) return Priority::EMPTY;
   else if(TaskProto_Priority_LOW == priority) return Priority::LOW;
   else if(TaskProto_Priority_MEDIUM == priority) return Priority::MEDIUM;

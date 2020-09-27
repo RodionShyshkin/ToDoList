@@ -128,7 +128,7 @@ TEST_F(FullStorageTest, shouldNotLoadFromUnexistingFile) {
   ts_storage.AddTask(dto_);
   auto result = ts_storage.LoadFromDisk("unknown_file.txt");
 
-  ASSERT_EQ(result.GetError(), ErrorCode::UNKNOWN_PATH);
+  ASSERT_EQ(result.GetError(), ErrorCode::DESERIALIZATION_ERROR);
 }
 
 TEST_F(FullStorageTest, shouldLoadFromEmptyFile) {

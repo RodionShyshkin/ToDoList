@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <MemoryModel/Storage/Serialization/TaskToProtoConverter.h>
-#include <MemoryModel/Storage/Serialization/TaskDeserializer.h>
+#include <MemoryModel/Storage/Serialization/ProtoToTaskConverter.h>
 
  class SerializationTest : public ::testing::Test {
  public:
@@ -40,7 +40,7 @@ TEST_F(SerializationTest, shouldSerializeTask) {
 }
 
 TEST_F(SerializationTest, shouldDeserializeTask) {
-  auto desir = TaskDeserializer::DeserializeTask(task_proto_);
+  auto desir = ProtoToTaskConverter::UnconvertTask(task_proto_);
 
   ASSERT_TRUE(desir.has_value());
   ASSERT_EQ(desir.value().GetName(), task_.GetName());
