@@ -85,16 +85,16 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
 OperationResult FullStorage::SaveToDisk(const std::string &path) {
   auto tasks = this->GetTaskView().GetAllTasks();
   StorageProto storage = StorageToProtoConverter::ConvertStorageToProto(tasks);
-  Persister persister;
-  if(!persister.SaveToDisk(path, storage)) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
+  Persister persister{path, storage};
+  if(!persister.Save()) return OperationResult{ErrorCode::SERIALIZATION_ERROR};
 
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
 OperationResult FullStorage::LoadFromDisk(const std::string &path) {
   StorageProto storage;
-  Persister persister;
-  if(!persister.LoadFromDisk(path, storage)) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
+  Persister persister{path, storage};
+  if(!persister.Load()) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
 
   auto temp_storage_ = ProtoToStorageConverter::ConvertFromProto(storage);
 

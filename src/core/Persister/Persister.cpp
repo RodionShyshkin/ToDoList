@@ -4,20 +4,22 @@
 
 #include "Persister.h"
 
-bool Persister::SaveToDisk(const std::string &filepath, const StorageProto &storage) {
-  std::ofstream file(filepath);
+Persister::Persister(const std::string &filepath, StorageProto &storage) : filepath_(filepath), storage_(storage) { }
+
+bool Persister::Save() {
+  std::ofstream file(this->filepath_);
   if(!file.is_open()) return false;
 
-  if(!storage.SerializeToOstream(&file)) return false;
+  if(!this->storage_.SerializeToOstream(&file)) return false;
 
   return true;
 }
 
-bool Persister::LoadFromDisk(const std::string &filepath, StorageProto& storage) {
-  std::ifstream file(filepath);
+bool Persister::Load() {
+  std::ifstream file(this->filepath_);
   if(!file.is_open()) return false;
 
-  if(!storage.ParseFromIstream(&file)) return false;
+  if(!this->storage_.ParseFromIstream(&file)) return false;
 
   file.close();
   return true;

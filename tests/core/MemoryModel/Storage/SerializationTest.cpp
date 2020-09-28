@@ -30,7 +30,7 @@
 };
 
 TEST_F(SerializationTest, shouldSerializeTask) {
-  TaskProto serialized = TaskToProtoConverter::ConvertTaskWithSubtasks(task_);
+  TaskProto serialized = TaskToProtoConverter::ConvertTaskEntityToProto(task_);
   ASSERT_EQ(serialized.name(), task_proto_.name());
   ASSERT_EQ(serialized.label(), task_proto_.label());
   ASSERT_EQ(serialized.priority(), task_proto_.priority());

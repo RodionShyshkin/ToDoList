@@ -9,7 +9,7 @@ StorageProto StorageToProtoConverter::ConvertStorageToProto(const std::vector<Ta
   for(const auto& task : tasks) {
     auto* newTask = storage.add_tasks();
     TaskProto temporary;
-    temporary = TaskToProtoConverter::ConvertTaskWithSubtasks(task);
+    temporary = TaskToProtoConverter::ConvertTaskEntityToProto(task);
     *newTask = temporary;
   }
   return storage;

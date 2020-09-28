@@ -18,7 +18,7 @@
 
 class TaskToProtoConverter {
  public:
-  static TaskProto    ConvertTaskWithSubtasks(const TaskEntity&);
+  static TaskProto    ConvertTaskEntityToProto(const TaskEntity&);
 
  private:
   /*

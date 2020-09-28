@@ -4,7 +4,7 @@
 
 #include "TaskToProtoConverter.h"
 
-TaskProto TaskToProtoConverter::ConvertTaskWithSubtasks(const TaskEntity &task) {
+TaskProto TaskToProtoConverter::ConvertTaskEntityToProto(const TaskEntity &task) {
   auto newtask = std::make_unique<TaskProto>();
   newtask = TaskToProtoConverter::ConvertSingleTask(task);
   for(const auto& [first, second] : task.GetSubtasks()) {
