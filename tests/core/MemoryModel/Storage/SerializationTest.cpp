@@ -3,8 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include <MemoryModel/Storage/Serialization/TaskToProtoConverter.h>
-#include <MemoryModel/Storage/Serialization/ProtoToTaskConverter.h>
+#include <Persister/Serialization/TaskToProtoConverter.h>
+#include <Persister/Serialization/ProtoToTaskConverter.h>
 
  class SerializationTest : public ::testing::Test {
  public:

@@ -3,9 +3,8 @@
 //
 
 #include "FullStorage.h"
-#include <MemoryModel/Storage/Serialization/ProtoToTaskConverter.h>
-#include <MemoryModel/Storage/Serialization/StorageToProtoConverter.h>
-#include <MemoryModel/Storage/Serialization/ProtoToStorageConverter.h>
+#include <Persister/Serialization/StorageToProtoConverter.h>
+#include <Persister/Serialization/ProtoToStorageConverter.h>
 #include <Persister/Persister.h>
 #include <fstream>
 #include "task.pb.h"
