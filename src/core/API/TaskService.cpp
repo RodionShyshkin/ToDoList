@@ -6,8 +6,8 @@
 
 TaskService::TaskService() = default;
 
-TaskDTO TaskService::getTask(const TaskID &id) const {
-  auto model_dto = memory_model_api_->getTask(id);
+TaskDTO TaskService::getTask(const unsigned int& id) const {
+  auto model_dto = memory_model_api_->getTask(TaskID{id});
 
   return TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
                          model_dto.getLabel(), model_dto.getPriority(),
@@ -91,22 +91,22 @@ OperationResult TaskService::addTask(const TaskDTO &task) {
   return memory_model_api_->addTask(model_dto);
 }
 
-OperationResult TaskService::addSubtask(const TaskID &id, const TaskDTO& subtask) {
+OperationResult TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
   auto model_dto = ModelTaskDTO::create(TaskID{subtask.getID()}, subtask.getName(), subtask.getLabel(),
                                         subtask.getPriority(), Date{subtask.getDueDate()}, subtask.getStatus());
-  return memory_model_api_->addSubtask(id, model_dto);
+  return memory_model_api_->addSubtask(TaskID{id}, model_dto);
 }
 
-OperationResult TaskService::RemoveTask(const TaskID &id) {
-  return memory_model_api_->RemoveTask(id);
+OperationResult TaskService::RemoveTask(const unsigned int& id) {
+  return memory_model_api_->RemoveTask(TaskID{id});
 }
 
-OperationResult TaskService::postponeTask(const TaskID &id, const Date &newdate) {
-  return memory_model_api_->postponeTask(id, newdate);
+OperationResult TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
+  return memory_model_api_->postponeTask(TaskID{id}, Date{newdate});
 }
 
-OperationResult TaskService::completeTask(const TaskID &id) {
-  return memory_model_api_->completeTask(id);
+OperationResult TaskService::completeTask(const unsigned int& id) {
+  return memory_model_api_->completeTask(TaskID{id});
 }
 
 std::vector<TaskDTO> TaskService::sortedByPriority(std::vector<TaskDTO> vector) {

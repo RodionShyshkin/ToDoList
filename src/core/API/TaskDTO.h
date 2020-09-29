@@ -5,10 +5,8 @@
 #ifndef TODOLIST_SRC_TASKDTO_H_
 #define TODOLIST_SRC_TASKDTO_H_
 
-#include <MemoryModel/Task/TaskID.h>
 #include <iostream>
 #include <API/Priority.h>
-#include <MemoryModel/Task/Date.h>
 #include <MemoryModel/Task/Task.h>
 
 /*

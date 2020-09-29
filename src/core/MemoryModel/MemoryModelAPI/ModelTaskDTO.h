@@ -10,6 +10,7 @@
 #include <src/core/API/Priority.h>
 #include <src/core/MemoryModel/Task/Date.h>
 #include <src/core/MemoryModel/Task/TaskID.h>
+
 class ModelTaskDTO {
  public:
   ModelTaskDTO();

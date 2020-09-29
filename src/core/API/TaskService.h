@@ -30,7 +30,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return TaskDTO object
    */
-  TaskDTO                           getTask(const TaskID& id) const override;
+  TaskDTO                           getTask(const unsigned int& id) const override;
   /*
    * \brief Gives all actual tasks.
    *
@@ -108,7 +108,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addSubtask(const TaskID &id, const TaskDTO& subtask) override;
+  OperationResult                   addSubtask(const unsigned int& id, const TaskDTO& subtask) override;
 
   /*
    * \brief Removes task.
@@ -117,7 +117,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of removing (contains error or message about success).
    */
-  OperationResult                   RemoveTask(const TaskID& id) override;
+  OperationResult                   RemoveTask(const unsigned int& id) override;
 
   /*
    * \brief Postpones task.
@@ -128,7 +128,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of postpone (contains error or message about success).
    */
-  OperationResult                   postponeTask(const TaskID& id, const Date& newdate) override;
+  OperationResult                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
 
   /*
    * \brief Completes task.
@@ -137,7 +137,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of completing (contains error or message about success).
    */
-  OperationResult                   completeTask(const TaskID& id) override;
+  OperationResult                   completeTask(const unsigned int& id) override;
 
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
