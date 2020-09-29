@@ -35,7 +35,7 @@ TEST_F(TaskDTOTest, validTask) {
   ASSERT_EQ(validTask.GetLabel(), dto.getLabel());
   ASSERT_EQ(validTask.GetPriority(), dto.getPriority());
   ASSERT_EQ(validTask.GetDate().GetDate(), dto.getDueDate());
-  ASSERT_EQ(TaskID{5}, dto.getID());
+  ASSERT_EQ(5, dto.getID());
   ASSERT_EQ(false, dto.getStatus());
 }
 

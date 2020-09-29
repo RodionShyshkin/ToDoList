@@ -17,7 +17,7 @@ class TaskServiceTest : public ::testing::Test {
 
     service.addTask(TaskDTO::create(1, "Task", "label",
                                     Priority::EMPTY, boost::gregorian::date{2040-9-20}, false));
-    service.addTask(TaskDTO::create(2, "Task", "label",
+    service.addTask(TaskDTO::create(2, "Tasik", "label",
                                     Priority::MEDIUM, boost::gregorian::date{2019-4-12}, false));
     service.addSubtask(1, TaskDTO::create(3, "Task 2", "label",
                                           Priority::HIGH, Date::GetCurrentDate().GetDate(), true));

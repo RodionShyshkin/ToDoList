@@ -4,23 +4,19 @@
 
 #include "TaskService.h"
 
-TaskService::TaskService() = default;
+TaskService::TaskService() : memory_model_api_(std::make_unique<ModelAPI>()) { }
 
 TaskDTO TaskService::getTask(const unsigned int& id) const {
   auto model_dto = memory_model_api_->getTask(TaskID{id});
 
-  return TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                         model_dto.getLabel(), model_dto.getPriority(),
-                         model_dto.getDueDate().GetDate(), model_dto.getStatus());
+  return TaskService::convertFromModelDTO(model_dto);
 }
 
 std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
   auto allTasks = memory_model_api_->getAllTasks();
   for(const auto& model_dto : allTasks) {
-    searchResult.push_back(TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                                           model_dto.getLabel(), model_dto.getPriority(),
-                                           model_dto.getDueDate().GetDate(), model_dto.getStatus()));
+    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -30,9 +26,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(const bool &sortByPriority) c
   std::vector<TaskDTO> searchResult;
   auto tasks = memory_model_api_->getTasksForToday();
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                                           model_dto.getLabel(), model_dto.getPriority(),
-                                           model_dto.getDueDate().GetDate(), model_dto.getStatus()));
+    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -42,9 +36,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(const bool &sortByPriority) co
   std::vector<TaskDTO> searchResult;
   auto tasks = memory_model_api_->getTasksForWeek();
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                                           model_dto.getLabel(), model_dto.getPriority(),
-                                           model_dto.getDueDate().GetDate(), model_dto.getStatus()));
+    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -54,9 +46,7 @@ std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, cons
   std::vector<TaskDTO> searchResult;
   auto tasks = memory_model_api_->getTasksByLabel(label);
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                                           model_dto.getLabel(), model_dto.getPriority(),
-                                           model_dto.getDueDate().GetDate(), model_dto.getStatus()));
+    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -66,9 +56,7 @@ std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const 
   std::vector<TaskDTO> searchResult;
   auto tasks = memory_model_api_->getTasksByName(name);
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                                           model_dto.getLabel(), model_dto.getPriority(),
-                                           model_dto.getDueDate().GetDate(), model_dto.getStatus()));
+    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
   if(sortByPriority) return sortedByPriority(searchResult);
   return searchResult;
@@ -78,23 +66,17 @@ std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) c
   std::vector<TaskDTO> searchResult;
   auto tasks = memory_model_api_->getTasksByPriority(priority);
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(),
-                                           model_dto.getLabel(), model_dto.getPriority(),
-                                           model_dto.getDueDate().GetDate(), model_dto.getStatus()));
+    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
   return searchResult;
 }
 
 OperationResult TaskService::addTask(const TaskDTO &task) {
-  auto model_dto = ModelTaskDTO::create(TaskID{task.getID()}, task.getName(), task.getLabel(),
-                                        task.getPriority(), Date{task.getDueDate()}, task.getStatus());
-  return memory_model_api_->addTask(model_dto);
+  return memory_model_api_->addTask(TaskService::convertToModelDTO(task));
 }
 
 OperationResult TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
-  auto model_dto = ModelTaskDTO::create(TaskID{subtask.getID()}, subtask.getName(), subtask.getLabel(),
-                                        subtask.getPriority(), Date{subtask.getDueDate()}, subtask.getStatus());
-  return memory_model_api_->addSubtask(TaskID{id}, model_dto);
+  return memory_model_api_->addSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
 }
 
 OperationResult TaskService::RemoveTask(const unsigned int& id) {
@@ -113,4 +95,14 @@ std::vector<TaskDTO> TaskService::sortedByPriority(std::vector<TaskDTO> vector) 
   sort(vector.begin(), vector.end(),
               [](const TaskDTO& lhs, const TaskDTO& rhs) { return lhs.getPriority() < rhs.getPriority(); });
   return vector;
+}
+
+TaskDTO TaskService::convertFromModelDTO(const ModelTaskDTO &model_dto) {
+  return TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(), model_dto.getLabel(),
+                         model_dto.getPriority(), model_dto.getDueDate().GetDate(), model_dto.getStatus());
+}
+
+ModelTaskDTO TaskService::convertToModelDTO(const TaskDTO &dto) {
+ return ModelTaskDTO::create(TaskID{dto.getID()}, dto.getName(), dto.getLabel(),
+                             dto.getPriority(), Date{dto.getDueDate()}, dto.getStatus());
 }

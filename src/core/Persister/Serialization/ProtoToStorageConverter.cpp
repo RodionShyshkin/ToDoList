@@ -10,7 +10,7 @@ std::unique_ptr<TaskModel> ProtoToStorageConverter::ConvertFromProto(const Stora
   for(const auto& task : storage_proto.tasks()) {
     auto task_ = ProtoToTaskConverter::ConvertProtoToTaskEntity(task);
     if(!task_.has_value()) return nullptr;
-    TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
+    ModelTaskDTO dto_ = ModelTaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
                                    task_->GetDueTime().GetDate(), task_->GetStatus());
 
     OperationResult result{ErrorCode::NO_ERRORS};

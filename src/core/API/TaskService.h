@@ -142,6 +142,9 @@ class TaskService : public TaskServiceInterface {
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
 
+  static TaskDTO                    convertFromModelDTO(const ModelTaskDTO& model_dto);
+  static ModelTaskDTO               convertToModelDTO(const TaskDTO& dto);
+
  private:
   std::unique_ptr<ModelAPI>         memory_model_api_;
 };

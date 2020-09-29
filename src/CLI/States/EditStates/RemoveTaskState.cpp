@@ -23,8 +23,7 @@ StateResult RemoveTaskState::run(std::shared_ptr<Context> &context) {
   if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
   this->task_id_ = id_from_buffer_.value();
 
-  auto id_ = TaskID{this->task_id_};
-  auto result = context->service_->RemoveTask(id_);
+  auto result = context->service_->RemoveTask(this->task_id_);
   if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   context->id_buffer_.clearBuffer();

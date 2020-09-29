@@ -22,8 +22,10 @@ TaskStorage TaskModel::GetTaskStorage() const {
 OperationResult TaskModel::AddTask(const ModelTaskDTO& task) {
   auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
+
   auto newid = generate_id_.GenerateID();
   if(!newid.has_value()) return OperationResult{ErrorCode::MEMORY_LIMIT};
+
   auto newtask = TaskEntity::createTask(taskInstance.value(), newid.value());
   if(task.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);

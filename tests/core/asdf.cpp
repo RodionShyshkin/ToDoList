@@ -18,12 +18,12 @@ TEST_F(asdf, base) {
   auto k = std::make_shared<TaskEntity>(m);
   auto kk = std::make_shared<TaskEntity>(mm);
 
-  auto mmm = TaskDTO::create(1, "name", "label", Priority::MEDIUM,
+  auto mmm = ModelTaskDTO::create(1, "name", "label", Priority::MEDIUM,
                              boost::gregorian::date{2012-10-10}, false);
-  auto kkk = TaskDTO::create(2, "subname", "label", Priority::LOW,
+  auto kkk = ModelTaskDTO::create(2, "subname", "label", Priority::LOW,
                              boost::gregorian::date{2012-10-10}, false);
 
-  auto nnn = TaskDTO::create(3, "subsubname", "label", Priority::LOW,
+  auto nnn = ModelTaskDTO::create(3, "subsubname", "label", Priority::LOW,
                              boost::gregorian::date{2012-10-10}, false);
 
   storage.AddTask(mmm);
