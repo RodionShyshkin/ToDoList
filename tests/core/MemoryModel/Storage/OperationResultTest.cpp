@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include "MemoryModel/Storage/OperationResult.h"
+#include "src/core/API/OperationResult.h"
 
  class OperationResultTest : public ::testing::Test {
 

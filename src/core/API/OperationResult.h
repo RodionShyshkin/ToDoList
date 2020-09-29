@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_MEMORYMODEL_OPERATIONRESULT_H_
 
 #include <optional>
-#include "Error.h"
+#include "src/core/MemoryModel/Storage/Error.h"
 
 /*
  * Class representing the result of adding tasks or subtasks.

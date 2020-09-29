@@ -7,7 +7,7 @@
 
 #include <MemoryModel/Storage/TaskView.h>
 #include <MemoryModel/Storage/TaskStorage.h>
-#include <MemoryModel/Storage/OperationResult.h>
+#include <src/core/API/OperationResult.h>
 #include <src/core/MemoryModel/MemoryModelAPI/ModelTaskDTO.h>
 
 class TaskModelInterface {

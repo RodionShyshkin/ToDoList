@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CORE_MEMORYMODEL_MEMORYMODELAPI_MODELAPIINTERFACE_H_
 
 #include <vector>
-#include <src/core/MemoryModel/Storage/OperationResult.h>
+#include <src/core/API/OperationResult.h>
 #include "ModelTaskDTO.h"
 class ModelAPIInterface {
  public:
