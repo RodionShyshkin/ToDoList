@@ -12,7 +12,7 @@
 
 class ProtoToStorageConverter {
  public:
-  static std::unique_ptr<TaskModel>      ConvertFromProto(const StorageProto&);
+  static std::unique_ptr<TaskModel>    ConvertFromProto(const StorageProto&);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTOTOSTORAGECONVERTER_H_

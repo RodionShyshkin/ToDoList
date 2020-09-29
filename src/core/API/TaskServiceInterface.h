@@ -21,6 +21,7 @@ class TaskServiceInterface {
   virtual std::vector<TaskDTO>    getTasksByLabel(const std::string &, const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksByName(const std::string&, const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksByPriority(const Priority&) const = 0;
+
   virtual OperationResult         addTask(const TaskDTO&) = 0;
   virtual OperationResult         addSubtask(const TaskID&, const TaskDTO&) = 0;
   virtual OperationResult         RemoveTask(const TaskID&) = 0;

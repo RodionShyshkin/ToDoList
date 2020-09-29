@@ -8,7 +8,7 @@
 #include <MemoryModel/Storage/TaskView.h>
 #include <MemoryModel/Storage/TaskStorage.h>
 #include <MemoryModel/Storage/OperationResult.h>
-#include <API/TaskDTO.h>
+#include <src/core/MemoryModel/MemoryModelAPI/ModelTaskDTO.h>
 
 class TaskModelInterface {
  public:
@@ -18,8 +18,8 @@ class TaskModelInterface {
   virtual TaskView                          GetTaskView() const = 0;
   virtual TaskStorage                       GetTaskStorage() const = 0;
 
-  virtual OperationResult                   AddTask(const TaskDTO& task) = 0;
-  virtual OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) = 0;
+  virtual OperationResult                   AddTask(const ModelTaskDTO& task) = 0;
+  virtual OperationResult                   AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
   virtual OperationResult                   RemoveTask(const TaskID& id) = 0;
 
   virtual OperationResult                   SaveToDisk(const std::string&) const = 0;

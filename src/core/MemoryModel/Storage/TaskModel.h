@@ -5,7 +5,6 @@
 #ifndef TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 #define TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 
-#include <API/TaskDTO.h>
 #include <MemoryModel/Storage/TaskModelInterface.h>
 
 class TaskModel : public TaskModelInterface {
@@ -16,8 +15,8 @@ class TaskModel : public TaskModelInterface {
   TaskView                          GetTaskView() const override;
   TaskStorage                       GetTaskStorage() const override;
 
-  OperationResult                   AddTask(const TaskDTO& task) override;
-  OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) override;
+  OperationResult                   AddTask(const ModelTaskDTO& task) override;
+  OperationResult                   AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
   OperationResult                   RemoveTask(const TaskID& id) override;
 
   /*

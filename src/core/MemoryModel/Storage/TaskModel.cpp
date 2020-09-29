@@ -19,7 +19,7 @@ TaskStorage TaskModel::GetTaskStorage() const {
   return task_storage_;
 }
 
-OperationResult TaskModel::AddTask(const TaskDTO& task) {
+OperationResult TaskModel::AddTask(const ModelTaskDTO& task) {
   auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
   auto newid = generate_id_.GenerateID();
@@ -33,7 +33,7 @@ OperationResult TaskModel::AddTask(const TaskDTO& task) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult TaskModel::AddSubtask(const TaskID &id, const TaskDTO& subtask) {
+OperationResult TaskModel::AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) {
   auto taskInstance = Task::create(subtask.getName(), subtask.getLabel(), subtask.getPriority(), subtask.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
 
