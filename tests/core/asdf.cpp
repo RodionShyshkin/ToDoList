@@ -3,14 +3,14 @@
 //
 
 #include <gtest/gtest.h>
-#include <src/core/MemoryModel/Storage/FullStorage.h>
+#include <src/core/MemoryModel/Storage/TaskModel.h>
 
 class asdf : public ::testing::Test {
 
 };
 
 TEST_F(asdf, base) {
-  FullStorage storage;
+  TaskModel storage;
   auto task = Task::create("name", "label", Priority::HIGH, Date{"2012-10-10"});
   auto subtask = Task::create("subtask", "label", Priority::MEDIUM, Date{"2012-10-10"});
   auto m = TaskEntity::createTask(task.value(), TaskID{1});

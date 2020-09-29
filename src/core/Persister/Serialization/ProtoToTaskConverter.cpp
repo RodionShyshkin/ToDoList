@@ -4,7 +4,7 @@
 
 #include "ProtoToTaskConverter.h"
 
-std::optional<TaskEntity> ProtoToTaskConverter::UnconvertTask(const TaskProto &task) {
+std::optional<TaskEntity> ProtoToTaskConverter::ConvertProtoToTaskEntity(const TaskProto &task) {
   auto task_ = Task::create(task.name(), task.label(),
                             ProtoToTaskConverter::UnconvertPriority(task.priority()),
                             boost::gregorian::date{task.deadline()});

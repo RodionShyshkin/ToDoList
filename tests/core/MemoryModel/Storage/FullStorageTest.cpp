@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "MemoryModel/Storage/FullStorage.h"
+#include "MemoryModel/Storage/TaskModel.h"
 
  class FullStorageTest : public ::testing::Test {
  public:
@@ -23,7 +23,7 @@
   }
 
  protected:
-  FullStorage ts_storage;
+  TaskModel ts_storage;
   Task task;
 
   TaskDTO dto_;
@@ -58,7 +58,7 @@ class MockIDGenerator : public IDGeneratorInterface {
 };
 /*
 TEST_F(FullStorageTest, AddingTask) {
-  FullStorage fst(MockStorage{}, MockView{});
+  TaskModel fst(MockStorage{}, MockView{});
 
 
 }*/

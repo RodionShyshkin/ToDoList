@@ -10,9 +10,9 @@
 #include <MemoryModel/Storage/OperationResult.h>
 #include <API/TaskDTO.h>
 
-class FullStorageInterface {
+class TaskModelInterface {
  public:
-  virtual ~FullStorageInterface() = default;
+  virtual ~TaskModelInterface() = default;
 
  public:
   virtual TaskView                          GetTaskView() const = 0;
@@ -22,8 +22,8 @@ class FullStorageInterface {
   virtual OperationResult                   AddSubtask(const TaskID &id, const TaskDTO& subtask) = 0;
   virtual OperationResult                   RemoveTask(const TaskID& id) = 0;
 
-  virtual OperationResult                   SaveToDisk(const std::string&) = 0;
-  virtual OperationResult                   LoadFromDisk(const std::string&) = 0;
+  virtual OperationResult                   SaveToDisk(const std::string&) const = 0;
+  virtual OperationResult                   LoadFromDisk(const std::string&) const = 0;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_STORAGE_FULLSTORAGEINTERFACE_H_

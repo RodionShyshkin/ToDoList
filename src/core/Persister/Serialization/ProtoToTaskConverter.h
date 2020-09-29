@@ -18,7 +18,7 @@
 
 class ProtoToTaskConverter {
  public:
-  static std::optional<TaskEntity>       UnconvertTask(const TaskProto&);
+  static std::optional<TaskEntity>       ConvertProtoToTaskEntity(const TaskProto&);
 
  private:
   /*

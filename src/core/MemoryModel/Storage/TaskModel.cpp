@@ -2,24 +2,24 @@
 // Created by rodion on 8/10/20.
 //
 
-#include "FullStorage.h"
+#include "TaskModel.h"
 #include <Persister/Serialization/StorageToProtoConverter.h>
 #include <Persister/Serialization/ProtoToStorageConverter.h>
 #include <Persister/Persister.h>
 #include <fstream>
 #include "task.pb.h"
 
-FullStorage::FullStorage() : generate_id_(IDGenerator()) {}
+TaskModel::TaskModel() : generate_id_(IDGenerator()) {}
 
-TaskView FullStorage::GetTaskView() const {
+TaskView TaskModel::GetTaskView() const {
   return task_view_;
 }
 
-TaskStorage FullStorage::GetTaskStorage() const {
+TaskStorage TaskModel::GetTaskStorage() const {
   return task_storage_;
 }
 
-OperationResult FullStorage::AddTask(const TaskDTO& task) {
+OperationResult TaskModel::AddTask(const TaskDTO& task) {
   auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
   auto newid = generate_id_.GenerateID();
@@ -33,7 +33,7 @@ OperationResult FullStorage::AddTask(const TaskDTO& task) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::AddSubtask(const TaskID &id, const TaskDTO& subtask) {
+OperationResult TaskModel::AddSubtask(const TaskID &id, const TaskDTO& subtask) {
   auto taskInstance = Task::create(subtask.getName(), subtask.getLabel(), subtask.getPriority(), subtask.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{ErrorCode::INVALID_TASK};
 
@@ -53,7 +53,7 @@ OperationResult FullStorage::AddSubtask(const TaskID &id, const TaskDTO& subtask
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::RemoveTask(const TaskID &id) {
+OperationResult TaskModel::RemoveTask(const TaskID &id) {
   auto task = task_storage_.GetTask(id);
   if(task == nullptr) return OperationResult{ErrorCode::TASK_NOT_FOUND};
   std::vector<TaskID> subtasksToRemove;
@@ -82,7 +82,7 @@ OperationResult FullStorage::RemoveTask(const TaskID &id) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::SaveToDisk(const std::string &path) {
+OperationResult TaskModel::SaveToDisk(const std::string &path) const {
   auto tasks = this->GetTaskView().GetAllTasks();
   StorageProto storage = StorageToProtoConverter::ConvertStorageToProto(tasks);
   Persister persister{path, storage};
@@ -91,13 +91,13 @@ OperationResult FullStorage::SaveToDisk(const std::string &path) {
   return OperationResult{ErrorCode::NO_ERRORS};
 }
 
-OperationResult FullStorage::LoadFromDisk(const std::string &path) {
+OperationResult TaskModel::LoadFromDisk(const std::string &path) const {
   StorageProto storage;
   Persister persister{path, storage};
   if(!persister.Load()) return OperationResult{ErrorCode::DESERIALIZATION_ERROR};
 
   auto temp_storage_ = ProtoToStorageConverter::ConvertFromProto(storage);
 
-  std::swap(*this, *temp_storage_);
+//  std::swap(*this, *temp_storage_);
   return OperationResult{ErrorCode::NO_ERRORS};
 }

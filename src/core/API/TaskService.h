@@ -7,7 +7,7 @@
 
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
-#include <MemoryModel/Storage/FullStorage.h>
+#include <MemoryModel/Storage/TaskModel.h>
 
 /*
  * \brief Entry point for tasks management.
@@ -142,7 +142,7 @@ class TaskService : public TaskServiceInterface {
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
 
  private:
-  FullStorage                task_service_storage_;
+  TaskModel                task_service_storage_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

@@ -6,11 +6,11 @@
 #define TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 
 #include <API/TaskDTO.h>
-#include <MemoryModel/Storage/FullStorageInterface.h>
+#include <MemoryModel/Storage/TaskModelInterface.h>
 
-class FullStorage : public FullStorageInterface {
+class TaskModel : public TaskModelInterface {
  public:
-  FullStorage();
+  TaskModel();
 
  public:
   TaskView                          GetTaskView() const override;
@@ -30,7 +30,7 @@ class FullStorage : public FullStorageInterface {
    * UNKNOWN_PATH if there is a problem with opening file,
    * SERIALIZATION_ERROR if serialization returns false.
    */
-  OperationResult                   SaveToDisk(const std::string&) override;
+  OperationResult                   SaveToDisk(const std::string&) const override;
 
   /*
    * \brief Method which loads storage from a disk.
@@ -43,7 +43,7 @@ class FullStorage : public FullStorageInterface {
    * DESERIALIZATION_ERROR if deserialization returns false.
    * INVALID_TASK if some serialized tasks are invalid.
    */
-  OperationResult                   LoadFromDisk(const std::string&) override;
+  OperationResult                   LoadFromDisk(const std::string&) const override;
 
  private:
   TaskStorage                       task_storage_;

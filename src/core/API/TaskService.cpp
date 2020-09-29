@@ -4,7 +4,7 @@
 
 #include "TaskService.h"
 
-TaskService::TaskService() : task_service_storage_(FullStorage()) {}
+TaskService::TaskService() : task_service_storage_(TaskModel()) {}
 
 TaskDTO TaskService::getTask(const TaskID &id) const {
   auto task = task_service_storage_.GetTaskStorage().GetTask(id);

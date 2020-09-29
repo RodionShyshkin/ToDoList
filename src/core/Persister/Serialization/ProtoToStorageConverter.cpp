@@ -5,11 +5,10 @@
 #include "ProtoToStorageConverter.h"
 #include "ProtoToTaskConverter.h"
 
-std::unique_ptr<FullStorage> ProtoToStorageConverter::ConvertFromProto(const StorageProto &storage_proto) {
-  auto temp_storage_ = std::make_unique<FullStorage>();
-//  FullStorage temp_storage_;
+std::unique_ptr<TaskModel> ProtoToStorageConverter::ConvertFromProto(const StorageProto &storage_proto) {
+  auto temp_storage_ = std::make_unique<TaskModel>();
   for(const auto& task : storage_proto.tasks()) {
-    auto task_ = ProtoToTaskConverter::UnconvertTask(task);
+    auto task_ = ProtoToTaskConverter::ConvertProtoToTaskEntity(task);
     if(!task_.has_value()) return nullptr;
     TaskDTO dto_ = TaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
                                    task_->GetDueTime().GetDate(), task_->GetStatus());

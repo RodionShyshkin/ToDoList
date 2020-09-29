@@ -40,7 +40,7 @@ TEST_F(SerializationTest, shouldSerializeTask) {
 }
 
 TEST_F(SerializationTest, shouldDeserializeTask) {
-  auto desir = ProtoToTaskConverter::UnconvertTask(task_proto_);
+  auto desir = ProtoToTaskConverter::ConvertProtoToTaskEntity(task_proto_);
 
   ASSERT_TRUE(desir.has_value());
   ASSERT_EQ(desir.value().GetName(), task_.GetName());
