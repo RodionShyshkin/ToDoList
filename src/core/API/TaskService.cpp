@@ -71,23 +71,23 @@ std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) c
   return searchResult;
 }
 
-OperationResult TaskService::addTask(const TaskDTO &task) {
+OperationResult<StorageError> TaskService::addTask(const TaskDTO &task) {
   return memory_model_api_->addTask(TaskService::convertToModelDTO(task));
 }
 
-OperationResult TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
+OperationResult<StorageError> TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
   return memory_model_api_->addSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
 }
 
-OperationResult TaskService::RemoveTask(const unsigned int& id) {
+OperationResult<StorageError> TaskService::RemoveTask(const unsigned int& id) {
   return memory_model_api_->RemoveTask(TaskID{id});
 }
 
-OperationResult TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
+OperationResult<StorageError> TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
   return memory_model_api_->postponeTask(TaskID{id}, Date{newdate});
 }
 
-OperationResult TaskService::completeTask(const unsigned int& id) {
+OperationResult<StorageError> TaskService::completeTask(const unsigned int& id) {
   return memory_model_api_->completeTask(TaskID{id});
 }
 

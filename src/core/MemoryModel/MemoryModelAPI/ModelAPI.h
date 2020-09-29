@@ -23,11 +23,11 @@ class ModelAPI : public ModelAPIInterface {
   std::vector<ModelTaskDTO>         getTasksByName(const std::string &name) const override;
   std::vector<ModelTaskDTO>         getTasksByPriority(const Priority &priority) const override;
 
-  OperationResult                   addTask(const ModelTaskDTO& task) override;
-  OperationResult                   addSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
-  OperationResult                   RemoveTask(const TaskID& id) override;
-  OperationResult                   postponeTask(const TaskID& id, const Date& newdate) override;
-  OperationResult                   completeTask(const TaskID& id) override;
+  OperationResult<StorageError>                   addTask(const ModelTaskDTO& task) override;
+  OperationResult<StorageError>                   addSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
+  OperationResult<StorageError>                   RemoveTask(const TaskID& id) override;
+  OperationResult<StorageError>                   postponeTask(const TaskID& id, const Date& newdate) override;
+  OperationResult<StorageError>                   completeTask(const TaskID& id) override;
 
  private:
   std::unique_ptr<TaskModel> model_;

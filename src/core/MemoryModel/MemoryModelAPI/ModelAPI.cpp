@@ -73,34 +73,34 @@ std::vector<ModelTaskDTO> ModelAPI::getTasksByPriority(const Priority& priority)
   return result;
 }
 
-OperationResult ModelAPI::addTask(const ModelTaskDTO &task) {
+OperationResult<StorageError> ModelAPI::addTask(const ModelTaskDTO &task) {
   return this->model_->AddTask(task);
 }
 
-OperationResult ModelAPI::addSubtask(const TaskID &id, const ModelTaskDTO &subtask) {
+OperationResult<StorageError> ModelAPI::addSubtask(const TaskID &id, const ModelTaskDTO &subtask) {
   return this->model_->AddSubtask(id, subtask);
 }
 
-OperationResult ModelAPI::RemoveTask(const TaskID &id) {
+OperationResult<StorageError> ModelAPI::RemoveTask(const TaskID &id) {
   return this->model_->RemoveTask(id);
 }
 
-OperationResult ModelAPI::postponeTask(const TaskID &id, const Date &newdate) {
+OperationResult<StorageError> ModelAPI::postponeTask(const TaskID &id, const Date &newdate) {
   auto task = this->model_->GetTaskStorage().GetTask(id);
-  if(task == nullptr) return OperationResult{ErrorCode::TASK_NOT_FOUND};
+  if(task == nullptr) return OperationResult<StorageError>{StorageError::TASK_NOT_FOUND};
 
   auto newtask = Task::create(task->GetName(), task->GetLabel(), task->GetPriority(), newdate);
-  if(!newtask.has_value()) return OperationResult{ErrorCode::INVALID_DATE};
+  if(!newtask.has_value()) return OperationResult{StorageError::INVALID_DATE};
   task->SubstituteTask(newtask.value());
 
-  return OperationResult{ErrorCode::NO_ERRORS};
+  return OperationResult{StorageError::NO_ERRORS};
 }
 
-OperationResult ModelAPI::completeTask(const TaskID &id) {
+OperationResult<StorageError> ModelAPI::completeTask(const TaskID &id) {
   auto task = this->model_->GetTaskStorage().GetTask(id);
-  if(task == nullptr) return OperationResult{ErrorCode::TASK_NOT_FOUND};
+  if(task == nullptr) return OperationResult{StorageError::TASK_NOT_FOUND};
 
-  if(!task->SetComplete()) return OperationResult{ErrorCode::COMPLETED_TASK};
+  if(!task->SetComplete()) return OperationResult{StorageError::COMPLETED_TASK};
 
-  return OperationResult{ErrorCode::NO_ERRORS};
+  return OperationResult{StorageError::NO_ERRORS};
 }

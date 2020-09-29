@@ -97,7 +97,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addTask(const TaskDTO& task) override;
+  OperationResult<StorageError>                   addTask(const TaskDTO& task) override;
 
   /*
    * \brief Adds subtask for a task which already exists.
@@ -108,7 +108,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addSubtask(const unsigned int& id, const TaskDTO& subtask) override;
+  OperationResult<StorageError>                   addSubtask(const unsigned int& id, const TaskDTO& subtask) override;
 
   /*
    * \brief Removes task.
@@ -117,7 +117,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of removing (contains error or message about success).
    */
-  OperationResult                   RemoveTask(const unsigned int& id) override;
+  OperationResult<StorageError>                   RemoveTask(const unsigned int& id) override;
 
   /*
    * \brief Postpones task.
@@ -128,7 +128,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of postpone (contains error or message about success).
    */
-  OperationResult                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
+  OperationResult<StorageError>                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
 
   /*
    * \brief Completes task.
@@ -137,7 +137,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of completing (contains error or message about success).
    */
-  OperationResult                   completeTask(const unsigned int& id) override;
+  OperationResult<StorageError>                   completeTask(const unsigned int& id) override;
 
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);

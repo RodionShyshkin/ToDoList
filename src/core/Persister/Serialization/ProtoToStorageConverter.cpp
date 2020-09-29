@@ -13,7 +13,7 @@ std::unique_ptr<TaskModel> ProtoToStorageConverter::ConvertFromProto(const Stora
     ModelTaskDTO dto_ = ModelTaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
                                    task_->GetDueTime().GetDate(), task_->GetStatus());
 
-    OperationResult result{ErrorCode::NO_ERRORS};
+    OperationResult result{StorageError::NO_ERRORS};
     if(task.parent_id() == 0) {
       result = temp_storage_->AddTask(dto_);
     }

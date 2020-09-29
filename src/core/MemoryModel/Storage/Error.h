@@ -11,7 +11,7 @@
  * @author Rodion Shyshkin
  */
 
-enum class ErrorCode {
+enum class StorageError {
   NO_ERRORS = 0,
   MEMORY_LIMIT,
   TASK_NOT_FOUND,
@@ -19,10 +19,7 @@ enum class ErrorCode {
   INVALID_DATE,
   WRONG_TASK_ID,
   COMPLETED_TASK,
-  INVALID_TASK,
-  UNKNOWN_PATH,
-  SERIALIZATION_ERROR,
-  DESERIALIZATION_ERROR
+  INVALID_TASK
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_ERROR_H_

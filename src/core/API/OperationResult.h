@@ -14,17 +14,26 @@
  * @author Rodion Shyshkin
  */
 
+template <typename ErrorEnum>
 class OperationResult {
  public:
-  OperationResult(ErrorCode err_code);
+  OperationResult(ErrorEnum err_code) : error_(err_code) {
+    if(err_code == ErrorEnum::NO_ERRORS) {
+      this->status_ = true;
+    }
+    else this->status_ = false;
+  }
 
  public:
-  bool                        GetStatus() const;
-  std::optional<ErrorCode>    GetError() const;
+  bool                        GetStatus() const {return this->status_;}
+  std::optional<ErrorEnum>    GetError() const {
+    if(this->status_) return std::nullopt;
+    return this->error_;
+  }
 
  private:
   bool                        status_;
-  ErrorCode                   error_;
+  ErrorEnum                   error_;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_OPERATIONRESULT_H_

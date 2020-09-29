@@ -1,7 +1,7 @@
 //
 // Created by rodion on 8/10/20.
 //
-
+/*
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "MemoryModel/Storage/TaskModel.h"
@@ -63,7 +63,7 @@ TEST_F(FullStorageTest, AddingTask) {
 
 }*/
 
-
+/*
 TEST_F(FullStorageTest, AddingTask) {
   ts_storage.AddTask(ModelTaskDTO::create(1, task.GetName(), task.GetLabel(), task.GetPriority(),
                                      task.GetDate().GetDate(), false));
@@ -120,7 +120,7 @@ TEST_F(FullStorageTest, saveToDisk) {
 
   auto result = ts_storage.SaveToDisk("testDoc.txt");
 
-  auto shouldResult = OperationResult{ErrorCode::NO_ERRORS};
+  auto shouldResult = OperationResult{StorageError::NO_ERRORS};
   ASSERT_EQ(result.GetError(), shouldResult.GetError());
 }
 
@@ -128,7 +128,7 @@ TEST_F(FullStorageTest, shouldNotLoadFromUnexistingFile) {
   ts_storage.AddTask(dto_);
   auto result = ts_storage.LoadFromDisk("unknown_file.txt");
 
-  ASSERT_EQ(result.GetError(), ErrorCode::DESERIALIZATION_ERROR);
+  ASSERT_EQ(result.GetError(), StorageError::DESERIALIZATION_ERROR);
 }
 
 TEST_F(FullStorageTest, shouldLoadFromEmptyFile) {
@@ -154,5 +154,5 @@ TEST_F(FullStorageTest, shouldLoadFromFileCorrectly) {
   ASSERT_EQ(tasks[0].GetSubtasks().at(TaskID{2}).lock()->GetStatus(), true);
   ASSERT_EQ(tasks[0].GetStatus(), false);
 }
-
+*/
 //TEST_F(FullStorageTest, shouldNot)

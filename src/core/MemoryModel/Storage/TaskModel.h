@@ -15,9 +15,9 @@ class TaskModel : public TaskModelInterface {
   TaskView                          GetTaskView() const override;
   TaskStorage                       GetTaskStorage() const override;
 
-  OperationResult                   AddTask(const ModelTaskDTO& task) override;
-  OperationResult                   AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
-  OperationResult                   RemoveTask(const TaskID& id) override;
+  OperationResult<StorageError>     AddTask(const ModelTaskDTO& task) override;
+  OperationResult<StorageError>     AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
+  OperationResult<StorageError>     RemoveTask(const TaskID& id) override;
 
   /*
    * \brief Method which saves storage to a disk.
@@ -29,7 +29,7 @@ class TaskModel : public TaskModelInterface {
    * UNKNOWN_PATH if there is a problem with opening file,
    * SERIALIZATION_ERROR if serialization returns false.
    */
-  OperationResult                   SaveToDisk(const std::string&) const override;
+  OperationResult<SerializationError>                   SaveToDisk(const std::string&) const override;
 
   /*
    * \brief Method which loads storage from a disk.
@@ -42,7 +42,7 @@ class TaskModel : public TaskModelInterface {
    * DESERIALIZATION_ERROR if deserialization returns false.
    * INVALID_TASK if some serialized tasks are invalid.
    */
-  OperationResult                   LoadFromDisk(const std::string&) const override;
+  OperationResult<SerializationError>                   LoadFromDisk(const std::string&) const override;
 
  private:
   TaskStorage                       task_storage_;
