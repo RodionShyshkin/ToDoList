@@ -4,8 +4,8 @@
 
 #include "TaskStorage.h"
 
-bool TaskStorage::AddTask(const std::shared_ptr<TaskEntity>& task) {
-  auto pair = std::make_pair(task->GetID(), task);
+bool TaskStorage::AddTask(const std::weak_ptr<TaskEntity>& task) {
+  auto pair = std::make_pair(task.lock()->GetID(), task);
   if(tasks_.find(pair.first) != tasks_.end()) return false;
   tasks_.insert(pair);
   return true;
@@ -20,7 +20,7 @@ bool TaskStorage::RemoveTask(const TaskID &id) {
 
 std::shared_ptr<TaskEntity> TaskStorage::GetTask(const TaskID &id) {
   for(const auto& [ID, task] : tasks_) {
-    if(ID == id) return task;
+    if(ID == id) return task.lock();
   }
   return nullptr;
 }

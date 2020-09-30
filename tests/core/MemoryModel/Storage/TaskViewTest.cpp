@@ -6,6 +6,8 @@
 
 class TaskViewTest : public ::testing::Test {
  public:
+
+
   void SetUp() override {
     std::optional<Task> validTask = Task::create("Val.Task", "test", Priority::HIGH,
                                                  Date(2025, 9, 9));
@@ -53,6 +55,7 @@ class TaskViewTest : public ::testing::Test {
 
   }
 
+ protected:
   TaskView task_view_;
 
   std::shared_ptr<TaskEntity> ptrValid;

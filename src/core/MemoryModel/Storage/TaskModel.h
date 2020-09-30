@@ -11,21 +11,27 @@ class TaskModel : public TaskModelInterface {
  public:
   TaskModel();
 
+  TaskModel(std::unique_ptr<TaskStorageInterface> storage,
+            std::unique_ptr<TaskViewInterface> view,
+            std::unique_ptr<IDGeneratorInterface> generator);
+
  public:
   static std::unique_ptr<TaskModel> createByTasks(const std::vector<ModelTaskDTO>& tasks);
 
  public:
-  TaskView                          GetTaskView() const override;
-  TaskStorage                       GetTaskStorage() const override;
+  TaskViewInterface&         GetTaskView() const override;
+  TaskStorageInterface&      GetTaskStorage() const override;
 
   OperationResult<StorageError>     AddTask(const ModelTaskDTO& task) override;
   OperationResult<StorageError>     AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
   OperationResult<StorageError>     RemoveTask(const TaskID& id) override;
 
+  std::vector<ModelTaskDTO>         GetSubtasks(const TaskID &id) override;
+
  private:
-  TaskStorage                       task_storage_;
-  TaskView                          task_view_;
-  IDGenerator                       generate_id_;
+  std::unique_ptr<TaskStorageInterface>      task_storage_;
+  std::unique_ptr<TaskViewInterface>         task_view_;
+  std::unique_ptr<IDGeneratorInterface>      generate_id_;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_

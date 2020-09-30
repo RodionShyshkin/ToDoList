@@ -16,12 +16,14 @@ class TaskModelInterface {
   virtual ~TaskModelInterface() = default;
 
  public:
-  virtual TaskView                          GetTaskView() const = 0;
-  virtual TaskStorage                       GetTaskStorage() const = 0;
+  virtual TaskViewInterface&          GetTaskView() const = 0;
+  virtual TaskStorageInterface&       GetTaskStorage() const = 0;
 
   virtual OperationResult<StorageError>                   AddTask(const ModelTaskDTO& task) = 0;
   virtual OperationResult<StorageError>                   AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
   virtual OperationResult<StorageError>                   RemoveTask(const TaskID& id) = 0;
+
+  virtual std::vector<ModelTaskDTO>                       GetSubtasks(const TaskID& id) = 0;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_STORAGE_FULLSTORAGEINTERFACE_H_

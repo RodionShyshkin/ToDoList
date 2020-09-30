@@ -9,29 +9,39 @@
 #include <fstream>
 #include "task.pb.h"
 
-TaskModel::TaskModel() : generate_id_(IDGenerator()), task_view_(TaskView()), task_storage_(TaskStorage()) {}
+TaskModel::TaskModel() : generate_id_(std::make_unique<IDGenerator>()),
+                         task_storage_(std::make_unique<TaskStorage>()),
+                          task_view_(std::make_unique<TaskView>()) {}
 
-TaskView TaskModel::GetTaskView() const {
-  return task_view_;
+TaskModel::TaskModel(std::unique_ptr<TaskStorageInterface> storage,
+                     std::unique_ptr<TaskViewInterface> view,
+                     std::unique_ptr<IDGeneratorInterface> generator) {
+  this->task_storage_ = std::move(storage);
+  this->task_view_ = std::move(view);
+  this->generate_id_ = std::move(generator);
 }
 
-TaskStorage TaskModel::GetTaskStorage() const {
-  return task_storage_;
+TaskViewInterface& TaskModel::GetTaskView() const {
+  return *this->task_view_;
+}
+
+TaskStorageInterface& TaskModel::GetTaskStorage() const {
+  return *this->task_storage_;
 }
 
 OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
   auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{StorageError::INVALID_TASK};
 
-  auto newid = generate_id_.GenerateID();
+  auto newid = generate_id_->GenerateID();
   if(!newid.has_value()) return OperationResult{StorageError::MEMORY_LIMIT};
 
   auto newtask = TaskEntity::createTask(taskInstance.value(), newid.value());
   if(task.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!task_storage_.AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
-  if(!task_view_.AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
+  if(!this->task_storage_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
+  if(!this->task_view_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
   return OperationResult{StorageError::NO_ERRORS};
 }
 
@@ -39,24 +49,24 @@ OperationResult<StorageError> TaskModel::AddSubtask(const TaskID &id, const Mode
   auto taskInstance = Task::create(subtask.getName(), subtask.getLabel(), subtask.getPriority(), subtask.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{StorageError::INVALID_TASK};
 
-  auto task = task_storage_.GetTask(id);
+  auto task = this->task_storage_->GetTask(id);
   if(task == nullptr) return OperationResult{StorageError::PARENT_NOT_FOUND};
 
-  auto newid = generate_id_.GenerateID();
+  auto newid = generate_id_->GenerateID();
   if(!newid.has_value()) return OperationResult{StorageError::MEMORY_LIMIT};
   auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid.value(), id);
   if(subtask.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!task_storage_.AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
-  if(!task_view_.AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
+  if(!task_storage_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
+  if(!task_view_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
   task->AddSubtask(task_ptr);
 
   return OperationResult{StorageError::NO_ERRORS};
 }
 
 OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
-  auto task = task_storage_.GetTask(id);
+  auto task = task_storage_->GetTask(id);
   if(task == nullptr) return OperationResult{StorageError::TASK_NOT_FOUND};
   std::vector<TaskID> subtasksToRemove;
 
@@ -67,49 +77,39 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
   }
 
   for(const auto& subtask : subtasksToRemove) {
-    if(!task_storage_.RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
-    if(!task_view_.RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
+    if(!task_storage_->RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
+    if(!task_view_->RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
   }
 
   if(task->checkParent()) {
     auto parentID = task->GetParentID();
-    if(task_storage_.GetTask(parentID) == nullptr) throw std::runtime_error("Parent was lost.");
-    auto parent = task_storage_.GetTask(parentID);
+    if(task_storage_->GetTask(parentID) == nullptr) throw std::runtime_error("Parent was lost.");
+    auto parent = task_storage_->GetTask(parentID);
     if(!parent->RemoveSubtask(id)) throw std::runtime_error("Subtask was lost.");
   }
 
-  task_storage_.RemoveTask(id);
-  task_view_.RemoveTask(id);
+  task_storage_->RemoveTask(id);
+  task_view_->RemoveTask(id);
 
   return OperationResult{StorageError::NO_ERRORS};
 }
-/*
-OperationResult<SerializationError> TaskModel::SaveToDisk(const std::string &path) const {
-  auto tasks = this->GetTaskView().GetAllTasks();
-  StorageProto storage = StorageToProtoConverter::ConvertStorageToProto(tasks);
-  Persister persister{path, storage};
-  if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
 
-  return OperationResult{SerializationError::NO_ERRORS};
-}
+std::vector<ModelTaskDTO> TaskModel::GetSubtasks(const TaskID &id) {
+  auto task = this->task_storage_->GetTask(id);
+  auto subtasks = task->GetSubtasks();
 
-OperationResult<SerializationError> TaskModel::LoadFromDisk(const std::string &path) const {
-  StorageProto storage;
-  Persister persister{path, storage};
-  if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
-
-  TaskModel temp_model;
-  auto tasks = ProtoToStorageConverter::Convert(storage);
-  for(const auto& task : tasks) {
-    if(task.getParentID() == task.getID()) {
-      temp_model.AddTask(task);
-    }
-    else temp_model.AddSubtask(task.getParentID(), task);
+  std::vector<ModelTaskDTO> result;
+  for(const auto& subtask : subtasks) {
+    result.push_back(ModelTaskDTO::createWithParent(subtask.second.lock()->GetID(),
+                                                    subtask.second.lock()->GetName(),
+                                                    subtask.second.lock()->GetLabel(),
+                                                    subtask.second.lock()->GetPriority(),
+                                                    subtask.second.lock()->GetDueTime(),
+                                                    subtask.second.lock()->GetStatus(),
+                                                    subtask.second.lock()->GetParentID()));
   }
-
-  return OperationResult{SerializationError::NO_ERRORS};
+  return result;
 }
-*/
 
 std::unique_ptr<TaskModel> TaskModel::createByTasks(const std::vector<ModelTaskDTO> &tasks) {
   auto temp_model = std::make_unique<TaskModel>();
