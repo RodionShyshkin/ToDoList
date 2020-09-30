@@ -33,10 +33,10 @@ TEST_F(StorageTest, pushTask) {
 
 TEST_F(StorageTest, getTask) {
   storage.AddTask(std::make_shared<TaskEntity>(check));
-  std::shared_ptr<TaskEntity> check;
-  EXPECT_NO_THROW(check = storage.GetTask(TaskID{1}));
-  ASSERT_NE(check, nullptr);
-  ASSERT_EQ(check->GetName(), "Task");
+  std::shared_ptr<TaskEntity> kek;
+  EXPECT_NO_THROW(kek = storage.GetTask(TaskID{1}));
+  ASSERT_NE(kek, nullptr);
+  ASSERT_EQ(kek->GetName(), "Task");
 }
 
 TEST_F(StorageTest, removeTask) {
