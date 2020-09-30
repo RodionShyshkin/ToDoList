@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTO_TASKDESERIALIZER_H_
 #define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTO_TASKDESERIALIZER_H_
 
-#include <src/core/MemoryModel/Task/TaskEntity.h>
+#include <src/core/MemoryModel/MemoryModelAPI/ModelTaskDTO.h>
 #include "task.pb.h"
 
 /*
@@ -18,7 +18,7 @@
 
 class ProtoToTaskConverter {
  public:
-  static std::optional<TaskEntity>       ConvertProtoToTaskEntity(const TaskProto&);
+  static ModelTaskDTO       ConvertProtoToModelDTO(const TaskProto&);
 
  private:
   /*
@@ -28,7 +28,7 @@ class ProtoToTaskConverter {
    *
    * @return Priority instance.
    */
-  static Priority         UnconvertPriority(const TaskProto_Priority&);
+  static Priority         ConvertProtoToPriority(const TaskProto_Priority&);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTO_TASKDESERIALIZER_H_

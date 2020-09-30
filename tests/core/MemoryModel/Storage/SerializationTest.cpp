@@ -3,8 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include <Persister/Serialization/TaskToProtoConverter.h>
-#include <Persister/Serialization/ProtoToTaskConverter.h>
+#include <src/core/Persister/Serialization/TaskToProtoConverter.h>
+#include <src/core/Persister/Serialization/ProtoToTaskConverter.h>
 
  class SerializationTest : public ::testing::Test {
  public:
@@ -40,13 +40,11 @@ TEST_F(SerializationTest, shouldSerializeTask) {
 }
 
 TEST_F(SerializationTest, shouldDeserializeTask) {
-  auto desir = ProtoToTaskConverter::ConvertProtoToTaskEntity(task_proto_);
+  auto desir = ProtoToTaskConverter::ConvertProtoToModelDTO(task_proto_);
 
-  ASSERT_TRUE(desir.has_value());
-  ASSERT_EQ(desir.value().GetName(), task_.GetName());
-  ASSERT_EQ(desir.value().GetLabel(), task_.GetLabel());
-  ASSERT_EQ(desir.value().GetPriority(), task_.GetPriority());
-  ASSERT_EQ(desir.value().GetDueTime().GetDate(), task_.GetDueTime().GetDate());
-  ASSERT_EQ(desir.value().GetStatus(), task_.GetStatus());
-  ASSERT_EQ(desir.value().GetSubtasks().size(), task_.GetSubtasks().size());
+  ASSERT_EQ(desir.getName(), task_.GetName());
+  ASSERT_EQ(desir.getLabel(), task_.GetLabel());
+  ASSERT_EQ(desir.getPriority(), task_.GetPriority());
+  ASSERT_EQ(desir.getDueDate().GetDate(), task_.GetDueTime().GetDate());
+  ASSERT_EQ(desir.getStatus(), task_.GetStatus());
 }

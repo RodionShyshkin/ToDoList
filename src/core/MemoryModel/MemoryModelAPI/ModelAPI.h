@@ -29,6 +29,9 @@ class ModelAPI : public ModelAPIInterface {
   OperationResult<StorageError>                   postponeTask(const TaskID& id, const Date& newdate) override;
   OperationResult<StorageError>                   completeTask(const TaskID& id) override;
 
+  OperationResult<SerializationError>             SaveToDisk(const std::string& path);
+  OperationResult<SerializationError>             LoadFromDisk(const std::string& path);
+
  private:
   std::unique_ptr<TaskModel> model_;
 };

@@ -6,6 +6,7 @@
 #define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKTOPROTOCONVERTER_H_
 
 #include <src/core/MemoryModel/Task/TaskEntity.h>
+#include <src/core/MemoryModel/MemoryModelAPI/ModelTaskDTO.h>
 #include "task.pb.h"
 
 /*
@@ -18,7 +19,7 @@
 
 class TaskToProtoConverter {
  public:
-  static TaskProto    ConvertTaskEntityToProto(const TaskEntity&);
+  static TaskProto    ConvertTaskEntityToProto(const ModelTaskDTO&);
 
  private:
   /*
@@ -28,7 +29,7 @@ class TaskToProtoConverter {
    *
    * @return TaskProto* pointer.
    */
-  static std::unique_ptr<TaskProto>  ConvertSingleTask(const TaskEntity&);
+  static std::unique_ptr<TaskProto>  ConvertSingleTask(const ModelTaskDTO&);
 
   /*
    * Converts Priority to TaskProto_Priority.
@@ -45,7 +46,7 @@ class TaskToProtoConverter {
    * @param TaskProto* a pointer to a TaskProto instance to update its fields.
    * @param TaskEntity by a reference in which there is new data.
    */
-  static void         SetTaskProtoFields(TaskProto* task, const TaskEntity& task_entity);
+  static void         SetTaskProtoFields(TaskProto* task, const ModelTaskDTO& task_entity);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKTOPROTOCONVERTER_H_

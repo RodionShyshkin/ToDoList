@@ -103,6 +103,6 @@ TaskDTO TaskService::convertFromModelDTO(const ModelTaskDTO &model_dto) {
 }
 
 ModelTaskDTO TaskService::convertToModelDTO(const TaskDTO &dto) {
- return ModelTaskDTO::create(TaskID{dto.getID()}, dto.getName(), dto.getLabel(),
+ return ModelTaskDTO::createWithoutParent(TaskID{dto.getID()}, dto.getName(), dto.getLabel(),
                              dto.getPriority(), Date{dto.getDueDate()}, dto.getStatus());
 }

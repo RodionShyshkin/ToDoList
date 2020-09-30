@@ -10,7 +10,7 @@ class asdf : public ::testing::Test {
 };
 
 TEST_F(asdf, base) {
-  TaskModel storage;
+/*  TaskModel storage;
   auto task = Task::create("name", "label", Priority::HIGH, Date{"2012-10-10"});
   auto subtask = Task::create("subtask", "label", Priority::MEDIUM, Date{"2012-10-10"});
   auto m = TaskEntity::createTask(task.value(), TaskID{1});
@@ -31,5 +31,5 @@ TEST_F(asdf, base) {
   storage.AddSubtask(mmm.getID(), nnn);
   auto status = storage.SaveToDisk("newfile");
   if(status.GetError()) std::cout << "hui";
-  status = storage.LoadFromDisk("newfile");
+  status = storage.LoadFromDisk("newfile");*/
 }

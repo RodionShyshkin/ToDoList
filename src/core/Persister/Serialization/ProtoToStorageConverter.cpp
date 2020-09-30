@@ -5,22 +5,11 @@
 #include "ProtoToStorageConverter.h"
 #include "ProtoToTaskConverter.h"
 
-std::unique_ptr<TaskModel> ProtoToStorageConverter::ConvertFromProto(const StorageProto &storage_proto) {
-  auto temp_storage_ = std::make_unique<TaskModel>();
+std::vector<ModelTaskDTO> ProtoToStorageConverter::Convert(const StorageProto &storage_proto) {
+  std::vector<ModelTaskDTO> result;
   for(const auto& task : storage_proto.tasks()) {
-    auto task_ = ProtoToTaskConverter::ConvertProtoToTaskEntity(task);
-    if(!task_.has_value()) return nullptr;
-    ModelTaskDTO dto_ = ModelTaskDTO::create(0, task_->GetName(), task_->GetLabel(), task_->GetPriority(),
-                                   task_->GetDueTime().GetDate(), task_->GetStatus());
-
-    OperationResult result{StorageError::NO_ERRORS};
-    if(task.parent_id() == 0) {
-      result = temp_storage_->AddTask(dto_);
-    }
-    else {
-      result = temp_storage_->AddSubtask(TaskID{task.parent_id()}, dto_);
-    }
-    if(!result.GetStatus()) return nullptr;
+    auto model_dto = ProtoToTaskConverter::ConvertProtoToModelDTO(task);
+    result.push_back(model_dto);
   }
-  return temp_storage_;
+  return result;
 }

@@ -4,7 +4,7 @@
 
 #include "StorageToProtoConverter.h"
 
-StorageProto StorageToProtoConverter::ConvertStorageToProto(const std::vector<TaskEntity> &tasks) {
+StorageProto StorageToProtoConverter::ConvertStorageToProto(const std::vector<ModelTaskDTO> &tasks) {
   StorageProto storage;
   for(const auto& task : tasks) {
     auto* newTask = storage.add_tasks();

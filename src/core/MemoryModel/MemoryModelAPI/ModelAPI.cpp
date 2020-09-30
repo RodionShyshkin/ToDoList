@@ -2,6 +2,7 @@
 // Created by rodion on 9/29/20.
 //
 
+#include <src/core/Persister/Persister.h>
 #include "ModelAPI.h"
 
 ModelAPI::ModelAPI() : model_(std::make_unique<TaskModel>()) { }
@@ -9,7 +10,7 @@ ModelAPI::ModelAPI() : model_(std::make_unique<TaskModel>()) { }
 ModelTaskDTO ModelAPI::getTask(const TaskID &id) const {
   auto task = this->model_->GetTaskStorage().GetTask(id);
 
-  return ModelTaskDTO::create(task->GetID(), task->GetName(), task->GetLabel(),
+  return ModelTaskDTO::createWithoutParent(task->GetID(), task->GetName(), task->GetLabel(),
                               task->GetPriority(), task->GetDueTime(), task->GetStatus());
 }
 
@@ -17,7 +18,7 @@ std::vector<ModelTaskDTO> ModelAPI::getAllTasks() const {
   auto tasks = this->model_->GetTaskView().GetAllTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::create(task.GetID(), task.GetName(), task.GetLabel(),
+    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
                                           task.GetPriority(), task.GetDueTime(), task.GetStatus()));
   }
   return result;
@@ -27,7 +28,7 @@ std::vector<ModelTaskDTO> ModelAPI::getTasksForToday() const {
   auto tasks = this->model_->GetTaskView().GetTodayTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::create(task.GetID(), task.GetName(), task.GetLabel(),
+    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
                                           task.GetPriority(), task.GetDueTime(), task.GetStatus()));
   }
   return result;
@@ -37,7 +38,7 @@ std::vector<ModelTaskDTO> ModelAPI::getTasksForWeek() const {
   auto tasks = this->model_->GetTaskView().GetWeekTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::create(task.GetID(), task.GetName(), task.GetLabel(),
+    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
                                           task.GetPriority(), task.GetDueTime(), task.GetStatus()));
   }
   return result;
@@ -47,7 +48,7 @@ std::vector<ModelTaskDTO> ModelAPI::getTasksByLabel(const std::string& label) co
   auto tasks = this->model_->GetTaskView().GetTasksByLabel(label);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::create(task.GetID(), task.GetName(), task.GetLabel(),
+    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
                                           task.GetPriority(), task.GetDueTime(), task.GetStatus()));
   }
   return result;
@@ -57,7 +58,7 @@ std::vector<ModelTaskDTO> ModelAPI::getTasksByName(const std::string& name) cons
   auto tasks = this->model_->GetTaskView().GetTasksByName(name);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::create(task.GetID(), task.GetName(), task.GetLabel(),
+    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
                                           task.GetPriority(), task.GetDueTime(), task.GetStatus()));
   }
   return result;
@@ -67,7 +68,7 @@ std::vector<ModelTaskDTO> ModelAPI::getTasksByPriority(const Priority& priority)
   auto tasks = this->model_->GetTaskView().GetTasksByPriority(priority);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::create(task.GetID(), task.GetName(), task.GetLabel(),
+    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
                                           task.GetPriority(), task.GetDueTime(), task.GetStatus()));
   }
   return result;
@@ -104,3 +105,23 @@ OperationResult<StorageError> ModelAPI::completeTask(const TaskID &id) {
 
   return OperationResult{StorageError::NO_ERRORS};
 }
+
+OperationResult<SerializationError> ModelAPI::SaveToDisk(const std::string &path) {
+  auto tasks = this->getAllTasks();
+  Persister persister{path, tasks};
+  if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
+
+  return OperationResult{SerializationError::NO_ERRORS};
+}
+
+OperationResult<SerializationError> ModelAPI::LoadFromDisk(const std::string &path) {
+  std::vector<ModelTaskDTO> tasks;
+  Persister persister{path, tasks};
+  if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
+
+  auto model = TaskModel::createByTasks(tasks);
+  std::swap(model_, model);
+
+  return OperationResult{SerializationError::NO_ERRORS};
+}
+

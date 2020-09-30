@@ -11,7 +11,7 @@
 
 class StorageToProtoConverter {
  public:
-  static StorageProto       ConvertStorageToProto(const std::vector<TaskEntity>&);
+  static StorageProto       ConvertStorageToProto(const std::vector<ModelTaskDTO>&);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_STORAGETOPROTOCONVERTER_H_

@@ -3,13 +3,13 @@
 //
 
 #include "TaskModel.h"
-#include <Persister/Serialization/StorageToProtoConverter.h>
-#include <Persister/Serialization/ProtoToStorageConverter.h>
+#include <src/core/Persister/Serialization/StorageToProtoConverter.h>
+#include <src/core/Persister/Serialization/ProtoToStorageConverter.h>
 #include <Persister/Persister.h>
 #include <fstream>
 #include "task.pb.h"
 
-TaskModel::TaskModel() : generate_id_(IDGenerator()) {}
+TaskModel::TaskModel() : generate_id_(IDGenerator()), task_view_(TaskView()), task_storage_(TaskStorage()) {}
 
 TaskView TaskModel::GetTaskView() const {
   return task_view_;
@@ -17,6 +17,10 @@ TaskView TaskModel::GetTaskView() const {
 
 TaskStorage TaskModel::GetTaskStorage() const {
   return task_storage_;
+}
+
+IDGenerator TaskModel::GetIDGenerator() const {
+  return this->generate_id_;
 }
 
 OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
@@ -83,7 +87,7 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
 
   return OperationResult{StorageError::NO_ERRORS};
 }
-
+/*
 OperationResult<SerializationError> TaskModel::SaveToDisk(const std::string &path) const {
   auto tasks = this->GetTaskView().GetAllTasks();
   StorageProto storage = StorageToProtoConverter::ConvertStorageToProto(tasks);
@@ -98,8 +102,27 @@ OperationResult<SerializationError> TaskModel::LoadFromDisk(const std::string &p
   Persister persister{path, storage};
   if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
 
-  auto temp_storage_ = ProtoToStorageConverter::ConvertFromProto(storage);
+  TaskModel temp_model;
+  auto tasks = ProtoToStorageConverter::Convert(storage);
+  for(const auto& task : tasks) {
+    if(task.getParentID() == task.getID()) {
+      temp_model.AddTask(task);
+    }
+    else temp_model.AddSubtask(task.getParentID(), task);
+  }
 
-//  std::swap(*this, *temp_storage_);
   return OperationResult{SerializationError::NO_ERRORS};
 }
+*/
+
+std::unique_ptr<TaskModel> TaskModel::createByTasks(const std::vector<ModelTaskDTO> &tasks) {
+  auto temp_model = std::make_unique<TaskModel>();
+  for(const auto& task : tasks) {
+    if(task.getParentID() == task.getID()) {
+      temp_model->AddTask(task);
+    }
+    else temp_model->AddSubtask(task.getParentID(), task);
+  }
+  return temp_model;
+}
+
