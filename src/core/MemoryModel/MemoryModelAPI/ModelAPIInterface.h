@@ -28,6 +28,9 @@ class ModelAPIInterface {
   virtual OperationResult<StorageError>                   RemoveTask(const TaskID& id) = 0;
   virtual OperationResult<StorageError>                   postponeTask(const TaskID& id, const Date& newdate) = 0;
   virtual OperationResult<StorageError>                   completeTask(const TaskID& id) = 0;
+
+  virtual OperationResult<SerializationError>             saveToDisk(const std::string&) = 0;
+  virtual OperationResult<SerializationError>             loadFromDisk(const std::string&) = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_MEMORYMODELAPI_MODELAPIINTERFACE_H_

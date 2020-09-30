@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <src/core/Persister/Serialization/TaskToProtoConverter.h>
 #include <src/core/Persister/Serialization/ProtoToTaskConverter.h>
-
+/*
  class SerializationTest : public ::testing::Test {
  public:
   void SetUp() override {
@@ -47,4 +47,4 @@ TEST_F(SerializationTest, shouldDeserializeTask) {
   ASSERT_EQ(desir.getPriority(), task_.GetPriority());
   ASSERT_EQ(desir.getDueDate().GetDate(), task_.GetDueTime().GetDate());
   ASSERT_EQ(desir.getStatus(), task_.GetStatus());
-}
+}*/

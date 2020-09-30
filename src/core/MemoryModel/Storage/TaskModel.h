@@ -10,7 +10,6 @@
 class TaskModel : public TaskModelInterface {
  public:
   TaskModel();
-  TaskModel(TaskModel&) = default;
 
  public:
   static std::unique_ptr<TaskModel> createByTasks(const std::vector<ModelTaskDTO>& tasks);
@@ -18,36 +17,10 @@ class TaskModel : public TaskModelInterface {
  public:
   TaskView                          GetTaskView() const override;
   TaskStorage                       GetTaskStorage() const override;
-  IDGenerator                       GetIDGenerator() const;
 
   OperationResult<StorageError>     AddTask(const ModelTaskDTO& task) override;
   OperationResult<StorageError>     AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
   OperationResult<StorageError>     RemoveTask(const TaskID& id) override;
-
-  /*
-   * \brief Method which saves storage to a disk.
-   *
-   * @param std::string path to file in which storage would be saved.
-   *
-   * @return OperationResult The result of saving.
-   * Should return NO_ERRORS in the case of success,
-   * UNKNOWN_PATH if there is a problem with opening file,
-   * SERIALIZATION_ERROR if serialization returns false.
-   */
-  //OperationResult<SerializationError>                   SaveToDisk(const std::string&) const override;
-
-  /*
-   * \brief Method which loads storage from a disk.
-   *
-   * @param std::string path to file with storage.
-   *
-   * @return OperationREsult The result of saving.
-   * Should return NO_ERRORS in the case of success.
-   * UNKNOWN_PATH if there are no such a file.
-   * DESERIALIZATION_ERROR if deserialization returns false.
-   * INVALID_TASK if some serialized tasks are invalid.
-   */
-//  OperationResult<SerializationError>                   LoadFromDisk(const std::string&) const override;
 
  private:
   TaskStorage                       task_storage_;

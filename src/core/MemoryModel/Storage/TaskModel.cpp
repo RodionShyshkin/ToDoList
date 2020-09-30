@@ -19,10 +19,6 @@ TaskStorage TaskModel::GetTaskStorage() const {
   return task_storage_;
 }
 
-IDGenerator TaskModel::GetIDGenerator() const {
-  return this->generate_id_;
-}
-
 OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
   auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
   if(!taskInstance.has_value()) return OperationResult{StorageError::INVALID_TASK};
@@ -125,4 +121,3 @@ std::unique_ptr<TaskModel> TaskModel::createByTasks(const std::vector<ModelTaskD
   }
   return temp_model;
 }
-

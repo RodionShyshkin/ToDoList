@@ -106,7 +106,7 @@ OperationResult<StorageError> ModelAPI::completeTask(const TaskID &id) {
   return OperationResult{StorageError::NO_ERRORS};
 }
 
-OperationResult<SerializationError> ModelAPI::SaveToDisk(const std::string &path) {
+OperationResult<SerializationError> ModelAPI::saveToDisk(const std::string &path) {
   auto tasks = this->getAllTasks();
   Persister persister{path, tasks};
   if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
@@ -114,7 +114,7 @@ OperationResult<SerializationError> ModelAPI::SaveToDisk(const std::string &path
   return OperationResult{SerializationError::NO_ERRORS};
 }
 
-OperationResult<SerializationError> ModelAPI::LoadFromDisk(const std::string &path) {
+OperationResult<SerializationError> ModelAPI::loadFromDisk(const std::string &path) {
   std::vector<ModelTaskDTO> tasks;
   Persister persister{path, tasks};
   if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
