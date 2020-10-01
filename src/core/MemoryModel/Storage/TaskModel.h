@@ -15,12 +15,18 @@ class TaskModel : public TaskModelInterface {
             std::unique_ptr<TaskViewInterface> view,
             std::unique_ptr<IDGeneratorInterface> generator);
 
+  TaskModel(TaskModel& model) {
+    this->task_storage_ = std::move(model.task_storage_);
+    this->task_view_ = std::move(model.task_view_);
+    this->generate_id_ = std::move(model.generate_id_);
+  }
+
  public:
   static std::unique_ptr<TaskModel> createByTasks(const std::vector<ModelTaskDTO>& tasks);
 
  public:
-  TaskViewInterface&         GetTaskView() const override;
-  TaskStorageInterface&      GetTaskStorage() const override;
+  TaskViewInterface&                GetTaskView() const override;
+  TaskStorageInterface&             GetTaskStorage() const override;
 
   OperationResult<StorageError>     AddTask(const ModelTaskDTO& task) override;
   OperationResult<StorageError>     AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
