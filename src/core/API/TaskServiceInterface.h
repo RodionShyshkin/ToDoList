@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <src/core/API/OperationResult.h>
+#include <src/core/Persister/SerializationError.h>
 #include "TaskDTO.h"
 
 class TaskServiceInterface {
@@ -27,6 +28,9 @@ class TaskServiceInterface {
   virtual OperationResult<StorageError>         RemoveTask(const unsigned int&) = 0;
   virtual OperationResult<StorageError>         postponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
   virtual OperationResult<StorageError>         completeTask(const unsigned int&) = 0;
+
+  virtual OperationResult<SerializationError>   SaveToFile(const std::string&) = 0;
+  virtual OperationResult<SerializationError>   LoadFromFile(const std::string&) = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_

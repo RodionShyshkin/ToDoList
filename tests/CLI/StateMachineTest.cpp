@@ -23,6 +23,9 @@ class MockService : public TaskServiceInterface {
   MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
   MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
   MOCK_METHOD(OperationResult<StorageError>, completeTask, (const unsigned int&), (override));
+
+  MOCK_METHOD(OperationResult<SerializationError>, SaveToFile, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<SerializationError>, LoadFromFile, (const std::string&), (override));
 };
 
 class MockIO : public IOInterface {

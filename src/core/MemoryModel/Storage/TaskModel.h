@@ -25,12 +25,23 @@ class TaskModel : public TaskModelInterface {
   static std::unique_ptr<TaskModel> createByTasks(const std::vector<ModelTaskDTO>& tasks);
 
  public:
-  TaskViewInterface&                GetTaskView() const override;
-  TaskStorageInterface&             GetTaskStorage() const override;
+ /* TaskViewInterface&                GetTaskView() const override;
+  TaskStorageInterface&             GetTaskStorage() const override;*/
+
+ ModelTaskDTO getTask(const TaskID &) const override;
+ std::vector<ModelTaskDTO> getAllTasks() const override;
+ std::vector<ModelTaskDTO> getTasksForToday() const override;
+ std::vector<ModelTaskDTO> getTasksForWeek() const override;
+ std::vector<ModelTaskDTO> getTasksByLabel(const std::string &label) const override;
+ std::vector<ModelTaskDTO> getTasksByName(const std::string &name) const override;
+ std::vector<ModelTaskDTO> getTasksByPriority(const Priority &priority) const override;
 
   OperationResult<StorageError>     AddTask(const ModelTaskDTO& task) override;
   OperationResult<StorageError>     AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) override;
   OperationResult<StorageError>     RemoveTask(const TaskID& id) override;
+
+  OperationResult<StorageError> completeTask(const TaskID &id) override;
+  OperationResult<StorageError> postponeTask(const TaskID &id, const Date &newdate) override;
 
   std::vector<ModelTaskDTO>         GetSubtasks(const TaskID &id) override;
 

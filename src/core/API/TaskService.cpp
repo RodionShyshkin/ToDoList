@@ -2,19 +2,20 @@
 // Created by rodion on 7/15/20.
 //
 
+#include <src/core/Persister/Persister.h>
 #include "TaskService.h"
 
-TaskService::TaskService() : memory_model_api_(std::make_unique<ModelAPI>()) { }
+TaskService::TaskService() : model_api_(std::make_unique<TaskModel>()) { }
 
 TaskDTO TaskService::getTask(const unsigned int& id) const {
-  auto model_dto = memory_model_api_->getTask(TaskID{id});
+  auto model_dto = this->model_api_->getTask(TaskID{id});
 
   return TaskService::convertFromModelDTO(model_dto);
 }
 
 std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto allTasks = memory_model_api_->getAllTasks();
+  auto allTasks = this->model_api_->getAllTasks();
   for(const auto& model_dto : allTasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -24,7 +25,7 @@ std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const 
 
 std::vector<TaskDTO> TaskService::getTasksForToday(const bool &sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = memory_model_api_->getTasksForToday();
+  auto tasks = this->model_api_->getTasksForToday();
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -34,7 +35,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(const bool &sortByPriority) c
 
 std::vector<TaskDTO> TaskService::getTasksForWeek(const bool &sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = memory_model_api_->getTasksForWeek();
+  auto tasks = this->model_api_->getTasksForWeek();
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -44,7 +45,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(const bool &sortByPriority) co
 
 std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = memory_model_api_->getTasksByLabel(label);
+  auto tasks = this->model_api_->getTasksByLabel(label);
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -54,7 +55,7 @@ std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, cons
 
 std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = memory_model_api_->getTasksByName(name);
+  auto tasks = this->model_api_->getTasksByName(name);
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -64,7 +65,7 @@ std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const 
 
 std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = memory_model_api_->getTasksByPriority(priority);
+  auto tasks = this->model_api_->getTasksByPriority(priority);
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -72,23 +73,42 @@ std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) c
 }
 
 OperationResult<StorageError> TaskService::addTask(const TaskDTO &task) {
-  return memory_model_api_->addTask(TaskService::convertToModelDTO(task));
+  return this->model_api_->AddTask(TaskService::convertToModelDTO(task));
 }
 
 OperationResult<StorageError> TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
-  return memory_model_api_->addSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
+  return this->model_api_->AddSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
 }
 
 OperationResult<StorageError> TaskService::RemoveTask(const unsigned int& id) {
-  return memory_model_api_->RemoveTask(TaskID{id});
+  return this->model_api_->RemoveTask(TaskID{id});
 }
 
 OperationResult<StorageError> TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
-  return memory_model_api_->postponeTask(TaskID{id}, Date{newdate});
+  return this->model_api_->postponeTask(TaskID{id}, Date{newdate});
 }
 
 OperationResult<StorageError> TaskService::completeTask(const unsigned int& id) {
-  return memory_model_api_->completeTask(TaskID{id});
+  return this->model_api_->completeTask(TaskID{id});
+}
+
+OperationResult<SerializationError> TaskService::SaveToFile(const std::string &filepath) {
+  auto tasks = this->model_api_->getAllTasks();
+  Persister persister{filepath, tasks};
+  if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
+
+  return OperationResult{SerializationError::NO_ERRORS};
+}
+
+OperationResult<SerializationError> TaskService::LoadFromFile(const std::string &filepath) {
+  std::vector<ModelTaskDTO> tasks;
+  Persister persister{filepath, tasks};
+  if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
+
+  auto model = TaskModel::createByTasks(tasks);
+  std::swap(this->model_api_, model);
+
+  return OperationResult{SerializationError::NO_ERRORS};
 }
 
 std::vector<TaskDTO> TaskService::sortedByPriority(std::vector<TaskDTO> vector) {

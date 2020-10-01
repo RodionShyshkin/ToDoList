@@ -8,7 +8,6 @@
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
 #include <MemoryModel/Storage/TaskModel.h>
-#include <src/core/MemoryModel/MemoryModelAPI/ModelAPI.h>
 
 /*
  * \brief Entry point for tasks management.
@@ -139,6 +138,9 @@ class TaskService : public TaskServiceInterface {
    */
   OperationResult<StorageError>                   completeTask(const unsigned int& id) override;
 
+  OperationResult<SerializationError> SaveToFile(const std::string &filepath) override;
+  OperationResult<SerializationError> LoadFromFile(const std::string &filepath) override;
+
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
 
@@ -146,7 +148,7 @@ class TaskService : public TaskServiceInterface {
   static ModelTaskDTO               convertToModelDTO(const TaskDTO& dto);
 
  private:
-  std::unique_ptr<ModelAPI>         memory_model_api_;
+  std::unique_ptr<TaskModel>         model_api_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_
