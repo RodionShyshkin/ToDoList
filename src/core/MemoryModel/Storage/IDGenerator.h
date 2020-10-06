@@ -24,7 +24,7 @@ class IDGenerator : public IDGeneratorInterface {
    *
    * @return optional TaskID generated ID if it's valid and nullopt in another case.
    */
-  std::optional<TaskID>            GenerateID() override;
+  TaskID            GenerateID() override;
 
  private:
   unsigned int                     ids_amount_;

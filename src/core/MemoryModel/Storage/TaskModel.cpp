@@ -14,11 +14,15 @@ TaskModel::TaskModel() : generate_id_(std::make_unique<IDGenerator>()),
                           task_view_(std::make_unique<TaskView>()) {}
 
 TaskModel::TaskModel(std::unique_ptr<TaskStorageInterface> storage,
-                     std::unique_ptr<TaskViewInterface> view,
-                     std::unique_ptr<IDGeneratorInterface> generator) {
-  this->task_storage_ = std::move(storage);
-  this->task_view_ = std::move(view);
-  this->generate_id_ = std::move(generator);
+                            std::unique_ptr<TaskViewInterface> view,
+                      std::unique_ptr<IDGeneratorInterface> generator) :
+                        task_storage_(std::move(storage)), task_view_(std::move(view)),
+                        generate_id_(std::move(generator)) { }
+
+TaskModel::TaskModel(TaskModel& model) {
+  this->task_storage_ = std::move(model.task_storage_);
+  this->task_view_ = std::move(model.task_view_);
+  this->generate_id_ = std::move(model.generate_id_);
 }
 
 ModelTaskDTO TaskModel::getTask(const TaskID &id) const {
@@ -98,9 +102,7 @@ OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
   if(!taskInstance.has_value()) return OperationResult{StorageError::INVALID_TASK};
 
   auto newid = generate_id_->GenerateID();
-  if(!newid.has_value()) return OperationResult{StorageError::MEMORY_LIMIT};
-
-  auto newtask = TaskEntity::createTask(taskInstance.value(), newid.value());
+  auto newtask = TaskEntity::createTask(taskInstance.value(), newid);
   if(task.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
@@ -117,8 +119,7 @@ OperationResult<StorageError> TaskModel::AddSubtask(const TaskID &id, const Mode
   if(task == nullptr) return OperationResult{StorageError::PARENT_NOT_FOUND};
 
   auto newid = generate_id_->GenerateID();
-  if(!newid.has_value()) return OperationResult{StorageError::MEMORY_LIMIT};
-  auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid.value(), id);
+  auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid, id);
   if(subtask.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
@@ -139,7 +140,6 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
     subtasksToRemove.push_back(subtask.first);
     RemoveTask(subtask.first);
   }
-
   for(const auto& subtask : subtasksToRemove) {
     if(!task_storage_->RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
     if(!task_view_->RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
@@ -147,7 +147,6 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
 
   if(task->checkParent()) {
     auto parentID = task->GetParentID();
-    if(task_storage_->GetTask(parentID) == nullptr) throw std::runtime_error("Parent was lost.");
     auto parent = task_storage_->GetTask(parentID);
     if(!parent->RemoveSubtask(id)) throw std::runtime_error("Subtask was lost.");
   }
@@ -164,22 +163,33 @@ std::vector<ModelTaskDTO> TaskModel::GetSubtasks(const TaskID &id) {
 
   std::vector<ModelTaskDTO> result;
   for(const auto& subtask : subtasks) {
-    result.push_back(ModelTaskDTO::createWithParent(subtask.second.lock()->GetID(),
+    std::cout << subtask.second.lock()->GetName() << std::endl;
+    auto model_dto = ModelTaskDTO::createWithParent(subtask.second.lock()->GetID(),
                                                     subtask.second.lock()->GetName(),
                                                     subtask.second.lock()->GetLabel(),
                                                     subtask.second.lock()->GetPriority(),
                                                     subtask.second.lock()->GetDueTime(),
                                                     subtask.second.lock()->GetStatus(),
-                                                    subtask.second.lock()->GetParentID()));
+                                                    subtask.second.lock()->GetParentID());
+    std::cout << subtasks.size() << " " << result.size() << std::endl;
   }
+
   return result;
 }
 
 OperationResult<StorageError> TaskModel::completeTask(const TaskID &id) {
   auto task = this->task_storage_->GetTask(id);
   if(task == nullptr) return OperationResult{StorageError::TASK_NOT_FOUND};
+  if(task->GetStatus()) return OperationResult{StorageError::COMPLETED_TASK};
+  std::vector<TaskID> subtasksToComplete;
 
-  if(!task->SetComplete()) return OperationResult{StorageError::COMPLETED_TASK};
+  auto subtasks = task->GetSubtasks();
+  for(const auto& subtask : subtasks) {
+    subtasksToComplete.push_back(subtask.first);
+    completeTask(subtask.first);
+  }
+
+  task->SetComplete();
 
   return OperationResult{StorageError::NO_ERRORS};
 }
@@ -205,3 +215,4 @@ std::unique_ptr<TaskModel> TaskModel::createByTasks(const std::vector<ModelTaskD
   }
   return temp_model;
 }
+

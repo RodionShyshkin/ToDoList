@@ -6,8 +6,6 @@
 
 IDGenerator::IDGenerator() : ids_amount_(0) {}
 
-std::optional<TaskID> IDGenerator::GenerateID() {
-  auto id = TaskID{++this->ids_amount_};
-  if(this->ids_amount_ == 10000) return std::nullopt;
-  return id;
+TaskID IDGenerator::GenerateID() {
+  return TaskID{++this->ids_amount_};
 }

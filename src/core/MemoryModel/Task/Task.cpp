@@ -7,7 +7,6 @@
 Task::Task() = default;
 
 Task::Task(const std::string &name, const std::string &label, Priority priority, const Date &duedate) {
-  if(name.empty()) throw std::invalid_argument("Task should be named.");
   this->name_ = name;
   this->label_ = label;
   this->priority_ = priority;

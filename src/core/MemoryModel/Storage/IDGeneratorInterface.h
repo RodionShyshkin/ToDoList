@@ -12,7 +12,7 @@ class IDGeneratorInterface {
   virtual ~IDGeneratorInterface() = default;
 
  public:
-  virtual std::optional<TaskID> GenerateID() = 0;
+  virtual TaskID GenerateID() = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_IDGENERATORINTERFACE_H_
