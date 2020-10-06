@@ -12,7 +12,7 @@
 
 class ProtoToStorageConverter {
  public:
-  static TaskModel&    Convert(const StorageProto&);
+  static TaskModelInterface&    Convert(const StorageProto&);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTOTOSTORAGECONVERTER_H_

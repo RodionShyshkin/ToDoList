@@ -5,7 +5,7 @@
 #include "ProtoToStorageConverter.h"
 #include "ProtoToTaskConverter.h"
 
-TaskModel& ProtoToStorageConverter::Convert(const StorageProto &storage_proto) {
+TaskModelInterface& ProtoToStorageConverter::Convert(const StorageProto &storage_proto) {
   TaskModel result;
   for(const auto& task : storage_proto.tasks()) {
     auto model_dto = ProtoToTaskConverter::ConvertProtoToModelDTO(task);
