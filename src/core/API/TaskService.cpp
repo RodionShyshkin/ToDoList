@@ -2,10 +2,12 @@
 // Created by rodion on 7/15/20.
 //
 
-#include <src/core/Persister/Persister.h>
+#include <src/core/Persister/FilePersister.h>
 #include "TaskService.h"
 
 TaskService::TaskService() : model_api_(std::make_unique<TaskModel>()) { }
+
+TaskService::TaskService(std::unique_ptr<TaskModelInterface> model) : model_api_(std::move(model)) {}
 
 TaskDTO TaskService::getTask(const unsigned int& id) const {
   auto model_dto = this->model_api_->getTask(TaskID{id});
@@ -93,20 +95,15 @@ OperationResult<StorageError> TaskService::completeTask(const unsigned int& id) 
 }
 
 OperationResult<SerializationError> TaskService::SaveToFile(const std::string &filepath) {
-  auto tasks = this->model_api_->getAllTasks();
-  Persister persister{filepath, tasks};
+  FilePersister persister{filepath, *this->model_api_};
   if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
 
   return OperationResult{SerializationError::NO_ERRORS};
 }
 
 OperationResult<SerializationError> TaskService::LoadFromFile(const std::string &filepath) {
-  std::vector<ModelTaskDTO> tasks;
-  Persister persister{filepath, tasks};
+  FilePersister persister{filepath, *this->model_api_};
   if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
-
-  auto model = TaskModel::createByTasks(tasks);
-  std::swap(this->model_api_, model);
 
   return OperationResult{SerializationError::NO_ERRORS};
 }

@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTO_TASKDESERIALIZER_H_
 #define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTO_TASKDESERIALIZER_H_
 
-#include <src/core/MemoryModel/Storage/ModelTaskDTO.h>
+#include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
 #include "task.pb.h"
 
 /*

@@ -8,7 +8,7 @@
 #include <MemoryModel/Storage/TaskView.h>
 #include <MemoryModel/Storage/TaskStorage.h>
 #include <src/core/API/OperationResult.h>
-#include <src/core/MemoryModel/Storage/ModelTaskDTO.h>
+#include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
 #include <src/core/Persister/SerializationError.h>
 
 class TaskModelInterface {

@@ -2,17 +2,17 @@
 // Created by rodion on 9/27/20.
 //
 
-#ifndef TODOLIST_SRC_CORE_PERSISTER_PERSISTER_H_
-#define TODOLIST_SRC_CORE_PERSISTER_PERSISTER_H_
+#ifndef TODOLIST_SRC_CORE_PERSISTER_FILEPERSISTER_H_
+#define TODOLIST_SRC_CORE_PERSISTER_FILEPERSISTER_H_
 
 #include <Persister/PersisterInterface.h>
 #include <Persister/Serialization/ProtoToStorageConverter.h>
 #include <Persister/Serialization/StorageToProtoConverter.h>
 #include <fstream>
 
-class Persister : public PersisterInterface {
+class FilePersister : public PersisterInterface {
  public:
-  Persister(const std::string& filepath, std::vector<ModelTaskDTO>& tasks);
+  FilePersister(const std::string& filepath, TaskModelInterface& model);
 
  public:
   bool Save() override;
@@ -20,7 +20,7 @@ class Persister : public PersisterInterface {
 
  private:
   std::string filepath_;
-  std::vector<ModelTaskDTO>& tasks_;
+  TaskModelInterface& model_;
 };
 
-#endif //TODOLIST_SRC_CORE_PERSISTER_PERSISTER_H_
+#endif //TODOLIST_SRC_CORE_PERSISTER_FILEPERSISTER_H_

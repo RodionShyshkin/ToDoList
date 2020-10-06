@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 #define TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 
-#include <MemoryModel/Storage/TaskModelInterface.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModelInterface.h>
 
 class TaskModel : public TaskModelInterface {
  public:
@@ -16,7 +16,7 @@ class TaskModel : public TaskModelInterface {
   TaskModel(TaskModel& model);
 
  public:
-  static std::unique_ptr<TaskModel> createByTasks(const std::vector<ModelTaskDTO>& tasks);
+  static TaskModel& createByTasks(const std::vector<ModelTaskDTO>& tasks);
 
  public:
  ModelTaskDTO getTask(const TaskID &) const override;

@@ -7,7 +7,7 @@
 
 #include <string>
 #include <task.pb.h>
-#include <src/core/MemoryModel/Storage/TaskModel.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
 class PersisterInterface {
  public:

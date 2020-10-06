@@ -7,7 +7,7 @@
 
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
-#include <MemoryModel/Storage/TaskModel.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
 /*
  * \brief Entry point for tasks management.
@@ -20,6 +20,7 @@
 class TaskService : public TaskServiceInterface {
  public:
   TaskService();
+  TaskService(std::unique_ptr<TaskModelInterface> model);
 
  public:
   /*
@@ -148,7 +149,7 @@ class TaskService : public TaskServiceInterface {
   static ModelTaskDTO               convertToModelDTO(const TaskDTO& dto);
 
  private:
-  std::unique_ptr<TaskModel>         model_api_;
+  std::unique_ptr<TaskModelInterface>         model_api_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

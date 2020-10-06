@@ -8,6 +8,7 @@
 #include <task.pb.h>
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include <src/core/Persister/Serialization/TaskToProtoConverter.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
 class StorageToProtoConverter {
  public:

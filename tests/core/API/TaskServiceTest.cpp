@@ -10,27 +10,57 @@ class TaskServiceTest : public ::testing::Test {
  public:
 
   void SetUp() override {
-    std::optional<Task> task = Task::create("Task", "label", Priority::EMPTY, Date(2040, 9, 20));
+/*    std::optional<Task> task = Task::create("Task", "label", Priority::EMPTY, Date(2040, 9, 20));
     std::optional<Task> task2 = Task::create("Task", "label", Priority::MEDIUM, Date(2019, 4, 12));
     std::optional<Task> task3 = Task::create("Task 2", "label", Priority::HIGH, Date::GetCurrentDate());
     std::optional<Task> task4 = Task::create("Task 2", "label", Priority::LOW, Date::GetCurrentDate());
-
-    service.addTask(TaskDTO::create(1, "Task", "label",
-                                    Priority::EMPTY, boost::gregorian::date{2040-9-20}, false));
-    service.addTask(TaskDTO::create(2, "Tasik", "label",
-                                    Priority::MEDIUM, boost::gregorian::date{2019-4-12}, false));
-    service.addSubtask(1, TaskDTO::create(3, "Task 2", "label",
-                                          Priority::HIGH, Date::GetCurrentDate().GetDate(), true));
-    service.addSubtask(3, TaskDTO::create(4, "Task 2", "label",
-                                          Priority::LOW, Date::GetCurrentDate().GetDate(), false));
+*/
+    task1 = TaskDTO::create(1, "Task", "label",
+                                    Priority::EMPTY, boost::gregorian::date{2040-9-20}, false);
+    task2 = TaskDTO::create(2, "Tasik", "label",
+                                    Priority::MEDIUM, boost::gregorian::date{2019-4-12}, false);
+    task3 = TaskDTO::create(3, "Task 2", "label",
+                                          Priority::HIGH, Date::GetCurrentDate().GetDate(), true);
+    task4 = TaskDTO::create(4, "Task 2", "label",
+                                          Priority::LOW, Date::GetCurrentDate().GetDate(), false);
   }
 
   void TearDown() override {
 
   }
 
+  TaskDTO task1;
+  TaskDTO task2;
+  TaskDTO task3;
+  TaskDTO task4;
+
   TaskService service;
 };
+
+class MockModel : public TaskModelInterface {
+ public:
+  MOCK_METHOD(ModelTaskDTO, getTask, (const TaskID&), (const, override));
+
+  MOCK_METHOD(std::vector<ModelTaskDTO>, getAllTasks, (), (const, override));
+  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksForToday, (), (const, override));
+  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksForWeek, (), (const, override));
+  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByLabel, (const std::string &label), (const, override));
+  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByName, (const std::string& name), (const, override));
+  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByPriority, (const Priority& priority), (const, override));
+
+  MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const TaskID& id, const Date& newdate), (override));
+  MOCK_METHOD(OperationResult<StorageError>, completeTask, (const TaskID& id), (override));
+
+  MOCK_METHOD(OperationResult<StorageError>, AddTask, (const ModelTaskDTO& task), (override));
+  MOCK_METHOD(OperationResult<StorageError>, AddSubtask, (const TaskID &id, const ModelTaskDTO& subtask), (override));
+  MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const TaskID& id), (override));
+
+  MOCK_METHOD(std::vector<ModelTaskDTO>, GetSubtasks, (const TaskID& id), (override));
+};
+
+TEST_F(TaskServiceTest, shouldAddTaskCorrectly) {
+
+}
 
 /*class MockView : public TaskViewInterface {
  public:

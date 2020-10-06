@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <src/core/MemoryModel/Storage/TaskModel.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
 class asdf : public ::testing::Test {
 

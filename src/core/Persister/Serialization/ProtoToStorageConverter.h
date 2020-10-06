@@ -8,11 +8,11 @@
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include <vector>
 #include <task.pb.h>
-#include <src/core/MemoryModel/Storage/TaskModel.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
 class ProtoToStorageConverter {
  public:
-  static std::vector<ModelTaskDTO>    Convert(const StorageProto&);
+  static TaskModel&    Convert(const StorageProto&);
 };
 
 #endif //TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_PROTOTOSTORAGECONVERTER_H_

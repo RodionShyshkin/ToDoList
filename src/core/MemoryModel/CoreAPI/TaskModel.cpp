@@ -5,7 +5,7 @@
 #include "TaskModel.h"
 #include <src/core/Persister/Serialization/StorageToProtoConverter.h>
 #include <src/core/Persister/Serialization/ProtoToStorageConverter.h>
-#include <Persister/Persister.h>
+#include <Persister/FilePersister.h>
 #include <fstream>
 #include "task.pb.h"
 
@@ -205,7 +205,7 @@ OperationResult<StorageError> TaskModel::postponeTask(const TaskID &id, const Da
   return OperationResult{StorageError::NO_ERRORS};
 }
 
-std::unique_ptr<TaskModel> TaskModel::createByTasks(const std::vector<ModelTaskDTO> &tasks) {
+TaskModel& TaskModel::createByTasks(const std::vector<ModelTaskDTO> &tasks) {
   auto temp_model = std::make_unique<TaskModel>();
   for(const auto& task : tasks) {
     if(task.getParentID() == task.getID()) {
@@ -213,6 +213,6 @@ std::unique_ptr<TaskModel> TaskModel::createByTasks(const std::vector<ModelTaskD
     }
     else temp_model->AddSubtask(task.getParentID(), task);
   }
-  return temp_model;
+  return *temp_model;
 }
 
