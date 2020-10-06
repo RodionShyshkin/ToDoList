@@ -9,7 +9,7 @@
 #include "task.pb.h"
 
 /*
- * Class contains static methods to convert TaskProto to TaskEntity.
+ * Class contains static methods to convert TaskProto to ModelTaskDTO.
  *
  * @see task.proto
  *
@@ -18,13 +18,20 @@
 
 class ProtoToTaskConverter {
  public:
+  /*
+   * Converts TaskProto to ModelTaskDTO.
+   *
+   * @param TaskProto
+   *
+   * @return ModelTaskDTO
+   */
   static ModelTaskDTO       ConvertProtoToTask(const TaskProto&);
 
  private:
   /*
    * \brief Converts TaskProto_Priority to Priority.
    *
-   * @param TaskProrot_Priority
+   * @param TaskProto_Priority instance.
    *
    * @return Priority instance.
    */

@@ -5,9 +5,11 @@
 #ifndef TODOLIST_SRC_CORE_PERSISTER_PERSISTERINTERFACE_H_
 #define TODOLIST_SRC_CORE_PERSISTER_PERSISTERINTERFACE_H_
 
-#include <string>
-#include <task.pb.h>
-#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
+/*
+ * \brief Persister interface, which defines contract of saving/loading of a ToDoList.
+ *
+ * @author Rodion Shyshkin
+ */
 
 class PersisterInterface {
  public:

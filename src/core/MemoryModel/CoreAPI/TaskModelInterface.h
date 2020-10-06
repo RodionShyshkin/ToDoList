@@ -9,7 +9,6 @@
 #include <MemoryModel/Storage/TaskStorage.h>
 #include <src/core/API/OperationResult/OperationResult.h>
 #include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
-#include <src/core/Persister/SerializationError.h>
 #include <src/core/API/OperationResult/StorageError.h>
 
 class TaskModelInterface {

@@ -8,7 +8,7 @@
 #include <optional>
 
 /*
- * Class representing the result of adding tasks or subtasks.
+ * Class representing the result of some operations.
  *
  * @author Rodion Shyshkin
  */

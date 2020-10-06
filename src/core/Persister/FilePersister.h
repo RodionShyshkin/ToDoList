@@ -10,6 +10,14 @@
 #include <Persister/Serialization/StorageToProtoConverter.h>
 #include <fstream>
 
+/*
+ * \brief Persister, inherited from PersisterInterface, which saves/loads ToDoList from a file.
+ *
+ * @see TaskService.h
+ *
+ * @author Rodion Shyshkin
+ */
+
 class FilePersister : public PersisterInterface {
  public:
   FilePersister(std::fstream& file, TaskModelInterface& model);

@@ -11,25 +11,46 @@
 #include <src/core/MemoryModel/Task/Date.h>
 #include <src/core/MemoryModel/Task/TaskID.h>
 
+/*
+ * Data transfer object which contains information about task
+ * and which is accessful only in Memory Model.
+ *
+ * @author Rodion Shyshkin
+ */
+
 class ModelTaskDTO {
  public:
   ModelTaskDTO();
 
  public:
   /*
-   * Factory method for TaskDTO instance.
+   * Factory method for ModelTaskDTO instance which is subtask of some task.
    *
    * @param TaskID identifier of a task.
+   * @param std::string name.
+   * @param std::string label.
+   * @param Priority priority.
+   * @param Date date.
+   * @param bool Status(true if completed, false in another case).
+   * @param TaskID parent task.
    *
-   * @param Task task.
-   *
-   * @param bool status, True if task is completed, False in another case.
-   *
-   * @return TaskDTO instance.
+   * @return ModelTaskDTO instance.
    */
   static ModelTaskDTO  createWithParent(const TaskID& id, const std::string& name, const std::string& label,
                          const Priority& priority, const Date& date, const bool& status, const TaskID& parent);
 
+  /*
+   * Factory method for ModelTaskDTO instance which is not subtask of any task.
+   *
+   * @param TaskID identifier of a task.
+   * @param std::string name.
+   * @param std::string label.
+   * @param Priority priority.
+   * @param Date date.
+   * @param bool Status(true if completed, false in another case).
+   *
+   * @return ModelTaskDTO instance.
+   */
   static ModelTaskDTO  createWithoutParent(const TaskID& id, const std::string& name, const std::string& label,
                                         const Priority& priority, const Date& date, const bool& status);
 

@@ -10,8 +10,23 @@
 #include <src/core/Persister/Serialization/TaskToProtoConverter.h>
 #include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
+/*
+ * This converter gets StorageProto instance from a TaskModel instance.
+ *
+ * @see task.proto
+ *
+ * @author Rodion Shyshkin
+ */
+
 class StorageToProtoConverter {
  public:
+  /*
+   * Converts a vector of ModelTaskDTO instances to StorageProto.
+   *
+   * @param std::vector<ModelTaskDTO>
+   *
+   * @return StorageProto
+   */
   static StorageProto       ConvertStorageToProto(const std::vector<ModelTaskDTO>&);
 };
 

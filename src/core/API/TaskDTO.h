@@ -23,10 +23,11 @@ class TaskDTO {
   /*
    * Factory method for TaskDTO instance.
    *
-   * @param TaskID identifier of a task.
-   *
-   * @param Task task.
-   *
+   * @param uint32 identifier of a task.
+   * @param std::string name.
+   * @param std::string label.
+   * @param Priority priority
+   * @param boost::gregorian::date date.
    * @param bool status, True if task is completed, False in another case.
    *
    * @return TaskDTO instance.

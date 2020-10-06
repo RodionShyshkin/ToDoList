@@ -59,21 +59,19 @@ class TaskEntity {
   /*
    * Adds subtask for current task.
    *
-   * @param const std::shared_ptr<TaskEntity>& reference to the TaskEntity smart pointer.
+   * @param const std::weak_ptr<TaskEntity>& reference to the TaskEntity smart pointer.
    */
   void                                                    AddSubtask(const std::weak_ptr<TaskEntity> &task);
 
   /*
    * Changes task status.
-   *
-   * @return bool True if task old status is false, False in another case.
    */
   void                                                    SetComplete();
 
   /*
-   * Changes Task date.
+   * Changes Task instance in TaskEntity.
    *
-   * @return bool True if new date is not less then old date, False in another case.
+   * @param Task new task.
    */
   void                                                    SubstituteTask(const Task &newtask);
 

@@ -7,7 +7,6 @@
 
 #include <vector>
 #include <src/core/API/OperationResult/OperationResult.h>
-#include <src/core/Persister/SerializationError.h>
 #include <src/core/API/OperationResult/StorageError.h>
 #include <src/core/API/OperationResult/PersistError.h>
 #include "TaskDTO.h"

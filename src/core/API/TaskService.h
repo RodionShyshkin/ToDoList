@@ -26,7 +26,7 @@ class TaskService : public TaskServiceInterface {
   /*
    * \brief Gives a task by its ID.
    *
-   * @param TaskID identifier of the task
+   * @param uint32 identifier of the task
    *
    * @return TaskDTO object
    */
@@ -102,7 +102,7 @@ class TaskService : public TaskServiceInterface {
   /*
    * \brief Adds subtask for a task which already exists.
    *
-   * @param TaskID identifier of a task for which you are going to add subtask.
+   * @param uint32 identifier of a task for which you are going to add subtask.
    *
    * @param TaskDTO obbject with internal subtask information.
    *
@@ -113,7 +113,7 @@ class TaskService : public TaskServiceInterface {
   /*
    * \brief Removes task.
    *
-   * @param TaskID identifier of a task which you are going to delete.
+   * @param uint32 identifier of a task which you are going to delete.
    *
    * @return OperationResult information about result of removing (contains error or message about success).
    */
@@ -126,20 +126,37 @@ class TaskService : public TaskServiceInterface {
    *
    * @param Date New deadline for task.
    *
-   * @return OperationResult information about result of postpone (contains error or message about success).
+   * @return bool result (true if successful, false in another case).
    */
   bool                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
 
   /*
    * \brief Completes task.
    *
-   * @param TaskID identifier of a task you want to mark as completed.
+   * @param uint32 identifier of a task you want to mark as completed.
    *
-   * @return OperationResult information about result of completing (contains error or message about success).
+   * @return bool result (true if successful, false in another case).
    */
   bool                   completeTask(const unsigned int& id) override;
 
+  /*
+   * \brief Saves tasks to a file.
+   *
+   * @param std::string file path
+   *
+   * @return OperationResult result of operation. std::nullopt if there is no errors
+   * or PersistError if something went wrong.
+   */
   OperationResult<PersistError> Save(const std::string &filepath) override;
+
+  /*
+   * \brief Load tasks from a file.
+   *
+   * @param std::string file path
+   *
+   * @return OperationResult result of operation. std::nullopt if there is no errors
+   * or PersistError if something went wrong.
+   */
   OperationResult<PersistError> Load(const std::string &filepath) override;
 
  private:

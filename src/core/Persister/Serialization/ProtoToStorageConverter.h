@@ -10,6 +10,14 @@
 #include <task.pb.h>
 #include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
+/*
+ * This converter gets task model from a StorageProto instance.
+ *
+ * @see task.proto
+ *
+ * @author Rodion Shyshkin
+ */
+
 class ProtoToStorageConverter {
  public:
   static TaskModelInterface&    ConvertProtoToStorage(const StorageProto&);
