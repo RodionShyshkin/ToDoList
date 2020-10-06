@@ -12,14 +12,14 @@
 
 class FilePersister : public PersisterInterface {
  public:
-  FilePersister(const std::string& filepath, TaskModelInterface& model);
+  FilePersister(std::fstream& file, TaskModelInterface& model);
 
  public:
   bool Save() override;
   bool Load() override;
 
  private:
-  std::string filepath_;
+  std::fstream file_;
   TaskModelInterface& model_;
 };
 

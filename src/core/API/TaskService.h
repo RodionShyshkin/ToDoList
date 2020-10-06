@@ -139,8 +139,8 @@ class TaskService : public TaskServiceInterface {
    */
   OperationResult<StorageError>                   completeTask(const unsigned int& id) override;
 
-  OperationResult<SerializationError> SaveToFile(const std::string &filepath) override;
-  OperationResult<SerializationError> LoadFromFile(const std::string &filepath) override;
+  OperationResult<SerializationError> Save(const std::string &filepath) override;
+  OperationResult<SerializationError> Load(const std::string &filepath) override;
 
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);

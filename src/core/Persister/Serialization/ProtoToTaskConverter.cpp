@@ -4,7 +4,7 @@
 
 #include "ProtoToTaskConverter.h"
 
-ModelTaskDTO ProtoToTaskConverter::ConvertProtoToModelDTO(const TaskProto &task) {
+ModelTaskDTO ProtoToTaskConverter::ConvertProtoToTask(const TaskProto &task) {
   if(task.deadline() == 0) {
     return ModelTaskDTO::createWithoutParent(TaskID{0}, task.name(), task.label(),
                                              ProtoToTaskConverter::ConvertProtoToPriority(task.priority()),

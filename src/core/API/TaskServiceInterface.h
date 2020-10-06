@@ -29,8 +29,8 @@ class TaskServiceInterface {
   virtual OperationResult<StorageError>         postponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
   virtual OperationResult<StorageError>         completeTask(const unsigned int&) = 0;
 
-  virtual OperationResult<SerializationError>   SaveToFile(const std::string&) = 0;
-  virtual OperationResult<SerializationError>   LoadFromFile(const std::string&) = 0;
+  virtual OperationResult<SerializationError>   Save(const std::string&) = 0;
+  virtual OperationResult<SerializationError>   Load(const std::string&) = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_

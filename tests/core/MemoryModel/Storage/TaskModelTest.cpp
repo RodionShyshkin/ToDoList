@@ -36,7 +36,7 @@ class MockGenerator : public IDGeneratorInterface {
   MOCK_METHOD(TaskID, GenerateID, (), (override));
 };
 
-class MockService : public TaskServiceInterface {
+/*class MockService : public TaskServiceInterface {
  public:
   MOCK_METHOD(TaskDTO, getTask, (const unsigned int&), (const, override));
   MOCK_METHOD(std::vector<TaskDTO>, getAllTasks, (const bool&), (const, override));
@@ -52,9 +52,9 @@ class MockService : public TaskServiceInterface {
   MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
   MOCK_METHOD(OperationResult<StorageError>, completeTask, (const unsigned int&), (override));
 
-  MOCK_METHOD(OperationResult<SerializationError>, SaveToFile, (const std::string&), (override));
-  MOCK_METHOD(OperationResult<SerializationError>, LoadFromFile, (const std::string&), (override));
-};
+  MOCK_METHOD(OperationResult<SerializationError>, Save, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<SerializationError>, Load, (const std::string&), (override));
+};*/
 
 class TaskModelTest : public ::testing::Test {
  public:

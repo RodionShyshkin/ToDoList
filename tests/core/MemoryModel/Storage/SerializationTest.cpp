@@ -30,7 +30,7 @@
 };
 
 TEST_F(SerializationTest, shouldSerializeTask) {
-  TaskProto serialized = TaskToProtoConverter::ConvertTaskEntityToProto(task_);
+  TaskProto serialized = TaskToProtoConverter::ConvertTaskToProto(task_);
   ASSERT_EQ(serialized.name(), task_proto_.name());
   ASSERT_EQ(serialized.label(), task_proto_.label());
   ASSERT_EQ(serialized.priority(), task_proto_.priority());
@@ -40,7 +40,7 @@ TEST_F(SerializationTest, shouldSerializeTask) {
 }
 
 TEST_F(SerializationTest, shouldDeserializeTask) {
-  auto desir = ProtoToTaskConverter::ConvertProtoToModelDTO(task_proto_);
+  auto desir = ProtoToTaskConverter::ConvertProtoToTask(task_proto_);
 
   ASSERT_EQ(desir.getName(), task_.GetName());
   ASSERT_EQ(desir.getLabel(), task_.GetLabel());

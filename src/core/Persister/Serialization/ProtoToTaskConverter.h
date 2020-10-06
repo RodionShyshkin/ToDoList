@@ -18,7 +18,7 @@
 
 class ProtoToTaskConverter {
  public:
-  static ModelTaskDTO       ConvertProtoToModelDTO(const TaskProto&);
+  static ModelTaskDTO       ConvertProtoToTask(const TaskProto&);
 
  private:
   /*

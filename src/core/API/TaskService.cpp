@@ -94,15 +94,17 @@ OperationResult<StorageError> TaskService::completeTask(const unsigned int& id) 
   return this->model_api_->completeTask(TaskID{id});
 }
 
-OperationResult<SerializationError> TaskService::SaveToFile(const std::string &filepath) {
-  FilePersister persister{filepath, *this->model_api_};
+OperationResult<SerializationError> TaskService::Save(const std::string &filepath) {
+  std::fstream file(filepath, std::ios::out);
+  FilePersister persister{file, *this->model_api_};
   if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
 
   return OperationResult{SerializationError::NO_ERRORS};
 }
 
-OperationResult<SerializationError> TaskService::LoadFromFile(const std::string &filepath) {
-  FilePersister persister{filepath, *this->model_api_};
+OperationResult<SerializationError> TaskService::Load(const std::string &filepath) {
+  std::fstream file(filepath, std::ios::in);
+  FilePersister persister{file, *this->model_api_};
   if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
 
   return OperationResult{SerializationError::NO_ERRORS};
