@@ -16,9 +16,6 @@ class TaskModel : public TaskModelInterface {
   TaskModel(TaskModel& model);
 
  public:
-  static TaskModel& createByTasks(const std::vector<ModelTaskDTO>& tasks);
-
- public:
  ModelTaskDTO getTask(const TaskID &) const override;
  std::vector<ModelTaskDTO> getAllTasks() const override;
  std::vector<ModelTaskDTO> getTasksForToday() const override;

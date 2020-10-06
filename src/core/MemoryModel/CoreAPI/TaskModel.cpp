@@ -205,14 +205,4 @@ OperationResult<StorageError> TaskModel::postponeTask(const TaskID &id, const Da
   return OperationResult{StorageError::NO_ERRORS};
 }
 
-TaskModel& TaskModel::createByTasks(const std::vector<ModelTaskDTO> &tasks) {
-  auto temp_model = std::make_unique<TaskModel>();
-  for(const auto& task : tasks) {
-    if(task.getParentID() == task.getID()) {
-      temp_model->AddTask(task);
-    }
-    else temp_model->AddSubtask(task.getParentID(), task);
-  }
-  return *temp_model;
-}
 
