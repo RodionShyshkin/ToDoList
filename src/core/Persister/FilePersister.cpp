@@ -10,7 +10,7 @@ bool FilePersister::Save() {
   if(!this->file_.is_open()) return false;
 
   auto storage = StorageToProtoConverter::ConvertStorageToProto(this->model_.getAllTasks());
-  if(storage.SerializeToOstream(&this->file_)) return false;
+  if(!storage.SerializeToOstream(&this->file_)) return false;
 
   this->file_.close();
   return true;
