@@ -24,7 +24,7 @@ StateResult CompleteTaskState::run(std::shared_ptr<Context> &context) {
   this->task_id_ = id_from_buffer_.value();
 
   auto result = context->service_->completeTask(this->task_id_);
-  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
+  if(!result) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();

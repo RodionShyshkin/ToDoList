@@ -128,7 +128,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of postpone (contains error or message about success).
    */
-  OperationResult<StorageError>                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
+  bool                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
 
   /*
    * \brief Completes task.
@@ -137,10 +137,10 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of completing (contains error or message about success).
    */
-  OperationResult<StorageError>                   completeTask(const unsigned int& id) override;
+  bool                   completeTask(const unsigned int& id) override;
 
-  OperationResult<SerializationError> Save(const std::string &filepath) override;
-  OperationResult<SerializationError> Load(const std::string &filepath) override;
+  OperationResult<PersistError> Save(const std::string &filepath) override;
+  OperationResult<PersistError> Load(const std::string &filepath) override;
 
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);

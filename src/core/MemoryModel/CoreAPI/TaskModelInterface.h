@@ -7,9 +7,10 @@
 
 #include <MemoryModel/Storage/TaskView.h>
 #include <MemoryModel/Storage/TaskStorage.h>
-#include <src/core/API/OperationResult.h>
+#include <src/core/API/OperationResult/OperationResult.h>
 #include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
 #include <src/core/Persister/SerializationError.h>
+#include <src/core/API/OperationResult/StorageError.h>
 
 class TaskModelInterface {
  public:
@@ -26,12 +27,12 @@ class TaskModelInterface {
   virtual std::vector<ModelTaskDTO>              getTasksByName(const std::string& name) const = 0;
   virtual std::vector<ModelTaskDTO>              getTasksByPriority(const Priority& priority) const = 0;
 
-  virtual OperationResult<StorageError>                   postponeTask(const TaskID& id, const Date& newdate) = 0;
-  virtual OperationResult<StorageError>                   completeTask(const TaskID& id) = 0;
+  virtual bool                                   postponeTask(const TaskID& id, const Date& newdate) = 0;
+  virtual bool                                   completeTask(const TaskID& id) = 0;
 
-  virtual OperationResult<StorageError>                   AddTask(const ModelTaskDTO& task) = 0;
-  virtual OperationResult<StorageError>                   AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
-  virtual OperationResult<StorageError>                   RemoveTask(const TaskID& id) = 0;
+  virtual OperationResult<StorageError>          AddTask(const ModelTaskDTO& task) = 0;
+  virtual OperationResult<StorageError>          AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
+  virtual OperationResult<StorageError>          RemoveTask(const TaskID& id) = 0;
 
   virtual std::vector<ModelTaskDTO>                       GetSubtasks(const TaskID& id) = 0;
 };

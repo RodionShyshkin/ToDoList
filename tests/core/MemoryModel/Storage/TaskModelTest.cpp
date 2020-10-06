@@ -167,11 +167,10 @@ TEST_F(TaskModelTest, shouldNotAddTaskWithoutName) {
   auto generator = std::make_unique<MockGenerator>();
 
   TaskModel task_model(std::move(storage), std::move(view), std::move(generator));
-  auto rhs_result = OperationResult<StorageError>{StorageError::INVALID_TASK};
 
   OperationResult<StorageError> result = task_model.AddTask(task_without_name_);
 
-  ASSERT_EQ(result.GetError(), rhs_result.GetError());
+  ASSERT_EQ(result.GetError(), StorageError::INVALID_TASK);
 }
 
 TEST_F(TaskModelTest, shouldAddWithoutOtherParams) {
@@ -188,13 +187,13 @@ TEST_F(TaskModelTest, shouldAddWithoutOtherParams) {
   TaskModel task_model(std::move(storage), std::move(view), std::move(generator));
 
   OperationResult<StorageError> result = task_model.AddTask(task_without_label_);
-  ASSERT_TRUE(result.GetStatus());
+  ASSERT_EQ(result.GetError(), std::nullopt);
 
   result = task_model.AddTask(task_without_priority_);
-  ASSERT_TRUE(result.GetStatus());
+  ASSERT_EQ(result.GetError(), std::nullopt);
 
   result = task_model.AddTask(task_without_date_);
-  ASSERT_TRUE(result.GetStatus());
+  ASSERT_EQ(result.GetError(), std::nullopt);
 }
 
 TEST_F(TaskModelTest, shouldNotAddTaskIfStorageCannotDoIt) {
@@ -363,7 +362,7 @@ TEST_F(TaskModelTest, shouldCompleteTaskWithSubtasks) {
 
   auto result = model.completeTask(2);
 
-  ASSERT_EQ(result.GetError(), std::nullopt);
+  ASSERT_TRUE(result);
   ASSERT_EQ(parent_entity_->GetSubtasks().size(), 1);
 
   ASSERT_FALSE(parent_entity_->GetStatus());
@@ -386,10 +385,10 @@ TEST_F(TaskModelTest, shouldNotCompleteTaskWhichDoesNotExist) {
 
   auto result = model.completeTask(1);
 
-  ASSERT_EQ(result.GetError(), StorageError::TASK_NOT_FOUND);
+  ASSERT_FALSE(result);
 }
 
-TEST_F(TaskModelTest, shouldNotCompleteTaskWhichIsCompleted) {
+TEST_F(TaskModelTest, shouldCompleteTaskWhichIsCompleted) {
   auto view = std::make_unique<MockView>();
   auto storage = std::make_unique<MockStorage>();
   auto generator = std::make_unique<MockGenerator>();
@@ -401,8 +400,7 @@ TEST_F(TaskModelTest, shouldNotCompleteTaskWhichIsCompleted) {
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
   auto result = model.completeTask(1);
-
-  ASSERT_EQ(result.GetError(), StorageError::COMPLETED_TASK);
+  ASSERT_TRUE(result);
 }
 
 TEST_F(TaskModelTest, shouldPostponeCorrectTask) {
@@ -416,7 +414,7 @@ TEST_F(TaskModelTest, shouldPostponeCorrectTask) {
 
   auto result = model.postponeTask(1, Date{2020, 12, 31});
 
-  ASSERT_EQ(result.GetError(), std::nullopt);
+  ASSERT_TRUE(result);
 }
 
 TEST_F(TaskModelTest, shouldNotPostponeUnexistingTask) {
@@ -430,7 +428,7 @@ TEST_F(TaskModelTest, shouldNotPostponeUnexistingTask) {
 
   auto result = model.postponeTask(1, Date{2020, 12, 31});
 
-  ASSERT_EQ(result.GetError(), StorageError::TASK_NOT_FOUND);
+  ASSERT_FALSE(result);
 }
 
 TEST_F(TaskModelTest, getAllTasks) {

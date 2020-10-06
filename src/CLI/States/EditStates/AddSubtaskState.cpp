@@ -24,7 +24,7 @@ StateResult AddSubtaskState::run(std::shared_ptr<Context> &context) {
                                 context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
 
     auto result = context->service_->addSubtask(id, dto);
-    if (!result.GetStatus()) throw std::invalid_argument("Wrong AddSubtask validation.");
+    if (result.GetError().has_value()) throw std::invalid_argument("Wrong AddSubtask validation.");
   }
 
   context->add_task_buffer_.clearBuffer();

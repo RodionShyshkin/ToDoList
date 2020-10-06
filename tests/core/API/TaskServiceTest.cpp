@@ -60,8 +60,8 @@ class MockModel : public TaskModelInterface {
   MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByName, (const std::string& name), (const, override));
   MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByPriority, (const Priority& priority), (const, override));
 
-  MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const TaskID& id, const Date& newdate), (override));
-  MOCK_METHOD(OperationResult<StorageError>, completeTask, (const TaskID& id), (override));
+  MOCK_METHOD(bool, postponeTask, (const TaskID& id, const Date& newdate), (override));
+  MOCK_METHOD(bool, completeTask, (const TaskID& id), (override));
 
   MOCK_METHOD(OperationResult<StorageError>, AddTask, (const ModelTaskDTO& task), (override));
   MOCK_METHOD(OperationResult<StorageError>, AddSubtask, (const TaskID &id, const ModelTaskDTO& subtask), (override));
@@ -73,61 +73,56 @@ class MockModel : public TaskModelInterface {
 TEST_F(TaskServiceTest, shouldAddTaskCorrectly) {
   auto model = std::make_unique<MockModel>();
 
-  auto model_result = OperationResult<StorageError>{StorageError::NO_ERRORS};
-  EXPECT_CALL(*model, AddTask).Times(1).WillOnce(Return(model_result));
+  EXPECT_CALL(*model, AddTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
 
   TaskService service{std::move(model)};
 
   auto result = service.addTask(task1);
-  ASSERT_EQ(result.GetError(), model_result.GetError());
+  ASSERT_EQ(result.GetError(), std::nullopt);
 }
 
 TEST_F(TaskServiceTest, shouldAddSubtaskCorrectly) {
   auto model = std::make_unique<MockModel>();
 
-  auto model_result = OperationResult<StorageError>{StorageError::NO_ERRORS};
-  EXPECT_CALL(*model, AddSubtask).Times(1).WillOnce(Return(model_result));
+  EXPECT_CALL(*model, AddSubtask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
 
   TaskService service{std::move(model)};
 
   auto result = service.addSubtask(1, task1);
-  ASSERT_EQ(result.GetError(), model_result.GetError());
+  ASSERT_EQ(result.GetError(), std::nullopt);
 }
 
 TEST_F(TaskServiceTest, shouldRemoveTaskCorrectly) {
   auto model = std::make_unique<MockModel>();
 
-  auto model_result = OperationResult<StorageError>{StorageError::NO_ERRORS};
-  EXPECT_CALL(*model, RemoveTask).Times(1).WillOnce(Return(model_result));
+  EXPECT_CALL(*model, RemoveTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
 
   TaskService service{std::move(model)};
 
   auto result = service.RemoveTask(1);
-  ASSERT_EQ(result.GetError(), model_result.GetError());
+  ASSERT_EQ(result.GetError(), std::nullopt);
 }
 
 TEST_F(TaskServiceTest, shouldCompleteTaskCorrectly) {
   auto model = std::make_unique<MockModel>();
 
-  auto model_result = OperationResult<StorageError>{StorageError::NO_ERRORS};
-  EXPECT_CALL(*model, completeTask).Times(1).WillOnce(Return(model_result));
+  EXPECT_CALL(*model, completeTask).Times(1).WillOnce(Return(true));
 
   TaskService service{std::move(model)};
 
   auto result = service.completeTask(1);
-  ASSERT_EQ(result.GetError(), model_result.GetError());
+  ASSERT_TRUE(result);
 }
 
 TEST_F(TaskServiceTest, shouldPostponeTaskCorrectly) {
   auto model = std::make_unique<MockModel>();
 
-  auto model_result = OperationResult<StorageError>{StorageError::NO_ERRORS};
-  EXPECT_CALL(*model, postponeTask).Times(1).WillOnce(Return(model_result));
+  EXPECT_CALL(*model, postponeTask).Times(1).WillOnce(Return(true));
 
   TaskService service{std::move(model)};
 
   auto result = service.postponeTask(1, boost::gregorian::date{2020-1-30});
-  ASSERT_EQ(result.GetError(), model_result.GetError());
+  ASSERT_TRUE(result);
 }
 
 TEST_F(TaskServiceTest, shouldGetAllTasksWithSortingCorrectly) {

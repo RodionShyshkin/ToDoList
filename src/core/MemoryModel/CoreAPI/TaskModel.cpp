@@ -99,40 +99,41 @@ std::vector<ModelTaskDTO> TaskModel::getTasksByPriority(const Priority &priority
 
 OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
   auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
-  if(!taskInstance.has_value()) return OperationResult{StorageError::INVALID_TASK};
+  if(!taskInstance.has_value()) return OperationResult<StorageError>::Fail(StorageError::INVALID_TASK);
 
   auto newid = generate_id_->GenerateID();
   auto newtask = TaskEntity::createTask(taskInstance.value(), newid);
   if(task.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!this->task_storage_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
-  if(!this->task_view_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
-  return OperationResult{StorageError::NO_ERRORS};
+  if(!this->task_storage_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
+  if(!this->task_view_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
+
+  return OperationResult<StorageError>::Success();
 }
 
 OperationResult<StorageError> TaskModel::AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) {
   auto taskInstance = Task::create(subtask.getName(), subtask.getLabel(), subtask.getPriority(), subtask.getDueDate());
-  if(!taskInstance.has_value()) return OperationResult{StorageError::INVALID_TASK};
+  if(!taskInstance.has_value()) return OperationResult<StorageError>::Fail(StorageError::INVALID_TASK);
 
   auto task = this->task_storage_->GetTask(id);
-  if(task == nullptr) return OperationResult{StorageError::PARENT_NOT_FOUND};
+  if(task == nullptr) return OperationResult<StorageError>::Fail(StorageError::PARENT_NOT_FOUND);
 
   auto newid = generate_id_->GenerateID();
   auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid, id);
   if(subtask.getStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!task_storage_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
-  if(!task_view_->AddTask(task_ptr)) return OperationResult{StorageError::WRONG_TASK_ID};
+  if(!this->task_storage_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
+  if(!this->task_view_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
   task->AddSubtask(task_ptr);
 
-  return OperationResult{StorageError::NO_ERRORS};
+  return OperationResult<StorageError>::Success();
 }
 
 OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
   auto task = task_storage_->GetTask(id);
-  if(task == nullptr) return OperationResult{StorageError::TASK_NOT_FOUND};
+  if(task == nullptr) return OperationResult<StorageError>::Fail(StorageError::TASK_NOT_FOUND);
   std::vector<TaskID> subtasksToRemove;
 
   auto subtasks = task->GetSubtasks();
@@ -141,8 +142,8 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
     RemoveTask(subtask.first);
   }
   for(const auto& subtask : subtasksToRemove) {
-    if(!task_storage_->RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
-    if(!task_view_->RemoveTask(subtask)) return OperationResult{StorageError::WRONG_TASK_ID};
+    if(!task_storage_->RemoveTask(subtask)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);;
+    if(!task_view_->RemoveTask(subtask)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
   }
 
   if(task->checkParent()) {
@@ -154,7 +155,7 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
   task_storage_->RemoveTask(id);
   task_view_->RemoveTask(id);
 
-  return OperationResult{StorageError::NO_ERRORS};
+  return OperationResult<StorageError>::Success();
 }
 
 std::vector<ModelTaskDTO> TaskModel::GetSubtasks(const TaskID &id) {
@@ -177,10 +178,9 @@ std::vector<ModelTaskDTO> TaskModel::GetSubtasks(const TaskID &id) {
   return result;
 }
 
-OperationResult<StorageError> TaskModel::completeTask(const TaskID &id) {
+bool TaskModel::completeTask(const TaskID &id) {
   auto task = this->task_storage_->GetTask(id);
-  if(task == nullptr) return OperationResult{StorageError::TASK_NOT_FOUND};
-  if(task->GetStatus()) return OperationResult{StorageError::COMPLETED_TASK};
+  if(task == nullptr) return false;
   std::vector<TaskID> subtasksToComplete;
 
   auto subtasks = task->GetSubtasks();
@@ -190,19 +190,17 @@ OperationResult<StorageError> TaskModel::completeTask(const TaskID &id) {
   }
 
   task->SetComplete();
-
-  return OperationResult{StorageError::NO_ERRORS};
+  return true;
 }
 
-OperationResult<StorageError> TaskModel::postponeTask(const TaskID &id, const Date &newdate) {
+bool TaskModel::postponeTask(const TaskID &id, const Date &newdate) {
   auto task = this->task_storage_->GetTask(id);
-  if(task == nullptr) return OperationResult<StorageError>{StorageError::TASK_NOT_FOUND};
+  if(task == nullptr) return false;
 
   auto newtask = Task::create(task->GetName(), task->GetLabel(), task->GetPriority(), newdate);
-  if(!newtask.has_value()) return OperationResult{StorageError::INVALID_DATE};
+  if(!newtask.has_value()) return false;
   task->SubstituteTask(newtask.value());
-
-  return OperationResult{StorageError::NO_ERRORS};
+  return true;
 }
 
 

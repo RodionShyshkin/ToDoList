@@ -6,8 +6,10 @@
 #define TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_
 
 #include <vector>
-#include <src/core/API/OperationResult.h>
+#include <src/core/API/OperationResult/OperationResult.h>
 #include <src/core/Persister/SerializationError.h>
+#include <src/core/API/OperationResult/StorageError.h>
+#include <src/core/API/OperationResult/PersistError.h>
 #include "TaskDTO.h"
 
 class TaskServiceInterface {
@@ -26,11 +28,11 @@ class TaskServiceInterface {
   virtual OperationResult<StorageError>         addTask(const TaskDTO&) = 0;
   virtual OperationResult<StorageError>         addSubtask(const unsigned int&, const TaskDTO&) = 0;
   virtual OperationResult<StorageError>         RemoveTask(const unsigned int&) = 0;
-  virtual OperationResult<StorageError>         postponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
-  virtual OperationResult<StorageError>         completeTask(const unsigned int&) = 0;
+  virtual bool         postponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
+  virtual bool         completeTask(const unsigned int&) = 0;
 
-  virtual OperationResult<SerializationError>   Save(const std::string&) = 0;
-  virtual OperationResult<SerializationError>   Load(const std::string&) = 0;
+  virtual OperationResult<PersistError>   Save(const std::string&) = 0;
+  virtual OperationResult<PersistError>   Load(const std::string&) = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_

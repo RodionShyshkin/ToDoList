@@ -14,7 +14,7 @@ StateResult NewDateParamState::run(std::shared_ptr<Context> &context) {
 
   auto id = id_from_buffer_.value();
   auto result = context->service_->postponeTask(id, context->postpone_buffer_.getNewDate());
-  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
+  if(!result) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   if(context->postpone_buffer_.getSingleTaskFlag()) return StateResult::create(ErrorType::NO_ERRORS,
                                                                                StateFactory::create(getStateTypeByCommand(Command::GETTASK)));

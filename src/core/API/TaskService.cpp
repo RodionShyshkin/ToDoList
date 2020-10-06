@@ -86,28 +86,28 @@ OperationResult<StorageError> TaskService::RemoveTask(const unsigned int& id) {
   return this->model_api_->RemoveTask(TaskID{id});
 }
 
-OperationResult<StorageError> TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
+bool TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
   return this->model_api_->postponeTask(TaskID{id}, Date{newdate});
 }
 
-OperationResult<StorageError> TaskService::completeTask(const unsigned int& id) {
+bool TaskService::completeTask(const unsigned int& id) {
   return this->model_api_->completeTask(TaskID{id});
 }
 
-OperationResult<SerializationError> TaskService::Save(const std::string &filepath) {
+OperationResult<PersistError> TaskService::Save(const std::string &filepath) {
   std::fstream file(filepath, std::ios::out);
   FilePersister persister{file, *this->model_api_};
-  if(!persister.Save()) return OperationResult{SerializationError::SERIALIZATION_ERROR};
+  if(!persister.Save()) return OperationResult<PersistError>::Fail(PersistError::SERIALIZATION_ERROR);
 
-  return OperationResult{SerializationError::NO_ERRORS};
+  return OperationResult<PersistError>::Success();
 }
 
-OperationResult<SerializationError> TaskService::Load(const std::string &filepath) {
+OperationResult<PersistError> TaskService::Load(const std::string &filepath) {
   std::fstream file(filepath, std::ios::in);
   FilePersister persister{file, *this->model_api_};
-  if(!persister.Load()) return OperationResult{SerializationError::DESERIALIZATION_ERROR};
+  if(!persister.Load()) return OperationResult<PersistError>::Fail(PersistError::DESERIALIZATION_ERROR);
 
-  return OperationResult{SerializationError::NO_ERRORS};
+  return OperationResult<PersistError>::Success();
 }
 
 std::vector<TaskDTO> TaskService::sortedByPriority(std::vector<TaskDTO> vector) {

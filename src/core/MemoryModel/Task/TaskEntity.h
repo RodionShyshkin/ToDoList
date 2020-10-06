@@ -68,14 +68,14 @@ class TaskEntity {
    *
    * @return bool True if task old status is false, False in another case.
    */
-  bool                                                    SetComplete();
+  void                                                    SetComplete();
 
   /*
    * Changes Task date.
    *
    * @return bool True if new date is not less then old date, False in another case.
    */
-  bool                                                    SubstituteTask(const Task &newtask);
+  void                                                    SubstituteTask(const Task &newtask);
 
   /*
    * Removes subtasks.

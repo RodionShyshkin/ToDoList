@@ -21,11 +21,11 @@ class MockService : public TaskServiceInterface {
   MOCK_METHOD(OperationResult<StorageError>, addTask, (const TaskDTO&), (override));
   MOCK_METHOD(OperationResult<StorageError>, addSubtask, (const unsigned int&, const TaskDTO&), (override));
   MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, completeTask, (const unsigned int&), (override));
+  MOCK_METHOD(bool, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
+  MOCK_METHOD(bool, completeTask, (const unsigned int&), (override));
 
-  MOCK_METHOD(OperationResult<SerializationError>, Save, (const std::string&), (override));
-  MOCK_METHOD(OperationResult<SerializationError>, Load, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<PersistError>, Save, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<PersistError>, Load, (const std::string&), (override));
 };
 
 class MockIO : public IOInterface {
@@ -165,10 +165,10 @@ TEST_F(TaskParamsTest, shouldAddSubtask) {
   EXPECT_CALL(*io_, outputWithBreak).Times(19);
   EXPECT_CALL(*io_, output).Times(11);
 
-  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult{StorageError::NO_ERRORS}));
+  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
   EXPECT_CALL(*service_, getAllTasks).Times(2).WillOnce(Return(vectorToReturn))
                                                     .WillOnce(Return(secondVectorToReturn));
-  EXPECT_CALL(*service_, addSubtask).Times(1).WillOnce(Return(OperationResult{StorageError::NO_ERRORS}));
+  EXPECT_CALL(*service_, addSubtask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
 
   StateMachine task_machine_ = StateMachine::create(StatesMachineType::MAIN, this->context_);
   auto result = task_machine_.execute();

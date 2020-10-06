@@ -3,7 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-#include "src/core/API/OperationResult.h"
 
  class OperationResultTest : public ::testing::Test {
 

@@ -21,11 +21,11 @@ class MockService : public TaskServiceInterface {
   MOCK_METHOD(OperationResult<StorageError>, addTask, (const TaskDTO&), (override));
   MOCK_METHOD(OperationResult<StorageError>, addSubtask, (const unsigned int&, const TaskDTO&), (override));
   MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, completeTask, (const unsigned int&), (override));
+  MOCK_METHOD(bool, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
+  MOCK_METHOD(bool, completeTask, (const unsigned int&), (override));
 
-  MOCK_METHOD(OperationResult<SerializationError>, Save, (const std::string&), (override));
-  MOCK_METHOD(OperationResult<SerializationError>, Load, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<PersistError>, Save, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<PersistError>, Load, (const std::string&), (override));
 };
 
 class MockIO : public IOInterface {
@@ -142,7 +142,7 @@ TEST_F(StateMachineTest, shouldWorkWithInternalStateMachine) {
                                     .WillOnce(Return("yes"));
   EXPECT_CALL(*io_, outputWithBreak).Times(13);
   EXPECT_CALL(*io_, output).Times(6);
-  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult{StorageError::NO_ERRORS}));
+  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
   EXPECT_CALL(*service_, getAllTasks).Times(1).WillOnce(Return(vectorToReturn));
 
   StateMachine machine_ = StateMachine::create(second_type_, context_);

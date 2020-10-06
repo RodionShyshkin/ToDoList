@@ -24,7 +24,7 @@ StateResult RemoveTaskState::run(std::shared_ptr<Context> &context) {
   this->task_id_ = id_from_buffer_.value();
 
   auto result = context->service_->RemoveTask(this->task_id_);
-  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
+  if(result.GetError().has_value()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   context->id_buffer_.clearBuffer();
   if(context->show_list_buffer_.checkBufferFullness()) return StateResult::create(ErrorType::NO_ERRORS,
