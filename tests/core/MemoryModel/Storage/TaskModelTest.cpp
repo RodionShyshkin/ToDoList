@@ -28,6 +28,7 @@ class MockStorage : public TaskStorageInterface {
   MOCK_METHOD(bool, AddTask, (const std::shared_ptr<TaskEntity>&), (override));
   MOCK_METHOD(bool, RemoveTask, (const TaskID&), (override));
   MOCK_METHOD(std::shared_ptr<TaskEntity>, GetTask, (const TaskID&), (override));
+  MOCK_METHOD(std::vector<TaskEntity>, GetAllTasks, (), (override));
 };
 
 class MockGenerator : public IDGeneratorInterface {
@@ -441,7 +442,7 @@ TEST_F(TaskModelTest, getAllTasks) {
   vectorToReturn.push_back(*subtask1_entity_);
   vectorToReturn.push_back(*parent_entity_);
 
-  EXPECT_CALL(*view, GetAllTasks).Times(1).WillOnce(Return(vectorToReturn));
+  EXPECT_CALL(*storage, GetAllTasks).Times(1).WillOnce(Return(vectorToReturn));
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 

@@ -15,6 +15,7 @@ class TaskStorage : public TaskStorageInterface {
   bool                                              RemoveTask(const TaskID& id) override;
 
   std::shared_ptr<TaskEntity>                       GetTask(const TaskID& id) override;
+  std::vector<TaskEntity>                           GetAllTasks() override;
 
  private:
   std::map<TaskID, std::shared_ptr<TaskEntity>>     tasks_;

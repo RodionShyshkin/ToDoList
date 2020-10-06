@@ -37,7 +37,7 @@ ModelTaskDTO TaskModel::getTask(const TaskID &id) const {
 }
 
 std::vector<ModelTaskDTO> TaskModel::getAllTasks() const {
-  auto tasks = this->task_view_->GetAllTasks();
+  auto tasks = this->task_storage_->GetAllTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
     result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(),
