@@ -28,7 +28,7 @@ class OperationResult {
   std::optional<ErrorEnum>    GetError() const { return this->error_; }
 
  private:
-  OperationResult(std::optional<ErrorEnum> err_code) : error_(err_code) {  }
+  OperationResult(const std::optional<ErrorEnum>& err_code) : error_(err_code) {  }
 
  private:
   std::optional<ErrorEnum>    error_;

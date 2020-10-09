@@ -27,22 +27,14 @@ TaskModel::TaskModel(TaskModel& model) {
 
 ModelTaskDTO TaskModel::getTask(const TaskID &id) const {
   auto task = this->task_storage_->GetTask(id);
-  if(task->GetParentID() == task->GetID())
-    return ModelTaskDTO::createWithoutParent(task->GetID(), task->GetName(),
-                                             task->GetLabel(), task->GetPriority(),
-                                             task->GetDueTime(), task->GetStatus());
-  return ModelTaskDTO::createWithParent(task->GetID(), task->GetName(),
-                                        task->GetLabel(), task->GetPriority(),
-                                        task->GetDueTime(), task->GetStatus(), task->GetParentID());
+  return TaskModel::ConvertToModelTaskDTO(*task);
 }
 
 std::vector<ModelTaskDTO> TaskModel::getAllTasks() const {
   auto tasks = this->task_storage_->GetAllTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(),
-                                                       task.GetLabel(), task.GetPriority(), task.GetDueTime(),
-                                                       task.GetStatus()));
+    result.push_back(TaskModel::ConvertToModelTaskDTO(task));
   }
   return result;
 }
@@ -51,8 +43,7 @@ std::vector<ModelTaskDTO> TaskModel::getTasksForToday() const {
   auto tasks = this->task_view_->GetTodayTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
-                                                       task.GetPriority(), task.GetDueTime(), task.GetStatus()));
+    result.push_back(TaskModel::ConvertToModelTaskDTO(task));
   }
   return result;
 }
@@ -61,8 +52,8 @@ std::vector<ModelTaskDTO> TaskModel::getTasksForWeek() const {
   auto tasks = this->task_view_->GetWeekTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
-                                                       task.GetPriority(), task.GetDueTime(), task.GetStatus()));
+
+    result.push_back(TaskModel::ConvertToModelTaskDTO(task));
   }
   return result;
 }
@@ -71,8 +62,7 @@ std::vector<ModelTaskDTO> TaskModel::getTasksByLabel(const std::string &label) c
   auto tasks = this->task_view_->GetTasksByLabel(label);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
-                                                       task.GetPriority(), task.GetDueTime(), task.GetStatus()));
+    result.push_back(TaskModel::ConvertToModelTaskDTO(task));
   }
   return result;
 }
@@ -81,8 +71,7 @@ std::vector<ModelTaskDTO> TaskModel::getTasksByName(const std::string &name) con
   auto tasks = this->task_view_->GetTasksByName(name);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
-                                                       task.GetPriority(), task.GetDueTime(), task.GetStatus()));
+    result.push_back(TaskModel::ConvertToModelTaskDTO(task));
   }
   return result;
 }
@@ -91,8 +80,7 @@ std::vector<ModelTaskDTO> TaskModel::getTasksByPriority(const Priority &priority
   auto tasks = this->task_view_->GetTasksByPriority(priority);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(), task.GetLabel(),
-                                                       task.GetPriority(), task.GetDueTime(), task.GetStatus()));
+    result.push_back(TaskModel::ConvertToModelTaskDTO(task));
   }
   return result;
 }
@@ -203,4 +191,13 @@ bool TaskModel::postponeTask(const TaskID &id, const Date &newdate) {
   return true;
 }
 
-
+ModelTaskDTO TaskModel::ConvertToModelTaskDTO(const TaskEntity &task) {
+  if(task.GetID().GetID() != task.GetParentID().GetID())
+    return ModelTaskDTO::createWithParent(task.GetID(), task.GetName(),
+                                          task.GetLabel(), task.GetPriority(),
+                                          task.GetDueTime(), task.GetStatus(),
+                                          task.GetParentID());
+  return ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(),
+                                           task.GetLabel(), task.GetPriority(),
+                                           task.GetDueTime(), task.GetStatus());
+}

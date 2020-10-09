@@ -143,6 +143,9 @@ class TaskModel : public TaskModelInterface {
   std::vector<ModelTaskDTO>         GetSubtasks(const TaskID &id) override;
 
  private:
+  static ModelTaskDTO               ConvertToModelTaskDTO(const TaskEntity& task);
+
+ private:
   std::unique_ptr<TaskStorageInterface>      task_storage_;
   std::unique_ptr<TaskViewInterface>         task_view_;
   std::unique_ptr<IDGeneratorInterface>      generate_id_;
