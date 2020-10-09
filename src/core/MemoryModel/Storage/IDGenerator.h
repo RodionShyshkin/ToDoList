@@ -27,7 +27,7 @@ class IDGenerator : public IDGeneratorInterface {
   TaskID            GenerateID() override;
 
  private:
-  unsigned int                     ids_amount_;
+  unsigned int      ids_amount_;
 };
 
 #endif //TODOLIST_SRC_GENERATEID_H_

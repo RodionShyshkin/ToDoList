@@ -5,10 +5,10 @@
 #ifndef TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 #define TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 
-#include <src/core/MemoryModel/CoreAPI/TaskModelInterface.h>
+#include <src/core/MemoryModel/ModelAPI/TaskModelInterface.h>
 
 /*
- * \brief Core API.
+ * \brief Entry point to work with the memory model.
  *
  * @see ModelTaskDTO.h
  *
@@ -31,28 +31,28 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO data-transfer-object
    */
-  ModelTaskDTO getTask(const TaskID &) const override;
+  ModelTaskDTO                      getTask(const TaskID &) const override;
 
   /*
    * Gets all tasks sorted by ID.
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO> getAllTasks() const override;
+  std::vector<ModelTaskDTO>         getAllTasks() const override;
 
   /*
    * Gets all tasks for current day.
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO> getTasksForToday() const override;
+  std::vector<ModelTaskDTO>         getTasksForToday() const override;
 
   /*
    * Gets tasks due the next week.
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO> getTasksForWeek() const override;
+  std::vector<ModelTaskDTO>         getTasksForWeek() const override;
 
   /*
    * Gets tasks with a particular label.
@@ -61,7 +61,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO> getTasksByLabel(const std::string &label) const override;
+  std::vector<ModelTaskDTO>         getTasksByLabel(const std::string &label) const override;
 
   /*
    * Gets tasks with a particular name.
@@ -70,7 +70,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO> getTasksByName(const std::string &name) const override;
+  std::vector<ModelTaskDTO>         getTasksByName(const std::string &name) const override;
 
   /*
    * Gets tasks with a particular priority.
@@ -79,7 +79,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO> getTasksByPriority(const Priority &priority) const override;
+  std::vector<ModelTaskDTO>         getTasksByPriority(const Priority &priority) const override;
 
   /*
    * Adds task to a system.

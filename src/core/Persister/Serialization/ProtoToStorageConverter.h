@@ -8,7 +8,7 @@
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include <vector>
 #include <task.pb.h>
-#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
+#include <src/core/MemoryModel/ModelAPI/TaskModel.h>
 
 /*
  * This converter gets task model from a StorageProto instance.

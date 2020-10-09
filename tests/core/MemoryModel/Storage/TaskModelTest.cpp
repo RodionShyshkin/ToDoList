@@ -2,7 +2,7 @@
 // Created by rodion on 10/1/20.
 //
 
-#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
+#include <src/core/MemoryModel/ModelAPI/TaskModel.h>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <src/core/API/TaskServiceInterface.h>

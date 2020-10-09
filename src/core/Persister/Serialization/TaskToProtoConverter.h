@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CORE_MEMORYMODEL_STORAGE_SERIALIZATION_TASKTOPROTOCONVERTER_H_
 
 #include <src/core/MemoryModel/Task/TaskEntity.h>
-#include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
+#include <src/core/MemoryModel/ModelAPI/ModelTaskDTO.h>
 #include "task.pb.h"
 
 /*
@@ -26,7 +26,7 @@ class TaskToProtoConverter {
    *
    * @return the TaskProto instance.
    */
-  static TaskProto    ConvertTaskToProto(const ModelTaskDTO&);
+  static TaskProto              ConvertTaskToProto(const ModelTaskDTO&);
 
  private:
   /*

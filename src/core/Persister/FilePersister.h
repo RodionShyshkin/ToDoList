@@ -23,12 +23,12 @@ class FilePersister : public PersisterInterface {
   FilePersister(std::fstream& file, TaskModelInterface& model);
 
  public:
-  bool Save() override;
-  bool Load() override;
+  bool                  Save() override;
+  bool                  Load() override;
 
  private:
-  std::fstream file_;
-  TaskModelInterface& model_;
+  std::fstream          file_;
+  TaskModelInterface&   model_;
 };
 
 #endif //TODOLIST_SRC_CORE_PERSISTER_FILEPERSISTER_H_

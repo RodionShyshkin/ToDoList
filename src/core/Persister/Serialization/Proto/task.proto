@@ -10,15 +10,15 @@ message TaskProto {
     HIGH = 3;
   }
 
-  string name = 1;
-  string label = 2;
-  Priority priority = 3;
-  uint32 deadline = 4;
-  bool completed = 5;
-  repeated TaskProto subtasks = 6;
-  uint32 parent_id = 7;
+  string              name = 1;
+  string              label = 2;
+  Priority            priority = 3;
+  uint32              deadline = 4;
+  bool                completed = 5;
+  repeated TaskProto  subtasks = 6;
+  uint32              parent_id = 7;
 }
 
 message StorageProto {
-  repeated TaskProto tasks = 1;
+  repeated TaskProto  tasks = 1;
 }
