@@ -8,7 +8,7 @@
 #include <MemoryModel/Storage/TaskView.h>
 #include <MemoryModel/Storage/TaskStorage.h>
 #include <src/core/API/OperationResult/OperationResult.h>
-#include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
+#include <src/core/MemoryModel/ModelAPI/ModelTaskDTO.h>
 #include <src/core/API/OperationResult/StorageError.h>
 
 class TaskModelInterface {
@@ -17,7 +17,7 @@ class TaskModelInterface {
 
  public:
 
-  virtual ModelTaskDTO        getTask(const TaskID&) const = 0;
+  virtual ModelTaskDTO                           getTask(const TaskID&) const = 0;
 
   virtual std::vector<ModelTaskDTO>              getAllTasks() const = 0;
   virtual std::vector<ModelTaskDTO>              getTasksForToday() const = 0;
@@ -33,7 +33,7 @@ class TaskModelInterface {
   virtual OperationResult<StorageError>          AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
   virtual OperationResult<StorageError>          RemoveTask(const TaskID& id) = 0;
 
-  virtual std::vector<ModelTaskDTO>                       GetSubtasks(const TaskID& id) = 0;
+  virtual std::vector<ModelTaskDTO>              GetSubtasks(const TaskID& id) = 0;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_STORAGE_FULLSTORAGEINTERFACE_H_

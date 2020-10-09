@@ -16,8 +16,8 @@ class PersisterInterface {
   virtual ~PersisterInterface() = default;
 
  public:
-  virtual bool      Save() = 0;
-  virtual bool      Load() = 0;
+  virtual bool Save() = 0;
+  virtual bool Load() = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_PERSISTER_PERSISTERINTERFACE_H_

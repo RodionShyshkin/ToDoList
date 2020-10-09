@@ -8,7 +8,7 @@
 #include <task.pb.h>
 #include <src/core/MemoryModel/Task/TaskEntity.h>
 #include <src/core/Persister/Serialization/TaskToProtoConverter.h>
-#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
+#include <src/core/MemoryModel/ModelAPI/TaskModel.h>
 
 /*
  * This converter gets StorageProto instance from a TaskModel instance.

@@ -36,7 +36,7 @@ class ModelTaskDTO {
    *
    * @return ModelTaskDTO instance.
    */
-  static ModelTaskDTO  createWithParent(const TaskID& id, const std::string& name, const std::string& label,
+  static ModelTaskDTO     createWithParent(const TaskID& id, const std::string& name, const std::string& label,
                          const Priority& priority, const Date& date, const bool& status, const TaskID& parent);
 
   /*
@@ -51,17 +51,17 @@ class ModelTaskDTO {
    *
    * @return ModelTaskDTO instance.
    */
-  static ModelTaskDTO  createWithoutParent(const TaskID& id, const std::string& name, const std::string& label,
+  static ModelTaskDTO     createWithoutParent(const TaskID& id, const std::string& name, const std::string& label,
                                         const Priority& priority, const Date& date, const bool& status);
 
  public:
-  TaskID                            getID() const;
-  TaskID                            getParentID() const;
-  std::string                       getName() const;
-  std::string                       getLabel() const;
-  Priority                          getPriority() const;
-  Date                              getDueDate() const;
-  bool                              getStatus() const;
+  TaskID                  getID() const;
+  TaskID                  getParentID() const;
+  std::string             getName() const;
+  std::string             getLabel() const;
+  Priority                getPriority() const;
+  Date                    getDueDate() const;
+  bool                    getStatus() const;
 
  private:
   ModelTaskDTO(const TaskID& id, const std::string& name, const std::string& label,

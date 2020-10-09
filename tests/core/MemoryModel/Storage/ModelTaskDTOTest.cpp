@@ -2,7 +2,7 @@
 // Created by rodion on 10/6/20.
 //
 
-#include <src/core/MemoryModel/CoreAPI/ModelTaskDTO.h>
+#include <src/core/MemoryModel/ModelAPI/ModelTaskDTO.h>
 #include <gtest/gtest.h>
 #include <src/core/MemoryModel/Task/Task.h>
 
