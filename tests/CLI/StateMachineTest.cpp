@@ -10,7 +10,7 @@ using ::testing::Return;
 
 class MockService : public TaskServiceInterface {
  public:
-  MOCK_METHOD(TaskDTO, getTask, (const TaskID&), (const, override));
+  MOCK_METHOD(TaskDTO, getTask, (const unsigned int&), (const, override));
   MOCK_METHOD(std::vector<TaskDTO>, getAllTasks, (const bool&), (const, override));
   MOCK_METHOD(std::vector<TaskDTO>, getTasksForToday, (const bool&), (const, override));
   MOCK_METHOD(std::vector<TaskDTO>, getTasksForWeek, (const bool&), (const, override));
@@ -18,11 +18,14 @@ class MockService : public TaskServiceInterface {
   MOCK_METHOD(std::vector<TaskDTO>, getTasksByName, (const std::string&, const bool&), (const, override));
   MOCK_METHOD(std::vector<TaskDTO>, getTasksByPriority, (const Priority&), (const, override));
 
-  MOCK_METHOD(OperationResult, addTask, (const TaskDTO&), (override));
-  MOCK_METHOD(OperationResult, addSubtask, (const TaskID&, const TaskDTO&), (override));
-  MOCK_METHOD(OperationResult, RemoveTask, (const TaskID&), (override));
-  MOCK_METHOD(OperationResult, postponeTask, (const TaskID&, const Date&), (override));
-  MOCK_METHOD(OperationResult, completeTask, (const TaskID&), (override));
+  MOCK_METHOD(OperationResult<StorageError>, addTask, (const TaskDTO&), (override));
+  MOCK_METHOD(OperationResult<StorageError>, addSubtask, (const unsigned int&, const TaskDTO&), (override));
+  MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
+  MOCK_METHOD(bool, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
+  MOCK_METHOD(bool, completeTask, (const unsigned int&), (override));
+
+  MOCK_METHOD(OperationResult<PersistError>, Save, (const std::string&), (override));
+  MOCK_METHOD(OperationResult<PersistError>, Load, (const std::string&), (override));
 };
 
 class MockIO : public IOInterface {
@@ -139,7 +142,7 @@ TEST_F(StateMachineTest, shouldWorkWithInternalStateMachine) {
                                     .WillOnce(Return("yes"));
   EXPECT_CALL(*io_, outputWithBreak).Times(13);
   EXPECT_CALL(*io_, output).Times(6);
-  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult{ErrorCode::NO_ERRORS}));
+  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
   EXPECT_CALL(*service_, getAllTasks).Times(1).WillOnce(Return(vectorToReturn));
 
   StateMachine machine_ = StateMachine::create(second_type_, context_);

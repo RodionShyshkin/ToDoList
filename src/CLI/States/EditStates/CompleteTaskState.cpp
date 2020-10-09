@@ -23,8 +23,8 @@ StateResult CompleteTaskState::run(std::shared_ptr<Context> &context) {
   if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
   this->task_id_ = id_from_buffer_.value();
 
-  auto result = context->service_->completeTask(TaskID{this->task_id_});
-  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
+  auto result = context->service_->completeTask(this->task_id_);
+  if(!result) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   if(context->show_list_buffer_.checkBufferFullness()) {
     context->id_buffer_.clearBuffer();

@@ -24,3 +24,11 @@ std::shared_ptr<TaskEntity> TaskStorage::GetTask(const TaskID &id) {
   }
   return nullptr;
 }
+
+std::vector<TaskEntity> TaskStorage::GetAllTasks() {
+  std::vector<TaskEntity> result;
+  for(const auto& [first, second] : this->tasks_) {
+    result.push_back(*second);
+  }
+  return result;
+}

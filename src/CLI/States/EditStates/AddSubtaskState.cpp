@@ -19,12 +19,12 @@ StateResult AddSubtaskState::run(std::shared_ptr<Context> &context) {
 
   if(context->add_task_buffer_.checkBufferFullness()) {
 
-    auto id_ = TaskID{context->add_task_buffer_.getParent()};
-    auto dto_ = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
+    auto id = context->add_task_buffer_.getParent();
+    auto dto = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
                                 context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
 
-    auto result = context->service_->addSubtask(id_, dto_);
-    if (!result.GetStatus()) throw std::invalid_argument("Wrong AddSubtask validation.");
+    auto result = context->service_->addSubtask(id, dto);
+    if (result.GetError().has_value()) throw std::invalid_argument("Wrong AddSubtask validation.");
   }
 
   context->add_task_buffer_.clearBuffer();

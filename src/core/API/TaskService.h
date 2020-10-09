@@ -7,7 +7,7 @@
 
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
-#include <MemoryModel/Storage/FullStorage.h>
+#include <src/core/MemoryModel/CoreAPI/TaskModel.h>
 
 /*
  * \brief Entry point for tasks management.
@@ -20,16 +20,17 @@
 class TaskService : public TaskServiceInterface {
  public:
   TaskService();
+  TaskService(std::unique_ptr<TaskModelInterface> model);
 
  public:
   /*
    * \brief Gives a task by its ID.
    *
-   * @param TaskID identifier of the task
+   * @param uint32 identifier of the task
    *
    * @return TaskDTO object
    */
-  TaskDTO                           getTask(const TaskID& id) const override;
+  TaskDTO                           getTask(const unsigned int& id) const override;
   /*
    * \brief Gives all actual tasks.
    *
@@ -96,27 +97,27 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addTask(const TaskDTO& task) override;
+  OperationResult<StorageError>                   addTask(const TaskDTO& task) override;
 
   /*
    * \brief Adds subtask for a task which already exists.
    *
-   * @param TaskID identifier of a task for which you are going to add subtask.
+   * @param uint32 identifier of a task for which you are going to add subtask.
    *
    * @param TaskDTO obbject with internal subtask information.
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult                   addSubtask(const TaskID &id, const TaskDTO& subtask) override;
+  OperationResult<StorageError>                   addSubtask(const unsigned int& id, const TaskDTO& subtask) override;
 
   /*
    * \brief Removes task.
    *
-   * @param TaskID identifier of a task which you are going to delete.
+   * @param uint32 identifier of a task which you are going to delete.
    *
    * @return OperationResult information about result of removing (contains error or message about success).
    */
-  OperationResult                   RemoveTask(const TaskID& id) override;
+  OperationResult<StorageError>                   RemoveTask(const unsigned int& id) override;
 
   /*
    * \brief Postpones task.
@@ -125,24 +126,47 @@ class TaskService : public TaskServiceInterface {
    *
    * @param Date New deadline for task.
    *
-   * @return OperationResult information about result of postpone (contains error or message about success).
+   * @return bool result (true if successful, false in another case).
    */
-  OperationResult                   postponeTask(const TaskID& id, const Date& newdate) override;
+  bool                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
 
   /*
    * \brief Completes task.
    *
-   * @param TaskID identifier of a task you want to mark as completed.
+   * @param uint32 identifier of a task you want to mark as completed.
    *
-   * @return OperationResult information about result of completing (contains error or message about success).
+   * @return bool result (true if successful, false in another case).
    */
-  OperationResult                   completeTask(const TaskID& id) override;
+  bool                   completeTask(const unsigned int& id) override;
+
+  /*
+   * \brief Saves tasks to a file.
+   *
+   * @param std::string file path
+   *
+   * @return OperationResult result of operation. std::nullopt if there is no errors
+   * or PersistError if something went wrong.
+   */
+  OperationResult<PersistError> Save(const std::string &filepath) override;
+
+  /*
+   * \brief Load tasks from a file.
+   *
+   * @param std::string file path
+   *
+   * @return OperationResult result of operation. std::nullopt if there is no errors
+   * or PersistError if something went wrong.
+   */
+  OperationResult<PersistError> Load(const std::string &filepath) override;
 
  private:
   static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
 
+  static TaskDTO                    convertFromModelDTO(const ModelTaskDTO& model_dto);
+  static ModelTaskDTO               convertToModelDTO(const TaskDTO& dto);
+
  private:
-  FullStorage                task_service_storage_;
+  std::unique_ptr<TaskModelInterface>         model_api_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

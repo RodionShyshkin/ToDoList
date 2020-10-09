@@ -56,14 +56,10 @@ bool TaskEntity::checkParent() {
   return true;
 }
 
-bool TaskEntity::SetComplete() {
-  if(this->status_) return false;
+void TaskEntity::SetComplete() {
   this->status_ = true;
-  return true;
 }
 
-bool TaskEntity::SubstituteTask(const Task &newtask) {
-  if(newtask.GetDate().GetDate() < this->GetDueTime()) return false;
+void TaskEntity::SubstituteTask(const Task &newtask) {
   this->task_ = newtask;
-  return true;
 }

@@ -20,7 +20,7 @@ StateResult AddTaskState::run(std::shared_ptr<Context> &context) {
   auto dto_ = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
                               context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
   auto result = context->service_->addTask(dto_);
-  if(!result.GetStatus()) throw std::invalid_argument("Wrong AddTask validation");
+  if(result.GetError().has_value()) throw std::invalid_argument("Wrong AddTask validation");
 
   context->add_task_buffer_.clearBuffer();
 

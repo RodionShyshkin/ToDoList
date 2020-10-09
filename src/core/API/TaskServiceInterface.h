@@ -6,7 +6,9 @@
 #define TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_
 
 #include <vector>
-#include <MemoryModel/Storage/OperationResult.h>
+#include <src/core/API/OperationResult/OperationResult.h>
+#include <src/core/API/OperationResult/StorageError.h>
+#include <src/core/API/OperationResult/PersistError.h>
 #include "TaskDTO.h"
 
 class TaskServiceInterface {
@@ -14,18 +16,22 @@ class TaskServiceInterface {
   ~TaskServiceInterface() = default;
 
  public:
-  virtual TaskDTO                 getTask(const TaskID&) const = 0;
+  virtual TaskDTO                 getTask(const unsigned int&) const = 0;
   virtual std::vector<TaskDTO>    getAllTasks(const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksForToday(const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksForWeek(const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksByLabel(const std::string &, const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksByName(const std::string&, const bool&) const = 0;
   virtual std::vector<TaskDTO>    getTasksByPriority(const Priority&) const = 0;
-  virtual OperationResult         addTask(const TaskDTO&) = 0;
-  virtual OperationResult         addSubtask(const TaskID&, const TaskDTO&) = 0;
-  virtual OperationResult         RemoveTask(const TaskID&) = 0;
-  virtual OperationResult         postponeTask(const TaskID&, const Date&) = 0;
-  virtual OperationResult         completeTask(const TaskID&) = 0;
+
+  virtual OperationResult<StorageError>         addTask(const TaskDTO&) = 0;
+  virtual OperationResult<StorageError>         addSubtask(const unsigned int&, const TaskDTO&) = 0;
+  virtual OperationResult<StorageError>         RemoveTask(const unsigned int&) = 0;
+  virtual bool         postponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
+  virtual bool         completeTask(const unsigned int&) = 0;
+
+  virtual OperationResult<PersistError>   Save(const std::string&) = 0;
+  virtual OperationResult<PersistError>   Load(const std::string&) = 0;
 };
 
 #endif //TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_

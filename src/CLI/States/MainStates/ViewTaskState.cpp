@@ -16,7 +16,7 @@ StateResult ViewTaskState::run(std::shared_ptr<Context> &context) {
 
   if(!context->id_buffer_.checkBufferFullness()) throw std::invalid_argument("IDBuffer SM does not work correctly.");
 
-  auto task_dto_ = context->service_->getTask(TaskID{context->id_buffer_.getID().value()});
+  auto task_dto_ = context->service_->getTask(context->id_buffer_.getID().value());
   ViewTaskState::showTask(task_dto_, context->io_);
 
 //  context->show_list_buffer_.clearBuffer();

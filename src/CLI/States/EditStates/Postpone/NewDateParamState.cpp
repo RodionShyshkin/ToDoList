@@ -12,9 +12,9 @@ StateResult NewDateParamState::run(std::shared_ptr<Context> &context) {
   auto id_from_buffer_ = context->id_buffer_.getID();
   if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
 
-  auto id_ = TaskID{id_from_buffer_.value()};
-  auto result = context->service_->postponeTask(id_, context->postpone_buffer_.getNewDate());
-  if(!result.GetStatus()) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
+  auto id = id_from_buffer_.value();
+  auto result = context->service_->postponeTask(id, context->postpone_buffer_.getNewDate());
+  if(!result) return StateResult::create(ErrorType::OPERATION_ERROR, nullptr);
 
   if(context->postpone_buffer_.getSingleTaskFlag()) return StateResult::create(ErrorType::NO_ERRORS,
                                                                                StateFactory::create(getStateTypeByCommand(Command::GETTASK)));

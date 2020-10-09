@@ -54,7 +54,10 @@ TEST_F(DateTest, checkWeek) {
   ASSERT_FALSE(Date::CheckWeek(second_point));
   ASSERT_FALSE(Date::CheckWeek(third_point));
 
-  auto fourth_point = Date(2020, 9, 29);
+
+  auto now = Date::GetCurrentDate();
+  auto add_week = now.GetDate().day_number() + 7 - now.GetDate().day_of_week();
+  auto fourth_point = Date{boost::gregorian::date{add_week}};
 
   ASSERT_TRUE(Date::CheckWeek(fourth_point));
 }

@@ -6,6 +6,6 @@
 
 IDGenerator::IDGenerator() : ids_amount_(0) {}
 
-std::optional<TaskID> IDGenerator::GenerateID() {
-  return TaskID(++ids_amount_);
+TaskID IDGenerator::GenerateID() {
+  return TaskID{++this->ids_amount_};
 }

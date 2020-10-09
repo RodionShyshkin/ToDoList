@@ -17,6 +17,7 @@ class TaskStorageInterface {
   virtual bool                                    RemoveTask(const TaskID& id) = 0;
 
   virtual std::shared_ptr<TaskEntity>             GetTask(const TaskID& id) = 0;
+  virtual std::vector<TaskEntity>                 GetAllTasks() = 0;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_STORAGE_TASKSTORAGEINTERFACE_H_
