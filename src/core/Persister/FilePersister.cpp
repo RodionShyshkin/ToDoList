@@ -7,22 +7,22 @@
 FilePersister::FilePersister(std::fstream &file, TaskModelInterface &model) : file_(std::move(file)), model_(model) { }
 
 bool FilePersister::Save() {
-  if(!this->file_.is_open()) return false;
+  if(!file_.is_open()) return false;
 
-  auto storage = StorageToProtoConverter::ConvertStorageToProto(this->model_.getAllTasks());
-  if(!storage.SerializeToOstream(&this->file_)) return false;
+  auto storage = StorageToProtoConverter::ConvertStorageToProto(model_.getAllTasks());
+  if(!storage.SerializeToOstream(&file_)) return false;
 
-  this->file_.close();
+  file_.close();
   return true;
 }
 
 bool FilePersister::Load() {
-  if(!this->file_.is_open()) return false;
+  if(!file_.is_open()) return false;
   StorageProto storage;
 
-  if(!storage.ParseFromIstream(&this->file_)) return false;
-  this->file_.close();
+  if(!storage.ParseFromIstream(&file_)) return false;
+  file_.close();
 
-  ProtoToStorageConverter::ConvertProtoToStorage(storage, this->model_);
+  ProtoToStorageConverter::ConvertProtoToStorage(storage, model_);
   return true;
 }

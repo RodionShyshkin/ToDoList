@@ -45,7 +45,6 @@ enum class StateType {
 
   SAVE_TASKS_STATE,
   LOAD_TASKS_STATE,
-  FILEPATH_PARAM_STATE,
 
   EXIT_STATE
 };
