@@ -15,7 +15,7 @@
 #include <States/EditStates/Postpone/NewDateParamState.h>
 #include <States/MainStates/StartState.h>
 #include <States/AddingTask/ParentTaskParamState.h>
-#include <src/CLI/States/SaveLoadStates/SaveTasksState.h>
+#include <src/CLI/States/MainStates/PersistTasksState.h>
 #include "StateFactory.h"
 #include "States/MainStates/AddTaskState.h"
 #include "States/EditStates/AddSubtaskState.h"
@@ -95,10 +95,10 @@ std::shared_ptr<StateInterface> StateFactory::create(const StateType &type) {
     return std::make_shared<NewDateParamState>();
   }
   else if(StateType::SAVE_TASKS_STATE == type) {
-    return std::make_shared<SaveTasksState>(PersisterType::SAVE);
+    return std::make_shared<PersistTasksState>(PersistType::SAVE);
   }
   else if(StateType::LOAD_TASKS_STATE == type) {
-    return std::make_shared<SaveTasksState>(PersisterType::LOAD);
+    return std::make_shared<PersistTasksState>(PersistType::LOAD);
   }
   else if(type == StateType::EXIT_STATE) {
     return std::make_shared<ExitState>();
