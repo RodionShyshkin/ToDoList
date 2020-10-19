@@ -13,6 +13,8 @@ TEST_F(AvailableCommandsTest, checkMainMenuCommands) {
 
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::ADDTASK));
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::GETTASKLIST));
+  ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::SAVETASKS));
+  ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::LOADTASKS));
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::EXIT));
 
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::GETTASK));
@@ -38,6 +40,8 @@ TEST_F(AvailableCommandsTest, checkViewSingleTaskCommands) {
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::UNKNOWN));
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::ADDTASK));
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::GETTASKLIST));
+  ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::SAVETASKS));
+  ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::LOADTASKS));
 }
 
 TEST_F(AvailableCommandsTest, checkViewListOfTasksCommands) {
@@ -54,4 +58,6 @@ TEST_F(AvailableCommandsTest, checkViewListOfTasksCommands) {
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::UNKNOWN));
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::ADDTASK));
   ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::GETTASKLIST));
+  ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::SAVETASKS));
+  ASSERT_EQ(false, AvailableCommands::checkIsCommandAvailable(type, Command::LOADTASKS));
 }

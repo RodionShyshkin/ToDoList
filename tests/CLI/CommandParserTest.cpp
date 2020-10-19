@@ -28,6 +28,8 @@ TEST_F(CommandParserTest, parseCommand) {
   ASSERT_EQ(Command::COMPLETETASK, parseCommand("complete"));
   ASSERT_EQ(Command::REMOVETASK, parseCommand("remove"));
   ASSERT_EQ(Command::POSTPONETASK, parseCommand("postpone"));
+  ASSERT_EQ(Command::SAVETASKS, parseCommand("save"));
+  ASSERT_EQ(Command::LOADTASKS, parseCommand("load"));
   ASSERT_EQ(Command::EXIT, parseCommand("exit"));
 }
 
@@ -40,6 +42,8 @@ TEST_F(CommandParserTest, getStateTypeByCommand) {
   ASSERT_EQ(StateType::COMPLETE_TASK_STATE, getStateTypeByCommand(Command::COMPLETETASK));
   ASSERT_EQ(StateType::REMOVE_TASK_STATE, getStateTypeByCommand(Command::REMOVETASK));
   ASSERT_EQ(StateType::POSTPONE_TASK_STATE, getStateTypeByCommand(Command::POSTPONETASK));
+  ASSERT_EQ(StateType::SAVE_TASKS_STATE, getStateTypeByCommand(Command::SAVETASKS));
+  ASSERT_EQ(StateType::LOAD_TASKS_STATE, getStateTypeByCommand(Command::LOADTASKS));
   ASSERT_EQ(StateType::EXIT_STATE, getStateTypeByCommand(Command::EXIT));
   ASSERT_EQ(StateType::UNKNOWN_STATE, getStateTypeByCommand(Command::UNKNOWN));
 }

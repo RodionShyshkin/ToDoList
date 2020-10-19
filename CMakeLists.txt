@@ -62,7 +62,7 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS})
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} tests/CLI/SaveLoadCommandsTest.cpp)
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)

@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <API/TaskService.h>
+#include <src/core/Persister/PersisterInterface.h>
 
 using ::testing::Return;
 
@@ -249,4 +250,21 @@ TEST_F(TaskServiceTest, shouldGetPriorityTasksWithSortingCorrectly) {
   ASSERT_EQ(result[1].getID(), task2.getID());
   ASSERT_EQ(result[2].getID(), task4.getID());
   ASSERT_EQ(result[3].getID(), task1.getID());
+}
+
+TEST_F(TaskServiceTest, shouldPersistTasksCorrectly) {
+  TaskService service;
+  service.addTask(task1);
+  service.addSubtask(task1.getID(), task2);
+  service.addTask(task3);
+
+  service.Save("testservice.txt");
+
+  TaskService service_load;
+  service_load.Load("testservice.txt");
+
+  auto before = service.getAllTasks(false);
+  auto after = service_load.getAllTasks(false);
+
+  ASSERT_EQ(before.size(), after.size());
 }
