@@ -17,7 +17,6 @@ file(GLOB_RECURSE cli_headers "src/CLI/*.h")
 
 file(GLOB main "src/main.cpp")
 
-add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers} ${main})
 
 ######## TESTS ########
 file(GLOB_RECURSE core_tests "tests/core/*.cpp")
@@ -48,6 +47,8 @@ message("generated ${PROTO_SRCS} ${PROTO_HDRS}")
 
 SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
 
+add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers} ${main} ${PROTO_SRCS} ${PROTO_HDRS})
+
 ######## GTEST ########
 
 include_directories(src/core)
@@ -61,7 +62,7 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} src/core/Persister/PersisterFactory.cpp src/core/Persister/PersisterFactory.h)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS})
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)

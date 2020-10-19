@@ -23,6 +23,6 @@ bool FilePersister::Load() {
   if(!storage.ParseFromIstream(&this->file_)) return false;
   this->file_.close();
 
-  this->model_ = ProtoToStorageConverter::ConvertProtoToStorage(storage);
+  ProtoToStorageConverter::ConvertProtoToStorage(storage, this->model_);
   return true;
 }

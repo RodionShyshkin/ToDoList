@@ -10,6 +10,8 @@ const std::map<StateType, std::set<Command>> AvailableCommands::available_comman
         {
             Command::ADDTASK,
             Command::GETTASKLIST,
+            Command::SAVETASKS,
+            Command::LOADTASKS,
             Command::EXIT
         }
     },

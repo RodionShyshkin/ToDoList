@@ -5,14 +5,12 @@
 #include "ProtoToStorageConverter.h"
 #include "ProtoToTaskConverter.h"
 
-TaskModelInterface& ProtoToStorageConverter::ConvertProtoToStorage(const StorageProto &storage_proto) {
-  TaskModel result;
+void ProtoToStorageConverter::ConvertProtoToStorage(const StorageProto &storage_proto, TaskModelInterface& model) {
   for(const auto& task : storage_proto.tasks()) {
     auto model_dto = ProtoToTaskConverter::ConvertProtoToTask(task);
     if(model_dto.getParentID() == model_dto.getID()) {
-      result.AddTask(model_dto);
+      model.AddTask(model_dto);
     }
-    else result.AddSubtask(model_dto.getParentID(), model_dto);
+    else model.AddSubtask(model_dto.getParentID(), model_dto);
   }
-  return result;
 }
