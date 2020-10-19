@@ -4,6 +4,7 @@
 
 #include <src/core/Persister/FilePersister.h>
 #include "TaskService.h"
+#include <future>
 
 TaskService::TaskService() : model_api_(std::make_unique<TaskModel>()) { }
 
@@ -96,16 +97,19 @@ bool TaskService::completeTask(const unsigned int& id) {
 
 OperationResult<PersistError> TaskService::Save(const std::string &filepath) {
   std::fstream file(filepath, std::ios::out);
-  FilePersister persister{file, *this->model_api_};
-  if(!persister.Save()) return OperationResult<PersistError>::Fail(PersistError::SERIALIZATION_ERROR);
+  auto persister = std::make_unique<FilePersister>(file, *this->model_api_);
+  auto future = std::async(std::bind(&PersisterInterface::Save, persister.get()));
+  future.wait();
+  if(!future.get()) return OperationResult<PersistError>::Fail(PersistError::SERIALIZATION_ERROR);
 
   return OperationResult<PersistError>::Success();
 }
 
 OperationResult<PersistError> TaskService::Load(const std::string &filepath) {
   std::fstream file(filepath, std::ios::in);
-  FilePersister persister{file, *this->model_api_};
-  if(!persister.Load()) return OperationResult<PersistError>::Fail(PersistError::DESERIALIZATION_ERROR);
+  auto persister = std::make_unique<FilePersister>(file, *this->model_api_);
+  auto future = std::async(std::bind(&PersisterInterface::Load, persister.get()));
+  if(!future.get()) return OperationResult<PersistError>::Fail(PersistError::DESERIALIZATION_ERROR);
 
   return OperationResult<PersistError>::Success();
 }
