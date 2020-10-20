@@ -43,6 +43,9 @@ enum class StateType {
 
   POSTPONE_TASK_NEW_DATE_PARAM_STATE,
 
+  SAVE_TASKS_STATE,
+  LOAD_TASKS_STATE,
+
   EXIT_STATE
 };
 

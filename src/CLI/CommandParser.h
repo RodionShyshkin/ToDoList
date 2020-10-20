@@ -18,6 +18,8 @@ enum class Command {
   POSTPONETASK,
   COMPLETETASK,
   MAINMENU,
+  SAVETASKS,
+  LOADTASKS,
   EXIT
 };
 

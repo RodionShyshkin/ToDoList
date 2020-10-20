@@ -6,44 +6,52 @@
 
 Command parseCommand(const std::string& command) {
   if(command == "add") return Command::ADDTASK;
-  if(command == "add_subtask") return Command::ADDSUBTASK;
-  if(command == "view") return Command::GETTASK;
-  if(command == "show") return Command::GETTASKLIST;
-  if(command == "remove") return Command::REMOVETASK;
-  if(command == "postpone") return Command::POSTPONETASK;
-  if(command == "complete") return Command::COMPLETETASK;
-  if(command == "mm" || command == "mainmenu") return Command::MAINMENU;
-  if(command == "exit") return Command::EXIT;
-  return Command::UNKNOWN;
+  else if(command == "add_subtask") return Command::ADDSUBTASK;
+  else if(command == "view") return Command::GETTASK;
+  else if(command == "show") return Command::GETTASKLIST;
+  else if(command == "remove") return Command::REMOVETASK;
+  else if(command == "postpone") return Command::POSTPONETASK;
+  else if(command == "complete") return Command::COMPLETETASK;
+  else if(command == "mm" || command == "mainmenu") return Command::MAINMENU;
+  else if(command == "save") return Command::SAVETASKS;
+  else if(command == "load") return Command::LOADTASKS;
+  else if(command == "exit") return Command::EXIT;
+  else return Command::UNKNOWN;
 }
 
 StateType getStateTypeByCommand(const Command& operation) {
-  if(operation == Command::GETTASK) {
+  if(Command::GETTASK == operation) {
     return StateType::VIEW_TASK_STATE;
   }
-  if(operation == Command::ADDTASK) {
+  else if(Command::ADDTASK == operation) {
     return StateType::ADD_TASK_STATE;
   }
-  if(operation == Command::ADDSUBTASK) {
+  else if(Command::ADDSUBTASK == operation) {
     return StateType::ADD_SUBTASK_STATE;
   }
-  if(operation == Command::EXIT) {
+  else if(Command::EXIT == operation) {
     return StateType::EXIT_STATE;
   }
-  if(operation == Command::REMOVETASK) {
+  else if(Command::REMOVETASK == operation) {
     return StateType::REMOVE_TASK_STATE;
   }
-  if(operation == Command::POSTPONETASK) {
+  else if(Command::POSTPONETASK == operation) {
     return StateType::POSTPONE_TASK_STATE;
   }
-  if(operation == Command::COMPLETETASK) {
+  else if(Command::COMPLETETASK == operation) {
     return StateType::COMPLETE_TASK_STATE;
   }
-  if(operation == Command::GETTASKLIST) {
+  else if(Command::GETTASKLIST == operation) {
     return StateType::VIEW_TASK_LIST_STATE;
   }
-  if(operation == Command::MAINMENU) {
+  else if(Command::MAINMENU == operation) {
     return StateType::MAIN_MENU_STATE;
+  }
+  else if(Command::SAVETASKS == operation) {
+    return StateType::SAVE_TASKS_STATE;
+  }
+  else if(Command::LOADTASKS == operation) {
+    return StateType::LOAD_TASKS_STATE;
   }
   return StateType::UNKNOWN_STATE;
 }

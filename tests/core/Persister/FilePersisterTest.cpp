@@ -9,7 +9,7 @@
 class FilePersisterTest : public ::testing::Test {
  public:
   void SetUp() override {
-    auto task = TaskDTO::create(1, "name", "label", Priority::MEDIUM,
+/*    auto task = TaskDTO::create(1, "name", "label", Priority::MEDIUM,
                                 boost::gregorian::date{2012-10-10}, false);
     auto subtask = TaskDTO::create(2, "subname", "label", Priority::LOW,
                                    boost::gregorian::date{2012-10-10}, false);
@@ -19,7 +19,19 @@ class FilePersisterTest : public ::testing::Test {
 
     service.addTask(task);
     service.addSubtask(task.getID(), subtask);
-    service.addSubtask(subtask.getID(), subsubtask);
+    service.addSubtask(subtask.getID(), subsubtask);*/
+
+
+    auto task = ModelTaskDTO::createWithoutParent(1, "name", "label", Priority::MEDIUM,
+                                                  boost::gregorian::date{2012-10-10}, false);
+    auto subtask = ModelTaskDTO::createWithParent(2, "subname", "label", Priority::MEDIUM,
+                                                  boost::gregorian::date{2012-10-10}, false, 1);
+    auto subsubtask = ModelTaskDTO::createWithParent(3, "subsubname", "label", Priority::MEDIUM,
+                                                     boost::gregorian::date{2012-10-10}, false, 2);
+
+    savemodel.AddTask(task);
+    savemodel.AddSubtask(task.getID(), subtask);
+    savemodel.AddSubtask(subtask.getID(), subsubtask);
   }
 
   void TearDown() override {
@@ -27,18 +39,26 @@ class FilePersisterTest : public ::testing::Test {
   }
 
  protected:
-  TaskService service;
+  TaskModel savemodel;
+  TaskModel loadmodel;
+
 };
 
-TEST_F(FilePersisterTest, shouldSaveToFile) {
-  auto status = service.Save("testfile.txt");
-  ASSERT_EQ(status.GetError(), std::nullopt);
+TEST_F(FilePersisterTest, shouldSave) {
+  std::fstream file("test.txt", std::ios::out);
+  FilePersister persister{file, savemodel};
+
+  auto result = persister.Save();
+  ASSERT_TRUE(result);
 }
 
-TEST_F(FilePersisterTest, shouldLoadFromFile) {
-  auto status = service.Load("testfile.txt");
-  ASSERT_EQ(status.GetError(), std::nullopt);
+TEST_F(FilePersisterTest, shouldLoad) {
+  std::fstream file("test.txt", std::ios::in);
+  FilePersister persister{file, loadmodel};
 
-  auto tasks = service.getAllTasks(false);
-  ASSERT_EQ(tasks.size(), 3);
+  auto result = persister.Load();
+  ASSERT_TRUE(result);
+
+  auto tasks = loadmodel.getAllTasks();
+  ASSERT_EQ(tasks.size(), savemodel.getAllTasks().size());
 }
