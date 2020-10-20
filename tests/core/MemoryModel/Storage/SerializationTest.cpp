@@ -3,8 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-#include <src/core/Persister/Serialization/TaskToProtoConverter.h>
-#include <src/core/Persister/Serialization/ProtoToTaskConverter.h>
 /*
  class SerializationTest : public ::testing::Test {
  public:
