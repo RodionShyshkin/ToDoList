@@ -21,37 +21,37 @@ Command parseCommand(const std::string& command) {
 
 StateType getStateTypeByCommand(const Command& operation) {
   if(Command::GETTASK == operation) {
-    return StateType::VIEW_TASK_STATE;
+    return StateType::SHOW_TASK;
   }
   else if(Command::ADDTASK == operation) {
-    return StateType::ADD_TASK_STATE;
+    return StateType::ADD_TASK;
   }
   else if(Command::ADDSUBTASK == operation) {
-    return StateType::ADD_SUBTASK_STATE;
+    return StateType::ADD_SUBTASK;
   }
   else if(Command::EXIT == operation) {
     return StateType::EXIT_STATE;
   }
   else if(Command::REMOVETASK == operation) {
-    return StateType::REMOVE_TASK_STATE;
+    return StateType::REMOVE_TASK;
   }
   else if(Command::POSTPONETASK == operation) {
-    return StateType::POSTPONE_TASK_STATE;
+    return StateType::POSTPONE_TASK;
   }
   else if(Command::COMPLETETASK == operation) {
-    return StateType::COMPLETE_TASK_STATE;
+    return StateType::COMPLETE_TASK;
   }
   else if(Command::GETTASKLIST == operation) {
-    return StateType::VIEW_TASK_LIST_STATE;
+    return StateType::SHOW_TASKS_LIST;
   }
   else if(Command::MAINMENU == operation) {
-    return StateType::MAIN_MENU_STATE;
+    return StateType::MAIN_MENU;
   }
   else if(Command::SAVETASKS == operation) {
-    return StateType::SAVE_TASKS_STATE;
+    return StateType::SAVE_TASKS;
   }
   else if(Command::LOADTASKS == operation) {
-    return StateType::LOAD_TASKS_STATE;
+    return StateType::LOAD_TASKS;
   }
   return StateType::UNKNOWN_STATE;
 }

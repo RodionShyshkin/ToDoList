@@ -30,20 +30,17 @@ class AddTaskBuffer : public BufferInterface {
   void                    setLabel(const std::string&);
   void                    setPriority(const Priority&);
   void                    setDate(const boost::gregorian::date&);
-  void                    setParent(const unsigned int&);
 
   std::string             getName()                                 const;
   std::string             getLabel()                                const;
   Priority                getPriority()                             const;
   boost::gregorian::date  getDate()                                 const;
-  unsigned int            getParent()                               const;
 
  private:
   std::string             name_;
   std::string             label_;
   Priority                priority_;
   boost::gregorian::date  date_;
-  unsigned int            parent_id_;
   bool                    is_subtask_;
 };
 

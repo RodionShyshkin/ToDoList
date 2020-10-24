@@ -34,16 +34,16 @@ TEST_F(CommandParserTest, parseCommand) {
 }
 
 TEST_F(CommandParserTest, getStateTypeByCommand) {
-  ASSERT_EQ(StateType::MAIN_MENU_STATE, getStateTypeByCommand(Command::MAINMENU));
-  ASSERT_EQ(StateType::ADD_TASK_STATE, getStateTypeByCommand(Command::ADDTASK));
-  ASSERT_EQ(StateType::ADD_SUBTASK_STATE, getStateTypeByCommand(Command::ADDSUBTASK));
-  ASSERT_EQ(StateType::VIEW_TASK_STATE, getStateTypeByCommand(Command::GETTASK));
-  ASSERT_EQ(StateType::VIEW_TASK_LIST_STATE, getStateTypeByCommand(Command::GETTASKLIST));
-  ASSERT_EQ(StateType::COMPLETE_TASK_STATE, getStateTypeByCommand(Command::COMPLETETASK));
-  ASSERT_EQ(StateType::REMOVE_TASK_STATE, getStateTypeByCommand(Command::REMOVETASK));
-  ASSERT_EQ(StateType::POSTPONE_TASK_STATE, getStateTypeByCommand(Command::POSTPONETASK));
-  ASSERT_EQ(StateType::SAVE_TASKS_STATE, getStateTypeByCommand(Command::SAVETASKS));
-  ASSERT_EQ(StateType::LOAD_TASKS_STATE, getStateTypeByCommand(Command::LOADTASKS));
+  ASSERT_EQ(StateType::MAIN_MENU, getStateTypeByCommand(Command::MAINMENU));
+  ASSERT_EQ(StateType::ADD_TASK, getStateTypeByCommand(Command::ADDTASK));
+  ASSERT_EQ(StateType::ADD_SUBTASK, getStateTypeByCommand(Command::ADDSUBTASK));
+  ASSERT_EQ(StateType::SHOW_TASK, getStateTypeByCommand(Command::GETTASK));
+  ASSERT_EQ(StateType::SHOW_TASKS_LIST, getStateTypeByCommand(Command::GETTASKLIST));
+  ASSERT_EQ(StateType::COMPLETE_TASK, getStateTypeByCommand(Command::COMPLETETASK));
+  ASSERT_EQ(StateType::REMOVE_TASK, getStateTypeByCommand(Command::REMOVETASK));
+  ASSERT_EQ(StateType::POSTPONE_TASK, getStateTypeByCommand(Command::POSTPONETASK));
+  ASSERT_EQ(StateType::SAVE_TASKS, getStateTypeByCommand(Command::SAVETASKS));
+  ASSERT_EQ(StateType::LOAD_TASKS, getStateTypeByCommand(Command::LOADTASKS));
   ASSERT_EQ(StateType::EXIT_STATE, getStateTypeByCommand(Command::EXIT));
   ASSERT_EQ(StateType::UNKNOWN_STATE, getStateTypeByCommand(Command::UNKNOWN));
 }

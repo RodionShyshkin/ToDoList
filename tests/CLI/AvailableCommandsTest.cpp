@@ -9,7 +9,7 @@
 };
 
 TEST_F(AvailableCommandsTest, checkMainMenuCommands) {
-  StateType type = StateType::MAIN_MENU_STATE;
+  StateType type = StateType::MAIN_MENU;
 
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::ADDTASK));
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::GETTASKLIST));
@@ -27,7 +27,7 @@ TEST_F(AvailableCommandsTest, checkMainMenuCommands) {
 }
 
 TEST_F(AvailableCommandsTest, checkViewSingleTaskCommands) {
-  StateType type = StateType::VIEW_TASK_STATE;
+  StateType type = StateType::SHOW_TASK;
 
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::EXIT));
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::ADDSUBTASK));
@@ -45,7 +45,7 @@ TEST_F(AvailableCommandsTest, checkViewSingleTaskCommands) {
 }
 
 TEST_F(AvailableCommandsTest, checkViewListOfTasksCommands) {
-  StateType type = StateType::VIEW_TASK_LIST_STATE;
+  StateType type = StateType::SHOW_TASKS_LIST;
 
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::EXIT));
   ASSERT_EQ(true, AvailableCommands::checkIsCommandAvailable(type, Command::GETTASK));

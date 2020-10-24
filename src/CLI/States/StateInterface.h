@@ -8,11 +8,8 @@
 #include <memory>
 #include <set>
 #include <Context/Context.h>
-#include <CommandParser.h>
 #include <States/StateType.h>
 #include <States/StateResult.h>
-#include <States/StateFactory.h>
-#include <ErrorType.h>
 
 /*
  * A common interface for all states.
@@ -34,7 +31,9 @@ class StateInterface {
    *
    * @return StateResult instance
    */
-  virtual StateResult                         run(std::shared_ptr<Context> &context)            = 0;
+  virtual StateResult                         run(std::shared_ptr<Context> context)            = 0;
+
+  virtual std::unique_ptr<StateInterface>     switchState()                                    = 0;
 
   /*
    * Method which just gets the type of concrete state.
@@ -58,6 +57,7 @@ class StateInterface {
    *
    * @param IOInterface which contains stream to get input.
    */
+
   virtual void                                output(const std::shared_ptr<IOInterface> &io_)   = 0;
 };
 
