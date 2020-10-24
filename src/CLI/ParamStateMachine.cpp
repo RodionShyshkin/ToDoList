@@ -3,7 +3,7 @@
 //
 
 #include "ParamStateMachine.h"
-#include "src/CLI/States/StateFactory.h"
+#include "States/StateFactory.h"
 
 ParamStateMachine ParamStateMachine::create(std::queue<StateType> &&states, std::shared_ptr<Context> context) {
   return ParamStateMachine{std::move(states), context};

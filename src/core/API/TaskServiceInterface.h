@@ -6,9 +6,9 @@
 #define TODOLIST_SRC_CORE_API_TASKSERVICEINTERFACE_H_
 
 #include <vector>
-#include <src/core/API/OperationResult/OperationResult.h>
-#include <src/core/API/OperationResult/StorageError.h>
-#include <src/core/API/OperationResult/PersistError.h>
+#include <API/OperationResult/OperationResult.h>
+#include <API/OperationResult/StorageError.h>
+#include <API/OperationResult/PersistError.h>
 #include "TaskDTO.h"
 
 class TaskServiceInterface {

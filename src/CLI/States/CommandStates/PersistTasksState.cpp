@@ -2,7 +2,7 @@
 // Created by rodion on 10/19/20.
 //
 
-#include <src/CLI/States/StateFactory.h>
+#include <States/StateFactory.h>
 #include "PersistTasksState.h"
 
 PersistTasksState::PersistTasksState(const PersistType &type) : type_(type) {}

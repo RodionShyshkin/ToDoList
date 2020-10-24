@@ -6,8 +6,8 @@
 #define TODOLIST_SRC_CORE_PERSISTER_SERIALIZATION_PROTOCONVERTER_H_
 
 #include <task.pb.h>
-#include <src/core/MemoryModel/ModelAPI/ModelTaskDTO.h>
-#include <src/core/MemoryModel/ModelAPI/TaskModelInterface.h>
+#include <MemoryModel/ModelAPI/ModelTaskDTO.h>
+#include <MemoryModel/ModelAPI/TaskModelInterface.h>
 
 class ProtoConverter {
  public:

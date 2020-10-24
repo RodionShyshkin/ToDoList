@@ -6,9 +6,9 @@
 #define TODOLIST_SRC_CLI_STATES_PARAMSTATEMACHINE_H_
 
 #include <queue>
-#include <src/CLI/Context/Context.h>
+#include <Context/Context.h>
 #include <memory>
-#include "src/CLI/States/StateType.h"
+#include "States/StateType.h"
 
 class ParamStateMachine {
  public:

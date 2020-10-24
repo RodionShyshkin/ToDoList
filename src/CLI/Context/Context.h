@@ -13,6 +13,7 @@
 #include <Context/PostponeBuffer.h>
 #include <API/TaskServiceInterface.h>
 #include <IO/IOInterface.h>
+#include "FilepathBuffer.h"
 
 /*
  * Context contains the state of our system (API & IO) & temporary buffers to work with it.
@@ -38,6 +39,7 @@ class Context {
   ShowListBuffer  show_list_buffer_;
   IDBuffer        id_buffer_;
   PostponeBuffer  postpone_buffer_;
+  FilepathBuffer  filepath_buffer_;
 
  public:
   std::shared_ptr<TaskServiceInterface>   service_;

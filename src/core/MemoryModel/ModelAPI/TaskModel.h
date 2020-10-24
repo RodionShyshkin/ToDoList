@@ -5,7 +5,7 @@
 #ifndef TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 #define TODOLIST_SRC_MEMORYMODEL_FULLSTORAGE_H_
 
-#include <src/core/MemoryModel/ModelAPI/TaskModelInterface.h>
+#include <MemoryModel/ModelAPI/TaskModelInterface.h>
 
 /*
  * \brief Entry point to work with the memory model.

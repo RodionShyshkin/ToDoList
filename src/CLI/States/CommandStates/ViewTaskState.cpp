@@ -2,8 +2,8 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <src/CLI/ParamStateMachineFactory.h>
-#include <src/CLI/States/StateFactory.h>
+#include <ParamStateMachineFactory.h>
+#include <States/StateFactory.h>
 #include "ViewTaskState.h"
 
 ViewTaskState::ViewTaskState() : command_(Command::UNKNOWN) {}

@@ -7,9 +7,9 @@
 
 #include <string>
 #include <boost/date_time/gregorian/greg_date.hpp>
-#include <src/core/API/Priority.h>
-#include <src/core/MemoryModel/Task/Date.h>
-#include <src/core/MemoryModel/Task/TaskID.h>
+#include <API/Priority.h>
+#include <MemoryModel/Task/Date.h>
+#include <MemoryModel/Task/TaskID.h>
 
 /*
  * Data transfer object which contains information about task

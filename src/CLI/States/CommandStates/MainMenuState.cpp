@@ -2,8 +2,8 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <src/CLI/States/StateFactory.h>
-#include <src/CLI/AvailableCommands.h>
+#include <States/StateFactory.h>
+#include <AvailableCommands.h>
 #include "MainMenuState.h"
 
 MainMenuState::MainMenuState() : command_(Command::UNKNOWN) {}

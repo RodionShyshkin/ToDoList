@@ -2,8 +2,8 @@
 // Created by rodion on 8/31/20.
 //
 
-#include <src/CLI/ParamStateMachineFactory.h>
-#include <src/CLI/States/StateFactory.h>
+#include <ParamStateMachineFactory.h>
+#include <States/StateFactory.h>
 #include "AddSubtaskState.h"
 
 bool AddSubtaskState::input(const std::shared_ptr<IOInterface> &io) {
@@ -15,7 +15,7 @@ StateResult AddSubtaskState::run(std::shared_ptr<Context> context) {
   machine.execute();
 
   if(context->add_task_buffer_.checkBufferFullness()) {
-    auto id = context->add_task_buffer_.getParent();
+    auto id = context->id_buffer_.getID().value();
     auto dto = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
                                 context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
 

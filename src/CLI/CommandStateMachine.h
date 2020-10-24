@@ -6,8 +6,8 @@
 #define TODOLIST_SRC_CLI_STATES_COMMANDSTATEMACHINE_H_
 
 #include <memory>
-#include "src/CLI/States/StateType.h"
-#include "src/CLI/States/StateInterface.h"
+#include "States/StateType.h"
+#include "States/StateInterface.h"
 
 class CommandStateMachine {
  public:

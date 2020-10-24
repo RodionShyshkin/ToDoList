@@ -6,24 +6,24 @@
 #define TODOLIST_SRC_CLI_STATES_STATESMAP_H_
 
 #include <States/StateType.h>
-#include <src/CLI/States/CommandStates/MainMenuState.h>
-#include <src/CLI/States/CommandStates/AddTaskState.h>
-#include <src/CLI/States/CommandStates/AddSubtaskState.h>
-#include <src/CLI/States/CommandStates/CompleteTaskState.h>
-#include <src/CLI/States/CommandStates/ViewTaskState.h>
-#include <src/CLI/States/CommandStates/PostponeTaskState.h>
-#include <src/CLI/States/CommandStates/RemoveTaskState.h>
-#include <src/CLI/States/CommandStates/ViewTaskListState.h>
-#include <src/CLI/States/CommandStates/PersistTasksState.h>
-#include <src/CLI/States/ParamStates/ParentTaskParamState.h>
-#include <src/CLI/States/ParamStates/NameParamState.h>
-#include <src/CLI/States/ParamStates/LabelParamState.h>
-#include <src/CLI/States/ParamStates/DateParamState.h>
-#include <src/CLI/States/ParamStates/PriorityParamState.h>
-#include <src/CLI/States/ParamStates/ModifierParamState.h>
-#include <src/CLI/States/ParamStates/SortedParamState.h>
-#include <src/CLI/States/ParamStates/IDParamState.h>
-#include <src/CLI/States/ParamStates/FilenameParamState.h>
+#include <States/CommandStates/MainMenuState.h>
+#include <States/CommandStates/AddTaskState.h>
+#include <States/CommandStates/AddSubtaskState.h>
+#include <States/CommandStates/CompleteTaskState.h>
+#include <States/CommandStates/ViewTaskState.h>
+#include <States/CommandStates/PostponeTaskState.h>
+#include <States/CommandStates/RemoveTaskState.h>
+#include <States/CommandStates/ViewTaskListState.h>
+#include <States/CommandStates/PersistTasksState.h>
+#include <States/ParamStates/ParentTaskParamState.h>
+#include <States/ParamStates/NameParamState.h>
+#include <States/ParamStates/LabelParamState.h>
+#include <States/ParamStates/DateParamState.h>
+#include <States/ParamStates/PriorityParamState.h>
+#include <States/ParamStates/ModifierParamState.h>
+#include <States/ParamStates/SortedParamState.h>
+#include <States/ParamStates/IDParamState.h>
+#include <States/ParamStates/FilenameParamState.h>
 #include "ExitState.h"
 
 namespace StatesMap {

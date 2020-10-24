@@ -7,9 +7,9 @@
 
 #include <MemoryModel/Storage/TaskView.h>
 #include <MemoryModel/Storage/TaskStorage.h>
-#include <src/core/API/OperationResult/OperationResult.h>
-#include <src/core/MemoryModel/ModelAPI/ModelTaskDTO.h>
-#include <src/core/API/OperationResult/StorageError.h>
+#include <API/OperationResult/OperationResult.h>
+#include <MemoryModel/ModelAPI/ModelTaskDTO.h>
+#include <API/OperationResult/StorageError.h>
 
 class TaskModelInterface {
  public:

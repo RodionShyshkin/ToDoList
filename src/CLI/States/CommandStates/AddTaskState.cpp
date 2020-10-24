@@ -2,8 +2,8 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <src/CLI/ParamStateMachineFactory.h>
-#include <src/CLI/States/StateFactory.h>
+#include <ParamStateMachineFactory.h>
+#include <States/StateFactory.h>
 #include "AddTaskState.h"
 
 bool AddTaskState::input(const std::shared_ptr<IOInterface> &io) { return true; }

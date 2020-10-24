@@ -7,7 +7,7 @@
 
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
-#include <src/core/MemoryModel/ModelAPI/TaskModel.h>
+#include <MemoryModel/ModelAPI/TaskModel.h>
 
 /*
  * \brief Entry point for tasks management.

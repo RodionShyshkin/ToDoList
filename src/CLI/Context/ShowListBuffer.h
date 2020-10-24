@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_CONTEXT_SHOWLISTBUFFER_H_
 
 #include <Context/BufferInterface.h>
-#include <src/CLI/States/ListModifier.h>
+#include <States/ListModifier.h>
 #include <API/TaskDTO.h>
 
 /*
