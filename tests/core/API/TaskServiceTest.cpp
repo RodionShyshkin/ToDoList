@@ -5,7 +5,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <API/TaskService.h>
-#include <src/core/Persister/PersisterInterface.h>
+#include <Persister/PersisterInterface.h>
+#include <Mocks/MockModel.h>
 
 using ::testing::Return;
 
@@ -48,27 +49,6 @@ class TaskServiceTest : public ::testing::Test {
   ModelTaskDTO task2_dto;
   ModelTaskDTO task3_dto;
   ModelTaskDTO task4_dto;
-};
-
-class MockModel : public TaskModelInterface {
- public:
-  MOCK_METHOD(ModelTaskDTO, getTask, (const TaskID&), (const, override));
-
-  MOCK_METHOD(std::vector<ModelTaskDTO>, getAllTasks, (), (const, override));
-  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksForToday, (), (const, override));
-  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksForWeek, (), (const, override));
-  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByLabel, (const std::string &label), (const, override));
-  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByName, (const std::string& name), (const, override));
-  MOCK_METHOD(std::vector<ModelTaskDTO>, getTasksByPriority, (const Priority& priority), (const, override));
-
-  MOCK_METHOD(bool, postponeTask, (const TaskID& id, const Date& newdate), (override));
-  MOCK_METHOD(bool, completeTask, (const TaskID& id), (override));
-
-  MOCK_METHOD(OperationResult<StorageError>, AddTask, (const ModelTaskDTO& task), (override));
-  MOCK_METHOD(OperationResult<StorageError>, AddSubtask, (const TaskID &id, const ModelTaskDTO& subtask), (override));
-  MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const TaskID& id), (override));
-
-  MOCK_METHOD(std::vector<ModelTaskDTO>, GetSubtasks, (const TaskID& id), (override));
 };
 
 TEST_F(TaskServiceTest, shouldAddTaskCorrectly) {
@@ -267,4 +247,29 @@ TEST_F(TaskServiceTest, shouldPersistTasksCorrectly) {
   auto after = service_load.getAllTasks(false);
 
   ASSERT_EQ(before.size(), after.size());
+}
+
+TEST_F(TaskServiceTest, shouldGetTaskCorrectly) {
+  auto model = std::make_unique<MockModel>();
+
+  EXPECT_CALL(*model, getTask).Times(1).WillOnce(Return(task1_dto));
+
+  TaskService service{std::move(model)};
+
+  auto result = service.getTask(1);
+
+  ASSERT_TRUE(result.has_value());
+  ASSERT_EQ(result.value().getID(), TaskID{1});
+}
+
+TEST_F(TaskServiceTest, shouldNotGetTaskWhichDoesNotExist) {
+  auto model = std::make_unique<MockModel>();
+
+  EXPECT_CALL(*model, getTask).Times(1).WillOnce(Return(std::nullopt));
+
+  TaskService service{std::move(model)};
+
+  auto result = service.getTask(1);
+
+  ASSERT_FALSE(result.has_value());
 }

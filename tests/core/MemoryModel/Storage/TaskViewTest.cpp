@@ -78,26 +78,38 @@ TEST_F(TaskViewTest, getAllTasks) {
   ASSERT_EQ(tasks[2].GetName(), "Not this week Task");
 }
 
-TEST_F(TaskViewTest, addTask) {
+TEST_F(TaskViewTest, shouldAddValidTask) {
+  ASSERT_TRUE(task_view_.AddTask(ptrValid));
+}
+
+TEST_F(TaskViewTest, shouldNotAddInvalidTask) {
   ASSERT_TRUE(task_view_.AddTask(ptrValid));
   ASSERT_FALSE(task_view_.AddTask(ptrInvalid));
 }
 
-TEST_F(TaskViewTest, removeTask) {
+TEST_F(TaskViewTest, shouldRemoveExistingTask) {
   task_view_.AddTask(ptrValid);
   task_view_.AddTask(todayPtr);
   task_view_.AddTask(thisWeek);
   task_view_.AddTask(notThisWeek);
 
-  ASSERT_TRUE(task_view_.RemoveTask(2));
+  ASSERT_TRUE(task_view_.RemoveTask(TaskID{2}));
 
   auto tasks = task_view_.GetAllTasks();
   ASSERT_EQ(tasks.size(), 3);
   ASSERT_EQ(tasks[0].GetName(), "This week Task");
   ASSERT_EQ(tasks[1].GetName(), "Not this week Task");
   ASSERT_EQ(tasks[2].GetName(), "Val.Task");
+}
 
-  ASSERT_FALSE(task_view_.RemoveTask(2));
+TEST_F(TaskViewTest, shouldNotRemoveUnexistingTask) {
+  task_view_.AddTask(ptrValid);
+  task_view_.AddTask(todayPtr);
+  task_view_.AddTask(thisWeek);
+  task_view_.AddTask(notThisWeek);
+
+  task_view_.RemoveTask(TaskID{2});
+  ASSERT_FALSE(task_view_.RemoveTask(TaskID{2}));
 }
 
 TEST_F(TaskViewTest, getTasksForToday) {

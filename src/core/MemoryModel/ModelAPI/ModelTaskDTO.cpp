@@ -32,25 +32,25 @@ ModelTaskDTO::ModelTaskDTO(const TaskID &id,
                            const Date &date,
                            const bool &status,
                            const TaskID& parent) {
-  this->task_id_ = id;
-  this->task_name_ = name;
-  this->task_label_ = label;
-  this->task_priority_ = priority;
-  this->task_due_date_ = date;
-  this->task_status_ = status;
-  this->parent_id_ = parent;
+  task_id_ = id;
+  task_name_ = name;
+  task_label_ = label;
+  task_priority_ = priority;
+  task_due_date_ = date;
+  task_status_ = status;
+  parent_id_ = parent;
 }
 
-TaskID ModelTaskDTO::getID() const { return this->task_id_; }
+TaskID ModelTaskDTO::getID() const { return task_id_; }
 
-std::string ModelTaskDTO::getName() const { return this->task_name_; }
+std::string ModelTaskDTO::getName() const { return task_name_; }
 
-std::string ModelTaskDTO::getLabel() const { return this->task_label_; }
+std::string ModelTaskDTO::getLabel() const { return task_label_; }
 
-Priority ModelTaskDTO::getPriority() const { return this->task_priority_; }
+Priority ModelTaskDTO::getPriority() const { return task_priority_; }
 
-Date ModelTaskDTO::getDueDate() const { return this->task_due_date_; }
+Date ModelTaskDTO::getDueDate() const { return task_due_date_; }
 
-bool ModelTaskDTO::getStatus() const { return this->task_status_; }
+bool ModelTaskDTO::getStatus() const { return task_status_; }
 
-TaskID ModelTaskDTO::getParentID() const { return this->parent_id_; }
+TaskID ModelTaskDTO::getParentID() const { return parent_id_; }

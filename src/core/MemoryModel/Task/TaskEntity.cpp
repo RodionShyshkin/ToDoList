@@ -6,19 +6,15 @@
 
 TaskEntity::TaskEntity() = default;
 
-TaskEntity::TaskEntity(const Task &task, const TaskID &id, const TaskID& parent) {
-  this->user_id_ = id;
-  this->task_ = task;
-  this->status_ = false;
-  this->parent_id_ = parent;
-}
+TaskEntity::TaskEntity(const Task &task, const TaskID &id, const TaskID& parent) :
+user_id_(id), task_(task), status_(false), parent_id_(parent) { }
 
 TaskEntity TaskEntity::createTask(const Task &task, const TaskID &id) {
-  return TaskEntity(task, id, id);
+  return TaskEntity{task, id, id};
 }
 
 TaskEntity TaskEntity::createSubtask(const Task &task, const TaskID &id, const TaskID &parent) {
-  return TaskEntity(task, id, parent);
+  return TaskEntity{task, id, parent};
 }
 
 TaskID TaskEntity::GetID() const { return user_id_; }
@@ -57,9 +53,9 @@ bool TaskEntity::checkParent() {
 }
 
 void TaskEntity::SetComplete() {
-  this->status_ = true;
+  status_ = true;
 }
 
 void TaskEntity::SubstituteTask(const Task &newtask) {
-  this->task_ = newtask;
+  task_ = newtask;
 }

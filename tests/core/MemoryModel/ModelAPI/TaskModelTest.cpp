@@ -2,59 +2,16 @@
 // Created by rodion on 10/1/20.
 //
 
-#include <src/core/MemoryModel/ModelAPI/TaskModel.h>
+#include <MemoryModel/ModelAPI/TaskModel.h>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <src/core/API/TaskServiceInterface.h>
+#include <API/TaskServiceInterface.h>
+#include <Mocks/MockStorage.h>
+#include <Mocks/MockView.h>
+#include <Mocks/MockGenerator.h>
+#include <MemoryModel/ModelAPI/ModelTaskDTOConverter.h>
 
 using ::testing::Return;
-
-class MockView : public TaskViewInterface {
- public:
-  MOCK_METHOD(bool, AddTask, (const std::weak_ptr<TaskEntity>&), (override));
-  MOCK_METHOD(bool, RemoveTask, (const TaskID&), (override));
-
-  MOCK_METHOD(std::vector<TaskEntity>, GetTodayTasks, (), (override));
-  MOCK_METHOD(std::vector<TaskEntity>, GetWeekTasks, (), (override));
-
-  MOCK_METHOD(std::vector<TaskEntity>, GetAllTasks, (), (override));
-  MOCK_METHOD(std::vector<TaskEntity>, GetTasksByLabel, (const std::string&), (override));
-  MOCK_METHOD(std::vector<TaskEntity>, GetTasksByName, (const std::string&), (override));
-  MOCK_METHOD(std::vector<TaskEntity>, GetTasksByPriority, (const Priority&), (override));
-};
-
-class MockStorage : public TaskStorageInterface {
- public:
-  MOCK_METHOD(bool, AddTask, (const std::shared_ptr<TaskEntity>&), (override));
-  MOCK_METHOD(bool, RemoveTask, (const TaskID&), (override));
-  MOCK_METHOD(std::shared_ptr<TaskEntity>, GetTask, (const TaskID&), (override));
-  MOCK_METHOD(std::vector<TaskEntity>, GetAllTasks, (), (override));
-};
-
-class MockGenerator : public IDGeneratorInterface {
- public:
-  MOCK_METHOD(TaskID, GenerateID, (), (override));
-};
-
-/*class MockService : public TaskServiceInterface {
- public:
-  MOCK_METHOD(TaskDTO, getTask, (const unsigned int&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getAllTasks, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksForToday, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksForWeek, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByLabel, (const std::string &, const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByName, (const std::string&, const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByPriority, (const Priority&), (const, override));
-
-  MOCK_METHOD(OperationResult<StorageError>, addTask, (const TaskDTO&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, addSubtask, (const unsigned int&, const TaskDTO&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, completeTask, (const unsigned int&), (override));
-
-  MOCK_METHOD(OperationResult<SerializationError>, Save, (const std::string&), (override));
-  MOCK_METHOD(OperationResult<SerializationError>, Load, (const std::string&), (override));
-};*/
 
 class TaskModelTest : public ::testing::Test {
  public:
@@ -271,9 +228,9 @@ TEST_F(TaskModelTest, shouldRemoveTaskWithSubtasks) {
                                               .WillOnce(Return(parent_sub_entity_))
                                               .WillOnce(Return(parent_entity_));
 
-  EXPECT_CALL(*storage, RemoveTask).Times(11).WillRepeatedly(Return(true));
+  EXPECT_CALL(*storage, RemoveTask).Times(6).WillRepeatedly(Return(true));
   EXPECT_CALL(*view, AddTask).Times(7).WillRepeatedly(Return(true));
-  EXPECT_CALL(*view, RemoveTask).Times(11).WillRepeatedly(Return(true));
+  EXPECT_CALL(*view, RemoveTask).Times(6).WillRepeatedly(Return(true));
   EXPECT_CALL(*generator, GenerateID).Times(7).WillOnce(Return(TaskID{1}))
                                               .WillOnce(Return(TaskID{2}))
                                               .WillOnce(Return(TaskID{3}))
@@ -543,4 +500,49 @@ TEST_F(TaskModelTest, getTasksByPriority) {
 
   ASSERT_EQ(result.size(), 1);
   ASSERT_EQ(result[0].getName(), "name");
+}
+
+TEST_F(TaskModelTest, shouldGetTaskCorrectly) {
+  auto view = std::make_unique<MockView>();
+  auto storage = std::make_unique<MockStorage>();
+  auto generator = std::make_unique<MockGenerator>();
+
+  EXPECT_CALL(*storage, GetTask).Times(1).WillOnce(Return(parent_entity_));
+
+  TaskModel model{std::move(storage), std::move(view), std::move(generator)};
+
+  auto result = model.getTask(TaskID{1});
+
+  ASSERT_TRUE(result.has_value());
+  ASSERT_EQ(result.value().getID(), TaskID{1});
+}
+
+TEST_F(TaskModelTest, shouldNotGetTaskWhichDoesNotExist) {
+  auto view = std::make_unique<MockView>();
+  auto storage = std::make_unique<MockStorage>();
+  auto generator = std::make_unique<MockGenerator>();
+
+  EXPECT_CALL(*storage, GetTask).Times(1).WillOnce(Return(nullptr));
+
+  TaskModel model{std::move(storage), std::move(view), std::move(generator)};
+
+  auto result = model.getTask(TaskID{1});
+
+  ASSERT_FALSE(result.has_value());
+}
+
+TEST_F(TaskModelTest, shouldGetSubtasksCorrectly) {
+  auto view = std::make_unique<MockView>();
+  auto storage = std::make_unique<MockStorage>();
+  auto generator = std::make_unique<MockGenerator>();
+
+  parent_entity_->AddSubtask(subtask1_entity_);
+  EXPECT_CALL(*storage, GetTask).Times(1).WillOnce(Return(parent_entity_));
+
+
+  TaskModel model{std::move(storage), std::move(view), std::move(generator)};
+
+  std::vector<ModelTaskDTO> result;
+  ASSERT_NO_THROW(result = model.GetSubtasks(TaskID{1}));
+  ASSERT_EQ(result.size(), 1);
 }

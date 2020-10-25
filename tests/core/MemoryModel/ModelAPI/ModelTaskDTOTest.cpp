@@ -2,9 +2,9 @@
 // Created by rodion on 10/6/20.
 //
 
-#include <src/core/MemoryModel/ModelAPI/ModelTaskDTO.h>
+#include <MemoryModel/ModelAPI/ModelTaskDTO.h>
 #include <gtest/gtest.h>
-#include <src/core/MemoryModel/Task/Task.h>
+#include <MemoryModel/Task/Task.h>
 
 class ModelTaskDTOTest : public ::testing::Test {
   void SetUp() override {

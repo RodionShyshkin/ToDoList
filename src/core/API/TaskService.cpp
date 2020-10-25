@@ -10,10 +10,11 @@ TaskService::TaskService() : model_api_(std::make_unique<TaskModel>()) { }
 
 TaskService::TaskService(std::unique_ptr<TaskModelInterface> model) : model_api_(std::move(model)) {}
 
-TaskDTO TaskService::getTask(const unsigned int& id) const {
-  auto model_dto = model_api_->getTask(TaskID{id});
+std::optional<TaskDTO> TaskService::getTask(const unsigned int& id) const {
+  auto result = model_api_->getTask(TaskID{id});
+  if(!result.has_value()) return std::nullopt;
 
-  return TaskService::convertFromModelDTO(model_dto);
+  return TaskService::convertFromModelDTO(result.value());
 }
 
 std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const {

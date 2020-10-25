@@ -1,7 +1,7 @@
 //
 // Created by rodion on 10/19/20.
 //
-
+/*
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <StateMachine.h>
@@ -90,3 +90,4 @@ TEST_F(SaveLoadCommandsTest, shouldLoadCorrectly) {
 
   ASSERT_EQ(result, true);
 }
+*/

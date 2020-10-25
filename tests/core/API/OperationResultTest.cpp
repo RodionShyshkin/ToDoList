@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 #include <API/OperationResult/OperationResult.h>
-#include <src/core/API/OperationResult/StorageError.h>
-#include <src/core/API/OperationResult/PersistError.h>
+#include <API/OperationResult/StorageError.h>
+#include <API/OperationResult/PersistError.h>
 
 class OperationResultTest : public ::testing::Test {
 

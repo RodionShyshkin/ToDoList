@@ -7,11 +7,11 @@
 TaskID::TaskID() = default;
 
 TaskID::TaskID(const unsigned int &id) {
-  this->id_ = id;
+  id_ = id;
 }
 
 unsigned int TaskID::GetID() const {
-  return this->id_;
+  return id_;
 }
 
 bool operator== (const TaskID& lhs, const TaskID& rhs) {

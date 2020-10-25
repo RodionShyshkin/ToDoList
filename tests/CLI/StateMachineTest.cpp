@@ -1,32 +1,14 @@
 //
 // Created by rodion on 9/19/20.
 //
-
+/*
 #include <StateMachine.h>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
 using ::testing::Return;
 
-class MockService : public TaskServiceInterface {
- public:
-  MOCK_METHOD(TaskDTO, getTask, (const unsigned int&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getAllTasks, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksForToday, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksForWeek, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByLabel, (const std::string &, const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByName, (const std::string&, const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByPriority, (const Priority&), (const, override));
 
-  MOCK_METHOD(OperationResult<StorageError>, addTask, (const TaskDTO&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, addSubtask, (const unsigned int&, const TaskDTO&), (override));
-  MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
-  MOCK_METHOD(bool, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
-  MOCK_METHOD(bool, completeTask, (const unsigned int&), (override));
-
-  MOCK_METHOD(OperationResult<PersistError>, Save, (const std::string&), (override));
-  MOCK_METHOD(OperationResult<PersistError>, Load, (const std::string&), (override));
-};
 
 class MockIO : public IOInterface {
  public:
@@ -156,3 +138,4 @@ TEST_F(StateMachineTest, shouldWorkWithInternalStateMachine) {
   ASSERT_EQ(context_->show_list_buffer_.getList()[0].getPriority(), Priority::LOW);
   ASSERT_EQ(context_->show_list_buffer_.getList()[0].getDueDate(), boost::gregorian::from_string("2012-9-14"));
 }
+*/

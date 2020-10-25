@@ -21,7 +21,7 @@ StateResult ViewTaskState::run(std::shared_ptr<Context> context) {
   }
 
   //Request to Core.
-  auto task_dto = context->service_->getTask(context->id_buffer_.getID().value());
+  auto task_dto = context->service_->getTask(context->id_buffer_.getID().value()).value();
   ViewTaskState::showTask(task_dto, context->io_);
 
   //Waiting for command.

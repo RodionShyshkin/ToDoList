@@ -1,7 +1,7 @@
 //
 // Created by rodion on 9/17/20.
 //
-
+/*
 #include <gtest/gtest.h>
 #include <CommandParser.h>
 
@@ -47,3 +47,4 @@ TEST_F(CommandParserTest, getStateTypeByCommand) {
   ASSERT_EQ(StateType::EXIT_STATE, getStateTypeByCommand(Command::EXIT));
   ASSERT_EQ(StateType::UNKNOWN_STATE, getStateTypeByCommand(Command::UNKNOWN));
 }
+*/

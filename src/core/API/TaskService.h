@@ -30,7 +30,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return TaskDTO object
    */
-  TaskDTO                           getTask(const unsigned int& id) const override;
+  std::optional<TaskDTO> getTask(const unsigned int& id) const override;
   /*
    * \brief Gives all actual tasks.
    *

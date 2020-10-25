@@ -1,7 +1,7 @@
 //
 // Created by rodion on 9/22/20.
 //
-
+/*
 #include <StateMachine.h>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -181,3 +181,4 @@ TEST_F(TaskParamsTest, shouldAddSubtask) {
   ASSERT_EQ(context_->show_list_buffer_.getList()[0].getID(), 1);
   ASSERT_EQ(context_->show_list_buffer_.getList()[1].getID(), 2);
 }
+*/

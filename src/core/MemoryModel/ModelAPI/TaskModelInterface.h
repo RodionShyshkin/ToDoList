@@ -17,7 +17,7 @@ class TaskModelInterface {
 
  public:
 
-  virtual ModelTaskDTO                           getTask(const TaskID&) const = 0;
+  virtual std::optional<ModelTaskDTO> getTask(const TaskID&) const = 0;
 
   virtual std::vector<ModelTaskDTO>              getAllTasks() const = 0;
   virtual std::vector<ModelTaskDTO>              getTasksForToday() const = 0;

@@ -21,7 +21,6 @@ class TaskModel : public TaskModelInterface {
   TaskModel(std::unique_ptr<TaskStorageInterface> storage,
             std::unique_ptr<TaskViewInterface> view,
             std::unique_ptr<IDGeneratorInterface> generator);
-  TaskModel(TaskModel& model);
 
  public:
   /*
@@ -31,7 +30,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO data-transfer-object
    */
-  ModelTaskDTO                      getTask(const TaskID &) const override;
+  std::optional<ModelTaskDTO> getTask(const TaskID &) const override;
 
   /*
    * Gets all tasks sorted by ID.
@@ -141,9 +140,6 @@ class TaskModel : public TaskModelInterface {
    * @return ModelTaskDTO vector.
    */
   std::vector<ModelTaskDTO>         GetSubtasks(const TaskID &id) override;
-
- private:
-  static ModelTaskDTO               ConvertToModelTaskDTO(const TaskEntity& task);
 
  private:
   std::unique_ptr<TaskStorageInterface>      task_storage_;

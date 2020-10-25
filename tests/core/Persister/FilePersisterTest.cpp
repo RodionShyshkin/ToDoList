@@ -4,7 +4,7 @@
 
 #include <Persister/FilePersister.h>
 #include <gtest/gtest.h>
-#include <src/core/API/TaskService.h>
+#include <API/TaskService.h>
 
 class FilePersisterTest : public ::testing::Test {
  public:
@@ -46,19 +46,35 @@ class FilePersisterTest : public ::testing::Test {
 
 TEST_F(FilePersisterTest, shouldSave) {
   std::fstream file("test.txt", std::ios::out);
-  FilePersister persister{file, savemodel};
+  FilePersister persister{std::move(file), savemodel};
 
   auto result = persister.Save();
   ASSERT_TRUE(result);
 }
 
+TEST_F(FilePersisterTest, shouldNotSaveToIncorrectFile) {
+  std::fstream file("test.txt", std::ios::in);
+  FilePersister persister{std::move(file), savemodel};
+
+  auto result = persister.Save();
+  ASSERT_FALSE(result);
+}
+
 TEST_F(FilePersisterTest, shouldLoad) {
   std::fstream file("test.txt", std::ios::in);
-  FilePersister persister{file, loadmodel};
+  FilePersister persister{std::move(file), loadmodel};
 
   auto result = persister.Load();
   ASSERT_TRUE(result);
 
   auto tasks = loadmodel.getAllTasks();
   ASSERT_EQ(tasks.size(), savemodel.getAllTasks().size());
+}
+
+TEST_F(FilePersisterTest, shouldNotLoadFromIncorrectFile) {
+  std::fstream file("unknownFile.txt", std::ios::in);
+  FilePersister persister{std::move(file), loadmodel};
+
+  auto result = persister.Load();
+  ASSERT_FALSE(result);
 }

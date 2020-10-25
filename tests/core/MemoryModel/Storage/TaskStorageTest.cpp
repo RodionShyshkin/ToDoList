@@ -26,26 +26,55 @@ class StorageTest : public ::testing::Test {
   TaskEntity invalidTask;
 };
 
-TEST_F(StorageTest, pushTask) {
+TEST_F(StorageTest, shouldAddValidTaskCorrectly) {
   ASSERT_TRUE(storage.AddTask(std::make_shared<TaskEntity>(check)));
+
+}
+
+TEST_F(StorageTest, shouldNotAddInvalidTask) {
+  storage.AddTask(std::make_shared<TaskEntity>(check));
   ASSERT_FALSE(storage.AddTask(std::make_shared<TaskEntity>(invalidTask)));
 }
 
-TEST_F(StorageTest, getTask) {
+TEST_F(StorageTest, shouldGetExistingTaskCorrectly) {
   storage.AddTask(std::make_shared<TaskEntity>(check));
   std::shared_ptr<TaskEntity> kek;
-  EXPECT_NO_THROW(kek = storage.GetTask(TaskID{1}));
+  ASSERT_NO_THROW(kek = storage.GetTask(TaskID{1}));
   ASSERT_NE(kek, nullptr);
   ASSERT_EQ(kek->GetName(), "Task");
 }
 
-TEST_F(StorageTest, removeTask) {
+TEST_F(StorageTest, shouldNotGetUnexistingTask) {
+  std::shared_ptr<TaskEntity> kek;
+  ASSERT_NO_THROW(kek = storage.GetTask(TaskID{1}));
+  ASSERT_EQ(kek, nullptr);
+}
+
+TEST_F(StorageTest, shouldRemoveExistingTaskCorrectly) {
   storage.AddTask(std::make_shared<TaskEntity>(check));
   storage.AddTask(std::make_shared<TaskEntity>(second));
 
-  ASSERT_FALSE(storage.RemoveTask(500));
-  ASSERT_TRUE(storage.RemoveTask(1));
+  ASSERT_TRUE(storage.RemoveTask(TaskID{1}));
 
   ASSERT_EQ(storage.GetTask(1), nullptr);
   ASSERT_NE(storage.GetTask(2), nullptr);
+}
+
+TEST_F(StorageTest, shouldNotRemoveUnexistingTask) {
+  ASSERT_FALSE(storage.RemoveTask(TaskID{1}));
+}
+
+TEST_F(StorageTest, shouldGetAllTasksCorrectlyIfThereAreNoTasks) {
+  auto tasks = storage.GetAllTasks();
+  ASSERT_EQ(tasks.size(), 0);
+}
+
+TEST_F(StorageTest, shouldGetAllTasksCorrectly) {
+  storage.AddTask(std::make_shared<TaskEntity>(check));
+  storage.AddTask(std::make_shared<TaskEntity>(second));
+
+  auto tasks = storage.GetAllTasks();
+  ASSERT_EQ(tasks.size(), 2);
+  ASSERT_EQ(tasks[0].GetID(), TaskID{1});
+  ASSERT_EQ(tasks[1].GetID(), TaskID{2});
 }
