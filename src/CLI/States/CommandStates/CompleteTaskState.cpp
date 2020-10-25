@@ -9,6 +9,7 @@
 bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io) { return true; }
 
 StateResult CompleteTaskState::run(std::shared_ptr<Context> context) {
+  //Filling context.
   task_list_flag_ = false;
   std::cout << context->id_buffer_.checkBufferFullness() << std::endl;
   if(!context->id_buffer_.checkBufferFullness()) {
@@ -17,11 +18,12 @@ StateResult CompleteTaskState::run(std::shared_ptr<Context> context) {
     machine.execute();
  }
 
-  task_id_ = context->id_buffer_.getID().value();
-
-  auto result = context->service_->completeTask(task_id_);
+  //Request to Core.
+  auto id = context->id_buffer_.getID().value();
+  auto result = context->service_->completeTask(id);
   if(!result) return StateResult::OPERATION_ERROR;
 
+  //Clearing context.
   if(context->show_list_buffer_.checkBufferFullness()) {
     return StateResult::SUCCESS;
   }
@@ -30,7 +32,7 @@ StateResult CompleteTaskState::run(std::shared_ptr<Context> context) {
   return StateResult::SUCCESS;
 }
 
-void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io_) { }
+void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io) { }
 
 StateType CompleteTaskState::getType() {
   return StateType::COMPLETE_TASK;

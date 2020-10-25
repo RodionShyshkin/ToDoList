@@ -62,7 +62,7 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} src/CLI/CommandStateMachine.cpp src/CLI/CommandStateMachine.h src/CLI/ParamStateMachine.cpp src/CLI/ParamStateMachine.h src/CLI/ParamStateMachineFactory.h src/CLI/States/StatesMap.h src/CLI/States/ParamStates/FilenameParamState.cpp src/CLI/States/ParamStates/FilenameParamState.h src/CLI/Context/FilepathBuffer.cpp src/CLI/Context/FilepathBuffer.h)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS})
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)

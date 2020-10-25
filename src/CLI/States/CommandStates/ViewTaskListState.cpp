@@ -13,7 +13,6 @@ StateResult ViewTaskListState::run(std::shared_ptr<Context> context) {
     auto machine = ParamStateMachineFactory::ShowTasksList::create(context);
     machine.execute();
   }
-  if(!context->show_list_buffer_.checkBufferFullness()) throw std::invalid_argument("State machine does not work correctly.");
 
   //Request to API.
   auto modifier = context->show_list_buffer_.getModifier();

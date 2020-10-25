@@ -6,13 +6,14 @@
 
 Context::Context(const std::shared_ptr<TaskServiceInterface> &service,
                  const std::shared_ptr<IOInterface> &io) {
-  this->service_ = service;
-  this->io_ = io;
+  service_ = service;
+  io_ = io;
 }
 
 void Context::clearAllBuffers() {
-  this->id_buffer_.clearBuffer();
-  this->show_list_buffer_.clearBuffer();
-  this->postpone_buffer_.clearBuffer();
-  this->add_task_buffer_.clearBuffer();
+  id_buffer_.clearBuffer();
+  show_list_buffer_.clearBuffer();
+  postpone_buffer_.clearBuffer();
+  add_task_buffer_.clearBuffer();
+  filepath_buffer_.clearBuffer();
 }

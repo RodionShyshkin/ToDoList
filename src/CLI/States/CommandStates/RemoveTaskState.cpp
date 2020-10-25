@@ -10,19 +10,20 @@
 bool RemoveTaskState::input(const std::shared_ptr<IOInterface> &io) { return true; }
 
 StateResult RemoveTaskState::run(std::shared_ptr<Context> context) {
+  //Filling context.
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
     machine.execute();
  }
 
-  auto id_from_buffer_ = context->id_buffer_.getID();
-  task_id_ = id_from_buffer_.value();
-
-  auto result = context->service_->RemoveTask(task_id_);
+  //Request to Core.
+  auto id = context->id_buffer_.getID().value();
+  auto result = context->service_->RemoveTask(id);
   if(result.GetError().has_value()) {
     return StateResult::OPERATION_ERROR;
   }
 
+  //Clearing context.
   context->id_buffer_.clearBuffer();
 
   if(context->show_list_buffer_.checkBufferFullness()) {

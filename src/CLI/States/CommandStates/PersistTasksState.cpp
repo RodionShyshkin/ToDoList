@@ -9,9 +9,11 @@
 PersistTasksState::PersistTasksState(const PersistType &type) : type_(type) {}
 
 StateResult PersistTasksState::run(std::shared_ptr<Context> context) {
+  //Filling context.
   auto machine = ParamStateMachineFactory::PersistTasks::create(context);
   machine.execute();
 
+  //Request to Core.
   auto filepath = context->filepath_buffer_.getFilepath();
   if(PersistType::SAVE == type_) {
     auto result = context->service_->Save(filepath);
@@ -22,6 +24,8 @@ StateResult PersistTasksState::run(std::shared_ptr<Context> context) {
     if(result.GetError().has_value()) return StateResult::OPERATION_ERROR;
   }
 
+  //Clearing context.
+  context->filepath_buffer_.clearBuffer();
   return StateResult::SUCCESS;
 }
 

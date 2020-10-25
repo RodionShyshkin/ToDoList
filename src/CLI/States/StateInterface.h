@@ -50,7 +50,7 @@ class StateInterface {
    *
    * @return bool True if received data was validated or parsed successfully, False in another case.
    */
-  virtual bool                                input(const std::shared_ptr<IOInterface> &io_)    = 0;
+  virtual bool                                input(const std::shared_ptr<IOInterface> &io)    = 0;
 
   /*
    * Method which shows output using the IOInterface stream.
@@ -58,7 +58,7 @@ class StateInterface {
    * @param IOInterface which contains stream to get input.
    */
 
-  virtual void                                output(const std::shared_ptr<IOInterface> &io_)   = 0;
+  virtual void                                output(const std::shared_ptr<IOInterface> &io)   = 0;
 };
 
 #endif //TODOLIST_SRC_CLI_STATEINTERFACE_H_

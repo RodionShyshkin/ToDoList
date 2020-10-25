@@ -12,8 +12,8 @@ StateResult MainMenuState::run(std::shared_ptr<Context> context) {
   context->clearAllBuffers();
 
   output(context->io_);
-
   if(!input(context->io_)) return StateResult::INCORRECT_INPUT;
+
   return StateResult::SUCCESS;
 }
 

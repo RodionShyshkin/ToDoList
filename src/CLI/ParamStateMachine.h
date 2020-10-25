@@ -12,8 +12,6 @@
 
 class ParamStateMachine {
  public:
-  ~ParamStateMachine() { std::cout << "ParamStateMachine removed" << std::endl; }
-
   static ParamStateMachine create(std::queue<StateType>&& states,
                                     std::shared_ptr<Context> context);
 

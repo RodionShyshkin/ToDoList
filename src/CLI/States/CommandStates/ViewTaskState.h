@@ -19,8 +19,8 @@ class ViewTaskState : public StateInterface {
   <StateInterface>    switchState()                                     override;
 
  private:
-  bool                input(const std::shared_ptr<IOInterface> &io_)    override;
-  void                output(const std::shared_ptr<IOInterface> &io_)   override;
+  bool                input(const std::shared_ptr<IOInterface> &io)    override;
+  void                output(const std::shared_ptr<IOInterface> &io)   override;
 
   static void         showTask(const TaskDTO&, const std::shared_ptr<IOInterface>&);
 
