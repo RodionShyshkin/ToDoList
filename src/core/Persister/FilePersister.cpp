@@ -4,7 +4,7 @@
 
 #include "FilePersister.h"
 
-FilePersister::FilePersister(std::fstream &file, TaskModelInterface &model) : file_(std::move(file)), model_(model) { }
+FilePersister::FilePersister(std::fstream &&file, TaskModelInterface &model) : file_(std::move(file)), model_(model) { }
 
 bool FilePersister::Save() {
   if(!file_.is_open()) return false;

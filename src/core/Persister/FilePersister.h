@@ -19,7 +19,7 @@
 
 class FilePersister : public PersisterInterface {
  public:
-  FilePersister(std::fstream& file, TaskModelInterface& model);
+  FilePersister(std::fstream&& file, TaskModelInterface& model);
 
  public:
   bool                  Save() override;

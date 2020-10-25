@@ -26,7 +26,7 @@ bool MainMenuState::input(const std::shared_ptr<IOInterface> &io) {
 void MainMenuState::output(const std::shared_ptr<IOInterface> &io) {
   io->outputWithBreak("------------------");
   io->outputWithBreak("Enter one of the following commands:");
-  io->outputWithBreak("> add, > show, > exit");
+  io->outputWithBreak("> save, > load, > add, > show, > exit");
   io->outputWithBreak("------------------");
 }
 

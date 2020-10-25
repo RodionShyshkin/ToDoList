@@ -26,6 +26,7 @@ void CommandStateMachine::execute() {
     }
     else if(result == StateResult::OPERATION_ERROR) {
       context_->io_->outputWithBreak("Operation error!");
+      return;
     }
     else if(result == StateResult::FATAL_ERROR) {
       context_->io_->outputWithBreak("Fatal error!");

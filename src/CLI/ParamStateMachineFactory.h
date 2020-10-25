@@ -23,7 +23,6 @@ namespace ParamStateMachineFactory {
   namespace AddSubtask {
     static ParamStateMachine create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
-      params.push(StateType::TASK_PARENT_PARAM);
       params.push(StateType::TASK_NAME_PARAM);
       params.push(StateType::TASK_LABEL_PARAM);
       params.push(StateType::TASK_PRIORITY_PARAM);

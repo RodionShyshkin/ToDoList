@@ -15,7 +15,6 @@
 #include <States/CommandStates/RemoveTaskState.h>
 #include <States/CommandStates/ViewTaskListState.h>
 #include <States/CommandStates/PersistTasksState.h>
-#include <States/ParamStates/ParentTaskParamState.h>
 #include <States/ParamStates/NameParamState.h>
 #include <States/ParamStates/LabelParamState.h>
 #include <States/ParamStates/DateParamState.h>
@@ -46,7 +45,6 @@ namespace StatesMap {
     states[StateType::TASK_LABEL_PARAM] = std::make_unique<LabelParamState>();
     states[StateType::TASK_PRIORITY_PARAM] = std::make_unique<PriorityParamState>();
     states[StateType::TASK_DATE_PARAM] = std::make_unique<DateParamState>();
-    states[StateType::TASK_PARENT_PARAM] = std::make_unique<ParentTaskParamState>();
     states[StateType::LIST_MODIFIER_PARAM] = std::make_unique<ModifierParamState>();
     states[StateType::LIST_SORTED_PARAM] = std::make_unique<SortedParamState>();
     states[StateType::TASK_ID_PARAM] = std::make_unique<IDParamState>();

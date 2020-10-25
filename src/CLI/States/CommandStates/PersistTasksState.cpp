@@ -3,21 +3,22 @@
 //
 
 #include <States/StateFactory.h>
+#include <ParamStateMachineFactory.h>
 #include "PersistTasksState.h"
 
 PersistTasksState::PersistTasksState(const PersistType &type) : type_(type) {}
 
 StateResult PersistTasksState::run(std::shared_ptr<Context> context) {
-  output(context->io_);
-  if(!input(context->io_)) return StateResult::INCORRECT_INPUT;
+  auto machine = ParamStateMachineFactory::PersistTasks::create(context);
+  machine.execute();
 
-
+  auto filepath = context->filepath_buffer_.getFilepath();
   if(PersistType::SAVE == type_) {
-    auto result = context->service_->Save(filepath_);
+    auto result = context->service_->Save(filepath);
     if(result.GetError().has_value()) return StateResult::OPERATION_ERROR;
   }
   else if(PersistType::LOAD == type_) {
-    auto result = context->service_->Load(filepath_);
+    auto result = context->service_->Load(filepath);
     if(result.GetError().has_value()) return StateResult::OPERATION_ERROR;
   }
 
@@ -31,12 +32,11 @@ StateType PersistTasksState::getType() {
 }
 
 bool PersistTasksState::input(const std::shared_ptr<IOInterface> &io) {
-  this->filepath_ = io->input();
   return true;
 }
 
 void PersistTasksState::output(const std::shared_ptr<IOInterface> &io) {
-  io->output("Enter a pathfile: ");
+
 }
 
 std::unique_ptr<StateInterface> PersistTasksState::switchState() {

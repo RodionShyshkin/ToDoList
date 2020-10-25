@@ -5,26 +5,21 @@
 #include "PostponeBuffer.h"
 
 PostponeBuffer::PostponeBuffer() {
-  this->clearBuffer();
+  clearBuffer();
 }
 
 void PostponeBuffer::clearBuffer() {
-  this->is_single_task_ = false;
-  this->new_date_ = boost::gregorian::date{boost::gregorian::not_a_date_time};
+  new_date_ = boost::gregorian::date{boost::gregorian::not_a_date_time};
 }
 
 bool PostponeBuffer::checkBufferFullness() const {
-  return (!this->is_single_task_ && !this->new_date_.is_not_a_date());
+  return (!new_date_.is_not_a_date());
 }
 
 void PostponeBuffer::setNewDate(const boost::gregorian::date &date) {
-  this->new_date_ = date;
-}
-
-bool PostponeBuffer::getSingleTaskFlag() const {
-  return this->is_single_task_;
+  new_date_ = date;
 }
 
 boost::gregorian::date PostponeBuffer::getNewDate() const {
-  return this->new_date_;
+  return new_date_;
 }

@@ -26,7 +26,6 @@ class PersistTasksState : public StateInterface {
   void              output(const std::shared_ptr<IOInterface> &io_) override;
 
  private:
-  std::string       filepath_;
   PersistType       type_;
 };
 

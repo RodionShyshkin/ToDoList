@@ -127,10 +127,6 @@ OperationResult<StorageError> TaskModel::RemoveTask(const TaskID &id) {
     subtasksToRemove.push_back(subtask.first);
     RemoveTask(subtask.first);
   }
-  for(const auto& subtask : subtasksToRemove) {
-    if(!task_storage_->RemoveTask(subtask)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);;
-    if(!task_view_->RemoveTask(subtask)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
-  }
 
   if(task->checkParent()) {
     auto parentID = task->GetParentID();

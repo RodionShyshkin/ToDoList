@@ -12,9 +12,10 @@ bool PostponeTaskState::input(const std::shared_ptr<IOInterface> &io) {
 
 StateResult PostponeTaskState::run(std::shared_ptr<Context> context) {
   if(!context->id_buffer_.checkBufferFullness()) {
+    task_list_flag_ = true;
     auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
     machine.execute();
-  }
+  } else task_list_flag_ = false;
 
   auto machine = ParamStateMachineFactory::PostponeTask::create(context);
   machine.execute();
@@ -25,9 +26,10 @@ StateResult PostponeTaskState::run(std::shared_ptr<Context> context) {
   auto result = context->service_->postponeTask(id, newdate);
   if(!result) return StateResult::OPERATION_ERROR;
 
-  if(context->postpone_buffer_.getSingleTaskFlag()) return StateResult::SUCCESS;
-
-  context->id_buffer_.clearBuffer();
+  if(task_list_flag_) {
+    context->id_buffer_.clearBuffer();
+    return StateResult::SUCCESS;
+  }
   return StateResult::SUCCESS;
 }
 
@@ -42,6 +44,6 @@ StateType PostponeTaskState::getType() {
 std::unique_ptr<StateInterface> PostponeTaskState::switchState() {
   std::unique_ptr<StateInterface> newstate;
   if(task_list_flag_) newstate = StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
-  else newstate = StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
+  else newstate = StateFactory::create(getStateTypeByCommand(Command::GETTASK));
   return std::move(newstate);
 }

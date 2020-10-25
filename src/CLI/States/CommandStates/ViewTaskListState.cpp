@@ -7,6 +7,7 @@
 #include "ViewTaskListState.h"
 
 StateResult ViewTaskListState::run(std::shared_ptr<Context> context) {
+  context->id_buffer_.clearBuffer();
   //Fulling buffer.
   if(!context->show_list_buffer_.checkBufferFullness()) {
     auto machine = ParamStateMachineFactory::ShowTasksList::create(context);

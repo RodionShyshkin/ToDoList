@@ -11,14 +11,14 @@ TaskService::TaskService() : model_api_(std::make_unique<TaskModel>()) { }
 TaskService::TaskService(std::unique_ptr<TaskModelInterface> model) : model_api_(std::move(model)) {}
 
 TaskDTO TaskService::getTask(const unsigned int& id) const {
-  auto model_dto = this->model_api_->getTask(TaskID{id});
+  auto model_dto = model_api_->getTask(TaskID{id});
 
   return TaskService::convertFromModelDTO(model_dto);
 }
 
 std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto allTasks = this->model_api_->getAllTasks();
+  auto allTasks = model_api_->getAllTasks();
   for(const auto& model_dto : allTasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -28,7 +28,7 @@ std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const 
 
 std::vector<TaskDTO> TaskService::getTasksForToday(const bool &sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = this->model_api_->getTasksForToday();
+  auto tasks = model_api_->getTasksForToday();
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -38,7 +38,7 @@ std::vector<TaskDTO> TaskService::getTasksForToday(const bool &sortByPriority) c
 
 std::vector<TaskDTO> TaskService::getTasksForWeek(const bool &sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = this->model_api_->getTasksForWeek();
+  auto tasks = model_api_->getTasksForWeek();
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -48,7 +48,7 @@ std::vector<TaskDTO> TaskService::getTasksForWeek(const bool &sortByPriority) co
 
 std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = this->model_api_->getTasksByLabel(label);
+  auto tasks = model_api_->getTasksByLabel(label);
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -58,7 +58,7 @@ std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, cons
 
 std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const bool& sortByPriority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = this->model_api_->getTasksByName(name);
+  auto tasks = model_api_->getTasksByName(name);
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -68,7 +68,7 @@ std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const 
 
 std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = this->model_api_->getTasksByPriority(priority);
+  auto tasks = model_api_->getTasksByPriority(priority);
   for(const auto& model_dto : tasks) {
     searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
   }
@@ -76,28 +76,28 @@ std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) c
 }
 
 OperationResult<StorageError> TaskService::addTask(const TaskDTO &task) {
-  return this->model_api_->AddTask(TaskService::convertToModelDTO(task));
+  return model_api_->AddTask(TaskService::convertToModelDTO(task));
 }
 
 OperationResult<StorageError> TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
-  return this->model_api_->AddSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
+  return model_api_->AddSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
 }
 
 OperationResult<StorageError> TaskService::RemoveTask(const unsigned int& id) {
-  return this->model_api_->RemoveTask(TaskID{id});
+  return model_api_->RemoveTask(TaskID{id});
 }
 
 bool TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
-  return this->model_api_->postponeTask(TaskID{id}, Date{newdate});
+  return model_api_->postponeTask(TaskID{id}, Date{newdate});
 }
 
 bool TaskService::completeTask(const unsigned int& id) {
-  return this->model_api_->completeTask(TaskID{id});
+  return model_api_->completeTask(TaskID{id});
 }
 
 OperationResult<PersistError> TaskService::Save(const std::string &filepath) {
   std::fstream file(filepath, std::ios::out);
-  auto persister = std::make_unique<FilePersister>(file, *model_api_);
+  auto persister = std::make_unique<FilePersister>(std::move(file), *model_api_);
   auto future = std::async(std::bind(&PersisterInterface::Save, persister.get()));
   future.wait();
   if(!future.get()) return OperationResult<PersistError>::Fail(PersistError::SAVE_ERROR);
@@ -107,9 +107,11 @@ OperationResult<PersistError> TaskService::Save(const std::string &filepath) {
 
 OperationResult<PersistError> TaskService::Load(const std::string &filepath) {
   std::fstream file(filepath, std::ios::in);
-  auto persister = std::make_unique<FilePersister>(file, *model_api_);
+  std::unique_ptr<TaskModelInterface> newmodel = std::make_unique<TaskModel>();
+  auto persister = std::make_unique<FilePersister>(std::move(file), *newmodel);
   auto future = std::async(std::bind(&PersisterInterface::Load, persister.get()));
   if(!future.get()) return OperationResult<PersistError>::Fail(PersistError::LOAD_ERROR);
+  std::swap(model_api_, newmodel);
 
   return OperationResult<PersistError>::Success();
 }

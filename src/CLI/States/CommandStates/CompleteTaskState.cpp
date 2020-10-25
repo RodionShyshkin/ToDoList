@@ -9,31 +9,28 @@
 bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io) { return true; }
 
 StateResult CompleteTaskState::run(std::shared_ptr<Context> context) {
+  task_list_flag_ = false;
+  std::cout << context->id_buffer_.checkBufferFullness() << std::endl;
   if(!context->id_buffer_.checkBufferFullness()) {
+    task_list_flag_ = true;
     auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
     machine.execute();
  }
 
-  auto id_from_buffer = context->id_buffer_.getID();
-  //if(!id_from_buffer_.has_value()) throw std::invalid_argument("I don't know such ID.");
-  task_id_ = id_from_buffer.value();
+  task_id_ = context->id_buffer_.getID().value();
 
-  auto result = context->service_->completeTask(this->task_id_);
+  auto result = context->service_->completeTask(task_id_);
   if(!result) return StateResult::OPERATION_ERROR;
 
   if(context->show_list_buffer_.checkBufferFullness()) {
-    task_list_flag_ = true;
-    context->id_buffer_.clearBuffer();
     return StateResult::SUCCESS;
   }
-  task_list_flag_ = false;
+
   context->show_list_buffer_.clearBuffer();
   return StateResult::SUCCESS;
 }
 
-void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io_) {
-  io_->outputWithBreak("[Output]: Completing task.");
-}
+void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io_) { }
 
 StateType CompleteTaskState::getType() {
   return StateType::COMPLETE_TASK;

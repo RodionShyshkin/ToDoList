@@ -21,7 +21,7 @@
 
 class StateInterface {
  public:
-  ~StateInterface()                                                                             = default;
+  virtual ~StateInterface() = default;
 
  public:
   /*

@@ -13,6 +13,7 @@ StateResult ViewTaskState::run(std::shared_ptr<Context> context) {
   if(context->show_list_buffer_.getList().empty()) return StateResult::INCORRECT_INPUT;
 
   if(!context->id_buffer_.checkBufferFullness()) {
+    std::cout << "allo" << std::endl;
     auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
     machine.execute();
  }
@@ -50,7 +51,7 @@ void ViewTaskState::showTask(const TaskDTO& task,
   io->outputWithBreak("Task Status: " + std::to_string(task.getStatus()));
   io->outputWithBreak("------------------");
   io->outputWithBreak("You can do following operations:");
-  io->outputWithBreak(">add_subtask, > complete, > remove, > postpone, > mm, > exit");
+  io->outputWithBreak("> add_subtask, > complete, > remove, > postpone, > show, > mm, > exit");
   io->outputWithBreak("------------------");
 }
 

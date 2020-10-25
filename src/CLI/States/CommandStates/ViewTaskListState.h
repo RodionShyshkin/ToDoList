@@ -20,7 +20,6 @@ class ViewTaskListState : public StateInterface {
 
   static void     showList(const std::vector<TaskDTO>&, const std::shared_ptr<IOInterface>&);
 
- private:
   Command         command_;
 };
 

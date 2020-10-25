@@ -5,13 +5,13 @@
 #include "LabelParamState.h"
 
 StateResult LabelParamState::run(std::shared_ptr<Context> context) {
-  if(context->show_list_buffer_.checkBufferFullness() && !context->show_list_buffer_.getByLabelFlag())
+  if(context->show_list_buffer_.checkBufferFullness() && !context->id_buffer_.checkBufferFullness())
     return StateResult::SUCCESS;
 
   output(context->io_);
   input(context->io_);
 
-  if(context->show_list_buffer_.checkBufferFullness() && context->show_list_buffer_.getByLabelFlag()) {
+  if(!context->show_list_buffer_.checkBufferFullness() && context->show_list_buffer_.getByLabelFlag()) {
     context->show_list_buffer_.setLabel(param_);
     return StateResult::SUCCESS;
   }

@@ -36,6 +36,7 @@ const std::map<StateType, std::set<Command>> AvailableCommands::available_comman
             Command::COMPLETETASK,
             Command::POSTPONETASK,
             Command::REMOVETASK,
+            Command::GETTASKLIST,
             Command::MAINMENU,
             Command::EXIT
         }

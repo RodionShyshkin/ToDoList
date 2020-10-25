@@ -8,7 +8,10 @@ StateResult DateParamState::run(std::shared_ptr<Context> context) {
   output(context->io_);
   if(!input(context->io_)) return StateResult::INCORRECT_INPUT;
 
-  context->add_task_buffer_.setDate(param_);
+  if(context->add_task_buffer_.checkBufferFullness())
+    context->add_task_buffer_.setDate(param_);
+  else
+    context->postpone_buffer_.setNewDate(param_);
 
   return StateResult::SUCCESS;
 }

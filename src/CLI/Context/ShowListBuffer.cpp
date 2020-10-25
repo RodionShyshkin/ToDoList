@@ -5,39 +5,40 @@
 #include "ShowListBuffer.h"
 
 ShowListBuffer::ShowListBuffer() {
-  this->clearBuffer();
+  clearBuffer();
 }
 
 void ShowListBuffer::clearBuffer() {
-  this->modifier_ = ListModifier::UNKNOWN;
-  this->is_sorted_ = false;
-  this->label_ = "";
-  this->list_.clear();
-  this->is_by_label_ = false;
+  modifier_ = ListModifier::UNKNOWN;
+  is_sorted_ = false;
+  label_ = "";
+  list_.clear();
+  is_by_label_ = false;
 }
 
 bool ShowListBuffer::checkBufferFullness() const {
-  if(!this->is_by_label_ && !this->label_.empty()) return false;
-  return (this->modifier_ != ListModifier::UNKNOWN);
+  if(!is_by_label_ && !label_.empty()) return false;
+  if(is_by_label_ && label_.empty()) return false;
+  return (modifier_ != ListModifier::UNKNOWN);
 }
 
 void ShowListBuffer::setModifier(const ListModifier &modifier) {
-  this->modifier_ = modifier;
-  if(this->modifier_ == ListModifier::BY_LABEL) this->is_by_label_ = true;
+  modifier_ = modifier;
+  if(modifier_ == ListModifier::BY_LABEL) is_by_label_ = true;
 }
 
-void ShowListBuffer::setSortedFlag(const bool &flag) { this->is_sorted_ = flag; }
+void ShowListBuffer::setSortedFlag(const bool &flag) { is_sorted_ = flag; }
 
-void ShowListBuffer::setLabel(const std::string& label) { this->label_ = label; }
+void ShowListBuffer::setLabel(const std::string& label) { label_ = label; }
 
-void ShowListBuffer::setList(const std::vector<TaskDTO>& list) { this->list_ = list; }
+void ShowListBuffer::setList(const std::vector<TaskDTO>& list) { list_ = list; }
 
-ListModifier ShowListBuffer::getModifier() const { return this->modifier_; }
+ListModifier ShowListBuffer::getModifier() const { return modifier_; }
 
-bool ShowListBuffer::getSortedFlag() const { return this->is_sorted_; }
+bool ShowListBuffer::getSortedFlag() const { return is_sorted_; }
 
-std::string ShowListBuffer::getLabel() const { return this->label_; }
+std::string ShowListBuffer::getLabel() const { return label_; }
 
-std::vector<TaskDTO> ShowListBuffer::getList() const { return this->list_; }
+std::vector<TaskDTO> ShowListBuffer::getList() const { return list_; }
 
-bool ShowListBuffer::getByLabelFlag() const { return this->is_by_label_; }
+bool ShowListBuffer::getByLabelFlag() const { return is_by_label_; }

@@ -27,12 +27,10 @@ class PostponeBuffer : public BufferInterface {
  public:
   void                    setNewDate(const boost::gregorian::date&);
 
-  bool                    getSingleTaskFlag()                         const;
   boost::gregorian::date  getNewDate()                                const;
 
  private:
   boost::gregorian::date  new_date_;
-  bool                    is_single_task_;
   
 };
 
