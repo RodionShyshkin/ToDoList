@@ -3,7 +3,9 @@
 //
 
 #include <States/StateFactory.h>
-#include <AvailableCommands.h>
+#include <Commands/CommandParser.h>
+#include <Commands/AvailableCommands.h>
+#include <Commands/CommandToStateType.h>
 #include "MainMenuState.h"
 
 MainMenuState::MainMenuState() : command_(Command::UNKNOWN) {}
@@ -18,8 +20,8 @@ StateResult MainMenuState::run(std::shared_ptr<Context> context) {
 }
 
 bool MainMenuState::input(const std::shared_ptr<IOInterface> &io) {
-  command_ = parseCommand(io->inputCommand());
-  if(!AvailableCommands::checkIsCommandAvailable(getType(), command_)) return false;
+  command_ = CommandParser::Parse(io->inputCommand());
+  if(!AvailableCommands::IsCommandAvailable(getType(), command_)) return false;
   return true;
 }
 
@@ -35,6 +37,6 @@ StateType MainMenuState::getType() {
 }
 
 std::unique_ptr<StateInterface> MainMenuState::switchState() {
-  auto newstate = StateFactory::create(getStateTypeByCommand(command_));
+  auto newstate = StateFactory::create(CommandToStateType::Convert(command_));
   return std::move(newstate);
 }

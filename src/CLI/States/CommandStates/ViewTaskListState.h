@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_VIEWTASKLISTSTATE_H_
 
 #include <States/StateInterface.h>
-#include <AvailableCommands.h>
+#include <Commands/Command.h>
 
 class ViewTaskListState : public StateInterface {
  public:

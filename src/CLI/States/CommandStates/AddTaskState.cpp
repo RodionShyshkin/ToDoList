@@ -4,6 +4,7 @@
 
 #include <ParamStateMachineFactory.h>
 #include <States/StateFactory.h>
+#include <Commands/CommandToStateType.h>
 #include "AddTaskState.h"
 
 bool AddTaskState::input(const std::shared_ptr<IOInterface> &io) { return true; }
@@ -34,6 +35,6 @@ StateType AddTaskState::getType() {
 }
 
 std::unique_ptr<StateInterface> AddTaskState::switchState() {
-  auto newstate = StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
+  auto newstate = StateFactory::create(CommandToStateType::Convert(Command::MAINMENU));
   return std::move(newstate);
 }

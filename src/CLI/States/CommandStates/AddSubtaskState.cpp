@@ -4,6 +4,7 @@
 
 #include <ParamStateMachineFactory.h>
 #include <States/StateFactory.h>
+#include <Commands/CommandToStateType.h>
 #include "AddSubtaskState.h"
 
 bool AddSubtaskState::input(const std::shared_ptr<IOInterface> &io) {
@@ -47,7 +48,7 @@ StateType AddSubtaskState::getType() {
 
 std::unique_ptr<StateInterface> AddSubtaskState::switchState() {
   std::unique_ptr<StateInterface> newstate;
-  if(task_list_flag_) newstate = StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
-  else newstate = StateFactory::create(getStateTypeByCommand(Command::GETTASK));
+  if(task_list_flag_) newstate = StateFactory::create(CommandToStateType::Convert(Command::GETTASKLIST));
+  else newstate = StateFactory::create(CommandToStateType::Convert(Command::GETTASK));
   return std::move(newstate);
 }

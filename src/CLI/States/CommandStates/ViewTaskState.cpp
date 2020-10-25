@@ -4,6 +4,9 @@
 
 #include <ParamStateMachineFactory.h>
 #include <States/StateFactory.h>
+#include <Commands/CommandParser.h>
+#include <Commands/AvailableCommands.h>
+#include <Commands/CommandToStateType.h>
 #include "ViewTaskState.h"
 
 ViewTaskState::ViewTaskState() : command_(Command::UNKNOWN) {}
@@ -27,9 +30,8 @@ StateResult ViewTaskState::run(std::shared_ptr<Context> context) {
 }
 
 bool ViewTaskState::input(const std::shared_ptr<IOInterface> &io) {
-  command_ = parseCommand(io->inputCommand());
-  if(!AvailableCommands::checkIsCommandAvailable(getType(), command_)) return false;
-  return true;
+  command_ = CommandParser::Parse(io->inputCommand());
+  return AvailableCommands::IsCommandAvailable(getType(), command_);
 }
 
 void ViewTaskState::output(const std::shared_ptr<IOInterface> &io) {
@@ -55,6 +57,6 @@ void ViewTaskState::showTask(const TaskDTO& task,
 }
 
 std::unique_ptr<StateInterface> ViewTaskState::switchState() {
-  auto newstate = StateFactory::create(getStateTypeByCommand(command_));
+  auto newstate = StateFactory::create(CommandToStateType::Convert(command_));
   return std::move(newstate);
 }

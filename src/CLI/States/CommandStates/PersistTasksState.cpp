@@ -4,6 +4,7 @@
 
 #include <States/StateFactory.h>
 #include <ParamStateMachineFactory.h>
+#include <Commands/CommandToStateType.h>
 #include "PersistTasksState.h"
 
 PersistTasksState::PersistTasksState(const PersistType &type) : type_(type) {}
@@ -44,6 +45,6 @@ void PersistTasksState::output(const std::shared_ptr<IOInterface> &io) {
 }
 
 std::unique_ptr<StateInterface> PersistTasksState::switchState() {
-  auto newstate = StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
+  auto newstate = StateFactory::create(CommandToStateType::Convert(Command::MAINMENU));
   return std::move(newstate);
 }

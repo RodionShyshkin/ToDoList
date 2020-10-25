@@ -5,6 +5,7 @@
 
 #include <ParamStateMachineFactory.h>
 #include <States/StateFactory.h>
+#include <Commands/CommandToStateType.h>
 #include "RemoveTaskState.h"
 
 bool RemoveTaskState::input(const std::shared_ptr<IOInterface> &io) { return true; }
@@ -42,7 +43,7 @@ StateType RemoveTaskState::getType() {
 
 std::unique_ptr<StateInterface> RemoveTaskState::switchState() {
   std::unique_ptr<StateInterface> newstate;
-  if(task_list_flag_) newstate = StateFactory::create(getStateTypeByCommand(Command::GETTASKLIST));
-  else newstate = StateFactory::create(getStateTypeByCommand(Command::MAINMENU));
+  if(task_list_flag_) newstate = StateFactory::create(CommandToStateType::Convert(Command::GETTASKLIST));
+  else newstate = StateFactory::create(CommandToStateType::Convert(Command::MAINMENU));
   return std::move(newstate);
 }

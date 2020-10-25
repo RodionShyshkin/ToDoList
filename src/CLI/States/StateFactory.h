@@ -23,7 +23,4 @@ class StateFactory {
   static std::unique_ptr<StateInterface> create(const StateType& type);
 };
 
-
-
-
 #endif //TODOLIST_SRC_CLI_STATES_STATEFACTORY_H_

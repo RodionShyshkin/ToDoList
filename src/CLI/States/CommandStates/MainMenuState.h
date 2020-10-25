@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CLI_STATES_MAINMENUSTATE_H_
 
 #include <States/StateInterface.h>
-#include <CommandParser.h>
+#include <Commands/Command.h>
 
 class MainMenuState : public StateInterface {
  public:
