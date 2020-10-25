@@ -5,8 +5,8 @@
 #include "CommandStateMachine.h"
 #include "States/StateFactory.h"
 
-CommandStateMachine CommandStateMachine::create(const StateType &start_state, std::shared_ptr<Context>&& context) {
-  return CommandStateMachine(start_state, std::move(context));
+CommandStateMachine CommandStateMachine::create(StateType &&start_state, std::shared_ptr<Context>&& context) {
+  return CommandStateMachine(std::move(start_state), std::move(context));
 }
 
 CommandStateMachine::CommandStateMachine(const StateType &start_state, std::shared_ptr<Context>&& context)

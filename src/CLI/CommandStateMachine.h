@@ -11,7 +11,7 @@
 
 class CommandStateMachine {
  public:
-  static CommandStateMachine create(const StateType& start_state,
+  static CommandStateMachine create(StateType &&start_state,
                                     std::shared_ptr<Context>&& context);
 
   void execute();
