@@ -12,8 +12,6 @@
 ViewTaskState::ViewTaskState() : command_(Command::UNKNOWN) {}
 
 StateResult ViewTaskState::run(std::shared_ptr<Context> context) {
-  if(!context->show_list_buffer_.checkBufferFullness()) return StateResult::FATAL_ERROR;
-
   //Filling context.
   if(!context->id_buffer_.checkBufferFullness()) {
     auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
@@ -21,8 +19,9 @@ StateResult ViewTaskState::run(std::shared_ptr<Context> context) {
   }
 
   //Request to Core.
-  auto task_dto = context->service_->getTask(context->id_buffer_.getID().value()).value();
-  ViewTaskState::showTask(task_dto, context->io_);
+  auto task_dto = context->service_->getTask(context->id_buffer_.getID().value());
+  if(!task_dto.has_value()) return StateResult::OPERATION_ERROR;
+  ViewTaskState::showTask(task_dto.value(), context->io_);
 
   //Waiting for command.
   if(!input(context->io_)) return StateResult::INCORRECT_INPUT;
@@ -35,7 +34,6 @@ bool ViewTaskState::input(const std::shared_ptr<IOInterface> &io) {
 }
 
 void ViewTaskState::output(const std::shared_ptr<IOInterface> &io) {
-  io->outputWithBreak("[Output]: Single task view mode.");
 }
 
 StateType ViewTaskState::getType() {

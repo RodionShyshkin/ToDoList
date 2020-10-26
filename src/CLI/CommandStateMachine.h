@@ -17,7 +17,7 @@ class CommandStateMachine {
   void execute();
 
  private:
-  CommandStateMachine(const StateType& start_state,
+  CommandStateMachine(StateType&& state,
                       std::shared_ptr<Context>&& context);
 
  private:

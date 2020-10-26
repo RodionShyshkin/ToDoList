@@ -9,7 +9,7 @@ CommandStateMachine CommandStateMachine::create(StateType &&start_state, std::sh
   return CommandStateMachine(std::move(start_state), std::move(context));
 }
 
-CommandStateMachine::CommandStateMachine(const StateType &start_state, std::shared_ptr<Context>&& context)
+CommandStateMachine::CommandStateMachine(StateType&& start_state, std::shared_ptr<Context>&& context)
 :
 context_(context) {
   state_ = StateFactory::create(start_state);
@@ -26,10 +26,6 @@ void CommandStateMachine::execute() {
     }
     else if(result == StateResult::OPERATION_ERROR) {
       context_->io_->outputWithBreak("Operation error!");
-      return;
-    }
-    else if(result == StateResult::FATAL_ERROR) {
-      context_->io_->outputWithBreak("Fatal error!");
       return;
     }
     else throw std::runtime_error("Not all enum is coveraged by if-else in CommandStateMachine.");

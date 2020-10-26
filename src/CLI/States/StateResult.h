@@ -10,8 +10,8 @@
 /*
  * Represents the result of running some state.
  *
- * @see States/StateInterface.h
- * @see States/ErrorType.h
+ * @see CommandStates/StateInterface.h
+ * @see CommandStates/ErrorType.h
  *
  * @author Rodion Shyshkin
  */
@@ -19,8 +19,7 @@
 enum class StateResult {
   SUCCESS,
   INCORRECT_INPUT,
-  OPERATION_ERROR,
-  FATAL_ERROR
+  OPERATION_ERROR
 };
 
 #endif //TODOLIST_SRC_CLI_STATES_STATERESULT_H_

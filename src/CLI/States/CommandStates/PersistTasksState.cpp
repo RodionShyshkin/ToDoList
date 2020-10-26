@@ -31,8 +31,8 @@ StateResult PersistTasksState::run(std::shared_ptr<Context> context) {
 }
 
 StateType PersistTasksState::getType() {
-  if(PersistType::SAVE == this->type_) return StateType::SAVE_TASKS;
-  else if(PersistType::LOAD == this->type_) return StateType::LOAD_TASKS;
+  if(PersistType::SAVE == type_) return StateType::SAVE_TASKS;
+  else if(PersistType::LOAD == type_) return StateType::LOAD_TASKS;
   throw std::runtime_error("Not full if coverage of enum class in PersistTasksState");
 }
 

@@ -13,8 +13,6 @@ class MockState : public StateInterface {
   MOCK_METHOD(StateResult, run, (std::shared_ptr<Context>), (override));
   MOCK_METHOD(std::unique_ptr<StateInterface>, switchState, (), (override));
   MOCK_METHOD(StateType, getType, (), (override));
-
- private:
   MOCK_METHOD(bool, input, (const std::shared_ptr<IOInterface>&), (override));
   MOCK_METHOD(void, output, (const std::shared_ptr<IOInterface>&), (override));
 };

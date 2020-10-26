@@ -10,11 +10,14 @@
 
 class ViewTaskListState : public StateInterface {
  public:
+  ViewTaskListState();
+
+ public:
   StateResult     run(std::shared_ptr<Context> context)             override;
   StateType       getType()                                         override;
   std::unique_ptr<StateInterface> switchState() override;
 
- private:
+ public:
   bool            input(const std::shared_ptr<IOInterface> &io)    override;
   void            output(const std::shared_ptr<IOInterface> &io)   override;
 

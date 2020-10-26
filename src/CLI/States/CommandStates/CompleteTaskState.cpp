@@ -12,7 +12,6 @@ bool CompleteTaskState::input(const std::shared_ptr<IOInterface> &io) { return t
 StateResult CompleteTaskState::run(std::shared_ptr<Context> context) {
   //Filling context.
   task_list_flag_ = false;
-  std::cout << context->id_buffer_.checkBufferFullness() << std::endl;
   if(!context->id_buffer_.checkBufferFullness()) {
     task_list_flag_ = true;
     auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);

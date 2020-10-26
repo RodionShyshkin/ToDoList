@@ -9,6 +9,8 @@
 #include <Commands/CommandToStateType.h>
 #include "ViewTaskListState.h"
 
+ViewTaskListState::ViewTaskListState() : command_(Command::UNKNOWN) {}
+
 StateResult ViewTaskListState::run(std::shared_ptr<Context> context) {
   context->id_buffer_.clearBuffer();
   //Fulling buffer.

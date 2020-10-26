@@ -14,7 +14,7 @@
 /*
  * A common interface for all states.
  *
- * @see States/StateResult.h
+ * @see CommandStates/StateResult.h
  *
  * @author Rodion Shyshkin
  */

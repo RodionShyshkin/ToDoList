@@ -6,6 +6,7 @@
 #define TODOLIST_SRC_CLI_COMMANDSTATEMACHINEFACTORY_H_
 
 #include <IO/ConsoleIO.h>
+#include <States/StateFactory.h>
 #include "CommandStateMachine.h"
 
 namespace CommandStateMachineFactory {

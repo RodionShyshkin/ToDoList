@@ -8,7 +8,7 @@
 /*
  * Represents all types of states which can be created.
  *
- * @see States/StateFactory.h
+ * @see CommandStates/StateFactory.h
  *
  * @author Rodion Shyshkin
  */

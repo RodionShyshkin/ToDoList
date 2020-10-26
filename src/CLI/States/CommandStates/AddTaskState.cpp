@@ -27,7 +27,6 @@ StateResult AddTaskState::run(std::shared_ptr<Context> context) {
 }
 
 void AddTaskState::output(const std::shared_ptr<IOInterface> &io) {
-  io->outputWithBreak("[Output]: Adding new task.");
 }
 
 StateType AddTaskState::getType() {

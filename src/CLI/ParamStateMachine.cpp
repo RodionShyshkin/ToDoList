@@ -20,7 +20,7 @@ void ParamStateMachine::execute() {
       states_queue_.pop();
     }
     else {
-      std::cout << "error" << std::endl;
+      context_->io_->outputWithBreak("error");
       continue;
     }
   }
