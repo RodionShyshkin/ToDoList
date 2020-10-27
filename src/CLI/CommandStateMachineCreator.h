@@ -2,14 +2,14 @@
 // Created by Rodion Shyshkin on 25.10.2020.
 //
 
-#ifndef TODOLIST_SRC_CLI_COMMANDSTATEMACHINEFACTORY_H_
-#define TODOLIST_SRC_CLI_COMMANDSTATEMACHINEFACTORY_H_
+#ifndef TODOLIST_SRC_CLI_COMMANDSTATEMACHINECREATOR_H_
+#define TODOLIST_SRC_CLI_COMMANDSTATEMACHINECREATOR_H_
 
 #include <IO/ConsoleIO.h>
 #include <States/StateFactory.h>
 #include "CommandStateMachine.h"
 
-namespace CommandStateMachineFactory {
+namespace command_state_machine_creator {
   static CommandStateMachine StartCLI() {
     std::shared_ptr<Context> context = std::make_shared<Context>(
         std::make_shared<TaskService>(), std::make_shared<ConsoleIO>());
@@ -18,4 +18,4 @@ namespace CommandStateMachineFactory {
   }
 }
 
-#endif //TODOLIST_SRC_CLI_COMMANDSTATEMACHINEFACTORY_H_
+#endif //TODOLIST_SRC_CLI_COMMANDSTATEMACHINECREATOR_H_

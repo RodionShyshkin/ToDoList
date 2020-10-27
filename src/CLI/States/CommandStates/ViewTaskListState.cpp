@@ -2,7 +2,7 @@
 // Created by rodion on 8/21/20.
 //
 
-#include <ParamStateMachineFactory.h>
+#include <ParamStateMachineCreator.h>
 #include <States/StateFactory.h>
 #include <Commands/CommandParser.h>
 #include <Commands/AvailableCommands.h>
@@ -15,7 +15,7 @@ StateResult ViewTaskListState::run(std::shared_ptr<Context> context) {
   context->id_buffer_.clearBuffer();
   //Fulling buffer.
   if(!context->show_list_buffer_.checkBufferFullness()) {
-    auto machine = ParamStateMachineFactory::ShowTasksList::create(context);
+    auto machine = param_state_machine_creator::get_tasks_list_graph::create(context);
     machine.execute();
   }
 
@@ -23,16 +23,17 @@ StateResult ViewTaskListState::run(std::shared_ptr<Context> context) {
   auto modifier = context->show_list_buffer_.getModifier();
   std::vector<TaskDTO> vector;
   if(modifier == ListModifier::ALL) {
-    vector = context->service_->getAllTasks(context->show_list_buffer_.getSortedFlag());
+    vector = context->service_->GetAllTasks(context->show_list_buffer_.getSortedFlag());
   }
   else if(modifier == ListModifier::TODAY) {
-    vector = context->service_->getTasksForToday(context->show_list_buffer_.getSortedFlag());
+    vector = context->service_->GetTasksForToday(context->show_list_buffer_.getSortedFlag());
   }
   else if(modifier == ListModifier::WEEK) {
-    vector = context->service_->getTasksForWeek(context->show_list_buffer_.getSortedFlag());
+    vector = context->service_->GetTasksForWeek(context->show_list_buffer_.getSortedFlag());
   }
   else if(modifier == ListModifier::BY_LABEL) {
-    vector = context->service_->getTasksByLabel(context->show_list_buffer_.getLabel(), context->show_list_buffer_.getSortedFlag());
+    vector = context->service_->GetTasksByLabel(context->show_list_buffer_.getLabel(),
+                                                context->show_list_buffer_.getSortedFlag());
   }
 
   //Saving vector in context.
@@ -50,8 +51,8 @@ StateResult ViewTaskListState::run(std::shared_ptr<Context> context) {
 }
 
 bool ViewTaskListState::input(const std::shared_ptr<IOInterface> &io) {
-  command_ = CommandParser::Parse(io->inputCommand());
-  return AvailableCommands::IsCommandAvailable(getType(), command_);
+  command_ = command_parser::Parse(io->inputCommand());
+  return available_commands::IsCommandAvailable(getType(), command_);
 }
 
 void ViewTaskListState::output(const std::shared_ptr<IOInterface> &io) {  }
@@ -82,6 +83,6 @@ void ViewTaskListState::showList(const std::vector<TaskDTO>& list,
 }
 
 std::unique_ptr<StateInterface> ViewTaskListState::switchState() {
-  auto newstate = StateFactory::create(CommandToStateType::Convert(command_));
+  auto newstate = StateFactory::create(command_to_state_type::Convert(command_));
   return std::move(newstate);
 }

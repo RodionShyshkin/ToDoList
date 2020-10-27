@@ -8,14 +8,14 @@
 #include <MemoryModel/Task/TaskEntity.h>
 #include "ModelTaskDTO.h"
 
-namespace ModelTaskDTOConverter {
+namespace model_task_dto_converter {
   static ModelTaskDTO Convert(const TaskEntity& task) {
     if(task.GetID().GetID() != task.GetParentID().GetID())
-      return ModelTaskDTO::createWithParent(task.GetID(), task.GetName(),
+      return ModelTaskDTO::CreateWithParent(task.GetID(), task.GetName(),
                                             task.GetLabel(), task.GetPriority(),
                                             task.GetDueTime(), task.GetStatus(),
                                             task.GetParentID());
-    return ModelTaskDTO::createWithoutParent(task.GetID(), task.GetName(),
+    return ModelTaskDTO::CreateWithoutParent(task.GetID(), task.GetName(),
                                              task.GetLabel(), task.GetPriority(),
                                              task.GetDueTime(), task.GetStatus());
   }

@@ -86,14 +86,14 @@ TEST_F(ViewTaskListStateTest, shouldRunCorrectlyIfVectorIsNotEmpty) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   vector.push_back(dto);
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getAllTasks).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetAllTasks).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("all"))
                                       .WillOnce(testing::Return("no"));
@@ -114,7 +114,7 @@ TEST_F(ViewTaskListStateTest, shouldNotRunIfVectorIsEmpty) {
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getAllTasks).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetAllTasks).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("all"))
                                       .WillOnce(testing::Return("no"));
@@ -132,14 +132,14 @@ TEST_F(ViewTaskListStateTest, shouldNotRunSuccessIfCommandIsIncorrect) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   vector.push_back(dto);
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getAllTasks).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetAllTasks).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("all"))
       .WillOnce(testing::Return("no"));
@@ -167,14 +167,14 @@ TEST_F(ViewTaskListStateTest, ShouldSwitchStateIfThereIsCorrectCommand) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   vector.push_back(dto);
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getAllTasks).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetAllTasks).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("all"))
       .WillOnce(testing::Return("no"));
@@ -194,14 +194,14 @@ TEST_F(ViewTaskListStateTest, shouldRunCorrectlyWithTodayModifier) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   vector.push_back(dto);
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getTasksForToday).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetTasksForToday).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("today"))
       .WillOnce(testing::Return("no"));
@@ -219,14 +219,14 @@ TEST_F(ViewTaskListStateTest, shouldRunCorrectlyWithWeekModifier) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   vector.push_back(dto);
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getTasksForWeek).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetTasksForWeek).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("week"))
       .WillOnce(testing::Return("no"));
@@ -244,14 +244,14 @@ TEST_F(ViewTaskListStateTest, shouldRunCorrectlyWithLabelModifier) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   vector.push_back(dto);
 
   auto state = ViewTaskListState{};
 
-  EXPECT_CALL(*service, getTasksByLabel).Times(1).WillOnce(testing::Return(vector));
+  EXPECT_CALL(*service, GetTasksByLabel).Times(1).WillOnce(testing::Return(vector));
 
   EXPECT_CALL(*io, input).Times(3).WillOnce(testing::Return("by_label"))
       .WillOnce(testing::Return("no"))

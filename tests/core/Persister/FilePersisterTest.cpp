@@ -14,24 +14,24 @@ class FilePersisterTest : public ::testing::Test {
     auto subtask = TaskDTO::create(2, "subname", "label", Priority::LOW,
                                    boost::gregorian::date{2012-10-10}, false);
 
-    auto subsubtask = TaskDTO::create(3, "subsubname", "label", Priority::LOW,
+    auto subsubtask = TaskDTO::Create(3, "subsubname", "label", Priority::LOW,
                                       boost::gregorian::date{2012-10-10}, false);
 
-    service.addTask(task);
+    service.add_task_graph(task);
     service.addSubtask(task.getID(), subtask);
-    service.addSubtask(subtask.getID(), subsubtask);*/
+    service.add_subtask_graph(subtask.GetID(), subsubtask);*/
 
 
-    auto task = ModelTaskDTO::createWithoutParent(1, "name", "label", Priority::MEDIUM,
-                                                  boost::gregorian::date{2012-10-10}, false);
-    auto subtask = ModelTaskDTO::createWithParent(2, "subname", "label", Priority::MEDIUM,
-                                                  boost::gregorian::date{2012-10-10}, false, 1);
-    auto subsubtask = ModelTaskDTO::createWithParent(3, "subsubname", "label", Priority::MEDIUM,
-                                                     boost::gregorian::date{2012-10-10}, false, 2);
+    auto task = ModelTaskDTO::CreateWithoutParent(1, "name", "label", Priority::MEDIUM,
+                                                  boost::gregorian::date{2012 - 10 - 10}, false);
+    auto subtask = ModelTaskDTO::CreateWithParent(2, "subname", "label", Priority::MEDIUM,
+                                                  boost::gregorian::date{2012 - 10 - 10}, false, 1);
+    auto subsubtask = ModelTaskDTO::CreateWithParent(3, "subsubname", "label", Priority::MEDIUM,
+                                                     boost::gregorian::date{2012 - 10 - 10}, false, 2);
 
     savemodel.AddTask(task);
-    savemodel.AddSubtask(task.getID(), subtask);
-    savemodel.AddSubtask(subtask.getID(), subsubtask);
+    savemodel.AddSubtask(task.GetID(), subtask);
+    savemodel.AddSubtask(subtask.GetID(), subsubtask);
   }
 
   void TearDown() override {
@@ -67,8 +67,8 @@ TEST_F(FilePersisterTest, shouldLoad) {
   auto result = persister.Load();
   ASSERT_TRUE(result);
 
-  auto tasks = loadmodel.getAllTasks();
-  ASSERT_EQ(tasks.size(), savemodel.getAllTasks().size());
+  auto tasks = loadmodel.GetAllTasks();
+  ASSERT_EQ(tasks.size(), savemodel.GetAllTasks().size());
 }
 
 TEST_F(FilePersisterTest, shouldNotLoadFromIncorrectFile) {

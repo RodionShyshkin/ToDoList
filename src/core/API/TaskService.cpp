@@ -10,90 +10,90 @@ TaskService::TaskService() : model_api_(std::make_unique<TaskModel>()) { }
 
 TaskService::TaskService(std::unique_ptr<TaskModelInterface> model) : model_api_(std::move(model)) {}
 
-std::optional<TaskDTO> TaskService::getTask(const unsigned int& id) const {
-  auto result = model_api_->getTask(TaskID{id});
+std::optional<TaskDTO> TaskService::GetTask(const unsigned int& id) const {
+  auto result = model_api_->GetTask(TaskID{id});
   if(!result.has_value()) return std::nullopt;
 
-  return TaskService::convertFromModelDTO(result.value());
+  return api_converter::ConvertFromModelDTO(result.value());
 }
 
-std::vector<TaskDTO> TaskService::getAllTasks(const bool& sortByPriority) const {
+std::vector<TaskDTO> TaskService::GetAllTasks(const bool& sort_by_priority) const {
   std::vector<TaskDTO> searchResult;
-  auto allTasks = model_api_->getAllTasks();
+  auto allTasks = model_api_->GetAllTasks();
   for(const auto& model_dto : allTasks) {
-    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
+    searchResult.push_back(api_converter::ConvertFromModelDTO(model_dto));
   }
-  if(sortByPriority) return sortedByPriority(searchResult);
+  if(sort_by_priority) return api_converter::GetSortedByPriority(searchResult);
   return searchResult;
 }
 
-std::vector<TaskDTO> TaskService::getTasksForToday(const bool &sortByPriority) const {
+std::vector<TaskDTO> TaskService::GetTasksForToday(const bool &sort_by_priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = model_api_->getTasksForToday();
+  auto tasks = model_api_->GetTasksForToday();
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
+    searchResult.push_back(api_converter::ConvertFromModelDTO(model_dto));
   }
-  if(sortByPriority) return sortedByPriority(searchResult);
+  if(sort_by_priority) return api_converter::GetSortedByPriority(searchResult);
   return searchResult;
 }
 
-std::vector<TaskDTO> TaskService::getTasksForWeek(const bool &sortByPriority) const {
+std::vector<TaskDTO> TaskService::GetTasksForWeek(const bool &sort_by_priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = model_api_->getTasksForWeek();
+  auto tasks = model_api_->GetTasksForWeek();
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
+    searchResult.push_back(api_converter::ConvertFromModelDTO(model_dto));
   }
-  if(sortByPriority) return sortedByPriority(searchResult);
+  if(sort_by_priority) return api_converter::GetSortedByPriority(searchResult);
   return searchResult;
 }
 
-std::vector<TaskDTO> TaskService::getTasksByLabel(const std::string &label, const bool& sortByPriority) const {
+std::vector<TaskDTO> TaskService::GetTasksByLabel(const std::string &label, const bool& sort_by_priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = model_api_->getTasksByLabel(label);
+  auto tasks = model_api_->GetTasksByLabel(label);
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
+    searchResult.push_back(api_converter::ConvertFromModelDTO(model_dto));
   }
-  if(sortByPriority) return sortedByPriority(searchResult);
+  if(sort_by_priority) return api_converter::GetSortedByPriority(searchResult);
   return searchResult;
 }
 
-std::vector<TaskDTO> TaskService::getTasksByName(const std::string &name, const bool& sortByPriority) const {
+std::vector<TaskDTO> TaskService::GetTasksByName(const std::string &name, const bool& sort_by_priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = model_api_->getTasksByName(name);
+  auto tasks = model_api_->GetTasksByName(name);
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
+    searchResult.push_back(api_converter::ConvertFromModelDTO(model_dto));
   }
-  if(sortByPriority) return sortedByPriority(searchResult);
+  if(sort_by_priority) return api_converter::GetSortedByPriority(searchResult);
   return searchResult;
 }
 
-std::vector<TaskDTO> TaskService::getTasksByPriority(const Priority& priority) const {
+std::vector<TaskDTO> TaskService::GetTasksByPriority(const Priority& priority) const {
   std::vector<TaskDTO> searchResult;
-  auto tasks = model_api_->getTasksByPriority(priority);
+  auto tasks = model_api_->GetTasksByPriority(priority);
   for(const auto& model_dto : tasks) {
-    searchResult.push_back(TaskService::convertFromModelDTO(model_dto));
+    searchResult.push_back(api_converter::ConvertFromModelDTO(model_dto));
   }
   return searchResult;
 }
 
-OperationResult<StorageError> TaskService::addTask(const TaskDTO &task) {
-  return model_api_->AddTask(TaskService::convertToModelDTO(task));
+OperationResult<StorageError> TaskService::AddTask(const TaskDTO &task) {
+  return model_api_->AddTask(api_converter::ConvertToModelDTO(task));
 }
 
-OperationResult<StorageError> TaskService::addSubtask(const unsigned int& id, const TaskDTO& subtask) {
-  return model_api_->AddSubtask(TaskID{id}, TaskService::convertToModelDTO(subtask));
+OperationResult<StorageError> TaskService::AddSubtask(const unsigned int& id, const TaskDTO& subtask) {
+  return model_api_->AddSubtask(TaskID{id}, api_converter::ConvertToModelDTO(subtask));
 }
 
 OperationResult<StorageError> TaskService::RemoveTask(const unsigned int& id) {
   return model_api_->RemoveTask(TaskID{id});
 }
 
-bool TaskService::postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) {
-  return model_api_->postponeTask(TaskID{id}, Date{newdate});
+bool TaskService::PostponeTask(const unsigned int& id, const boost::gregorian::date& new_date) {
+  return model_api_->PostponeTask(TaskID{id}, Date{new_date});
 }
 
-bool TaskService::completeTask(const unsigned int& id) {
-  return model_api_->completeTask(TaskID{id});
+bool TaskService::CompleteTask(const unsigned int& id) {
+  return model_api_->CompleteTask(TaskID{id});
 }
 
 OperationResult<PersistError> TaskService::Save(const std::string &filepath) {
@@ -115,20 +115,4 @@ OperationResult<PersistError> TaskService::Load(const std::string &filepath) {
   std::swap(model_api_, newmodel);
 
   return OperationResult<PersistError>::Success();
-}
-
-std::vector<TaskDTO> TaskService::sortedByPriority(std::vector<TaskDTO> vector) {
-  sort(vector.begin(), vector.end(),
-              [](const TaskDTO& lhs, const TaskDTO& rhs) { return lhs.getPriority() < rhs.getPriority(); });
-  return vector;
-}
-
-TaskDTO TaskService::convertFromModelDTO(const ModelTaskDTO &model_dto) {
-  return TaskDTO::create(model_dto.getID().GetID(), model_dto.getName(), model_dto.getLabel(),
-                         model_dto.getPriority(), model_dto.getDueDate().GetDate(), model_dto.getStatus());
-}
-
-ModelTaskDTO TaskService::convertToModelDTO(const TaskDTO &dto) {
- return ModelTaskDTO::createWithoutParent(TaskID{dto.getID()}, dto.getName(), dto.getLabel(),
-                             dto.getPriority(), Date{dto.getDueDate()}, dto.getStatus());
 }

@@ -20,7 +20,7 @@ TaskDTO::TaskDTO(const unsigned int& id,
   this->task_status_ = status;
 }
 
-TaskDTO TaskDTO::create(const unsigned int& id,
+TaskDTO TaskDTO::Create(const unsigned int& id,
                         const std::string &name,
                         const std::string &label,
                         const Priority &priority,

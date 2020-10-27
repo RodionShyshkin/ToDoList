@@ -15,7 +15,7 @@ StateResult NameParamState::run(std::shared_ptr<Context> context) {
 
 bool NameParamState::input(const std::shared_ptr<IOInterface> &io) {
   param_ = io->input();
-  auto validated = Validator::ValidateName(param_);
+  auto validated = validator::ValidateName(param_);
   return validated;
 }
 

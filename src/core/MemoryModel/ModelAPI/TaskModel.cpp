@@ -18,74 +18,74 @@ TaskModel::TaskModel(std::unique_ptr<TaskStorageInterface> storage,
                         task_storage_(std::move(storage)), task_view_(std::move(view)),
                         generate_id_(std::move(generator)) { }
 
-std::optional<ModelTaskDTO> TaskModel::getTask(const TaskID &id) const {
+std::optional<ModelTaskDTO> TaskModel::GetTask(const TaskID &id) const {
   auto task = task_storage_->GetTask(id);
   if(task == nullptr) return std::nullopt;
-  return ModelTaskDTOConverter::Convert(*task);
+  return model_task_dto_converter::Convert(*task);
 }
 
-std::vector<ModelTaskDTO> TaskModel::getAllTasks() const {
-  auto tasks = this->task_storage_->GetAllTasks();
+std::vector<ModelTaskDTO> TaskModel::GetAllTasks() const {
+  auto tasks =  task_storage_->GetAllTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTOConverter::Convert(task));
+    result.push_back(model_task_dto_converter::Convert(task));
   }
   return result;
 }
 
-std::vector<ModelTaskDTO> TaskModel::getTasksForToday() const {
-  auto tasks = this->task_view_->GetTodayTasks();
+std::vector<ModelTaskDTO> TaskModel::GetTasksForToday() const {
+  auto tasks =  task_view_->GetTodayTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTOConverter::Convert(task));
+    result.push_back(model_task_dto_converter::Convert(task));
   }
   return result;
 }
 
-std::vector<ModelTaskDTO> TaskModel::getTasksForWeek() const {
-  auto tasks = this->task_view_->GetWeekTasks();
+std::vector<ModelTaskDTO> TaskModel::GetTasksForWeek() const {
+  auto tasks =  task_view_->GetWeekTasks();
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
 
-    result.push_back(ModelTaskDTOConverter::Convert(task));
+    result.push_back(model_task_dto_converter::Convert(task));
   }
   return result;
 }
 
-std::vector<ModelTaskDTO> TaskModel::getTasksByLabel(const std::string &label) const {
-  auto tasks = this->task_view_->GetTasksByLabel(label);
+std::vector<ModelTaskDTO> TaskModel::GetTasksByLabel(const std::string &label) const {
+  auto tasks =  task_view_->GetTasksByLabel(label);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTOConverter::Convert(task));
+    result.push_back(model_task_dto_converter::Convert(task));
   }
   return result;
 }
 
-std::vector<ModelTaskDTO> TaskModel::getTasksByName(const std::string &name) const {
-  auto tasks = this->task_view_->GetTasksByName(name);
+std::vector<ModelTaskDTO> TaskModel::GetTasksByName(const std::string &name) const {
+  auto tasks =  task_view_->GetTasksByName(name);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTOConverter::Convert(task));
+    result.push_back(model_task_dto_converter::Convert(task));
   }
   return result;
 }
 
-std::vector<ModelTaskDTO> TaskModel::getTasksByPriority(const Priority &priority) const {
-  auto tasks = this->task_view_->GetTasksByPriority(priority);
+std::vector<ModelTaskDTO> TaskModel::GetTasksByPriority(const Priority &priority) const {
+  auto tasks =  task_view_->GetTasksByPriority(priority);
   std::vector<ModelTaskDTO> result;
   for(const auto& task : tasks) {
-    result.push_back(ModelTaskDTOConverter::Convert(task));
+    result.push_back(model_task_dto_converter::Convert(task));
   }
   return result;
 }
 
 OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
-  auto taskInstance = Task::create(task.getName(), task.getLabel(), task.getPriority(), task.getDueDate());
+  auto taskInstance = Task::create(task.GetName(), task.GetLabel(), task.GetPriority(), task.GetDueDate());
   if(!taskInstance.has_value()) return OperationResult<StorageError>::Fail(StorageError::INVALID_TASK);
 
   auto newid = generate_id_->GenerateID();
   auto newtask = TaskEntity::createTask(taskInstance.value(), newid);
-  if(task.getStatus()) newtask.SetComplete();
+  if(task.GetStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
   if(!task_storage_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
@@ -95,19 +95,19 @@ OperationResult<StorageError> TaskModel::AddTask(const ModelTaskDTO& task) {
 }
 
 OperationResult<StorageError> TaskModel::AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) {
-  auto taskInstance = Task::create(subtask.getName(), subtask.getLabel(), subtask.getPriority(), subtask.getDueDate());
+  auto taskInstance = Task::create(subtask.GetName(), subtask.GetLabel(), subtask.GetPriority(), subtask.GetDueDate());
   if(!taskInstance.has_value()) return OperationResult<StorageError>::Fail(StorageError::INVALID_TASK);
 
-  auto task = this->task_storage_->GetTask(id);
+  auto task =  task_storage_->GetTask(id);
   if(task == nullptr) return OperationResult<StorageError>::Fail(StorageError::PARENT_NOT_FOUND);
 
   auto newid = generate_id_->GenerateID();
   auto newtask = TaskEntity::createSubtask(taskInstance.value(), newid, id);
-  if(subtask.getStatus()) newtask.SetComplete();
+  if(subtask.GetStatus()) newtask.SetComplete();
   auto task_ptr = std::make_shared<TaskEntity>(newtask);
 
-  if(!this->task_storage_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
-  if(!this->task_view_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
+  if(! task_storage_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
+  if(! task_view_->AddTask(task_ptr)) return OperationResult<StorageError>::Fail(StorageError::WRONG_TASK_ID);
   task->AddSubtask(task_ptr);
 
   return OperationResult<StorageError>::Success();
@@ -142,30 +142,30 @@ std::vector<ModelTaskDTO> TaskModel::GetSubtasks(const TaskID &id) {
 
   std::vector<ModelTaskDTO> result;
   for(const auto& subtask : subtasks) {
-    auto model_dto = ModelTaskDTOConverter::Convert(*subtask.second.lock());
+    auto model_dto = model_task_dto_converter::Convert(*subtask.second.lock());
     result.push_back(model_dto);
   }
 
   return result;
 }
 
-bool TaskModel::completeTask(const TaskID &id) {
-  auto task = this->task_storage_->GetTask(id);
+bool TaskModel::CompleteTask(const TaskID &id) {
+  auto task =  task_storage_->GetTask(id);
   if(task == nullptr) return false;
   std::vector<TaskID> subtasksToComplete;
 
   auto subtasks = task->GetSubtasks();
   for(const auto& subtask : subtasks) {
     subtasksToComplete.push_back(subtask.first);
-    completeTask(subtask.first);
+    CompleteTask(subtask.first);
   }
 
   task->SetComplete();
   return true;
 }
 
-bool TaskModel::postponeTask(const TaskID &id, const Date &newdate) {
-  auto task = this->task_storage_->GetTask(id);
+bool TaskModel::PostponeTask(const TaskID &id, const Date &newdate) {
+  auto task =  task_storage_->GetTask(id);
   if(task == nullptr) return false;
 
   auto newtask = Task::create(task->GetName(), task->GetLabel(), task->GetPriority(), newdate);

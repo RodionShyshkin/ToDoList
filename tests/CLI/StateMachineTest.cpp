@@ -124,18 +124,18 @@ TEST_F(StateMachineTest, shouldWorkWithInternalStateMachine) {
                                     .WillOnce(Return("yes"));
   EXPECT_CALL(*io_, outputWithBreak).Times(13);
   EXPECT_CALL(*io_, output).Times(6);
-  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
-  EXPECT_CALL(*service_, getAllTasks).Times(1).WillOnce(Return(vectorToReturn));
+  EXPECT_CALL(*service_, add_task_graph).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
+  EXPECT_CALL(*service_, GetAllTasks).Times(1).WillOnce(Return(vectorToReturn));
 
-  StateMachine machine_ = StateMachine::create(second_type_, context_);
+  StateMachine machine_ = StateMachine::Create(second_type_, context_);
   auto result = machine_.execute();
 
   ASSERT_EQ(result, true);
   ASSERT_EQ(context_->show_list_buffer_.checkBufferFullness(), true);
   ASSERT_EQ(context_->show_list_buffer_.getList().size(), 1);
-  ASSERT_EQ(context_->show_list_buffer_.getList()[0].getName(), "Task Name");
-  ASSERT_EQ(context_->show_list_buffer_.getList()[0].getLabel(), "Task Label");
-  ASSERT_EQ(context_->show_list_buffer_.getList()[0].getPriority(), Priority::LOW);
-  ASSERT_EQ(context_->show_list_buffer_.getList()[0].getDueDate(), boost::gregorian::from_string("2012-9-14"));
+  ASSERT_EQ(context_->show_list_buffer_.getList()[0].GetName(), "Task Name");
+  ASSERT_EQ(context_->show_list_buffer_.getList()[0].GetLabel(), "Task Label");
+  ASSERT_EQ(context_->show_list_buffer_.getList()[0].GetPriority(), Priority::LOW);
+  ASSERT_EQ(context_->show_list_buffer_.getList()[0].GetDueDate(), boost::gregorian::from_string("2012-9-14"));
 }
 */

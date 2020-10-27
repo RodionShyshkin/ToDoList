@@ -10,19 +10,19 @@ using ::testing::Return;
 
 class MockService : public TaskServiceInterface {
  public:
-  MOCK_METHOD(TaskDTO, getTask, (const unsigned int&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getAllTasks, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksForToday, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksForWeek, (const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByLabel, (const std::string &, const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByName, (const std::string&, const bool&), (const, override));
-  MOCK_METHOD(std::vector<TaskDTO>, getTasksByPriority, (const Priority&), (const, override));
+  MOCK_METHOD(TaskDTO, GetTask, (const unsigned int&), (const, override));
+  MOCK_METHOD(std::vector<TaskDTO>, GetAllTasks, (const bool&), (const, override));
+  MOCK_METHOD(std::vector<TaskDTO>, GetTasksForToday, (const bool&), (const, override));
+  MOCK_METHOD(std::vector<TaskDTO>, GetTasksForWeek, (const bool&), (const, override));
+  MOCK_METHOD(std::vector<TaskDTO>, GetTasksByLabel, (const std::string &, const bool&), (const, override));
+  MOCK_METHOD(std::vector<TaskDTO>, GetTasksByName, (const std::string&, const bool&), (const, override));
+  MOCK_METHOD(std::vector<TaskDTO>, GetTasksByPriority, (const Priority&), (const, override));
 
   MOCK_METHOD(OperationResult<StorageError>, addTask, (const TaskDTO&), (override));
   MOCK_METHOD(OperationResult<StorageError>, addSubtask, (const unsigned int&, const TaskDTO&), (override));
   MOCK_METHOD(OperationResult<StorageError>, RemoveTask, (const unsigned int&), (override));
-  MOCK_METHOD(bool, postponeTask, (const unsigned int&, const boost::gregorian::date&), (override));
-  MOCK_METHOD(bool, completeTask, (const unsigned int&), (override));
+  MOCK_METHOD(bool, postpone_task_graph, (const unsigned int&, const boost::gregorian::date&), (override));
+  MOCK_METHOD(bool, CompleteTask, (const unsigned int&), (override));
 
   MOCK_METHOD(OperationResult<PersistError>, Save, (const std::string&), (override));
   MOCK_METHOD(OperationResult<PersistError>, Load, (const std::string&), (override));
@@ -131,8 +131,8 @@ TEST_F(TaskParamsTest, shouldNotAddTaskWithIncorrectParams) {
   ASSERT_EQ(result, true);
   ASSERT_EQ(context_->add_task_buffer_.checkBufferFullness(), true);
   ASSERT_EQ(context_->add_task_buffer_.getName(), "name");
-  ASSERT_EQ(context_->add_task_buffer_.getLabel(), "");
-  ASSERT_EQ(context_->add_task_buffer_.getPriority(), Priority::HIGH);
+  ASSERT_EQ(context_->add_task_buffer_.GetLabel(), "");
+  ASSERT_EQ(context_->add_task_buffer_.GetPriority(), Priority::HIGH);
   ASSERT_EQ(context_->add_task_buffer_.getDate(), boost::gregorian::from_string("2010-10-10"));
   ASSERT_EQ(context_->add_task_buffer_.getParent(), 0);
 }
@@ -165,20 +165,20 @@ TEST_F(TaskParamsTest, shouldAddSubtask) {
   EXPECT_CALL(*io_, outputWithBreak).Times(19);
   EXPECT_CALL(*io_, output).Times(11);
 
-  EXPECT_CALL(*service_, addTask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
-  EXPECT_CALL(*service_, getAllTasks).Times(2).WillOnce(Return(vectorToReturn))
+  EXPECT_CALL(*service_, add_task_graph).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
+  EXPECT_CALL(*service_, GetAllTasks).Times(2).WillOnce(Return(vectorToReturn))
                                                     .WillOnce(Return(secondVectorToReturn));
-  EXPECT_CALL(*service_, addSubtask).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
+  EXPECT_CALL(*service_, add_subtask_graph).Times(1).WillOnce(Return(OperationResult<StorageError>::Success()));
 
-  StateMachine task_machine_ = StateMachine::create(StatesMachineType::MAIN, this->context_);
+  StateMachine task_machine_ = StateMachine::Create(StatesMachineType::MAIN, this->context_);
   auto result = task_machine_.execute();
 
   ASSERT_EQ(result, true);
   ASSERT_EQ(context_->show_list_buffer_.checkBufferFullness(), true);
   ASSERT_EQ(context_->show_list_buffer_.getList().size(), 2);
   ASSERT_EQ(context_->show_list_buffer_.getList()[0].getName(), "to eat");
-  ASSERT_EQ(context_->show_list_buffer_.getList()[1].getName(), "feed the cat");
+  ASSERT_EQ(context_->show_list_buffer_.getList()[1].GetName(), "feed the cat");
   ASSERT_EQ(context_->show_list_buffer_.getList()[0].getID(), 1);
-  ASSERT_EQ(context_->show_list_buffer_.getList()[1].getID(), 2);
+  ASSERT_EQ(context_->show_list_buffer_.getList()[1].GetID(), 2);
 }
 */

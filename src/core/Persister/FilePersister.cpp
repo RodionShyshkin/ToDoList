@@ -10,7 +10,7 @@ bool FilePersister::Save() {
   if(!file_.is_open()) return false;
 
   StorageProto storage;
-  ProtoConverter::StorageToProto(model_.getAllTasks(), storage);
+  proto_converter::StorageToProto(model_.GetAllTasks(), storage);
   if(!storage.SerializeToOstream(&file_)) return false;
 
   file_.close();
@@ -24,6 +24,6 @@ bool FilePersister::Load() {
   if(!storage.ParseFromIstream(&file_)) return false;
   file_.close();
 
-  if(!ProtoConverter::ProtoToModel(storage, model_)) return false;
+  if(!proto_converter::ProtoToModel(storage, model_)) return false;
   return true;
 }

@@ -6,22 +6,22 @@
 
 ModelTaskDTO::ModelTaskDTO() = default;
 
-ModelTaskDTO ModelTaskDTO::createWithParent(const TaskID &id,
-                                  const std::string &name,
-                                  const std::string &label,
-                                  const Priority &priority,
-                                  const Date &date,
-                                  const bool &status,
-                                  const TaskID& parent) {
-  return ModelTaskDTO{id, name, label, priority, date, status, parent};
-}
-
-ModelTaskDTO ModelTaskDTO::createWithoutParent(const TaskID &id,
+ModelTaskDTO ModelTaskDTO::CreateWithParent(const TaskID &id,
                                             const std::string &name,
                                             const std::string &label,
                                             const Priority &priority,
                                             const Date &date,
-                                            const bool &status) {
+                                            const bool &status,
+                                            const TaskID& parent) {
+  return ModelTaskDTO{id, name, label, priority, date, status, parent};
+}
+
+ModelTaskDTO ModelTaskDTO::CreateWithoutParent(const TaskID &id,
+                                               const std::string &name,
+                                               const std::string &label,
+                                               const Priority &priority,
+                                               const Date &date,
+                                               const bool &status) {
   return ModelTaskDTO{id, name, label, priority, date, status, id};
 }
 
@@ -41,16 +41,16 @@ ModelTaskDTO::ModelTaskDTO(const TaskID &id,
   parent_id_ = parent;
 }
 
-TaskID ModelTaskDTO::getID() const { return task_id_; }
+TaskID ModelTaskDTO::GetID() const { return task_id_; }
 
-std::string ModelTaskDTO::getName() const { return task_name_; }
+std::string ModelTaskDTO::GetName() const { return task_name_; }
 
-std::string ModelTaskDTO::getLabel() const { return task_label_; }
+std::string ModelTaskDTO::GetLabel() const { return task_label_; }
 
-Priority ModelTaskDTO::getPriority() const { return task_priority_; }
+Priority ModelTaskDTO::GetPriority() const { return task_priority_; }
 
-Date ModelTaskDTO::getDueDate() const { return task_due_date_; }
+Date ModelTaskDTO::GetDueDate() const { return task_due_date_; }
 
-bool ModelTaskDTO::getStatus() const { return task_status_; }
+bool ModelTaskDTO::GetStatus() const { return task_status_; }
 
-TaskID ModelTaskDTO::getParentID() const { return parent_id_; }
+TaskID ModelTaskDTO::GetParentID() const { return parent_id_; }

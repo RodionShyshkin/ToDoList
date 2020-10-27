@@ -62,7 +62,7 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} tests/CLI/ParamStates/NameParamStateTest.cpp tests/CLI/ParamStates/LabelParamStateTest.cpp tests/CLI/ParamStates/IDParamStateTest.cpp tests/CLI/ParamStates/FilenameParamStateTest.cpp src/CLI/States/Validator.h tests/CLI/ParamStates/ModifierParamStateTest.cpp tests/CLI/ParamStates/SortedParamStateTest.cpp tests/CLI/ParamStates/DateParamStateTest.cpp tests/CLI/ParamStates/PriorityParamStateTest.cpp tests/CLI/CommandStates/ExitStateTest.cpp)
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} tests/CLI/ParamStates/NameParamStateTest.cpp tests/CLI/ParamStates/LabelParamStateTest.cpp tests/CLI/ParamStates/IDParamStateTest.cpp tests/CLI/ParamStates/FilenameParamStateTest.cpp src/CLI/States/Validator.h tests/CLI/ParamStates/ModifierParamStateTest.cpp tests/CLI/ParamStates/SortedParamStateTest.cpp tests/CLI/ParamStates/DateParamStateTest.cpp tests/CLI/ParamStates/PriorityParamStateTest.cpp tests/CLI/CommandStates/ExitStateTest.cpp src/core/API/ApiConverter.h src/core/MemoryModel/Storage/TaskViewMap.h)
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)

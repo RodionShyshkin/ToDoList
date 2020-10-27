@@ -86,9 +86,9 @@ TEST_F(ViewTaskStateTest, shouldRunCorrectlyWithoutIDInBuffer) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                        boost::gregorian::date{boost::gregorian::not_a_date_time},
-                        true);
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                             boost::gregorian::date{boost::gregorian::not_a_date_time},
+                             true);
   vector.push_back(dto);
 
   context->show_list_buffer_.setList(vector);
@@ -97,7 +97,7 @@ TEST_F(ViewTaskStateTest, shouldRunCorrectlyWithoutIDInBuffer) {
 
   auto state = ViewTaskState{};
 
-  EXPECT_CALL(*service, getTask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, GetTask).Times(1).WillOnce(testing::Return(
       std::make_optional<TaskDTO>(dto)));
 
   EXPECT_CALL(*io, input).Times(1).WillOnce(testing::Return("0"));
@@ -114,14 +114,14 @@ TEST_F(ViewTaskStateTest, shouldRunCorrectlyWithIDInBuffer) {
   auto context = std::make_shared<Context>(
       service, io);
 
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   context->id_buffer_.setID(1);
 
   auto state = ViewTaskState{};
 
-  EXPECT_CALL(*service, getTask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, GetTask).Times(1).WillOnce(testing::Return(
       std::make_optional<TaskDTO>(dto)));
   EXPECT_CALL(*io, inputCommand).Times(1).WillOnce(testing::Return("complete"));
   EXPECT_CALL(*io, outputWithBreak).Times(10);
@@ -136,8 +136,8 @@ TEST_F(ViewTaskStateTest, shouldNotRunIfOperationError) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);
@@ -145,7 +145,7 @@ TEST_F(ViewTaskStateTest, shouldNotRunIfOperationError) {
 
   auto state = ViewTaskState{};
 
-  EXPECT_CALL(*service, getTask).Times(1).WillOnce(testing::Return(std::nullopt));
+  EXPECT_CALL(*service, GetTask).Times(1).WillOnce(testing::Return(std::nullopt));
 
   EXPECT_CALL(*io, input).Times(1).WillOnce(testing::Return("0"));
   EXPECT_CALL(*io, output).Times(1);
@@ -159,14 +159,14 @@ TEST_F(ViewTaskStateTest, shouldNotRunSuccessIfCommandIsIncorrect) {
   auto context = std::make_shared<Context>(
       service, io);
 
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   context->id_buffer_.setID(1);
 
   auto state = ViewTaskState{};
 
-  EXPECT_CALL(*service, getTask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, GetTask).Times(1).WillOnce(testing::Return(
       std::make_optional<TaskDTO>(dto)));
   EXPECT_CALL(*io, inputCommand).Times(1).WillOnce(testing::Return("asdf"));
   EXPECT_CALL(*io, outputWithBreak).Times(10);
@@ -190,14 +190,14 @@ TEST_F(ViewTaskStateTest, ShouldSwitchStateIfThereIsCorrectCommand) {
   auto context = std::make_shared<Context>(
       service, io);
 
-  auto dto = TaskDTO::create(1, "parent", "label", Priority::EMPTY,
+  auto dto = TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
                              boost::gregorian::date{boost::gregorian::not_a_date_time},
                              true);
   context->id_buffer_.setID(1);
 
   auto state = ViewTaskState{};
 
-  EXPECT_CALL(*service, getTask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, GetTask).Times(1).WillOnce(testing::Return(
       std::make_optional<TaskDTO>(dto)));
   EXPECT_CALL(*io, inputCommand).Times(1).WillOnce(testing::Return("add_subtask"));
   EXPECT_CALL(*io, outputWithBreak).Times(10);

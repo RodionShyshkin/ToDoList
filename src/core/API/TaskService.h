@@ -8,6 +8,7 @@
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
 #include <MemoryModel/ModelAPI/TaskModel.h>
+#include "ApiConverter.h"
 
 /*
  * \brief Entry point for tasks management.
@@ -30,7 +31,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return TaskDTO object
    */
-  std::optional<TaskDTO> getTask(const unsigned int& id) const override;
+  std::optional<TaskDTO> GetTask(const unsigned int& id) const override;
   /*
    * \brief Gives all actual tasks.
    *
@@ -39,7 +40,7 @@ class TaskService : public TaskServiceInterface {
    * @return TaskDTO vector Vector which contains all tasks, if param is true they are sorted by priority, in
    * another case they are not
    */
-  std::vector<TaskDTO>              getAllTasks(const bool& sortByPriority) const override;
+  std::vector<TaskDTO> GetAllTasks(const bool& sort_by_priority) const override;
 
   /*
    * \brief Gives all tasks for today by local time.
@@ -49,7 +50,7 @@ class TaskService : public TaskServiceInterface {
    * @return TaskDTO vector which contains all tasks for today, if param is true they are sorted by priority, in
    * another case they are not
    */
-  std::vector<TaskDTO>              getTasksForToday(const bool& sortByPriority) const override;
+  std::vector<TaskDTO> GetTasksForToday(const bool& sort_by_priority) const override;
 
   /*
    * \brief Gives all tasks for current week until Monday by local time.
@@ -59,7 +60,7 @@ class TaskService : public TaskServiceInterface {
    * @return TaskDTO vector which contains all tasks for this week, if param is true they are sorted by priority, in
    * another case they are not
    */
-  std::vector<TaskDTO>              getTasksForWeek(const bool& sortByPriority) const override;
+  std::vector<TaskDTO> GetTasksForWeek(const bool& sort_by_priority) const override;
 
   /*
    * \brief Gives all tasks with label which is pointed as parameter.
@@ -69,7 +70,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return TaskDTO vector which contains all tasks with this label
    */
-  std::vector<TaskDTO>              getTasksByLabel(const std::string &label, const bool& sortByPriority) const override;
+  std::vector<TaskDTO>  GetTasksByLabel(const std::string &label, const bool& sort_by_priority) const override;
 
   /*
    * \brief Gives all tasks with name which is pointed as parameter.
@@ -79,7 +80,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return TaskDTO vector which contains all tasks with this name
    */
-  std::vector<TaskDTO>              getTasksByName(const std::string& name, const bool& sortByPriority) const override;
+  std::vector<TaskDTO>  GetTasksByName(const std::string& name, const bool& sort_by_priority) const override;
 
   /*
    * \brief Gives all tasks with priority which is pointed as parameter.
@@ -88,7 +89,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return TaskDTO vector which contains all tasks with this priority.
    */
-  std::vector<TaskDTO>              getTasksByPriority(const Priority& priority) const override;
+  std::vector<TaskDTO>  GetTasksByPriority(const Priority& priority) const override;
 
   /*
    * \brief Adds task.
@@ -97,7 +98,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult<StorageError>                   addTask(const TaskDTO& task) override;
+  OperationResult<StorageError>  AddTask(const TaskDTO& task) override;
 
   /*
    * \brief Adds subtask for a task which already exists.
@@ -108,7 +109,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of adding (contains error or message about success).
    */
-  OperationResult<StorageError>                   addSubtask(const unsigned int& id, const TaskDTO& subtask) override;
+  OperationResult<StorageError>  AddSubtask(const unsigned int& id, const TaskDTO& subtask) override;
 
   /*
    * \brief Removes task.
@@ -117,7 +118,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return OperationResult information about result of removing (contains error or message about success).
    */
-  OperationResult<StorageError>                   RemoveTask(const unsigned int& id) override;
+  OperationResult<StorageError>     RemoveTask(const unsigned int& id) override;
 
   /*
    * \brief Postpones task.
@@ -128,7 +129,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return bool result (true if successful, false in another case).
    */
-  bool                   postponeTask(const unsigned int& id, const boost::gregorian::date& newdate) override;
+  bool      PostponeTask(const unsigned int& id, const boost::gregorian::date& new_date) override;
 
   /*
    * \brief Completes task.
@@ -137,7 +138,7 @@ class TaskService : public TaskServiceInterface {
    *
    * @return bool result (true if successful, false in another case).
    */
-  bool                   completeTask(const unsigned int& id) override;
+  bool                    CompleteTask(const unsigned int& id) override;
 
   /*
    * \brief Saves tasks to a file.
@@ -147,7 +148,7 @@ class TaskService : public TaskServiceInterface {
    * @return OperationResult result of operation. std::nullopt if there is no errors
    * or PersistError if something went wrong.
    */
-  OperationResult<PersistError> Save(const std::string &filepath) override;
+  OperationResult<PersistError>   Save(const std::string &filepath) override;
 
   /*
    * \brief Load tasks from a file.
@@ -157,16 +158,10 @@ class TaskService : public TaskServiceInterface {
    * @return OperationResult result of operation. std::nullopt if there is no errors
    * or PersistError if something went wrong.
    */
-  OperationResult<PersistError> Load(const std::string &filepath) override;
+  OperationResult<PersistError>   Load(const std::string &filepath) override;
 
  private:
-  static std::vector<TaskDTO>       sortedByPriority(std::vector<TaskDTO> vector);
-
-  static TaskDTO                    convertFromModelDTO(const ModelTaskDTO& model_dto);
-  static ModelTaskDTO               convertToModelDTO(const TaskDTO& dto);
-
- private:
-  std::unique_ptr<TaskModelInterface>         model_api_;
+  std::unique_ptr<TaskModelInterface> model_api_;
 };
 
 #endif //TODOLIST__TASKMANAGER_H_

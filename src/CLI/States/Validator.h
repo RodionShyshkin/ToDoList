@@ -12,7 +12,7 @@
 #include <API/Priority.h>
 #include <iostream>
 
-namespace Validator {
+namespace validator {
   static std::optional <boost::gregorian::date> ParseDate(const std::string& param) {
     try{
       boost::gregorian::date result;

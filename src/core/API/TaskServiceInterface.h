@@ -16,19 +16,19 @@ class TaskServiceInterface {
   ~TaskServiceInterface() = default;
 
  public:
-  virtual std::optional<TaskDTO> getTask(const unsigned int&) const = 0;
-  virtual std::vector<TaskDTO>    getAllTasks(const bool&) const = 0;
-  virtual std::vector<TaskDTO>    getTasksForToday(const bool&) const = 0;
-  virtual std::vector<TaskDTO>    getTasksForWeek(const bool&) const = 0;
-  virtual std::vector<TaskDTO>    getTasksByLabel(const std::string &, const bool&) const = 0;
-  virtual std::vector<TaskDTO>    getTasksByName(const std::string&, const bool&) const = 0;
-  virtual std::vector<TaskDTO>    getTasksByPriority(const Priority&) const = 0;
+  virtual std::optional<TaskDTO>  GetTask(const unsigned int&) const = 0;
+  virtual std::vector<TaskDTO>    GetAllTasks(const bool&) const = 0;
+  virtual std::vector<TaskDTO>    GetTasksForToday(const bool&) const = 0;
+  virtual std::vector<TaskDTO>    GetTasksForWeek(const bool&) const = 0;
+  virtual std::vector<TaskDTO>    GetTasksByLabel(const std::string &, const bool&) const = 0;
+  virtual std::vector<TaskDTO>    GetTasksByName(const std::string&, const bool&) const = 0;
+  virtual std::vector<TaskDTO>    GetTasksByPriority(const Priority&) const = 0;
 
-  virtual OperationResult<StorageError>         addTask(const TaskDTO&) = 0;
-  virtual OperationResult<StorageError>         addSubtask(const unsigned int&, const TaskDTO&) = 0;
+  virtual OperationResult<StorageError>         AddTask(const TaskDTO&) = 0;
+  virtual OperationResult<StorageError>         AddSubtask(const unsigned int&, const TaskDTO&) = 0;
   virtual OperationResult<StorageError>         RemoveTask(const unsigned int&) = 0;
-  virtual bool         postponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
-  virtual bool         completeTask(const unsigned int&) = 0;
+  virtual bool         PostponeTask(const unsigned int&, const boost::gregorian::date&) = 0;
+  virtual bool         CompleteTask(const unsigned int&) = 0;
 
   virtual OperationResult<PersistError>   Save(const std::string&) = 0;
   virtual OperationResult<PersistError>   Load(const std::string&) = 0;

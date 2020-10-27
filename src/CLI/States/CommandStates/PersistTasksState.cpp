@@ -3,7 +3,7 @@
 //
 
 #include <States/StateFactory.h>
-#include <ParamStateMachineFactory.h>
+#include <ParamStateMachineCreator.h>
 #include <Commands/CommandToStateType.h>
 #include "PersistTasksState.h"
 
@@ -11,7 +11,7 @@ PersistTasksState::PersistTasksState(const PersistType &type) : type_(type) {}
 
 StateResult PersistTasksState::run(std::shared_ptr<Context> context) {
   //Filling context.
-  auto machine = ParamStateMachineFactory::PersistTasks::create(context);
+  auto machine = param_state_machine_creator::persist_tasks_graph::create(context);
   machine.execute();
 
   //Request to Core.
@@ -45,6 +45,6 @@ void PersistTasksState::output(const std::shared_ptr<IOInterface> &io) {
 }
 
 std::unique_ptr<StateInterface> PersistTasksState::switchState() {
-  auto newstate = StateFactory::create(CommandToStateType::Convert(Command::MAINMENU));
+  auto newstate = StateFactory::create(command_to_state_type::Convert(Command::MAINMENU));
   return std::move(newstate);
 }

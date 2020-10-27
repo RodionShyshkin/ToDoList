@@ -57,7 +57,7 @@ TEST_F(LabelParamStateTest, shouldHaveCorrectStateType) {
 
 TEST_F(LabelParamStateTest, shouldNotRunIfItIsParamOfShowListAll) {
   std::vector<TaskDTO> tasks;
-  tasks.push_back(TaskDTO::create(1, "name", "label", Priority::LOW,
+  tasks.push_back(TaskDTO::Create(1, "name", "label", Priority::LOW,
                                   boost::gregorian::date{boost::gregorian::not_a_date_time},
                                   false));
 
@@ -74,7 +74,7 @@ TEST_F(LabelParamStateTest, shouldNotRunIfItIsParamOfShowListAll) {
 
 TEST_F(LabelParamStateTest, shouldRunIfItIsParamOfShowListByLabel) {
   std::vector<TaskDTO> tasks;
-  tasks.push_back(TaskDTO::create(1, "name", "label", Priority::LOW,
+  tasks.push_back(TaskDTO::Create(1, "name", "label", Priority::LOW,
                                   boost::gregorian::date{boost::gregorian::not_a_date_time},
                                   false));
 
@@ -95,7 +95,7 @@ TEST_F(LabelParamStateTest, shouldRunIfItIsParamOfShowListByLabel) {
 
 TEST_F(LabelParamStateTest, shouldRunIfItIsParamOfAddSubtaskWhenListOpen) {
   std::vector<TaskDTO> tasks;
-  tasks.push_back(TaskDTO::create(1, "name", "label", Priority::LOW,
+  tasks.push_back(TaskDTO::Create(1, "name", "label", Priority::LOW,
                                   boost::gregorian::date{boost::gregorian::not_a_date_time},
                                   false));
 

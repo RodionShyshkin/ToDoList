@@ -20,7 +20,7 @@ StateResult IDParamState::run(std::shared_ptr<Context> context) {
 }
 
 bool IDParamState::input(const std::shared_ptr<IOInterface> &io) {
-  auto parsed = Validator::ParseID(io->input());
+  auto parsed = validator::ParseID(io->input());
   if(parsed.has_value()) param_ = parsed.value();
   return parsed.has_value();
 }

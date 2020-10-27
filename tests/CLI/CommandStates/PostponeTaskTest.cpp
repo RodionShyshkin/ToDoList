@@ -58,8 +58,8 @@ TEST_F(PostponeTaskStateTest, shouldRunCorrectlyWithoutIDInBuffer) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);
@@ -67,7 +67,7 @@ TEST_F(PostponeTaskStateTest, shouldRunCorrectlyWithoutIDInBuffer) {
 
   auto state = PostponeTaskState{};
 
-  EXPECT_CALL(*service, postponeTask).Times(1).WillOnce(testing::Return(true));
+  EXPECT_CALL(*service, PostponeTask).Times(1).WillOnce(testing::Return(true));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("0"))
                                       .WillOnce(testing::Return("2012-12-12"));
@@ -86,7 +86,7 @@ TEST_F(PostponeTaskStateTest, shouldRunCorrectlyWithIDInBuffer) {
 
   auto state = PostponeTaskState{};
 
-  EXPECT_CALL(*service, postponeTask).Times(1).WillOnce(testing::Return(true));
+  EXPECT_CALL(*service, PostponeTask).Times(1).WillOnce(testing::Return(true));
   EXPECT_CALL(*io, input).Times(1).WillOnce(testing::Return("2012-12-12"));
   EXPECT_CALL(*io, output).Times(1);
 
@@ -100,8 +100,8 @@ TEST_F(PostponeTaskStateTest, shouldNotRunIfOperationError) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);
@@ -109,7 +109,7 @@ TEST_F(PostponeTaskStateTest, shouldNotRunIfOperationError) {
 
   auto state = PostponeTaskState{};
 
-  EXPECT_CALL(*service, postponeTask).Times(1).WillOnce(testing::Return(false));
+  EXPECT_CALL(*service, PostponeTask).Times(1).WillOnce(testing::Return(false));
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("0"))
       .WillOnce(testing::Return("2012-12-12"));

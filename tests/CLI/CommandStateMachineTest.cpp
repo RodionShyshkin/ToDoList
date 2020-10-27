@@ -48,7 +48,7 @@ TEST_F(CommandStateMachineTest, shouldSwitchStatesCorrectly) {
 
   EXPECT_CALL(*io, output).Times(4);
   EXPECT_CALL(*io, outputWithBreak).Times(8);
-  EXPECT_CALL(*service, addTask).Times(1).WillOnce(
+  EXPECT_CALL(*service, AddTask).Times(1).WillOnce(
       Return(OperationResult<StorageError>::Success()));
 
   auto machine = CommandStateMachine::create(std::move(start_state),
@@ -72,7 +72,7 @@ TEST_F(CommandStateMachineTest, shouldExitStateMachineIfOperationError) {
 
   EXPECT_CALL(*io, output).Times(4);
   EXPECT_CALL(*io, outputWithBreak).Times(5);
-  EXPECT_CALL(*service, addTask).Times(1).WillOnce(
+  EXPECT_CALL(*service, AddTask).Times(1).WillOnce(
       Return(OperationResult<StorageError>::Fail(StorageError::INVALID_TASK)));
 
   auto machine = CommandStateMachine::create(std::move(start_state),

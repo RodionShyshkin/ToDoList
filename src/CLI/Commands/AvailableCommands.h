@@ -11,9 +11,9 @@
 #include "Command.h"
 
 
-namespace AvailableCommands {
+namespace available_commands {
 
-  namespace AvailableCommandsMap {
+  namespace available_commands_map {
     static std::map<StateType, std::set<Command>> create() {
       return {
           {
@@ -57,7 +57,7 @@ namespace AvailableCommands {
   }
 
   static bool IsCommandAvailable(const StateType& state_type, const Command& command) {
-    auto commands_map = AvailableCommandsMap::create();
+    auto commands_map = available_commands_map::create();
     if(commands_map.find(state_type) == commands_map.end()) return false;
 
     auto commands_set = commands_map[state_type];

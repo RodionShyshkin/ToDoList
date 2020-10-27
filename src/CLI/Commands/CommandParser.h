@@ -9,9 +9,9 @@
 #include <string>
 #include "Command.h"
 
-namespace CommandParser {
+namespace command_parser {
 
-  namespace CommandsMap {
+  namespace commands_map {
     static std::map<std::string, Command> create() {
       std::map<std::string, Command> commands;
       commands["mainmenu"] = Command::MAINMENU;
@@ -32,7 +32,7 @@ namespace CommandParser {
   }
 
   static Command Parse(std::string&& string) {
-    auto command_map = CommandsMap::create();
+    auto command_map = commands_map::create();
     if(command_map.find(string) == command_map.end()) return Command::UNKNOWN;
 
     return command_map[string];

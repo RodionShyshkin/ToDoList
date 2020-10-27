@@ -61,7 +61,7 @@ TEST_F(AddSubtaskStateTest, shouldRunCorrectlyWithID) {
 
   auto state = AddSubtaskState{};
 
-  EXPECT_CALL(*service, addSubtask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, AddSubtask).Times(1).WillOnce(testing::Return(
       OperationResult<StorageError>::Success()));
 
   EXPECT_CALL(*io, input).Times(4).WillOnce(testing::Return("name"))
@@ -81,8 +81,8 @@ TEST_F(AddSubtaskStateTest, shouldRunCorrectlyWithoutID) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);
@@ -90,7 +90,7 @@ TEST_F(AddSubtaskStateTest, shouldRunCorrectlyWithoutID) {
 
   auto state = AddSubtaskState{};
 
-  EXPECT_CALL(*service, addSubtask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, AddSubtask).Times(1).WillOnce(testing::Return(
       OperationResult<StorageError>::Success()));
 
   EXPECT_CALL(*io, input).Times(5).WillOnce(testing::Return("0"))
@@ -111,8 +111,8 @@ TEST_F(AddSubtaskStateTest, shouldNotRunIfOperationError) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);
@@ -120,7 +120,7 @@ TEST_F(AddSubtaskStateTest, shouldNotRunIfOperationError) {
 
   auto state = AddSubtaskState{};
 
-  EXPECT_CALL(*service, addSubtask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, AddSubtask).Times(1).WillOnce(testing::Return(
       OperationResult<StorageError>::Fail(StorageError::INVALID_TASK)));
 
   EXPECT_CALL(*io, input).Times(5).WillOnce(testing::Return("0"))

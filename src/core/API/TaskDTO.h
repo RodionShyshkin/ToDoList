@@ -32,7 +32,7 @@ class TaskDTO {
    *
    * @return TaskDTO instance.
    */
-  static TaskDTO  create(const unsigned int& id, const std::string& name, const std::string& label,
+  static TaskDTO  Create(const unsigned int& id, const std::string& name, const std::string& label,
                          const Priority& priority, const boost::gregorian::date& date, const bool& status);
 
  public:

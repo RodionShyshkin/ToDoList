@@ -16,74 +16,90 @@ using ::testing::Return;
 class TaskModelTest : public ::testing::Test {
  public:
   void SetUp() override {
-    task_without_name_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "", "label",
+    task_without_name_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "", "label",
                                                            Priority::HIGH, Date{2020, 10, 10}, false);
-    task_without_label_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "name", "",
+    task_without_label_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "name", "",
                                                             Priority::HIGH, Date{2020, 10, 10}, false);
-    task_without_priority_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "name", "label",
+    task_without_priority_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "name", "label",
                                                                Priority::EMPTY, Date{2020, 10, 10}, false);
-    task_without_date_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "name", "label",
+    task_without_date_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "name", "label",
                                                            Priority::HIGH,
-                                                           Date{boost::gregorian::date{boost::gregorian::not_a_date_time}},
+                                                           Date{boost::gregorian::date{
+                                                               boost::gregorian::not_a_date_time}},
                                                            false);
 
-    simple_task_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "name", "label",
+    simple_task_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "name", "label",
                                                      Priority::MEDIUM, Date{2020, 10, 10}, true);
 
-    simple_subtask_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "subname", "label", Priority::MEDIUM,
+    simple_subtask_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "subname", "label", Priority::MEDIUM,
                                                         Date{2020, 10, 10}, false);
 
-    simple_entity_subtask_ = TaskEntity::createTask(Task::create(simple_task_.getName(), simple_task_.getLabel(),
-                                                                 simple_task_.getPriority(), simple_task_.getDueDate()).value(),
-                                                    simple_task_.getID());
+    simple_entity_subtask_ = TaskEntity::createTask(Task::create(simple_task_.GetName(), simple_task_.GetLabel(),
+                                                                 simple_task_.GetPriority(), simple_task_.GetDueDate()).value(),
+                                                    simple_task_.GetID());
 
 
-    parent_task_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "Michael", "label", Priority::MEDIUM,
-                                                        Date{2020, 10, 10}, false);
+    parent_task_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "Michael", "label", Priority::MEDIUM,
+                                                     Date{2020, 10, 10}, false);
 
-    parent_entity_ = std::make_shared<TaskEntity>(TaskEntity::createTask(Task::create(parent_task_.getName(), parent_task_.getLabel(),
-                                                                 parent_task_.getPriority(), parent_task_.getDueDate()).value(),
+    parent_entity_ = std::make_shared<TaskEntity>(TaskEntity::createTask(Task::create(parent_task_.GetName(),
+                                                                                      parent_task_.GetLabel(),
+                                                                                      parent_task_.GetPriority(),
+                                                                                      parent_task_.GetDueDate()).value(),
                                                     TaskID{1}));
-    parent_subtask_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "John, subtask of Michael", "label", Priority::MEDIUM,
-                                                        Date{2020, 10, 10}, false);
+    parent_subtask_ =
+        ModelTaskDTO::CreateWithoutParent(TaskID{1}, "John, subtask of Michael", "label", Priority::MEDIUM,
+                                          Date{2020, 10, 10}, false);
 
-    parent_sub_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(parent_subtask_.getName(), parent_subtask_.getLabel(),
-                                                                 parent_subtask_.getPriority(), parent_subtask_.getDueDate()).value(),
+    parent_sub_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(parent_subtask_.GetName(),
+                                                                                             parent_subtask_.GetLabel(),
+                                                                                             parent_subtask_.GetPriority(),
+                                                                                             parent_subtask_.GetDueDate()).value(),
                                                     TaskID{2}, parent_entity_->GetID()));
 
-    subtask1_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "George, subtask of John", "label", Priority::MEDIUM,
-                                                        Date{2020, 10, 10}, false);
-
-    subtask1_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask1_.getName(), subtask1_.getLabel(),
-                                                                 subtask1_.getPriority(), subtask1_.getDueDate()).value(),
-                                                    TaskID{3}, parent_sub_entity_->GetID()));
-
-    subtask2_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "Carl, subtask of John", "label", Priority::MEDIUM,
+    subtask1_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "George, subtask of John", "label", Priority::MEDIUM,
                                                   Date{2020, 10, 10}, false);
 
-    subtask2_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask2_.getName(), subtask2_.getLabel(),
-                                                              subtask2_.getPriority(), subtask2_.getDueDate()).value(),
+    subtask1_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask1_.GetName(),
+                                                                                           subtask1_.GetLabel(),
+                                                                                           subtask1_.GetPriority(),
+                                                                                           subtask1_.GetDueDate()).value(),
+                                                    TaskID{3}, parent_sub_entity_->GetID()));
+
+    subtask2_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "Carl, subtask of John", "label", Priority::MEDIUM,
+                                                  Date{2020, 10, 10}, false);
+
+    subtask2_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask2_.GetName(),
+                                                                                           subtask2_.GetLabel(),
+                                                                                           subtask2_.GetPriority(),
+                                                                                           subtask2_.GetDueDate()).value(),
                                                  TaskID{4}, parent_sub_entity_->GetID()));
 
-    subtask11_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "Lawrence, subtask of George", "label", Priority::MEDIUM,
-                                                        Date{2020, 10, 10}, false);
+    subtask11_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "Lawrence, subtask of George", "label", Priority::MEDIUM,
+                                                   Date{2020, 10, 10}, false);
 
-    subtask11_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask11_.getName(), subtask11_.getLabel(),
-                                                                 subtask11_.getPriority(), subtask11_.getDueDate()).value(),
+    subtask11_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask11_.GetName(),
+                                                                                            subtask11_.GetLabel(),
+                                                                                            subtask11_.GetPriority(),
+                                                                                            subtask11_.GetDueDate()).value(),
                                                     TaskID{5}, subtask1_entity_->GetID()));
 
-    subtask111_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "Diego, subtask of Lawrence", "label", Priority::MEDIUM,
-                                                        Date{2020, 10, 10}, false);
-
-    subtask111_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask111_.getName(), subtask111_.getLabel(),
-                                                               subtask111_.getPriority(), subtask111_.getDueDate()).value(),
-                                                  TaskID{6}, subtask11_entity_->GetID()));
-
-    subtask112_ = ModelTaskDTO::createWithoutParent(TaskID{1}, "Arnold, subtask of Lawrence", "label", Priority::MEDIUM,
+    subtask111_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "Diego, subtask of Lawrence", "label", Priority::MEDIUM,
                                                     Date{2020, 10, 10}, false);
 
-    subtask112_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask112_.getName(), subtask112_.getLabel(),
-                                                                subtask112_.getPriority(), subtask112_.getDueDate()).value(),
+    subtask111_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask111_.GetName(),
+                                                                                             subtask111_.GetLabel(),
+                                                                                             subtask111_.GetPriority(),
+                                                                                             subtask111_.GetDueDate()).value(),
+                                                  TaskID{6}, subtask11_entity_->GetID()));
+
+    subtask112_ = ModelTaskDTO::CreateWithoutParent(TaskID{1}, "Arnold, subtask of Lawrence", "label", Priority::MEDIUM,
+                                                    Date{2020, 10, 10}, false);
+
+    subtask112_entity_ = std::make_shared<TaskEntity>(TaskEntity::createSubtask(Task::create(subtask112_.GetName(),
+                                                                                             subtask112_.GetLabel(),
+                                                                                             subtask112_.GetPriority(),
+                                                                                             subtask112_.GetDueDate()).value(),
                                                    TaskID{7}, subtask11_entity_->GetID()));
   }
 
@@ -317,7 +333,7 @@ TEST_F(TaskModelTest, shouldCompleteTaskWithSubtasks) {
   EXPECT_FALSE(subtask111_entity_->GetStatus());
   EXPECT_FALSE(subtask112_entity_->GetStatus());
 
-  auto result = model.completeTask(2);
+  auto result = model.CompleteTask(2);
 
   ASSERT_TRUE(result);
   ASSERT_EQ(parent_entity_->GetSubtasks().size(), 1);
@@ -340,7 +356,7 @@ TEST_F(TaskModelTest, shouldNotCompleteTaskWhichDoesNotExist) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.completeTask(1);
+  auto result = model.CompleteTask(1);
 
   ASSERT_FALSE(result);
 }
@@ -356,7 +372,7 @@ TEST_F(TaskModelTest, shouldCompleteTaskWhichIsCompleted) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.completeTask(1);
+  auto result = model.CompleteTask(1);
   ASSERT_TRUE(result);
 }
 
@@ -369,7 +385,7 @@ TEST_F(TaskModelTest, shouldPostponeCorrectTask) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.postponeTask(1, Date{2020, 12, 31});
+  auto result = model.PostponeTask(1, Date{2020, 12, 31});
 
   ASSERT_TRUE(result);
 }
@@ -383,7 +399,7 @@ TEST_F(TaskModelTest, shouldNotPostponeUnexistingTask) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.postponeTask(1, Date{2020, 12, 31});
+  auto result = model.PostponeTask(1, Date{2020, 12, 31});
 
   ASSERT_FALSE(result);
 }
@@ -401,12 +417,12 @@ TEST_F(TaskModelTest, getAllTasks) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getAllTasks();
+  auto result = model.GetAllTasks();
 
   ASSERT_EQ(result.size(), 3);
-  ASSERT_EQ(result[0].getName(), "name");
-  ASSERT_EQ(result[1].getName(), "George, subtask of John");
-  ASSERT_EQ(result[2].getName(), "Michael");
+  ASSERT_EQ(result[0].GetName(), "name");
+  ASSERT_EQ(result[1].GetName(), "George, subtask of John");
+  ASSERT_EQ(result[2].GetName(), "Michael");
 }
 
 TEST_F(TaskModelTest, getTodayTasks) {
@@ -422,12 +438,12 @@ TEST_F(TaskModelTest, getTodayTasks) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTasksForToday();
+  auto result = model.GetTasksForToday();
 
   ASSERT_EQ(result.size(), 3);
-  ASSERT_EQ(result[0].getName(), "name");
-  ASSERT_EQ(result[1].getName(), "George, subtask of John");
-  ASSERT_EQ(result[2].getName(), "Michael");
+  ASSERT_EQ(result[0].GetName(), "name");
+  ASSERT_EQ(result[1].GetName(), "George, subtask of John");
+  ASSERT_EQ(result[2].GetName(), "Michael");
 }
 
 TEST_F(TaskModelTest, getWeekTasks) {
@@ -443,12 +459,12 @@ TEST_F(TaskModelTest, getWeekTasks) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTasksForWeek();
+  auto result = model.GetTasksForWeek();
 
   ASSERT_EQ(result.size(), 3);
-  ASSERT_EQ(result[0].getName(), "name");
-  ASSERT_EQ(result[1].getName(), "George, subtask of John");
-  ASSERT_EQ(result[2].getName(), "Michael");
+  ASSERT_EQ(result[0].GetName(), "name");
+  ASSERT_EQ(result[1].GetName(), "George, subtask of John");
+  ASSERT_EQ(result[2].GetName(), "Michael");
 }
 
 TEST_F(TaskModelTest, getTasksByLabel) {
@@ -462,10 +478,10 @@ TEST_F(TaskModelTest, getTasksByLabel) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTasksByLabel("name");
+  auto result = model.GetTasksByLabel("name");
 
   ASSERT_EQ(result.size(), 1);
-  ASSERT_EQ(result[0].getName(), "name");
+  ASSERT_EQ(result[0].GetName(), "name");
 }
 
 TEST_F(TaskModelTest, getTasksByName) {
@@ -479,10 +495,10 @@ TEST_F(TaskModelTest, getTasksByName) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTasksByName("name");
+  auto result = model.GetTasksByName("name");
 
   ASSERT_EQ(result.size(), 1);
-  ASSERT_EQ(result[0].getName(), "name");
+  ASSERT_EQ(result[0].GetName(), "name");
 }
 
 TEST_F(TaskModelTest, getTasksByPriority) {
@@ -496,10 +512,10 @@ TEST_F(TaskModelTest, getTasksByPriority) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTasksByPriority(Priority::MEDIUM);
+  auto result = model.GetTasksByPriority(Priority::MEDIUM);
 
   ASSERT_EQ(result.size(), 1);
-  ASSERT_EQ(result[0].getName(), "name");
+  ASSERT_EQ(result[0].GetName(), "name");
 }
 
 TEST_F(TaskModelTest, shouldGetTaskCorrectly) {
@@ -511,10 +527,10 @@ TEST_F(TaskModelTest, shouldGetTaskCorrectly) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTask(TaskID{1});
+  auto result = model.GetTask(TaskID{1});
 
   ASSERT_TRUE(result.has_value());
-  ASSERT_EQ(result.value().getID(), TaskID{1});
+  ASSERT_EQ(result.value().GetID(), TaskID{1});
 }
 
 TEST_F(TaskModelTest, shouldNotGetTaskWhichDoesNotExist) {
@@ -526,7 +542,7 @@ TEST_F(TaskModelTest, shouldNotGetTaskWhichDoesNotExist) {
 
   TaskModel model{std::move(storage), std::move(view), std::move(generator)};
 
-  auto result = model.getTask(TaskID{1});
+  auto result = model.GetTask(TaskID{1});
 
   ASSERT_FALSE(result.has_value());
 }

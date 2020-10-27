@@ -3,7 +3,7 @@
 //
 
 #include <ParamStateMachine.h>
-#include <ParamStateMachineFactory.h>
+#include <ParamStateMachineCreator.h>
 #include <gtest/gtest.h>
 #include <Mocks/MockService.h>
 #include <Mocks/MockIO.h>
@@ -101,7 +101,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithAddTaskGraph) {
 
   EXPECT_CALL(*io, output).Times(4);
 
-  auto machine = ParamStateMachineFactory::AddTask::create(context);
+  auto machine = param_state_machine_creator::add_task_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }
 
@@ -118,7 +118,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithAddSubtaskGraph) {
 
   EXPECT_CALL(*io, output).Times(4);
 
-  auto machine = ParamStateMachineFactory::AddSubtask::create(context);
+  auto machine = param_state_machine_creator::add_subtask_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }
 
@@ -133,7 +133,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithShowListGraphWithoutLabel) 
 
   EXPECT_CALL(*io, output).Times(2);
 
-  auto machine = ParamStateMachineFactory::ShowTasksList::create(context);
+  auto machine = param_state_machine_creator::get_tasks_list_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }
 
@@ -149,7 +149,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithShowListGraphWithLabel) {
 
   EXPECT_CALL(*io, output).Times(3);
 
-  auto machine = ParamStateMachineFactory::ShowTasksList::create(context);
+  auto machine = param_state_machine_creator::get_tasks_list_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }
 
@@ -160,8 +160,8 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithGetTaskGraph) {
       service, io);
 
   std::vector<TaskDTO> list;
-  list.push_back(TaskDTO::create(1, "name", "label", Priority::HIGH,
-                                 boost::gregorian::date{2019-2-1},
+  list.push_back(TaskDTO::Create(1, "name", "label", Priority::HIGH,
+                                 boost::gregorian::date{2019 - 2 - 1},
                                  true));
   context->show_list_buffer_.setList(list);
 
@@ -171,7 +171,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithGetTaskGraph) {
   EXPECT_CALL(*io, output).Times(2);
   EXPECT_CALL(*io, outputWithBreak).Times(1);
 
-  auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
+  auto machine = param_state_machine_creator::get_single_task_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }
 
@@ -187,7 +187,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithPostponeGraph) {
   EXPECT_CALL(*io, output).Times(2);
   EXPECT_CALL(*io, outputWithBreak).Times(1);
 
-  auto machine = ParamStateMachineFactory::PostponeTask::create(context);
+  auto machine = param_state_machine_creator::postpone_task_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }
 
@@ -201,6 +201,6 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithPersistGraph) {
 
   EXPECT_CALL(*io, output).Times(1);
 
-  auto machine = ParamStateMachineFactory::PersistTasks::create(context);
+  auto machine = param_state_machine_creator::persist_tasks_graph::create(context);
   ASSERT_NO_THROW(machine.execute());
 }

@@ -7,8 +7,8 @@
 
 #include "ParamStateMachine.h"
 
-namespace ParamStateMachineFactory {
-  namespace AddTask {
+namespace param_state_machine_creator {
+  namespace add_task_graph {
     static ParamStateMachine create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
       params.push(StateType::TASK_NAME_PARAM);
@@ -20,7 +20,7 @@ namespace ParamStateMachineFactory {
     }
   }
 
-  namespace AddSubtask {
+  namespace add_subtask_graph {
     static ParamStateMachine create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
       params.push(StateType::TASK_NAME_PARAM);
@@ -32,7 +32,7 @@ namespace ParamStateMachineFactory {
     }
   }
 
-  namespace ShowTasksList {
+  namespace get_tasks_list_graph {
     static ParamStateMachine create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
       params.push(StateType::LIST_MODIFIER_PARAM);
@@ -43,7 +43,7 @@ namespace ParamStateMachineFactory {
     }
   }
 
-  namespace ShowSingleTask {
+  namespace get_single_task_graph {
     static ParamStateMachine  create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
       params.push(StateType::TASK_ID_PARAM);
@@ -52,7 +52,7 @@ namespace ParamStateMachineFactory {
     }
   }
 
-  namespace PostponeTask {
+  namespace postpone_task_graph {
     static ParamStateMachine  create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
       params.push(StateType::TASK_DATE_PARAM);
@@ -61,7 +61,7 @@ namespace ParamStateMachineFactory {
     }
   }
 
-  namespace PersistTasks {
+  namespace persist_tasks_graph {
     static ParamStateMachine create(const std::shared_ptr<Context>& context) {
       std::queue<StateType> params;
       params.push(StateType::FILENAME_PARAM);

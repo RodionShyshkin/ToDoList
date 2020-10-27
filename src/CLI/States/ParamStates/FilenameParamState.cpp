@@ -24,7 +24,7 @@ std::unique_ptr<StateInterface> FilenameParamState::switchState() {
 
 bool FilenameParamState::input(const std::shared_ptr<IOInterface> &io) {
   filename_ = io->input();
-  return Validator::ValidateFilename(filename_);
+  return validator::ValidateFilename(filename_);
 }
 
 void FilenameParamState::output(const std::shared_ptr<IOInterface> &io) {

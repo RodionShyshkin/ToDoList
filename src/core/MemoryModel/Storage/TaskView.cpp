@@ -3,7 +3,8 @@
 //
 
 #include "TaskView.h"
-
+#include "TaskViewMap.h"
+/*
 template <typename T>
 bool findByID(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<TaskEntity>>> map) {
   for(const auto& [type, tasks] : map) {
@@ -26,13 +27,13 @@ bool removeFromMap(const TaskID& id, std::map<T, std::map<TaskID, std::weak_ptr<
   }
   return false;
 }
-
+*/
 bool TaskView::AddTask(const std::weak_ptr<TaskEntity> &task) {
   auto id = task.lock()->GetID();
   auto pairTask = std::make_pair(task.lock()->GetID(), task);
 
-  if(findByID(id, priority_sorted_) || findByID(id, name_sorted_) ||
-    findByID(id, label_sorted_) || findByID(id, date_sorted_)) return false;
+  if(task_view_map::FindByID(id, priority_sorted_) || task_view_map::FindByID(id, name_sorted_) ||
+      task_view_map::FindByID(id, label_sorted_) || task_view_map::FindByID(id, date_sorted_)) return false;
   priority_sorted_[task.lock()->GetPriority()].insert(std::make_pair(task.lock()->GetID(), task));
   name_sorted_[task.lock()->GetName()].insert(std::make_pair(task.lock()->GetID(), task));
   label_sorted_[task.lock()->GetLabel()].insert(std::make_pair(task.lock()->GetID(), task));
@@ -41,8 +42,8 @@ bool TaskView::AddTask(const std::weak_ptr<TaskEntity> &task) {
 }
 
 bool TaskView::RemoveTask(const TaskID& id) {
-  if(!removeFromMap(id, priority_sorted_) || !removeFromMap(id, name_sorted_)
-        || !removeFromMap(id, label_sorted_) || !removeFromMap(id, date_sorted_)) return false;
+  if(!task_view_map::RemoveFromMap(id, priority_sorted_) || !task_view_map::RemoveFromMap(id, name_sorted_)
+        || !task_view_map::RemoveFromMap(id, label_sorted_) || !task_view_map::RemoveFromMap(id, date_sorted_)) return false;
   return true;
 }
 

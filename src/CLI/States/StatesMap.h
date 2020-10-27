@@ -25,7 +25,7 @@
 #include <States/ParamStates/FilenameParamState.h>
 #include "States/CommandStates/ExitState.h"
 
-namespace StatesMap {
+namespace states_map {
   static std::map<StateType, std::unique_ptr<StateInterface>> create() {
     std::map<StateType, std::unique_ptr<StateInterface>> states;
     states[StateType::EXIT_STATE] = std::make_unique<ExitState>();

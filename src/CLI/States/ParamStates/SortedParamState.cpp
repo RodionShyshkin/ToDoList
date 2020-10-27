@@ -15,7 +15,7 @@ StateResult SortedParamState::run(std::shared_ptr<Context> context) {
 }
 
 bool SortedParamState::input(const std::shared_ptr<IOInterface> &io) {
-  auto parsed = Validator::ParseBoolFlag(io->input());
+  auto parsed = validator::ParseBoolFlag(io->input());
   if(!parsed.has_value()) return false;
   param_ = parsed.value();
   return true;

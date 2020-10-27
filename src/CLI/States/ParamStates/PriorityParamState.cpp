@@ -15,7 +15,7 @@ StateResult PriorityParamState::run(std::shared_ptr<Context> context) {
 }
 
 bool PriorityParamState::input(const std::shared_ptr<IOInterface> &io) {
-  auto parsed = Validator::ParsePriority(io->input());
+  auto parsed = validator::ParsePriority(io->input());
   if(!parsed.has_value()) return false;
   param_ = parsed.value();
   return true;

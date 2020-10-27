@@ -2,7 +2,7 @@
 // Created by rodion on 8/31/20.
 //
 
-#include <ParamStateMachineFactory.h>
+#include <ParamStateMachineCreator.h>
 #include <States/StateFactory.h>
 #include <Commands/CommandToStateType.h>
 #include "AddSubtaskState.h"
@@ -16,19 +16,19 @@ StateResult AddSubtaskState::run(std::shared_ptr<Context> context) {
   task_list_flag_ = false;
   if(!context->id_buffer_.checkBufferFullness()) {
     task_list_flag_ = true;
-    auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
+    auto machine = param_state_machine_creator::get_single_task_graph::create(context);
     machine.execute();
   }
 
-  auto machine = ParamStateMachineFactory::AddSubtask::create(context);
+  auto machine = param_state_machine_creator::add_subtask_graph::create(context);
   machine.execute();
 
   //Request to Core.
   auto id = context->id_buffer_.getID().value();
-  auto dto = TaskDTO::create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
+  auto dto = TaskDTO::Create(0, context->add_task_buffer_.getName(), context->add_task_buffer_.getLabel(),
                              context->add_task_buffer_.getPriority(), context->add_task_buffer_.getDate(), false);
 
-  auto result = context->service_->addSubtask(id, dto);
+  auto result = context->service_->AddSubtask(id, dto);
   if (result.GetError().has_value()) return StateResult::OPERATION_ERROR;
 
   //Clearing context.
@@ -48,7 +48,7 @@ StateType AddSubtaskState::getType() {
 
 std::unique_ptr<StateInterface> AddSubtaskState::switchState() {
   std::unique_ptr<StateInterface> newstate;
-  if(task_list_flag_) newstate = StateFactory::create(CommandToStateType::Convert(Command::GETTASKLIST));
-  else newstate = StateFactory::create(CommandToStateType::Convert(Command::GETTASK));
+  if(task_list_flag_) newstate = StateFactory::create(command_to_state_type::Convert(Command::GETTASKLIST));
+  else newstate = StateFactory::create(command_to_state_type::Convert(Command::GETTASK));
   return std::move(newstate);
 }

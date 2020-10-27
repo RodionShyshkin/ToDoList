@@ -9,8 +9,8 @@
 #include <States/StateType.h>
 #include <map>
 
-namespace CommandToStateType {
-  namespace CommandStateMap {
+namespace command_to_state_type {
+  namespace command_state_map {
     static std::map<Command, StateType> create() {
       std::map<Command, StateType> states;
 
@@ -31,7 +31,7 @@ namespace CommandToStateType {
   }
 
   static StateType Convert(const Command& command) {
-    auto command_states_map = CommandStateMap::create();
+    auto command_states_map = command_state_map::create();
     if(command_states_map.find(command) == command_states_map.end()) return StateType::UNKNOWN_STATE;
 
     return command_states_map[command];

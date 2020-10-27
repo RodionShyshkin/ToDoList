@@ -3,7 +3,7 @@
 //
 
 
-#include <ParamStateMachineFactory.h>
+#include <ParamStateMachineCreator.h>
 #include <States/StateFactory.h>
 #include <Commands/CommandToStateType.h>
 #include "RemoveTaskState.h"
@@ -13,7 +13,7 @@ bool RemoveTaskState::input(const std::shared_ptr<IOInterface> &io) { return tru
 StateResult RemoveTaskState::run(std::shared_ptr<Context> context) {
   //Filling context.
   if(!context->id_buffer_.checkBufferFullness()) {
-    auto machine = ParamStateMachineFactory::ShowSingleTask::create(context);
+    auto machine = param_state_machine_creator::get_single_task_graph::create(context);
     machine.execute();
  }
 
@@ -43,7 +43,7 @@ StateType RemoveTaskState::getType() {
 
 std::unique_ptr<StateInterface> RemoveTaskState::switchState() {
   std::unique_ptr<StateInterface> newstate;
-  if(task_list_flag_) newstate = StateFactory::create(CommandToStateType::Convert(Command::GETTASKLIST));
-  else newstate = StateFactory::create(CommandToStateType::Convert(Command::MAINMENU));
+  if(task_list_flag_) newstate = StateFactory::create(command_to_state_type::Convert(Command::GETTASKLIST));
+  else newstate = StateFactory::create(command_to_state_type::Convert(Command::MAINMENU));
   return std::move(newstate);
 }

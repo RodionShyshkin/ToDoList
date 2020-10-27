@@ -59,7 +59,7 @@ TEST_F(AddTaskStateTest, shouldNotRunIfOperationError) {
 
   auto state = AddTaskState{};
 
-  EXPECT_CALL(*service, addTask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, AddTask).Times(1).WillOnce(testing::Return(
       OperationResult<StorageError>::Fail(StorageError::INVALID_TASK)));
 
   EXPECT_CALL(*io, input).Times(4).WillOnce(testing::Return("name"))
@@ -79,7 +79,7 @@ TEST_F(AddTaskStateTest, shouldRunCorrectly) {
 
   auto state = AddTaskState{};
 
-  EXPECT_CALL(*service, addTask).Times(1).WillOnce(testing::Return(
+  EXPECT_CALL(*service, AddTask).Times(1).WillOnce(testing::Return(
       OperationResult<StorageError>::Success()));
 
   EXPECT_CALL(*io, input).Times(4).WillOnce(testing::Return("name"))

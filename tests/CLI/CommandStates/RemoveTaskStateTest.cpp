@@ -58,8 +58,8 @@ TEST_F(RemoveTaskStateTest, shouldRunCorrectlyWithoutIDInBuffer) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);
@@ -101,8 +101,8 @@ TEST_F(RemoveTaskStateTest, shouldNotRunIfOperationError) {
       service, io);
 
   std::vector<TaskDTO> vector;
-  vector.push_back(TaskDTO::create(1, "parent", "label", Priority::EMPTY,
-                                   boost::gregorian::date{2020-10-10}, true));
+  vector.push_back(TaskDTO::Create(1, "parent", "label", Priority::EMPTY,
+                                   boost::gregorian::date{2020 - 10 - 10}, true));
 
   context->show_list_buffer_.setList(vector);
   context->show_list_buffer_.setModifier(ListModifier::ALL);

@@ -43,7 +43,7 @@ TEST_F(IDParamStateTest, shouldNotAcceptEmptyInput) {
 
 TEST_F(IDParamStateTest, shouldAcceptCorrectInput) {
   std::vector<TaskDTO> tasks;
-  tasks.push_back(TaskDTO::create(1, "name", "label", Priority::LOW,
+  tasks.push_back(TaskDTO::Create(1, "name", "label", Priority::LOW,
                                   boost::gregorian::date{boost::gregorian::not_a_date_time},
                                   false));
 
@@ -96,7 +96,7 @@ TEST_F(IDParamStateTest, shouldNotRunIfTaskNotExist) {
 
 TEST_F(IDParamStateTest, shouldRunCorrectly) {
   std::vector<TaskDTO> tasks;
-  tasks.push_back(TaskDTO::create(1, "name", "label", Priority::LOW,
+  tasks.push_back(TaskDTO::Create(1, "name", "label", Priority::LOW,
                                   boost::gregorian::date{boost::gregorian::not_a_date_time},
                                   false));
 
@@ -118,7 +118,7 @@ TEST_F(IDParamStateTest, shouldRunCorrectly) {
 
 TEST_F(IDParamStateTest, shouldNotSwitchState) {
   std::vector<TaskDTO> tasks;
-  tasks.push_back(TaskDTO::create(1, "name", "label", Priority::LOW,
+  tasks.push_back(TaskDTO::Create(1, "name", "label", Priority::LOW,
                                   boost::gregorian::date{boost::gregorian::not_a_date_time},
                                   false));
 

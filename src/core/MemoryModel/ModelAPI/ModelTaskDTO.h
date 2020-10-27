@@ -36,8 +36,8 @@ class ModelTaskDTO {
    *
    * @return ModelTaskDTO instance.
    */
-  static ModelTaskDTO     createWithParent(const TaskID& id, const std::string& name, const std::string& label,
-                         const Priority& priority, const Date& date, const bool& status, const TaskID& parent);
+  static ModelTaskDTO     CreateWithParent(const TaskID& id, const std::string& name, const std::string& label,
+                                           const Priority& priority, const Date& date, const bool& status, const TaskID& parent);
 
   /*
    * Factory method for ModelTaskDTO instance which is not subtask of any task.
@@ -51,17 +51,17 @@ class ModelTaskDTO {
    *
    * @return ModelTaskDTO instance.
    */
-  static ModelTaskDTO     createWithoutParent(const TaskID& id, const std::string& name, const std::string& label,
-                                        const Priority& priority, const Date& date, const bool& status);
+  static ModelTaskDTO     CreateWithoutParent(const TaskID& id, const std::string& name, const std::string& label,
+                                              const Priority& priority, const Date& date, const bool& status);
 
  public:
-  TaskID                  getID() const;
-  TaskID                  getParentID() const;
-  std::string             getName() const;
-  std::string             getLabel() const;
-  Priority                getPriority() const;
-  Date                    getDueDate() const;
-  bool                    getStatus() const;
+  TaskID                  GetID() const;
+  TaskID                  GetParentID() const;
+  std::string             GetName() const;
+  std::string             GetLabel() const;
+  Priority                GetPriority() const;
+  Date                    GetDueDate() const;
+  bool                    GetStatus() const;
 
  private:
   ModelTaskDTO(const TaskID& id, const std::string& name, const std::string& label,

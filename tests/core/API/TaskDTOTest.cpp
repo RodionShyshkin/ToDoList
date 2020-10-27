@@ -22,7 +22,7 @@ TEST_F(TaskDTOTest, validTask) {
   boost::gregorian::date date{2020-10-6};
 
   TaskDTO dto;
-  EXPECT_NO_THROW(dto = TaskDTO::create(id, "name", "label", Priority::MEDIUM, date, false));
+  EXPECT_NO_THROW(dto = TaskDTO::Create(id, "name", "label", Priority::MEDIUM, date, false));
 
   ASSERT_EQ("name", dto.getName());
   ASSERT_EQ("label", dto.getLabel());

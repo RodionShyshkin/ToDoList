@@ -17,23 +17,23 @@ class TaskModelInterface {
 
  public:
 
-  virtual std::optional<ModelTaskDTO> getTask(const TaskID&) const = 0;
+  virtual std::optional<ModelTaskDTO> GetTask(const TaskID&) const = 0;
 
-  virtual std::vector<ModelTaskDTO>              getAllTasks() const = 0;
-  virtual std::vector<ModelTaskDTO>              getTasksForToday() const = 0;
-  virtual std::vector<ModelTaskDTO>              getTasksForWeek() const = 0;
-  virtual std::vector<ModelTaskDTO>              getTasksByLabel(const std::string &label) const = 0;
-  virtual std::vector<ModelTaskDTO>              getTasksByName(const std::string& name) const = 0;
-  virtual std::vector<ModelTaskDTO>              getTasksByPriority(const Priority& priority) const = 0;
+  virtual std::vector<ModelTaskDTO>   GetAllTasks() const = 0;
+  virtual std::vector<ModelTaskDTO>   GetTasksForToday() const = 0;
+  virtual std::vector<ModelTaskDTO>   GetTasksForWeek() const = 0;
+  virtual std::vector<ModelTaskDTO>   GetTasksByLabel(const std::string &label) const = 0;
+  virtual std::vector<ModelTaskDTO>   GetTasksByName(const std::string& name) const = 0;
+  virtual std::vector<ModelTaskDTO>   GetTasksByPriority(const Priority& priority) const = 0;
 
-  virtual bool                                   postponeTask(const TaskID& id, const Date& newdate) = 0;
-  virtual bool                                   completeTask(const TaskID& id) = 0;
+  virtual bool                        PostponeTask(const TaskID& id, const Date& newdate) = 0;
+  virtual bool                        CompleteTask(const TaskID& id) = 0;
 
-  virtual OperationResult<StorageError>          AddTask(const ModelTaskDTO& task) = 0;
-  virtual OperationResult<StorageError>          AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
-  virtual OperationResult<StorageError>          RemoveTask(const TaskID& id) = 0;
+  virtual OperationResult<StorageError>  AddTask(const ModelTaskDTO& task) = 0;
+  virtual OperationResult<StorageError>  AddSubtask(const TaskID &id, const ModelTaskDTO& subtask) = 0;
+  virtual OperationResult<StorageError>  RemoveTask(const TaskID& id) = 0;
 
-  virtual std::vector<ModelTaskDTO>              GetSubtasks(const TaskID& id) = 0;
+  virtual std::vector<ModelTaskDTO>      GetSubtasks(const TaskID& id) = 0;
 };
 
 #endif //TODOLIST_SRC_MEMORYMODEL_STORAGE_FULLSTORAGEINTERFACE_H_

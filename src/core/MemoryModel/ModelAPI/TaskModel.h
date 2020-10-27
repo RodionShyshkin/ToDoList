@@ -30,28 +30,28 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO data-transfer-object
    */
-  std::optional<ModelTaskDTO> getTask(const TaskID &) const override;
+  std::optional<ModelTaskDTO> GetTask(const TaskID &) const override;
 
   /*
    * Gets all tasks sorted by ID.
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO>         getAllTasks() const override;
+  std::vector<ModelTaskDTO>         GetAllTasks() const override;
 
   /*
    * Gets all tasks for current day.
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO>         getTasksForToday() const override;
+  std::vector<ModelTaskDTO>         GetTasksForToday() const override;
 
   /*
    * Gets tasks due the next week.
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO>         getTasksForWeek() const override;
+  std::vector<ModelTaskDTO>         GetTasksForWeek() const override;
 
   /*
    * Gets tasks with a particular label.
@@ -60,7 +60,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO>         getTasksByLabel(const std::string &label) const override;
+  std::vector<ModelTaskDTO>         GetTasksByLabel(const std::string &label) const override;
 
   /*
    * Gets tasks with a particular name.
@@ -69,7 +69,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO>         getTasksByName(const std::string &name) const override;
+  std::vector<ModelTaskDTO>         GetTasksByName(const std::string &name) const override;
 
   /*
    * Gets tasks with a particular priority.
@@ -78,7 +78,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return ModelTaskDTO vector.
    */
-  std::vector<ModelTaskDTO>         getTasksByPriority(const Priority &priority) const override;
+  std::vector<ModelTaskDTO>         GetTasksByPriority(const Priority &priority) const override;
 
   /*
    * Adds task to a system.
@@ -121,7 +121,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return True if success, False if task was not found.
    */
-  bool                              completeTask(const TaskID &id) override;
+  bool                              CompleteTask(const TaskID &id) override;
 
   /*
    * Postpones task.
@@ -130,7 +130,7 @@ class TaskModel : public TaskModelInterface {
    *
    * @return True if success, False if task was not found.
    */
-  bool                              postponeTask(const TaskID &id, const Date &newdate) override;
+  bool                              PostponeTask(const TaskID &id, const Date &newdate) override;
 
   /*
    * Gets all subtasks of a task.

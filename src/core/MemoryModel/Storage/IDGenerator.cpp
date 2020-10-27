@@ -7,5 +7,5 @@
 IDGenerator::IDGenerator() : ids_amount_(0) {}
 
 TaskID IDGenerator::GenerateID() {
-  return TaskID{++this->ids_amount_};
+  return TaskID{++ids_amount_};
 }

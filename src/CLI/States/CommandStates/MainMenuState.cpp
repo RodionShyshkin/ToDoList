@@ -20,8 +20,8 @@ StateResult MainMenuState::run(std::shared_ptr<Context> context) {
 }
 
 bool MainMenuState::input(const std::shared_ptr<IOInterface> &io) {
-  command_ = CommandParser::Parse(io->inputCommand());
-  if(!AvailableCommands::IsCommandAvailable(getType(), command_)) return false;
+  command_ = command_parser::Parse(io->inputCommand());
+  if(!available_commands::IsCommandAvailable(getType(), command_)) return false;
   return true;
 }
 
@@ -37,6 +37,6 @@ StateType MainMenuState::getType() {
 }
 
 std::unique_ptr<StateInterface> MainMenuState::switchState() {
-  auto newstate = StateFactory::create(CommandToStateType::Convert(command_));
+  auto newstate = StateFactory::create(command_to_state_type::Convert(command_));
   return std::move(newstate);
 }
