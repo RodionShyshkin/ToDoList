@@ -55,16 +55,17 @@ set(_REFLECTION gRPC::grpc++_reflection)
 
 find_package(gRPC CONFIG REQUIRED)
 message(STATUS "Using gRPC ${gRPC_VERSION}")
+
 set(_GRPC_GRPCPP gRPC::grpc++)
 find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
 
 get_filename_component(service_proto "Proto/service.proto" ABSOLUTE)
 get_filename_component(service_proto_path "${service_proto}" PATH)
 
-set(service_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.pb.cc")
-set(service_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.pb.h")
-set(service_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.grpc.pb.cc")
-set(service_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.grpc.pb.h")
+set(service_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/service.pb.cc")
+set(service_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/service.pb.h")
+set(service_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/service.grpc.pb.cc")
+set(service_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/service.grpc.pb.h")
 
 add_custom_command(
         OUTPUT "${service_proto_srcs}" "${service_proto_hdrs}" "${service_grpc_srcs}" "${service_grpc_hdrs}"
@@ -91,16 +92,41 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers}
-        ${main} ${PROTO_SRCS} ${PROTO_HDRS} ${ts_proto_srcs} ${ts_proto_hdrs}
-        ${ts_grpc_srcs} ${ts_grpc_hdrs})
+######## Configure ########
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS})
+add_executable(ToDoList ${core_sources} ${core_headers}
+                        ${cli_sources} ${cli_headers}
+                        ${main}
+                        ${PROTO_SRCS} ${PROTO_HDRS})
+                        #${service_proto_srcs} ${service_proto_hdrs}
+                        #${service_grpc_srcs} ${service_grpc_hdrs})
+
+message("${service_grpc_srcs}")
+
+target_link_libraries(ToDoList ${Boost_LIBRARIES}
+                                #${_REFLECTION}
+                                #${_GRPC_GRPCPP}
+                                ${Protobuf_LIBRARIES})
+
+
+
+add_executable(Tests    ${core_tests}
+                        ${core_sources}
+                        ${core_headers}
+                        ${cli_sources}
+                        ${cli_headers}
+                        ${cli_tests}
+                        ${PROTO_SRCS}
+                        ${PROTO_HDRS})
+                        #${service_proto_srcs}
+                        #${service_grpc_srcs})
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)
-target_link_libraries(Tests ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
-
-target_link_libraries(ToDoList ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
+target_link_libraries(Tests ${Boost_LIBRARIES}
+                            ${Protobuf_LIBRARIES})
+                            #${_REFLECTION}
+                            #${_GRPC_GRPCPP}
+                            #${_PROTOBUF_LIBPROTOBUF})
 
 gtest_discover_tests(Tests)
