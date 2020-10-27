@@ -104,24 +104,3 @@ target_link_libraries(Tests ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
 target_link_libraries(ToDoList ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
 
 gtest_discover_tests(Tests)
-
-
-#add_executable(Server src/server.cpp
-#        ${CORE_HEADERS} ${CORE_CPP_SOURCES}
-#        ${PROTO_SRCS} ${PROTO_HDRS}
-#        ${ts_proto_srcs}
-#        ${ts_grpc_srcs})
-
-#target_link_libraries(Server
-#        ${Boost_LIBRARIES} ${_REFLECTION}
-#        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
-
-#add_executable(Client src/client.cpp
-    #    ${CLI_HEADERS} ${CLI_CPP_SOURCES}
-   #     ${CORE_HEADERS} ${CORE_CPP_SOURCES}
-  #      ${PROTO_SRCS} ${PROTO_HDRS} ${ts_proto_srcs}
- #       ${ts_grpc_srcs})
-
-#target_link_libraries(Client
-#        ${Boost_LIBRARIES} ${_REFLECTION}
-#        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
