@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+import "task.proto";
+
+message TaskID {
+  uint32 id = 1;
+}
+
+message TaskData {
+  enum Priority {
+    EMPTY = 0;
+    LOW = 1;
+    MEDIUM = 2;
+    HIGH = 3;
+  }
+
+  string name = 1;
+  string label = 2;
+  Priority priority = 3;
+  uint32 deadline = 4;
+}
+
+message AddTask {
+  TaskData data = 1;
+}
+
+message AddSubtask {
+  TaskID id = 1;
+  TaskData data = 2;
+}
+
+message TaskDTO {
+  TaskID id = 1;
+}
+
+message AddTaskResponse {
+  bool status = 1;
+
+}
+
+service TaskService {
+
+}

@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <task.pb.h>
-#include <Persister/Serialization/ProtoConverter.h>
+#include <Persister/ProtoConverter.h>
 #include <MemoryModel/ModelAPI/TaskModel.h>
 
 class ProtoConvertersTest : public ::testing::Test {

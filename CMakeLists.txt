@@ -41,13 +41,25 @@ find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/core/Persister/Serialization/Proto/*.proto")
+file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/Proto/*.proto")
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_SOURCES})
 message("generated ${PROTO_SRCS} ${PROTO_HDRS}")
 
 SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
 
-add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers} ${main} ${PROTO_SRCS} ${PROTO_HDRS})
+
+
+######## gRPC ########
+set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
+set(_REFLECTION gRPC::grpc++_reflection)
+
+find_package(gRPC CONFIG REQUIRED)
+message(STATUS "Using gRPC ${gRPC_VERSION}")
+find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+
+add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers}
+        ${main} ${PROTO_SRCS} ${PROTO_HDRS} ${ts_proto_srcs} ${ts_proto_hdrs}
+        ${ts_grpc_srcs} ${ts_grpc_hdrs})
 
 ######## GTEST ########
 
@@ -73,3 +85,22 @@ target_link_libraries(ToDoList ${Boost_LIBRARIES} ${Protobuf_LIBRARIES})
 gtest_discover_tests(Tests)
 
 
+#add_executable(Server src/server.cpp
+#        ${CORE_HEADERS} ${CORE_CPP_SOURCES}
+#        ${PROTO_SRCS} ${PROTO_HDRS}
+#        ${ts_proto_srcs}
+#        ${ts_grpc_srcs})
+
+#target_link_libraries(Server
+#        ${Boost_LIBRARIES} ${_REFLECTION}
+#        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+
+#add_executable(Client src/client.cpp
+    #    ${CLI_HEADERS} ${CLI_CPP_SOURCES}
+   #     ${CORE_HEADERS} ${CORE_CPP_SOURCES}
+  #      ${PROTO_SRCS} ${PROTO_HDRS} ${ts_proto_srcs}
+ #       ${ts_grpc_srcs})
+
+#target_link_libraries(Client
+#        ${Boost_LIBRARIES} ${_REFLECTION}
+#        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
