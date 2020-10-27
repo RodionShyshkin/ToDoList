@@ -57,7 +57,7 @@ bool ViewTaskListState::input(const std::shared_ptr<IOInterface> &io) {
 
 void ViewTaskListState::output(const std::shared_ptr<IOInterface> &io) {  }
 
-StateType ViewTaskListState::getType() {
+StateType ViewTaskListState::getType() const {
   return StateType::SHOW_TASKS_LIST;
 }
 

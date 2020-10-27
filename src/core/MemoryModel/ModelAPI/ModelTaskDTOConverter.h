@@ -8,6 +8,12 @@
 #include <MemoryModel/Task/TaskEntity.h>
 #include "ModelTaskDTO.h"
 
+/*
+ * Toolkit for converting {TaskEntity} to {ModelTaskDTO}.
+ *
+ * @author Rodion Shyshkin
+ */
+
 namespace model_task_dto_converter {
   static ModelTaskDTO Convert(const TaskEntity& task) {
     if(task.GetID().GetID() != task.GetParentID().GetID())

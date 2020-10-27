@@ -27,9 +27,10 @@ class TaskService : public TaskServiceInterface {
   /*
    * \brief Gives a task by its ID.
    *
-   * @param uint32 identifier of the task
+   * @param unsigned int identifier of the task
    *
-   * @return TaskDTO object
+   * @return optional TaskDTO object, returns
+   * std::nullopt if there are no tasks by this id.
    */
   std::optional<TaskDTO> GetTask(const unsigned int& id) const override;
   /*

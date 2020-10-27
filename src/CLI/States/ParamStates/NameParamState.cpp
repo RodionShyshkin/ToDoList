@@ -23,7 +23,7 @@ void NameParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter task name: ");
 }
 
-StateType NameParamState::getType() {
+StateType NameParamState::getType() const {
   return StateType::TASK_NAME_PARAM;
 }
 

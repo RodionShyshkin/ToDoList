@@ -25,7 +25,7 @@ void PriorityParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter task priority (not required) [Low, Medium, High]: ");
 }
 
-StateType PriorityParamState::getType() {
+StateType PriorityParamState::getType() const {
   return StateType::TASK_PRIORITY_PARAM;
 }
 

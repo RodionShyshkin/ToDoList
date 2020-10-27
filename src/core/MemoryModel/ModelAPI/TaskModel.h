@@ -28,7 +28,8 @@ class TaskModel : public TaskModelInterface {
    *
    * @param TaskID id.
    *
-   * @return ModelTaskDTO data-transfer-object
+   * @return optional ModelTaskDTO data-transfer-object,
+   * std::nullopt if there are no task with specified ID.
    */
   std::optional<ModelTaskDTO> GetTask(const TaskID &) const override;
 
@@ -47,7 +48,7 @@ class TaskModel : public TaskModelInterface {
   std::vector<ModelTaskDTO>         GetTasksForToday() const override;
 
   /*
-   * Gets tasks due the next week.
+   * Gets tasks for all future days until nearest Monday.
    *
    * @return ModelTaskDTO vector.
    */

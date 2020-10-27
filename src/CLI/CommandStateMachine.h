@@ -9,6 +9,14 @@
 #include "States/StateType.h"
 #include "States/StateInterface.h"
 
+/*
+ * \brief State machine which works with states called by command.
+ *
+ * @see States/CommandStates
+ *
+ * @author Rodion Shyshkin
+ */
+
 class CommandStateMachine {
  public:
   static CommandStateMachine create(StateType &&start_state,

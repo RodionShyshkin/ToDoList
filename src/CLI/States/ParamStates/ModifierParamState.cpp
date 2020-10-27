@@ -31,7 +31,7 @@ ListModifier ModifierParamState::parseParam(const std::string& param) {
   return ListModifier::UNKNOWN;
 }
 
-StateType ModifierParamState::getType() {
+StateType ModifierParamState::getType() const {
   return StateType::LIST_MODIFIER_PARAM;
 }
 

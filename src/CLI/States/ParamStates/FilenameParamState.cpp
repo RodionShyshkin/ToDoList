@@ -14,7 +14,7 @@ StateResult FilenameParamState::run(std::shared_ptr<Context> context) {
   return StateResult::SUCCESS;
 }
 
-StateType FilenameParamState::getType() {
+StateType FilenameParamState::getType() const {
   return StateType::FILENAME_PARAM;
 }
 

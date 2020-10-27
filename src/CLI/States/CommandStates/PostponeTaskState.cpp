@@ -39,7 +39,7 @@ StateResult PostponeTaskState::run(std::shared_ptr<Context> context) {
 void PostponeTaskState::output(const std::shared_ptr<IOInterface> &io) {
 }
 
-StateType PostponeTaskState::getType() {
+StateType PostponeTaskState::getType() const {
   return StateType::POSTPONE_TASK;
 }
 

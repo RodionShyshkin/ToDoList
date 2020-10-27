@@ -33,6 +33,12 @@ class StateInterface {
    */
   virtual StateResult                         run(std::shared_ptr<Context> context)            = 0;
 
+  /*
+   * Changes state.
+   *
+   * @return pointer to a new state.
+   */
+
   virtual std::unique_ptr<StateInterface>     switchState()                                    = 0;
 
   /*
@@ -40,7 +46,7 @@ class StateInterface {
    *
    * @return StateType object.
    */
-  virtual StateType                           getType()                                         = 0;
+  virtual StateType                           getType() const                          = 0;
 
  public:
   /*

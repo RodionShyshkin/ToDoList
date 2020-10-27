@@ -34,7 +34,7 @@ StateResult CompleteTaskState::run(std::shared_ptr<Context> context) {
 
 void CompleteTaskState::output(const std::shared_ptr<IOInterface> &io) { }
 
-StateType CompleteTaskState::getType() {
+StateType CompleteTaskState::getType() const {
   return StateType::COMPLETE_TASK;
 }
 

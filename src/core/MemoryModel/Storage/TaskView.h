@@ -9,6 +9,12 @@
 #include <MemoryModel/Task/TaskEntity.h>
 #include <MemoryModel/Storage/TaskViewInterface.h>
 
+/*
+ * View class which holds prepared sorted tasks.
+ *
+ * @author Rodion Shyshkin.
+ */
+
 class TaskView : public TaskViewInterface {
  public:
   bool                                        AddTask(const std::weak_ptr<TaskEntity>& task) override;

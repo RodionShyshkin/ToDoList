@@ -5,6 +5,12 @@
 #ifndef TODOLIST_SRC_CORE_API_OPERATIONRESULT_STORAGEERROR_H_
 #define TODOLIST_SRC_CORE_API_OPERATIONRESULT_STORAGEERROR_H_
 
+/*
+ * \brief Errors which appears while working with storage.
+ *
+ * @author Rodion Shyshkin
+ */
+
 enum class StorageError {
   INVALID_TASK,
   TASK_NOT_FOUND,

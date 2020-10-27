@@ -10,6 +10,11 @@
 #include <map>
 #include "Command.h"
 
+/*
+ * \brief Toolkit for checking if particular command is available in current state.
+ *
+ * @author Rodion Shyshkin
+ */
 
 namespace available_commands {
 

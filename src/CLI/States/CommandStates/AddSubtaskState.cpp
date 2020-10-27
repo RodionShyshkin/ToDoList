@@ -42,7 +42,7 @@ StateResult AddSubtaskState::run(std::shared_ptr<Context> context) {
 
 void AddSubtaskState::output(const std::shared_ptr<IOInterface> &io) {  }
 
-StateType AddSubtaskState::getType() {
+StateType AddSubtaskState::getType() const {
   return StateType::ADD_SUBTASK;
 }
 

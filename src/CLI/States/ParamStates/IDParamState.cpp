@@ -29,7 +29,7 @@ void IDParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter task ID: ");
 }
 
-StateType IDParamState::getType() {
+StateType IDParamState::getType() const {
   return StateType::TASK_ID_PARAM;
 }
 

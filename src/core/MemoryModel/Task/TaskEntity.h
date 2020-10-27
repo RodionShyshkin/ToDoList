@@ -24,7 +24,7 @@ class TaskEntity {
    * Factory method for TaskEntity. Doesn't return an optional because
    * all its params are already validated.
    *
-   * @param Task task with the main information
+   * @param Task task with the main information.
    * @param TaskID identifier for task.
    *
    * @return TaskEntity Task without any parent tasks (it isn't a subtask of some task).
@@ -64,7 +64,7 @@ class TaskEntity {
   void                                                    AddSubtask(const std::weak_ptr<TaskEntity> &task);
 
   /*
-   * Changes task status.
+   * Marks task as completed.
    */
   void                                                    SetComplete();
 
@@ -76,7 +76,7 @@ class TaskEntity {
   void                                                    SubstituteTask(const Task &newtask);
 
   /*
-   * Removes subtasks.
+   * Removes subtask.
    *
    * @param taskID id of the subtask.
    *

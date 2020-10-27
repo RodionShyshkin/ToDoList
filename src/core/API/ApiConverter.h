@@ -9,6 +9,11 @@
 #include "Priority.h"
 #include "TaskDTO.h"
 
+/*
+ * Toolkit for convertions between {ModelTaskDTO} & {TaskDTO},
+ * and for sorting {TaskDTO} vectors by priority.
+ */
+
 namespace api_converter {
 
   static std::vector<TaskDTO> GetSortedByPriority(std::vector<TaskDTO> vector) {

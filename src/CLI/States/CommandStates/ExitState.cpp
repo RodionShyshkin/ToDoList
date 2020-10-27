@@ -18,7 +18,7 @@ void ExitState::output(const std::shared_ptr<IOInterface> &io) {
   io->outputWithBreak("State machine finished.");
 }
 
-StateType ExitState::getType() {
+StateType ExitState::getType() const {
   return StateType::EXIT_STATE;
 }
 

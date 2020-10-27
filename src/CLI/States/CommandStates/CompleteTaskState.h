@@ -10,7 +10,7 @@
 class CompleteTaskState : public StateInterface {
  public:
   StateResult       run(std::shared_ptr<Context> context)             override;
-  StateType         getType()                                         override;
+  StateType         getType() const                                   override;
   std::unique_ptr<StateInterface> switchState() override;
 
  public:

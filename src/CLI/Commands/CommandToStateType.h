@@ -9,6 +9,12 @@
 #include <States/StateType.h>
 #include <map>
 
+/*
+ * \brief Toolkit for getting state which should be runned to execute a particular command.
+ *
+ * @author Rodion Shyshkin
+ */
+
 namespace command_to_state_type {
   namespace command_state_map {
     static std::map<Command, StateType> create() {

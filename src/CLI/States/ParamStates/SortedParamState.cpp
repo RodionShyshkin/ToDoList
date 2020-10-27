@@ -25,7 +25,7 @@ void SortedParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Do you want to sort list? [y/n]: ");
 }
 
-StateType SortedParamState::getType() {
+StateType SortedParamState::getType() const {
   return StateType::LIST_SORTED_PARAM;
 }
 

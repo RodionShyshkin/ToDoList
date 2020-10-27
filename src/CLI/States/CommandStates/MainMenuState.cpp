@@ -32,7 +32,7 @@ void MainMenuState::output(const std::shared_ptr<IOInterface> &io) {
   io->outputWithBreak("------------------");
 }
 
-StateType MainMenuState::getType() {
+StateType MainMenuState::getType() const {
   return StateType::MAIN_MENU;
 }
 

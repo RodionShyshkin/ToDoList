@@ -7,6 +7,12 @@
 
 #include "ParamStateMachine.h"
 
+/*
+ * \brief Creator of {ParamStateMachine} for getting all parameters of commands.
+ *
+ * @author Rodion Shyshkin
+ */
+
 namespace param_state_machine_creator {
   namespace add_task_graph {
     static ParamStateMachine create(const std::shared_ptr<Context>& context) {

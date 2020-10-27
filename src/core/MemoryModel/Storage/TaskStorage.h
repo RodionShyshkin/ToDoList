@@ -9,6 +9,10 @@
 #include <MemoryModel/Task/TaskEntity.h>
 #include <MemoryModel/Storage/TaskStorageInterface.h>
 
+/*
+ * \brief Holder, which contains all tasks in system sorted by ID.
+ */
+
 class TaskStorage : public TaskStorageInterface {
  public:
   bool                                              AddTask(const std::shared_ptr<TaskEntity>& task) override;

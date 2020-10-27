@@ -37,7 +37,7 @@ StateResult RemoveTaskState::run(std::shared_ptr<Context> context) {
 
 void RemoveTaskState::output(const std::shared_ptr<IOInterface> &io) {}
 
-StateType RemoveTaskState::getType() {
+StateType RemoveTaskState::getType() const {
   return StateType::REMOVE_TASK;
 }
 

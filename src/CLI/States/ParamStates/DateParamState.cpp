@@ -28,7 +28,7 @@ void DateParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter deadline: ");
 }
 
-StateType DateParamState::getType() {
+StateType DateParamState::getType() const {
   return StateType::TASK_DATE_PARAM;
 }
 

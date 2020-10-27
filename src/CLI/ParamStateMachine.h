@@ -10,6 +10,15 @@
 #include <memory>
 #include "States/StateType.h"
 
+/*
+ * \brief StateMachine which works with container of states,
+ * which receive parameters and fill context by them.
+ *
+ * @see States/ParamStates
+ *
+ * @author Rodion Shyshkin
+ */
+
 class ParamStateMachine {
  public:
   static ParamStateMachine create(std::queue<StateType>&& states,

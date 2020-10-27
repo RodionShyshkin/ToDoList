@@ -28,7 +28,7 @@ void LabelParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter task label (not required): ");
 }
 
-StateType LabelParamState::getType() {
+StateType LabelParamState::getType() const {
   return StateType::TASK_LABEL_PARAM;
 }
 

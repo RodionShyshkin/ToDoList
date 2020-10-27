@@ -9,6 +9,12 @@
 #include <string>
 #include "Command.h"
 
+/*
+ * \brief Toolkit for parsing std::string into Command.
+ *
+ * @author Rodion Shyshkin
+ */
+
 namespace command_parser {
 
   namespace commands_map {

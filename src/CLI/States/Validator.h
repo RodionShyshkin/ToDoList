@@ -12,6 +12,12 @@
 #include <API/Priority.h>
 #include <iostream>
 
+/*
+ * \brief Toolkit for validating & parsing parameters.
+ *
+ * @author Rodion Shyshkin
+ */
+
 namespace validator {
   static std::optional <boost::gregorian::date> ParseDate(const std::string& param) {
     try{

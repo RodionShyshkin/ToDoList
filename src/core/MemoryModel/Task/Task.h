@@ -25,7 +25,7 @@ class Task {
    * @param std::string Task Name
    * @param std::string Task label
    * @param Priority Task priority (EMPTY, LOW, MEDIUM, HIGH)
-   * @param std::string Task Deadline in format YYYY-MM-DD
+   * @param Date Task Deadline in format YYYY-MM-DD
    *
    * @return optional<Task> created Task or std::nullopt in case one of the arguments is invalid.
    */

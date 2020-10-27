@@ -9,6 +9,12 @@
 #include <MemoryModel/ModelAPI/ModelTaskDTO.h>
 #include <MemoryModel/ModelAPI/TaskModelInterface.h>
 
+/*
+ * \brief Toolkit for converting proto tasks to memory model structures and vice versa.
+ *
+ * @author Rodion Shyshkin
+ */
+
 namespace proto_converter {
 
   static TaskProto_Priority PriorityToProto(const Priority& priority) {

@@ -29,7 +29,7 @@ StateResult AddTaskState::run(std::shared_ptr<Context> context) {
 void AddTaskState::output(const std::shared_ptr<IOInterface> &io) {
 }
 
-StateType AddTaskState::getType() {
+StateType AddTaskState::getType() const {
   return StateType::ADD_TASK;
 }
 

@@ -36,7 +36,7 @@ bool ViewTaskState::input(const std::shared_ptr<IOInterface> &io) {
 void ViewTaskState::output(const std::shared_ptr<IOInterface> &io) {
 }
 
-StateType ViewTaskState::getType() {
+StateType ViewTaskState::getType() const {
   return StateType::SHOW_TASK;
 }
 
