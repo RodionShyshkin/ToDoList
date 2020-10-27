@@ -2,6 +2,7 @@
 // Created by rodion on 8/27/20.
 //
 
+#include <States/Validator.h>
 #include "NameParamState.h"
 
 StateResult NameParamState::run(std::shared_ptr<Context> context) {
@@ -14,17 +15,12 @@ StateResult NameParamState::run(std::shared_ptr<Context> context) {
 
 bool NameParamState::input(const std::shared_ptr<IOInterface> &io) {
   param_ = io->input();
-  auto validated = NameParamState::validateParam(param_);
+  auto validated = Validator::ValidateName(param_);
   return validated;
 }
 
 void NameParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter task name: ");
-}
-
-bool NameParamState::validateParam(const std::string& param) {
-  if(param.empty()) return false;
-  return true;
 }
 
 StateType NameParamState::getType() {

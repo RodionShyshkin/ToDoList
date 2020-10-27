@@ -2,6 +2,7 @@
 // Created by rodion on 8/28/20.
 //
 
+#include <States/Validator.h>
 #include "SortedParamState.h"
 
 StateResult SortedParamState::run(std::shared_ptr<Context> context) {
@@ -14,7 +15,7 @@ StateResult SortedParamState::run(std::shared_ptr<Context> context) {
 }
 
 bool SortedParamState::input(const std::shared_ptr<IOInterface> &io) {
-  auto parsed = SortedParamState::parseParam(io->input());
+  auto parsed = Validator::ParseBoolFlag(io->input());
   if(!parsed.has_value()) return false;
   param_ = parsed.value();
   return true;
@@ -22,12 +23,6 @@ bool SortedParamState::input(const std::shared_ptr<IOInterface> &io) {
 
 void SortedParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Do you want to sort list? [y/n]: ");
-}
-
-std::optional<bool> SortedParamState::parseParam(const std::string& param) {
-  if(param == "y" || param == "yes") return true;
-  else if(param == "n" || param == "no") return false;
-  else return std::nullopt;
 }
 
 StateType SortedParamState::getType() {

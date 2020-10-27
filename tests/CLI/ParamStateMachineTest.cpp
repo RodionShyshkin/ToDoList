@@ -166,7 +166,7 @@ TEST_F(ParamStateMachineTest, shouldWorkCorrectlyWithGetTaskGraph) {
   context->show_list_buffer_.setList(list);
 
   EXPECT_CALL(*io, input).Times(2).WillOnce(testing::Return("21"))
-                                      .WillOnce(testing::Return("0"));
+                    .WillOnce(testing::Return("0"));
 
   EXPECT_CALL(*io, output).Times(2);
   EXPECT_CALL(*io, outputWithBreak).Times(1);

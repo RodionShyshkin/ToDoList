@@ -23,7 +23,7 @@
 #include <States/ParamStates/SortedParamState.h>
 #include <States/ParamStates/IDParamState.h>
 #include <States/ParamStates/FilenameParamState.h>
-#include "ExitState.h"
+#include "States/CommandStates/ExitState.h"
 
 namespace StatesMap {
   static std::map<StateType, std::unique_ptr<StateInterface>> create() {

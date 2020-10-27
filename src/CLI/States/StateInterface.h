@@ -42,7 +42,7 @@ class StateInterface {
    */
   virtual StateType                           getType()                                         = 0;
 
- private:
+ public:
   /*
    * Method which gets input and validate or parse data received from user using the IOInterface stream
    *

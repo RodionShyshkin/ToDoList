@@ -2,6 +2,7 @@
 // Created by rodion on 8/27/20.
 //
 
+#include <States/Validator.h>
 #include "DateParamState.h"
 
 StateResult DateParamState::run(std::shared_ptr<Context> context) {
@@ -17,7 +18,7 @@ StateResult DateParamState::run(std::shared_ptr<Context> context) {
 }
 
 bool DateParamState::input(const std::shared_ptr<IOInterface> &io) {
-  auto parsed = DateParamState::parseParam(io->input());
+  auto parsed = Validator::ParseDate(io->input());
   if(!parsed.has_value()) return false;
   param_ = parsed.value();
   return true;
@@ -25,24 +26,6 @@ bool DateParamState::input(const std::shared_ptr<IOInterface> &io) {
 
 void DateParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter deadline: ");
-}
-
-std::optional<boost::gregorian::date> DateParamState::parseParam(const std::string& param) {
-  try{
-    boost::gregorian::date result;
-    if(param.empty()) result = boost::gregorian::date{boost::gregorian::not_a_date_time};
-    else result = boost::gregorian::from_string(param);
-    return std::make_optional<boost::gregorian::date>(result);
-  }
-  catch(const std::out_of_range&) {
-    return std::nullopt;
-  }
-  catch(const std::invalid_argument&) {
-    return std::nullopt;
-  }
-  catch(const boost::bad_lexical_cast&) {
-    return std::nullopt;
-  }
 }
 
 StateType DateParamState::getType() {

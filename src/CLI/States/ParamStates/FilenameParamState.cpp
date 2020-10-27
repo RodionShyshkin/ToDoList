@@ -2,6 +2,7 @@
 // Created by rodion on 10/24/20.
 //
 
+#include <States/Validator.h>
 #include "FilenameParamState.h"
 
 StateResult FilenameParamState::run(std::shared_ptr<Context> context) {
@@ -23,10 +24,9 @@ std::unique_ptr<StateInterface> FilenameParamState::switchState() {
 
 bool FilenameParamState::input(const std::shared_ptr<IOInterface> &io) {
   filename_ = io->input();
-  return true;
+  return Validator::ValidateFilename(filename_);
 }
 
 void FilenameParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter filepath: ");
 }
-

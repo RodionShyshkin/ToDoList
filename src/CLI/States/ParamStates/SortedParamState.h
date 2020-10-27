@@ -13,11 +13,9 @@ class SortedParamState : public StateInterface {
   StateType                     getType()                                      override;
   std::unique_ptr<StateInterface> switchState() override;
 
- private:
+ public:
   bool                          input(const std::shared_ptr<IOInterface> &io)  override;
   void                          output(const std::shared_ptr<IOInterface> &io) override;
-
-  static std::optional<bool>    parseParam(const std::string&);
 
  private:
   bool                          param_;

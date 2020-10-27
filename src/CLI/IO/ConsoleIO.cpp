@@ -13,7 +13,7 @@ std::string ConsoleIO::input() {
 
 std::string ConsoleIO::inputCommand() {
   std::cout << ">> ";
-  return this->input();
+  return input();
 }
 
 void ConsoleIO::output(const std::string &string) {

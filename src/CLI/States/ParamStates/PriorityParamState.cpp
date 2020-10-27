@@ -2,6 +2,7 @@
 // Created by rodion on 8/27/20.
 //
 
+#include <States/Validator.h>
 #include "PriorityParamState.h"
 
 StateResult PriorityParamState::run(std::shared_ptr<Context> context) {
@@ -14,7 +15,7 @@ StateResult PriorityParamState::run(std::shared_ptr<Context> context) {
 }
 
 bool PriorityParamState::input(const std::shared_ptr<IOInterface> &io) {
-  auto parsed = PriorityParamState::parseParam(io->input());
+  auto parsed = Validator::ParsePriority(io->input());
   if(!parsed.has_value()) return false;
   param_ = parsed.value();
   return true;
@@ -22,14 +23,6 @@ bool PriorityParamState::input(const std::shared_ptr<IOInterface> &io) {
 
 void PriorityParamState::output(const std::shared_ptr<IOInterface> &io) {
   io->output("Enter task priority (not required) [Low, Medium, High]: ");
-}
-
-std::optional<Priority> PriorityParamState::parseParam(const std::string& param) {
-  if(param.empty()) return Priority::EMPTY;
-  else if(param == "Low") return Priority::LOW;
-  else if(param == "Medium") return Priority::MEDIUM;
-  else if(param == "High") return Priority::HIGH;
-  else return std::nullopt;
 }
 
 StateType PriorityParamState::getType() {
