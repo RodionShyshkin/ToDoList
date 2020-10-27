@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package proto;
+
+enum Priority {
+  EMPTY = 0;
+  LOW = 1;
+  MEDIUM = 2;
+  HIGH = 3;
+}
+
+service TaskService {
+
+}

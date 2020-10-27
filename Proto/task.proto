@@ -1,18 +1,13 @@
 syntax = "proto3";
 
+import "priority.proto";
 import "google/protobuf/timestamp.proto";
+package proto;
 
 message TaskProto {
-  enum Priority {
-    EMPTY = 0;
-    LOW = 1;
-    MEDIUM = 2;
-    HIGH = 3;
-  }
-
   string              name = 1;
   string              label = 2;
-  Priority            priority = 3;
+  proto.Priority      priority = 3;
   uint32              deadline = 4;
   bool                completed = 5;
   repeated TaskProto  subtasks = 6;

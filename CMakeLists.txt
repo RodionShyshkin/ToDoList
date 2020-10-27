@@ -5,6 +5,9 @@ set(CMAKE_C_FLAGS_DEBUG "-D_DEBUG")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include_directories(src/core)
+include_directories(src/CLI)
+
 ######## CORE ########
 
 file(GLOB_RECURSE core_sources "src/core/*.cpp")
@@ -16,7 +19,6 @@ file(GLOB_RECURSE cli_sources "src/CLI/*.cpp")
 file(GLOB_RECURSE cli_headers "src/CLI/*.h")
 
 file(GLOB main "src/main.cpp")
-
 
 ######## TESTS ########
 file(GLOB_RECURSE core_tests "tests/core/*.cpp")
@@ -41,13 +43,11 @@ find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/Proto/*.proto")
+file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/Proto/*.proto")
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_SOURCES})
 message("generated ${PROTO_SRCS} ${PROTO_HDRS}")
 
 SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
-
-
 
 ######## gRPC ########
 set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
@@ -55,11 +55,28 @@ set(_REFLECTION gRPC::grpc++_reflection)
 
 find_package(gRPC CONFIG REQUIRED)
 message(STATUS "Using gRPC ${gRPC_VERSION}")
+set(_GRPC_GRPCPP gRPC::grpc++)
 find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
 
-add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers}
-        ${main} ${PROTO_SRCS} ${PROTO_HDRS} ${ts_proto_srcs} ${ts_proto_hdrs}
-        ${ts_grpc_srcs} ${ts_grpc_hdrs})
+get_filename_component(service_proto "Proto/service.proto" ABSOLUTE)
+get_filename_component(service_proto_path "${service_proto}" PATH)
+
+set(service_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.pb.cc")
+set(service_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.pb.h")
+set(service_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.grpc.pb.cc")
+set(service_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/TaskServiceTransport.grpc.pb.h")
+
+add_custom_command(
+        OUTPUT "${service_proto_srcs}" "${service_proto_hdrs}" "${service_grpc_srcs}" "${service_grpc_hdrs}"
+        COMMAND protoc
+        ARGS -I "${service_proto_path}"
+        --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
+        --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
+        --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
+        ${service_proto}
+        DEPENDS ${service_proto})
+
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 ######## GTEST ########
 
@@ -74,7 +91,11 @@ find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
-add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS} tests/CLI/ParamStates/NameParamStateTest.cpp tests/CLI/ParamStates/LabelParamStateTest.cpp tests/CLI/ParamStates/IDParamStateTest.cpp tests/CLI/ParamStates/FilenameParamStateTest.cpp src/CLI/States/Validator.h tests/CLI/ParamStates/ModifierParamStateTest.cpp tests/CLI/ParamStates/SortedParamStateTest.cpp tests/CLI/ParamStates/DateParamStateTest.cpp tests/CLI/ParamStates/PriorityParamStateTest.cpp tests/CLI/CommandStates/ExitStateTest.cpp src/core/API/ApiConverter.h src/core/MemoryModel/Storage/TaskViewMap.h)
+add_executable(ToDoList ${core_sources} ${core_headers} ${cli_sources} ${cli_headers}
+        ${main} ${PROTO_SRCS} ${PROTO_HDRS} ${ts_proto_srcs} ${ts_proto_hdrs}
+        ${ts_grpc_srcs} ${ts_grpc_hdrs})
+
+add_executable(Tests ${core_tests} ${core_sources} ${cli_sources} ${cli_tests} ${PROTO_SRCS} ${PROTO_HDRS})
 
 set(GMOCK_L "/usr/local/lib/gmock/")
 target_link_libraries(Tests GTest::GTest GTest::Main /usr/local/lib/libgmock.a /usr/local/lib/libgmock_main.a)

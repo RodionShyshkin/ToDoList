@@ -17,25 +17,25 @@
 
 namespace proto_converter {
 
-  static TaskProto_Priority PriorityToProto(const Priority& priority) {
-    if(Priority::EMPTY == priority) return TaskProto_Priority_EMPTY;
-    else if(Priority::LOW == priority) return TaskProto_Priority_LOW;
-    else if(Priority::MEDIUM == priority) return TaskProto_Priority_MEDIUM;
-    else if(Priority::HIGH == priority) return TaskProto_Priority_HIGH;
+  static proto::Priority PriorityToProto(const Priority& priority) {
+    if(Priority::EMPTY == priority) return proto::Priority::EMPTY;
+    else if(Priority::LOW == priority) return proto::Priority::LOW;
+    else if(Priority::MEDIUM == priority) return proto::Priority::MEDIUM;
+    else if(Priority::HIGH == priority) return proto::Priority::HIGH;
     throw std::runtime_error("Invalid priority convertion.");
   }
 
-  static Priority ProtoToPriority(const TaskProto_Priority& priority) {
-    if(TaskProto_Priority_EMPTY == priority) return Priority::EMPTY;
-    else if(TaskProto_Priority_LOW == priority) return Priority::LOW;
-    else if(TaskProto_Priority_MEDIUM == priority) return Priority::MEDIUM;
-    else if(TaskProto_Priority_HIGH == priority) return Priority::HIGH;
+  static Priority ProtoToPriority(const proto::Priority& priority) {
+    if(proto::Priority::EMPTY == priority) return Priority::EMPTY;
+    else if(proto::Priority::LOW == priority) return Priority::LOW;
+    else if(proto::Priority::MEDIUM == priority) return Priority::MEDIUM;
+    else if(proto::Priority::HIGH == priority) return Priority::HIGH;
     throw std::runtime_error("Invalid priority convertion.");
   }
 
 
-  static TaskProto TaskToProto(const ModelTaskDTO& task) {
-    auto newtask = std::make_unique<TaskProto>();
+  static proto::TaskProto TaskToProto(const ModelTaskDTO& task) {
+    auto newtask = std::make_unique<proto::TaskProto>();
     newtask->set_name(task.GetName());
     newtask->set_label(task.GetLabel());
     newtask->set_priority(PriorityToProto(task.GetPriority()));
@@ -48,22 +48,22 @@ namespace proto_converter {
     return *newtask;
   }
 
-  static ModelTaskDTO ProtoToTask(const TaskProto& task) {
+  static ModelTaskDTO ProtoToTask(const proto::TaskProto& task) {
     return ModelTaskDTO::CreateWithParent(TaskID{0}, task.name(), task.label(),
                                           proto_converter::ProtoToPriority(task.priority()),
                                           Date{boost::gregorian::date{task.deadline()}}, task.completed(),
                                           TaskID{task.parent_id()});
   }
 
-  static void StorageToProto(const std::vector<ModelTaskDTO>& tasks, StorageProto& storage) {
+  static void StorageToProto(const std::vector<ModelTaskDTO>& tasks, proto::StorageProto& storage) {
     for(const auto& task : tasks) {
       auto* newTask = storage.add_tasks();
-      TaskProto temporary;
+      proto::TaskProto temporary;
       temporary = proto_converter::TaskToProto(task);
       *newTask = temporary;
     }
   }
-  static bool ProtoToModel(const StorageProto& storage_proto, TaskModelInterface& model) {
+  static bool ProtoToModel(const proto::StorageProto& storage_proto, TaskModelInterface& model) {
     for(const auto& task : storage_proto.tasks()) {
       auto model_dto = proto_converter::ProtoToTask(task);
       if(model_dto.GetParentID() == model_dto.GetID()) {

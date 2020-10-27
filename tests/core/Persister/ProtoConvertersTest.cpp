@@ -40,13 +40,13 @@ class ProtoConvertersTest : public ::testing::Test {
     proto_task_with_parent_.set_parent_id(33);
     proto_task_with_parent_.set_name("name");
     proto_task_with_parent_.set_label("label");
-    proto_task_with_parent_.set_priority(TaskProto_Priority_HIGH);
+    proto_task_with_parent_.set_priority(proto::Priority::HIGH);
     proto_task_with_parent_.set_deadline(2459215);
 
     proto_task_without_parent_.set_parent_id(0);
     proto_task_without_parent_.set_name("");
     proto_task_without_parent_.set_label("");
-    proto_task_without_parent_.set_priority(TaskProto_Priority_EMPTY);
+    proto_task_without_parent_.set_priority(proto::Priority::EMPTY);
     proto_task_without_parent_.set_deadline(4294967294);
 
     model_ = std::make_unique<TaskModel>();
@@ -66,32 +66,32 @@ class ProtoConvertersTest : public ::testing::Test {
   ModelTaskDTO root_task_;
   ModelTaskDTO incorrect_task_;
 
-  TaskProto proto_task_with_parent_;
-  TaskProto proto_task_without_parent_;
+  proto::TaskProto proto_task_with_parent_;
+  proto::TaskProto proto_task_without_parent_;
 
-  StorageProto storage_proto_;
-  StorageProto proto_storage_;
+  proto::StorageProto storage_proto_;
+  proto::StorageProto proto_storage_;
   std::vector<ModelTaskDTO> tasks_;
 
   std::unique_ptr<TaskModelInterface> model_;
 };
 
 TEST_F(ProtoConvertersTest, shouldConvertPriorityToProtoCorrectly) {
-  ASSERT_EQ(TaskProto_Priority_EMPTY, proto_converter::PriorityToProto(Priority::EMPTY));
-  ASSERT_EQ(TaskProto_Priority_LOW, proto_converter::PriorityToProto(Priority::LOW));
-  ASSERT_EQ(TaskProto_Priority_MEDIUM, proto_converter::PriorityToProto(Priority::MEDIUM));
-  ASSERT_EQ(TaskProto_Priority_HIGH, proto_converter::PriorityToProto(Priority::HIGH));
+  ASSERT_EQ(proto::Priority::EMPTY, proto_converter::PriorityToProto(Priority::EMPTY));
+  ASSERT_EQ(proto::Priority::LOW, proto_converter::PriorityToProto(Priority::LOW));
+  ASSERT_EQ(proto::Priority::MEDIUM, proto_converter::PriorityToProto(Priority::MEDIUM));
+  ASSERT_EQ(proto::Priority::HIGH, proto_converter::PriorityToProto(Priority::HIGH));
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertProtoToPriorityCorrectly) {
-  ASSERT_EQ(Priority::EMPTY, proto_converter::ProtoToPriority(TaskProto_Priority_EMPTY));
-  ASSERT_EQ(Priority::LOW, proto_converter::ProtoToPriority(TaskProto_Priority_LOW));
-  ASSERT_EQ(Priority::MEDIUM, proto_converter::ProtoToPriority(TaskProto_Priority_MEDIUM));
-  ASSERT_EQ(Priority::HIGH, proto_converter::ProtoToPriority(TaskProto_Priority_HIGH));
+  ASSERT_EQ(Priority::EMPTY, proto_converter::ProtoToPriority(proto::Priority::EMPTY));
+  ASSERT_EQ(Priority::LOW, proto_converter::ProtoToPriority(proto::Priority::LOW));
+  ASSERT_EQ(Priority::MEDIUM, proto_converter::ProtoToPriority(proto::Priority::MEDIUM));
+  ASSERT_EQ(Priority::HIGH, proto_converter::ProtoToPriority(proto::Priority::HIGH));
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertSubtaskToProtoCorrectly) {
-  TaskProto proto_task;
+  proto::TaskProto proto_task;
   ASSERT_NO_THROW(proto_task = proto_converter::TaskToProto(task_with_parent_));
   ASSERT_EQ(proto_task.name(), task_with_parent_.GetName());
   ASSERT_EQ(proto_task.label(), task_with_parent_.GetLabel());
@@ -104,7 +104,7 @@ TEST_F(ProtoConvertersTest, shouldConvertSubtaskToProtoCorrectly) {
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertTaskToProtoCorrectly) {
-  TaskProto proto_task;
+  proto::TaskProto proto_task;
   ASSERT_NO_THROW(proto_task = proto_converter::TaskToProto(task_without_parent_));
   ASSERT_EQ(proto_task.name(), task_without_parent_.GetName());
   ASSERT_EQ(proto_task.label(), task_without_parent_.GetLabel());

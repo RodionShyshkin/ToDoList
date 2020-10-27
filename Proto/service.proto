@@ -1,6 +1,7 @@
 syntax = "proto3";
-
+/*
 import "task.proto";
+import "priority.proto";
 
 message TaskID {
   uint32 id = 1;
@@ -16,8 +17,9 @@ message TaskData {
 
   string name = 1;
   string label = 2;
-  Priority priority = 3;
+  proto.ProtoPriority priority = 3;
   uint32 deadline = 4;
+  TaskProto task = 5;
 }
 
 message AddTask {
@@ -37,7 +39,4 @@ message AddTaskResponse {
   bool status = 1;
 
 }
-
-service TaskService {
-
-}
+*/
