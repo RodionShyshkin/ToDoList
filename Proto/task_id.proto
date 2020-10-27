@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message ProtoTaskID {
+  uint32 id = 1;
+}

@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message ProtoDate {
+  uint32 date = 1;
+}

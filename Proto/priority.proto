@@ -1,14 +1,8 @@
 syntax = "proto3";
 
-package proto;
-
-enum Priority {
+enum ProtoPriority {
   EMPTY = 0;
   LOW = 1;
   MEDIUM = 2;
   HIGH = 3;
-}
-
-service TaskService {
-
 }

@@ -9,7 +9,7 @@ FilePersister::FilePersister(std::fstream &&file, TaskModelInterface &model) : f
 bool FilePersister::Save() {
   if(!file_.is_open()) return false;
 
-  proto::StorageProto storage;
+  StorageProto storage;
   proto_converter::StorageToProto(model_.GetAllTasks(), storage);
   if(!storage.SerializeToOstream(&file_)) return false;
 
@@ -19,7 +19,7 @@ bool FilePersister::Save() {
 
 bool FilePersister::Load() {
   if(!file_.is_open()) return false;
-  proto::StorageProto storage;
+  StorageProto storage;
 
   if(!storage.ParseFromIstream(&file_)) return false;
   file_.close();

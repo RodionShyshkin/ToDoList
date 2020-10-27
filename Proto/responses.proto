@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+
+import "storage_error.proto";
+import "persist_error.proto";
+import "task.proto";
+
+message StorageResponse {
+  StorageError error = 1;
+}
+
+message PersistResponse {
+  PersistError error = 1;
+}
+
+message BoolResponse {
+  bool status = 1;
+}
+
+message GetTaskResponse {
+  TaskProto task = 1;
+}
+
+message TasksListResponse {
+  repeated TaskProto tasks = 1;
+}

@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+enum StorageError {
+  INVALID_TASK = 0;
+  TASK_NOT_FOUND = 1;
+  PARENT_NOT_FOUND = 2;
+  WRONG_TASK_ID = 3;
+}

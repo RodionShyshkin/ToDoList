@@ -37,17 +37,17 @@ class ProtoConvertersTest : public ::testing::Test {
                                                         Date{2012, 12, 1},
                                                         true);
 
-    proto_task_with_parent_.set_parent_id(33);
+    proto_task_with_parent_.mutable_parent_id()->set_id(33);
     proto_task_with_parent_.set_name("name");
     proto_task_with_parent_.set_label("label");
-    proto_task_with_parent_.set_priority(proto::Priority::HIGH);
-    proto_task_with_parent_.set_deadline(2459215);
+    proto_task_with_parent_.set_priority(ProtoPriority::HIGH);
+    proto_task_with_parent_.mutable_deadline()->set_date(2459215);
 
-    proto_task_without_parent_.set_parent_id(0);
+    proto_task_without_parent_.mutable_parent_id()->set_id(0);
     proto_task_without_parent_.set_name("");
     proto_task_without_parent_.set_label("");
-    proto_task_without_parent_.set_priority(proto::Priority::EMPTY);
-    proto_task_without_parent_.set_deadline(4294967294);
+    proto_task_without_parent_.set_priority(ProtoPriority::EMPTY);
+    proto_task_without_parent_.mutable_deadline()->set_date(4294967294);
 
     model_ = std::make_unique<TaskModel>();
     model_->AddTask(root_task_);
@@ -66,52 +66,52 @@ class ProtoConvertersTest : public ::testing::Test {
   ModelTaskDTO root_task_;
   ModelTaskDTO incorrect_task_;
 
-  proto::TaskProto proto_task_with_parent_;
-  proto::TaskProto proto_task_without_parent_;
+  TaskProto proto_task_with_parent_;
+  TaskProto proto_task_without_parent_;
 
-  proto::StorageProto storage_proto_;
-  proto::StorageProto proto_storage_;
+  StorageProto storage_proto_;
+  StorageProto proto_storage_;
   std::vector<ModelTaskDTO> tasks_;
 
   std::unique_ptr<TaskModelInterface> model_;
 };
 
 TEST_F(ProtoConvertersTest, shouldConvertPriorityToProtoCorrectly) {
-  ASSERT_EQ(proto::Priority::EMPTY, proto_converter::PriorityToProto(Priority::EMPTY));
-  ASSERT_EQ(proto::Priority::LOW, proto_converter::PriorityToProto(Priority::LOW));
-  ASSERT_EQ(proto::Priority::MEDIUM, proto_converter::PriorityToProto(Priority::MEDIUM));
-  ASSERT_EQ(proto::Priority::HIGH, proto_converter::PriorityToProto(Priority::HIGH));
+  ASSERT_EQ(ProtoPriority::EMPTY, proto_converter::PriorityToProto(Priority::EMPTY));
+  ASSERT_EQ(ProtoPriority::LOW, proto_converter::PriorityToProto(Priority::LOW));
+  ASSERT_EQ(ProtoPriority::MEDIUM, proto_converter::PriorityToProto(Priority::MEDIUM));
+  ASSERT_EQ(ProtoPriority::HIGH, proto_converter::PriorityToProto(Priority::HIGH));
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertProtoToPriorityCorrectly) {
-  ASSERT_EQ(Priority::EMPTY, proto_converter::ProtoToPriority(proto::Priority::EMPTY));
-  ASSERT_EQ(Priority::LOW, proto_converter::ProtoToPriority(proto::Priority::LOW));
-  ASSERT_EQ(Priority::MEDIUM, proto_converter::ProtoToPriority(proto::Priority::MEDIUM));
-  ASSERT_EQ(Priority::HIGH, proto_converter::ProtoToPriority(proto::Priority::HIGH));
+  ASSERT_EQ(Priority::EMPTY, proto_converter::ProtoToPriority(ProtoPriority::EMPTY));
+  ASSERT_EQ(Priority::LOW, proto_converter::ProtoToPriority(ProtoPriority::LOW));
+  ASSERT_EQ(Priority::MEDIUM, proto_converter::ProtoToPriority(ProtoPriority::MEDIUM));
+  ASSERT_EQ(Priority::HIGH, proto_converter::ProtoToPriority(ProtoPriority::HIGH));
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertSubtaskToProtoCorrectly) {
-  proto::TaskProto proto_task;
+  TaskProto proto_task;
   ASSERT_NO_THROW(proto_task = proto_converter::TaskToProto(task_with_parent_));
   ASSERT_EQ(proto_task.name(), task_with_parent_.GetName());
   ASSERT_EQ(proto_task.label(), task_with_parent_.GetLabel());
-  ASSERT_EQ(proto_task.parent_id(), task_with_parent_.GetParentID());
+  ASSERT_EQ(proto_task.parent_id().id(), task_with_parent_.GetParentID());
   ASSERT_EQ(proto_task.priority(),
             proto_converter::PriorityToProto(task_with_parent_.GetPriority()));
-  ASSERT_EQ(proto_task.deadline(), task_with_parent_.GetDueDate().GetDate().day_number());
+  ASSERT_EQ(proto_task.deadline().date(), task_with_parent_.GetDueDate().GetDate().day_number());
 
 
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertTaskToProtoCorrectly) {
-  proto::TaskProto proto_task;
+  TaskProto proto_task;
   ASSERT_NO_THROW(proto_task = proto_converter::TaskToProto(task_without_parent_));
   ASSERT_EQ(proto_task.name(), task_without_parent_.GetName());
   ASSERT_EQ(proto_task.label(), task_without_parent_.GetLabel());
-  ASSERT_EQ(proto_task.parent_id(), 0);
+  ASSERT_EQ(proto_task.parent_id().id(), 0);
   ASSERT_EQ(proto_task.priority(),
             proto_converter::PriorityToProto(task_without_parent_.GetPriority()));
-  ASSERT_EQ(proto_task.deadline(), task_without_parent_.GetDueDate().GetDate().day_number());
+  ASSERT_EQ(proto_task.deadline().date(), task_without_parent_.GetDueDate().GetDate().day_number());
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertProtoToSubtaskCorrectly) {
@@ -121,8 +121,8 @@ TEST_F(ProtoConvertersTest, shouldConvertProtoToSubtaskCorrectly) {
   ASSERT_EQ(dto.GetLabel(), proto_task_with_parent_.label());
   ASSERT_EQ(dto.GetPriority(),
             proto_converter::ProtoToPriority(proto_task_with_parent_.priority()));
-  ASSERT_EQ(dto.GetParentID().GetID(), proto_task_with_parent_.parent_id());
-  ASSERT_EQ(dto.GetDueDate().GetDate().day_number(), proto_task_with_parent_.deadline());
+  ASSERT_EQ(dto.GetParentID().GetID(), proto_task_with_parent_.parent_id().id());
+  ASSERT_EQ(dto.GetDueDate().GetDate().day_number(), proto_task_with_parent_.deadline().date());
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertProtoToTaskCorrectly) {
@@ -132,10 +132,10 @@ TEST_F(ProtoConvertersTest, shouldConvertProtoToTaskCorrectly) {
   ASSERT_EQ(dto.GetLabel(), proto_task_without_parent_.label());
   ASSERT_EQ(dto.GetPriority(),
             proto_converter::ProtoToPriority(proto_task_without_parent_.priority()));
-  ASSERT_EQ(dto.GetParentID().GetID(), proto_task_without_parent_.parent_id());
-  ASSERT_EQ(dto.GetDueDate().GetDate().day_number(), proto_task_without_parent_.deadline());
+  ASSERT_EQ(dto.GetParentID().GetID(), proto_task_without_parent_.parent_id().id());
+  ASSERT_EQ(dto.GetDueDate().GetDate().day_number(), proto_task_without_parent_.deadline().date());
   ASSERT_EQ(boost::gregorian::date{boost::gregorian::not_a_date_time},
-            boost::gregorian::date{proto_task_without_parent_.deadline()});
+            boost::gregorian::date{proto_task_without_parent_.deadline().date()});
 }
 
 TEST_F(ProtoConvertersTest, shouldConvertStorageToProtoCorrectly) {

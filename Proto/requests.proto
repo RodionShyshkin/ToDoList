@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+
+import "task.proto";
+import "task_id.proto";
+import "date.proto";
+import "priority.proto";
+
+message AddTaskRequest {
+  TaskProto task = 1;
+}
+
+message AddSubtaskRequest {
+  ProtoTaskID parent = 1;
+  TaskProto task = 2;
+}
+
+message RemoveTaskRequest {
+  ProtoTaskID id = 1;
+}
+
+message CompleteTaskRequest {
+  ProtoTaskID id = 1;
+}
+
+message PostponeTaskRequest {
+  ProtoTaskID id = 1;
+  ProtoDate date = 2;
+}
+
+message SaveTasksRequest {
+  string filepath = 1;
+}
+
+message LoadTasksRequest {
+  string filepath = 1;
+}
+
+message GetTaskRequest {
+  ProtoTaskID id = 1;
+}
+
+message GetAllTasksRequest {
+  bool is_sorted_by_priority = 1;
+}
+
+message GetTodayTasksRequest {
+  bool is_sorted_by_priority = 1;
+}
+
+message GetWeekTasksRequest {
+  bool is_sorted_by_priority = 1;
+}
+
+message GetTasksByLabelRequest {
+  bool is_sorted_by_priority = 1;
+  string label = 2;
+}
+
+message GetTasksByNameRequest {
+  bool is_sorted_by_priority = 1;
+  string name = 2;
+}
+
+message GetTasksByPriorityRequest {
+  ProtoPriority priority = 1;
+}
+
+message GetSubtasksRequest {
+  ProtoTaskID id = 1;
+}

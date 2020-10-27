@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+enum PersistError {
+  SAVE_ERROR = 0;
+  LOAD_ERROR = 1;
+}

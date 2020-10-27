@@ -1,42 +1,29 @@
 syntax = "proto3";
-/*
+
 import "task.proto";
 import "priority.proto";
+import "requests.proto";
+import "responses.proto";
 
-message TaskID {
-  uint32 id = 1;
+service gRPCTaskService {
+  rpc AddTask(AddTaskRequest) returns (StorageResponse) {  }
+  rpc AddSubtask(AddSubtaskRequest) returns (StorageResponse) {  }
+  rpc RemoveTask(RemoveTaskRequest) returns (StorageResponse) {  }
+
+  rpc CompleteTask(CompleteTaskRequest) returns(BoolResponse) {  }
+  rpc PostponeTask(PostponeTaskRequest) returns(BoolResponse) {  }
+
+  rpc Save(SaveTasksRequest) returns (PersistResponse) {  }
+  rpc Load(LoadTasksRequest) returns (PersistResponse) {  }
+
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse) {  }
+
+  rpc GetAllTasks(GetAllTasksRequest) returns (TasksListResponse) {  }
+  rpc GetTodayTasks(GetTodayTasksRequest) returns (TasksListResponse) {  }
+  rpc GetWeekTasks(GetWeekTasksRequest) returns (TasksListResponse) {  }
+  rpc GetTasksByLabel(GetTasksByLabelRequest) returns (TasksListResponse) {  }
+  rpc GetTasksByName(GetTasksByNameRequest) returns (TasksListResponse) {  }
+  rpc GetTasksByPriority(GetTasksByPriorityRequest) returns (TasksListResponse) {  }
+
+  rpc GetSubtasks(GetSubtasksRequest) returns (TasksListResponse) {  }
 }
-
-message TaskData {
-  enum Priority {
-    EMPTY = 0;
-    LOW = 1;
-    MEDIUM = 2;
-    HIGH = 3;
-  }
-
-  string name = 1;
-  string label = 2;
-  proto.ProtoPriority priority = 3;
-  uint32 deadline = 4;
-  TaskProto task = 5;
-}
-
-message AddTask {
-  TaskData data = 1;
-}
-
-message AddSubtask {
-  TaskID id = 1;
-  TaskData data = 2;
-}
-
-message TaskDTO {
-  TaskID id = 1;
-}
-
-message AddTaskResponse {
-  bool status = 1;
-
-}
-*/

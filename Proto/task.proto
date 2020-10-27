@@ -1,17 +1,17 @@
 syntax = "proto3";
 
 import "priority.proto";
-import "google/protobuf/timestamp.proto";
-package proto;
+import "date.proto";
+import "task_id.proto";
 
 message TaskProto {
   string              name = 1;
   string              label = 2;
-  proto.Priority      priority = 3;
-  uint32              deadline = 4;
+  ProtoPriority      priority = 3;
+  ProtoDate          deadline = 4;
   bool                completed = 5;
   repeated TaskProto  subtasks = 6;
-  uint32              parent_id = 7;
+  ProtoTaskID        parent_id = 7;
 }
 
 message StorageProto {
