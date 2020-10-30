@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-enum StorageError {
+enum ProtoStorageError {
   INVALID_TASK = 0;
   TASK_NOT_FOUND = 1;
   PARENT_NOT_FOUND = 2;

@@ -6,11 +6,11 @@ import "persist_error.proto";
 import "task.proto";
 
 message StorageResponse {
-  StorageError error = 1;
+  ProtoStorageError error = 1;
 }
 
 message PersistResponse {
-  PersistError error = 1;
+  ProtoPersistError error = 1;
 }
 
 message BoolResponse {
