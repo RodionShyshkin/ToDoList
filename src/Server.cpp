@@ -4,7 +4,6 @@
 
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
-#include <MemoryModel/ModelAPI/TaskModelInterface.h>
 #include <API/GRPCServer.h>
 #include <MemoryModel/ModelAPI/TaskModel.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
@@ -21,14 +20,13 @@
   server->Wait();
 }
 */
-int main() {
+int main(int argc, char** argv) {
   std::string server_address("0.0.0.0:50051");
-  grpc::EnableDefaultHealthCheckService(true);
-  grpc::reflection::InitProtoReflectionServerBuilderPlugin();
-
   auto model = std::make_unique<TaskModel>();
   GRPCServer service(std::move(model));
 
+  grpc::EnableDefaultHealthCheckService(true);
+  grpc::reflection::InitProtoReflectionServerBuilderPlugin();
   grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
   builder.RegisterService(&service);
