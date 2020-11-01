@@ -16,10 +16,13 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
 ::grpc::Status GRPCServer::AddTask(::grpc::ServerContext *context,
                                    const ::AddTaskRequest *request,
                                    ::StorageResponse *response) {
-  auto converted_request = grpc_converter::AddTaskRequestToModelDTO(*request);
-  if(!converted_request.has_value()) return ::grpc::Status::CANCELLED;
+  if(!request->has_task()) {
+    response->set_error(ProtoStorageError::INVALID_TASK);
+    return ::grpc::Status::CANCELLED;
+  }
+  auto converted_task = grpc_converter::AddTaskRequestToModelDTO(*request);
 
-  auto task = converted_request.value();
+  auto task = converted_task.value();
   auto result = model_->AddTask(task);
 
   *response = grpc_converter::StorageResultToProto(result);
@@ -29,10 +32,13 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
 ::grpc::Status GRPCServer::AddSubtask(::grpc::ServerContext *context,
                                       const ::AddSubtaskRequest *request,
                                       ::StorageResponse *response) {
-  if(!request->has_task()) return ::grpc::Status::CANCELLED;
-  if(!request->has_parent()) return ::grpc::Status::CANCELLED;
-  auto converted_task = grpc_converter::TaskProtoToModelDTO(request->task());
-  auto converted_id = grpc_converter::ProtoTaskIDToID(request->parent());
+  if(!request->has_task() || !request->has_parent()) {
+    response->set_error(ProtoStorageError::INVALID_TASK);
+    return ::grpc::Status::CANCELLED;
+  }
+
+  auto converted_task = proto_converter::TaskProtoToModelDTO(request->task());
+  auto converted_id = proto_converter::ProtoTaskIDToID(request->parent());
 
   auto result = model_->AddSubtask(converted_id, converted_task);
 
@@ -43,8 +49,11 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
 ::grpc::Status GRPCServer::RemoveTask(::grpc::ServerContext *context,
                                       const ::RemoveTaskRequest *request,
                                       ::StorageResponse *response) {
-  if(!request->has_id()) return ::grpc::Status::CANCELLED;
-  auto converted_id = grpc_converter::ProtoTaskIDToID(request->id());
+  if(!request->has_id()) {
+    response->set_error(ProtoStorageError::TASK_NOT_FOUND);
+    return ::grpc::Status::CANCELLED;
+  }
+  auto converted_id = proto_converter::ProtoTaskIDToID(request->id());
 
   auto result = model_->RemoveTask(converted_id);
 
@@ -56,14 +65,14 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
                                    const ::GetTaskRequest *request,
                                    ::GetTaskResponse *response) {
   if(!request->has_id()) return ::grpc::Status::CANCELLED;
-  auto converted_id = grpc_converter::ProtoTaskIDToID(request->id());
+  auto converted_id = proto_converter::ProtoTaskIDToID(request->id());
 
   auto result = model_->GetTask(converted_id);
 
   if(result.has_value()) {
-    auto proto_task = grpc_converter::ModelDTOToProto(result.value());
-    auto proto_task_ptr = std::make_unique<TaskProto>(proto_task);
-    response->set_allocated_task(proto_task_ptr.get());
+    auto proto_task = TaskProto::default_instance().New();
+    *proto_task = proto_converter::ModelDTOToProto(result.value());
+    response->set_allocated_task(proto_task);
   }
   return ::grpc::Status::OK;
 }
@@ -77,6 +86,7 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
   }
 
   *response = grpc_converter::ModelDTOVectorToResponse(result);
+
   return ::grpc::Status::OK;
 }
 
@@ -131,7 +141,7 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
 ::grpc::Status GRPCServer::GetTasksByPriority(::grpc::ServerContext *context,
                                               const ::GetTasksByPriorityRequest *request,
                                               ::TasksListResponse *response) {
-  auto converted_priority = grpc_converter::ProtoToPriority(request->priority());
+  auto converted_priority = proto_converter::ProtoToPriority(request->priority());
 
   auto result = model_->GetTasksByPriority(converted_priority);
 
@@ -143,7 +153,7 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
                                         const ::CompleteTaskRequest *request,
                                         ::BoolResponse *response) {
   if(!request->has_id()) return ::grpc::Status::CANCELLED;
-  auto converted_id = grpc_converter::ProtoTaskIDToID(request->id());
+  auto converted_id = proto_converter::ProtoTaskIDToID(request->id());
 
   auto result = model_->CompleteTask(converted_id);
 
@@ -156,7 +166,7 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
                                         ::BoolResponse *response) {
   if(!request->has_id()) return ::grpc::Status::CANCELLED;
   if(!request->has_date()) return ::grpc::Status::CANCELLED;
-  auto converted_id = grpc_converter::ProtoTaskIDToID(request->id());
+  auto converted_id = proto_converter::ProtoTaskIDToID(request->id());
   auto converted_date = boost::gregorian::date{request->date().date()};
 
   auto result = model_->PostponeTask(converted_id, converted_date);
@@ -169,7 +179,7 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
                                        const ::GetSubtasksRequest *request,
                                        ::TasksListResponse *response) {
   if(!request->has_id()) return ::grpc::Status::CANCELLED;
-  auto converted_id = grpc_converter::ProtoTaskIDToID(request->id());
+  auto converted_id = proto_converter::ProtoTaskIDToID(request->id());
 
   auto result = model_->GetSubtasks(converted_id);
 
@@ -187,7 +197,7 @@ GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
 
 
   if(!future.get()) response->set_error(ProtoPersistError::SAVE_ERROR);
-
+  else response->set_error(ProtoPersistError::NONE);
   return ::grpc::Status::OK;
 }
 

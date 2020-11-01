@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CORE_PERSISTER_FILEPERSISTER_H_
 
 #include <Persister/PersisterInterface.h>
-#include <Persister/ProtoConverter.h>
+#include <Persister/PersisterConverter.h>
 #include <fstream>
 
 /*
