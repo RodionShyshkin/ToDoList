@@ -143,7 +143,7 @@ add_executable(Client "${CMAKE_SOURCE_DIR}/src/Client.cpp"
         ${cli_sources} ${cli_headers}
         ${PROTO_SRCS} ${PROTO_HDRS}
         ${service_proto_srcs} ${service_proto_hdrs}
-        ${service_grpc_srcs} ${service_grpc_hdrs} src/core/API/TaskServiceClient.cpp src/core/API/TaskServiceClient.h)
+        ${service_grpc_srcs} ${service_grpc_hdrs})
 
 target_link_libraries(Client
         ${Boost_LIBRARIES} ${_REFLECTION}
