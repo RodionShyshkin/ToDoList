@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CORE_API_GRPCCONVERTER_H_
 
 #include <MemoryModel/ModelAPI/ModelTaskDTO.h>
-#include <API/ProtoConverter.h>
+#include <API/Utils/ProtoConverter.h>
 #include <requests.pb.h>
 #include <storage_error.pb.h>
 #include <API/OperationResult/StorageError.h>

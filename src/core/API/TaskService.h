@@ -8,7 +8,7 @@
 #include "TaskDTO.h"
 #include "TaskServiceInterface.h"
 #include <MemoryModel/ModelAPI/TaskModel.h>
-#include "ApiConverter.h"
+#include "API/Utils/ApiConverter.h"
 
 /*
  * \brief Entry point for tasks management.

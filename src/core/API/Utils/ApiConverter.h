@@ -6,8 +6,8 @@
 #define TODOLIST_SRC_CORE_API_APICONVERTER_H_
 
 #include <MemoryModel/ModelAPI/ModelTaskDTO.h>
-#include "Priority.h"
-#include "TaskDTO.h"
+#include "API/Priority.h"
+#include "API/TaskDTO.h"
 
 /*
  * Toolkit for convertions between {ModelTaskDTO} & {TaskDTO},

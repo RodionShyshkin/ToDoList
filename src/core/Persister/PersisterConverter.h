@@ -6,7 +6,7 @@
 #define TODOLIST_SRC_CORE_PERSISTER_SERIALIZATION_PROTOCONVERTER_H_
 
 #include <task.pb.h>
-#include <API/ProtoConverter.h>
+#include <API/Utils/ProtoConverter.h>
 #include <MemoryModel/ModelAPI/ModelTaskDTO.h>
 #include <MemoryModel/ModelAPI/TaskModelInterface.h>
 

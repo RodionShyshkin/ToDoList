@@ -7,7 +7,7 @@
 #include <boost/date_time/gregorian/greg_date.hpp>
 #include <Mocks/MockModel.h>
 #include <API/GRPCServer.h>
-#include <API/GRPCConverter.h>
+#include <API/Utils/GRPCConverter.h>
 
 class GRPCServerTest : public ::testing::Test {
  public:

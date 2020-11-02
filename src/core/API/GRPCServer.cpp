@@ -7,8 +7,8 @@
 #include <Persister/FilePersister.h>
 #include <MemoryModel/ModelAPI/TaskModel.h>
 #include "GRPCServer.h"
-#include "GRPCConverter.h"
-#include "ApiConverter.h"
+#include "API/Utils/GRPCConverter.h"
+#include "API/Utils/ApiConverter.h"
 
 GRPCServer::GRPCServer(std::unique_ptr<TaskModelInterface> model)
 : model_(std::move(model)) {  }
