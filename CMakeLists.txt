@@ -138,4 +138,15 @@ target_link_libraries(Server
         ${Boost_LIBRARIES} ${_REFLECTION}
         ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
+add_executable(Client "${CMAKE_SOURCE_DIR}/src/Client.cpp"
+        ${core_sources} ${core_headers}
+        ${cli_sources} ${cli_headers}
+        ${PROTO_SRCS} ${PROTO_HDRS}
+        ${service_proto_srcs} ${service_proto_hdrs}
+        ${service_grpc_srcs} ${service_grpc_hdrs})
+
+target_link_libraries(Client
+        ${Boost_LIBRARIES} ${_REFLECTION}
+        ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+
 gtest_discover_tests(Tests)
